@@ -1,0 +1,522 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		09FF68911D3EC18800EF4551 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FF68901D3EC18800EF4551 /* AppDelegate.swift */; };
+		09FF68931D3EC18800EF4551 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FF68921D3EC18800EF4551 /* ViewController.swift */; };
+		09FF68961D3EC18800EF4551 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 09FF68941D3EC18800EF4551 /* Main.storyboard */; };
+		09FF68991D3EC18800EF4551 /* Trucky.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 09FF68971D3EC18800EF4551 /* Trucky.xcdatamodeld */; };
+		09FF689B1D3EC18800EF4551 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 09FF689A1D3EC18800EF4551 /* Assets.xcassets */; };
+		09FF689E1D3EC18800EF4551 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 09FF689C1D3EC18800EF4551 /* LaunchScreen.storyboard */; };
+		09FF68A91D3EC18800EF4551 /* TruckyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FF68A81D3EC18800EF4551 /* TruckyTests.swift */; };
+		09FF68B41D3EC18800EF4551 /* TruckyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FF68B31D3EC18800EF4551 /* TruckyUITests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		09FF68A51D3EC18800EF4551 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 09FF68851D3EC18800EF4551 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 09FF688C1D3EC18800EF4551;
+			remoteInfo = Trucky;
+		};
+		09FF68B01D3EC18800EF4551 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 09FF68851D3EC18800EF4551 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 09FF688C1D3EC18800EF4551;
+			remoteInfo = Trucky;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		09FF688D1D3EC18800EF4551 /* Trucky.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Trucky.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		09FF68901D3EC18800EF4551 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		09FF68921D3EC18800EF4551 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		09FF68951D3EC18800EF4551 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		09FF68981D3EC18800EF4551 /* Trucky.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Trucky.xcdatamodel; sourceTree = "<group>"; };
+		09FF689A1D3EC18800EF4551 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		09FF689D1D3EC18800EF4551 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		09FF689F1D3EC18800EF4551 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		09FF68A41D3EC18800EF4551 /* TruckyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TruckyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		09FF68A81D3EC18800EF4551 /* TruckyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TruckyTests.swift; sourceTree = "<group>"; };
+		09FF68AA1D3EC18800EF4551 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		09FF68AF1D3EC18800EF4551 /* TruckyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TruckyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		09FF68B31D3EC18800EF4551 /* TruckyUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TruckyUITests.swift; sourceTree = "<group>"; };
+		09FF68B51D3EC18800EF4551 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		09FF688A1D3EC18800EF4551 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		09FF68A11D3EC18800EF4551 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		09FF68AC1D3EC18800EF4551 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		09FF68841D3EC18800EF4551 = {
+			isa = PBXGroup;
+			children = (
+				09FF688F1D3EC18800EF4551 /* Trucky */,
+				09FF68A71D3EC18800EF4551 /* TruckyTests */,
+				09FF68B21D3EC18800EF4551 /* TruckyUITests */,
+				09FF688E1D3EC18800EF4551 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		09FF688E1D3EC18800EF4551 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				09FF688D1D3EC18800EF4551 /* Trucky.app */,
+				09FF68A41D3EC18800EF4551 /* TruckyTests.xctest */,
+				09FF68AF1D3EC18800EF4551 /* TruckyUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		09FF688F1D3EC18800EF4551 /* Trucky */ = {
+			isa = PBXGroup;
+			children = (
+				09FF68901D3EC18800EF4551 /* AppDelegate.swift */,
+				09FF68921D3EC18800EF4551 /* ViewController.swift */,
+				09FF68941D3EC18800EF4551 /* Main.storyboard */,
+				09FF689A1D3EC18800EF4551 /* Assets.xcassets */,
+				09FF689C1D3EC18800EF4551 /* LaunchScreen.storyboard */,
+				09FF689F1D3EC18800EF4551 /* Info.plist */,
+				09FF68971D3EC18800EF4551 /* Trucky.xcdatamodeld */,
+			);
+			path = Trucky;
+			sourceTree = "<group>";
+		};
+		09FF68A71D3EC18800EF4551 /* TruckyTests */ = {
+			isa = PBXGroup;
+			children = (
+				09FF68A81D3EC18800EF4551 /* TruckyTests.swift */,
+				09FF68AA1D3EC18800EF4551 /* Info.plist */,
+			);
+			path = TruckyTests;
+			sourceTree = "<group>";
+		};
+		09FF68B21D3EC18800EF4551 /* TruckyUITests */ = {
+			isa = PBXGroup;
+			children = (
+				09FF68B31D3EC18800EF4551 /* TruckyUITests.swift */,
+				09FF68B51D3EC18800EF4551 /* Info.plist */,
+			);
+			path = TruckyUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		09FF688C1D3EC18800EF4551 /* Trucky */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 09FF68B81D3EC18800EF4551 /* Build configuration list for PBXNativeTarget "Trucky" */;
+			buildPhases = (
+				09FF68891D3EC18800EF4551 /* Sources */,
+				09FF688A1D3EC18800EF4551 /* Frameworks */,
+				09FF688B1D3EC18800EF4551 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Trucky;
+			productName = Trucky;
+			productReference = 09FF688D1D3EC18800EF4551 /* Trucky.app */;
+			productType = "com.apple.product-type.application";
+		};
+		09FF68A31D3EC18800EF4551 /* TruckyTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 09FF68BB1D3EC18800EF4551 /* Build configuration list for PBXNativeTarget "TruckyTests" */;
+			buildPhases = (
+				09FF68A01D3EC18800EF4551 /* Sources */,
+				09FF68A11D3EC18800EF4551 /* Frameworks */,
+				09FF68A21D3EC18800EF4551 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				09FF68A61D3EC18800EF4551 /* PBXTargetDependency */,
+			);
+			name = TruckyTests;
+			productName = TruckyTests;
+			productReference = 09FF68A41D3EC18800EF4551 /* TruckyTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		09FF68AE1D3EC18800EF4551 /* TruckyUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 09FF68BE1D3EC18800EF4551 /* Build configuration list for PBXNativeTarget "TruckyUITests" */;
+			buildPhases = (
+				09FF68AB1D3EC18800EF4551 /* Sources */,
+				09FF68AC1D3EC18800EF4551 /* Frameworks */,
+				09FF68AD1D3EC18800EF4551 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				09FF68B11D3EC18800EF4551 /* PBXTargetDependency */,
+			);
+			name = TruckyUITests;
+			productName = TruckyUITests;
+			productReference = 09FF68AF1D3EC18800EF4551 /* TruckyUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		09FF68851D3EC18800EF4551 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0730;
+				LastUpgradeCheck = 0730;
+				ORGANIZATIONNAME = Kyle;
+				TargetAttributes = {
+					09FF688C1D3EC18800EF4551 = {
+						CreatedOnToolsVersion = 7.3.1;
+					};
+					09FF68A31D3EC18800EF4551 = {
+						CreatedOnToolsVersion = 7.3.1;
+						TestTargetID = 09FF688C1D3EC18800EF4551;
+					};
+					09FF68AE1D3EC18800EF4551 = {
+						CreatedOnToolsVersion = 7.3.1;
+						TestTargetID = 09FF688C1D3EC18800EF4551;
+					};
+				};
+			};
+			buildConfigurationList = 09FF68881D3EC18800EF4551 /* Build configuration list for PBXProject "Trucky" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 09FF68841D3EC18800EF4551;
+			productRefGroup = 09FF688E1D3EC18800EF4551 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				09FF688C1D3EC18800EF4551 /* Trucky */,
+				09FF68A31D3EC18800EF4551 /* TruckyTests */,
+				09FF68AE1D3EC18800EF4551 /* TruckyUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		09FF688B1D3EC18800EF4551 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				09FF689E1D3EC18800EF4551 /* LaunchScreen.storyboard in Resources */,
+				09FF689B1D3EC18800EF4551 /* Assets.xcassets in Resources */,
+				09FF68961D3EC18800EF4551 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		09FF68A21D3EC18800EF4551 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		09FF68AD1D3EC18800EF4551 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		09FF68891D3EC18800EF4551 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				09FF68991D3EC18800EF4551 /* Trucky.xcdatamodeld in Sources */,
+				09FF68931D3EC18800EF4551 /* ViewController.swift in Sources */,
+				09FF68911D3EC18800EF4551 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		09FF68A01D3EC18800EF4551 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				09FF68A91D3EC18800EF4551 /* TruckyTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		09FF68AB1D3EC18800EF4551 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				09FF68B41D3EC18800EF4551 /* TruckyUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		09FF68A61D3EC18800EF4551 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 09FF688C1D3EC18800EF4551 /* Trucky */;
+			targetProxy = 09FF68A51D3EC18800EF4551 /* PBXContainerItemProxy */;
+		};
+		09FF68B11D3EC18800EF4551 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 09FF688C1D3EC18800EF4551 /* Trucky */;
+			targetProxy = 09FF68B01D3EC18800EF4551 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		09FF68941D3EC18800EF4551 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				09FF68951D3EC18800EF4551 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		09FF689C1D3EC18800EF4551 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				09FF689D1D3EC18800EF4551 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		09FF68B61D3EC18800EF4551 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		09FF68B71D3EC18800EF4551 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		09FF68B91D3EC18800EF4551 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = Trucky/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = Donovan.Trucky;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		09FF68BA1D3EC18800EF4551 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = Trucky/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = Donovan.Trucky;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		09FF68BC1D3EC18800EF4551 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = TruckyTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = Donovan.TruckyTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Trucky.app/Trucky";
+			};
+			name = Debug;
+		};
+		09FF68BD1D3EC18800EF4551 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = TruckyTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = Donovan.TruckyTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Trucky.app/Trucky";
+			};
+			name = Release;
+		};
+		09FF68BF1D3EC18800EF4551 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = TruckyUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = Donovan.TruckyUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = Trucky;
+			};
+			name = Debug;
+		};
+		09FF68C01D3EC18800EF4551 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = TruckyUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = Donovan.TruckyUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = Trucky;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		09FF68881D3EC18800EF4551 /* Build configuration list for PBXProject "Trucky" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				09FF68B61D3EC18800EF4551 /* Debug */,
+				09FF68B71D3EC18800EF4551 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		09FF68B81D3EC18800EF4551 /* Build configuration list for PBXNativeTarget "Trucky" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				09FF68B91D3EC18800EF4551 /* Debug */,
+				09FF68BA1D3EC18800EF4551 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		09FF68BB1D3EC18800EF4551 /* Build configuration list for PBXNativeTarget "TruckyTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				09FF68BC1D3EC18800EF4551 /* Debug */,
+				09FF68BD1D3EC18800EF4551 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		09FF68BE1D3EC18800EF4551 /* Build configuration list for PBXNativeTarget "TruckyUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				09FF68BF1D3EC18800EF4551 /* Debug */,
+				09FF68C01D3EC18800EF4551 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		09FF68971D3EC18800EF4551 /* Trucky.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				09FF68981D3EC18800EF4551 /* Trucky.xcdatamodel */,
+			);
+			currentVersion = 09FF68981D3EC18800EF4551 /* Trucky.xcdatamodel */;
+			path = Trucky.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 09FF68851D3EC18800EF4551 /* Project object */;
+}
