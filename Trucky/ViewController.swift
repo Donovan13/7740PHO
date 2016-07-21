@@ -41,7 +41,9 @@ class ViewController: UIViewController,CLLocationManagerDelegate {
             } else if user != nil {
                 print ("User Created")
                 self.ref.child("Users").child(user!.uid).setValue(["uid": user!.uid, "gender": "female"])
-                self.dismissViewControllerAnimated(true, completion: nil)
+                self.performSegueWithIdentifier("LogInSegue", sender: self)
+
+//                self.dismissViewControllerAnimated(true, completion: nil)
                 
             
             
@@ -60,9 +62,11 @@ class ViewController: UIViewController,CLLocationManagerDelegate {
                 print ("Incorrect")
                 
             }
-            else{
-                self.dismissViewControllerAnimated(true, completion: nil)
+            else if user != nil {
+                self.performSegueWithIdentifier("LogInSegue", sender: self)
+                //                self.dismissViewControllerAnimated(true, completion: nil)
                 print ("Successful Login")
+                
             }
         })
     }

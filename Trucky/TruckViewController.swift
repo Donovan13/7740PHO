@@ -12,6 +12,8 @@ import CoreLocation
 import Firebase
 
 
+
+
 class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var hideMap: UISegmentedControl!
@@ -21,7 +23,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     var trucks = [Truck]()
     let locationManager = CLLocationManager()
     var ref:FIRDatabaseReference!
-    let user = FIRAuth.auth()?.currentUser!
+    var user = FIRAuth.auth()?.currentUser!
     
     
     override func viewDidLoad() {
@@ -34,6 +36,11 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         locationManager.startUpdatingLocation()
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(true)
+        
+    }
+    
     
     
     func mapView(mapView: MKMapView, didUpdateUserLocation userLocation: MKUserLocation) {
@@ -44,7 +51,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
             self.ref.child("Users").child(user!.uid).updateChildValues(["Location": "\(userL)"])
             print("\(userL)")
         } else {
-            errorAlert("error", message: "print")
+            //            errorAlert("error", message: "print")
         }
         
         
