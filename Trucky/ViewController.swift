@@ -26,30 +26,9 @@ class ViewController: UIViewController,CLLocationManagerDelegate {
     }
     
     
-
-
-    @IBAction func createUser(sender: AnyObject) {
-        FIRAuth.auth()?.createUserWithEmail(emailTextField.text!, password: passwordTextfield.text!, completion: {
-        user, error in
-            
-            
-            
-            if error != nil {
-                
-                self.errorAlert("Error", message: "\(error?.localizedDescription)")
-                
-            } else if user != nil {
-                print ("User Created")
-                self.ref.child("Users").child(user!.uid).setValue(["uid": user!.uid, "gender": "female"])
-                self.performSegueWithIdentifier("LogInSegue", sender: self)
-
-//                self.dismissViewControllerAnimated(true, completion: nil)
-                
-            
-            
-            }
-            
-        })
+    @IBAction func backButton(sender: AnyObject) {
+        dismissViewControllerAnimated(true) { 
+        }
     }
     
     @IBAction func loginButtonTapped(sender: AnyObject) {
@@ -63,7 +42,7 @@ class ViewController: UIViewController,CLLocationManagerDelegate {
                 
             }
             else if user != nil {
-                self.performSegueWithIdentifier("LogInSegue", sender: self)
+                self.performSegueWithIdentifier("LogInSeg", sender: self)
                 //                self.dismissViewControllerAnimated(true, completion: nil)
                 print ("Successful Login")
                 

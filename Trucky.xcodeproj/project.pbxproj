@@ -9,8 +9,10 @@
 /* Begin PBXBuildFile section */
 		095F09B01D400658007E8F5B /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 095F09AF1D400658007E8F5B /* MapKit.framework */; };
 		095F09B61D400768007E8F5B /* TruckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095F09B51D400768007E8F5B /* TruckViewController.swift */; };
-		095F09B81D40092D007E8F5B /* Truck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095F09B71D40092D007E8F5B /* Truck.swift */; };
 		095F09BA1D400CEA007E8F5B /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 095F09B91D400CEA007E8F5B /* CoreLocation.framework */; };
+		096F21941D4BACAE00B42813 /* YelpClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096F21931D4BACAE00B42813 /* YelpClient.swift */; };
+		096F219A1D4BB29500B42813 /* Business.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096F21991D4BB29500B42813 /* Business.swift */; };
+		096F219C1D4BB81200B42813 /* CreateUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096F219B1D4BB81200B42813 /* CreateUserViewController.swift */; };
 		09FF68911D3EC18800EF4551 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FF68901D3EC18800EF4551 /* AppDelegate.swift */; };
 		09FF68931D3EC18800EF4551 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FF68921D3EC18800EF4551 /* ViewController.swift */; };
 		09FF68961D3EC18800EF4551 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 09FF68941D3EC18800EF4551 /* Main.storyboard */; };
@@ -20,7 +22,7 @@
 		09FF68A91D3EC18800EF4551 /* TruckyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FF68A81D3EC18800EF4551 /* TruckyTests.swift */; };
 		09FF68B41D3EC18800EF4551 /* TruckyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FF68B31D3EC18800EF4551 /* TruckyUITests.swift */; };
 		09FF68C21D3EC1C000EF4551 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 09FF68C11D3EC1C000EF4551 /* GoogleService-Info.plist */; };
-		AEC5AE59A5064400F89A35A1 /* libPods-Trucky.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 175A61FA85B28B8DD3BB0937 /* libPods-Trucky.a */; };
+		EC4ABBC28A8354153EA44DC6 /* Pods_Trucky.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5194AA8F6EB282C7F786CB0C /* Pods_Trucky.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,8 +45,10 @@
 /* Begin PBXFileReference section */
 		095F09AF1D400658007E8F5B /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		095F09B51D400768007E8F5B /* TruckViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TruckViewController.swift; sourceTree = "<group>"; };
-		095F09B71D40092D007E8F5B /* Truck.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Truck.swift; sourceTree = "<group>"; };
 		095F09B91D400CEA007E8F5B /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		096F21931D4BACAE00B42813 /* YelpClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YelpClient.swift; sourceTree = "<group>"; };
+		096F21991D4BB29500B42813 /* Business.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Business.swift; sourceTree = "<group>"; };
+		096F219B1D4BB81200B42813 /* CreateUserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateUserViewController.swift; sourceTree = "<group>"; };
 		09FF688D1D3EC18800EF4551 /* Trucky.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Trucky.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		09FF68901D3EC18800EF4551 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		09FF68921D3EC18800EF4551 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -60,7 +64,7 @@
 		09FF68B31D3EC18800EF4551 /* TruckyUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TruckyUITests.swift; sourceTree = "<group>"; };
 		09FF68B51D3EC18800EF4551 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		09FF68C11D3EC1C000EF4551 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		175A61FA85B28B8DD3BB0937 /* libPods-Trucky.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Trucky.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5194AA8F6EB282C7F786CB0C /* Pods_Trucky.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Trucky.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6E0E4B358E120246D05E2083 /* Pods-Trucky.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Trucky.release.xcconfig"; path = "Pods/Target Support Files/Pods-Trucky/Pods-Trucky.release.xcconfig"; sourceTree = "<group>"; };
 		729D30F36C980294FBFDF0D9 /* Pods-Trucky.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Trucky.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Trucky/Pods-Trucky.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -72,7 +76,7 @@
 			files = (
 				095F09BA1D400CEA007E8F5B /* CoreLocation.framework in Frameworks */,
 				095F09B01D400658007E8F5B /* MapKit.framework in Frameworks */,
-				AEC5AE59A5064400F89A35A1 /* libPods-Trucky.a in Frameworks */,
+				EC4ABBC28A8354153EA44DC6 /* Pods_Trucky.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -120,9 +124,11 @@
 			children = (
 				09FF68901D3EC18800EF4551 /* AppDelegate.swift */,
 				09FF68921D3EC18800EF4551 /* ViewController.swift */,
+				096F219B1D4BB81200B42813 /* CreateUserViewController.swift */,
 				095F09B51D400768007E8F5B /* TruckViewController.swift */,
 				09FF68941D3EC18800EF4551 /* Main.storyboard */,
-				095F09B71D40092D007E8F5B /* Truck.swift */,
+				096F21991D4BB29500B42813 /* Business.swift */,
+				096F21931D4BACAE00B42813 /* YelpClient.swift */,
 				09FF689A1D3EC18800EF4551 /* Assets.xcassets */,
 				09FF689C1D3EC18800EF4551 /* LaunchScreen.storyboard */,
 				09FF689F1D3EC18800EF4551 /* Info.plist */,
@@ -164,7 +170,7 @@
 			children = (
 				095F09B91D400CEA007E8F5B /* CoreLocation.framework */,
 				095F09AF1D400658007E8F5B /* MapKit.framework */,
-				175A61FA85B28B8DD3BB0937 /* libPods-Trucky.a */,
+				5194AA8F6EB282C7F786CB0C /* Pods_Trucky.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -353,9 +359,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				095F09B61D400768007E8F5B /* TruckViewController.swift in Sources */,
+				096F219A1D4BB29500B42813 /* Business.swift in Sources */,
 				09FF68991D3EC18800EF4551 /* Trucky.xcdatamodeld in Sources */,
-				095F09B81D40092D007E8F5B /* Truck.swift in Sources */,
+				096F219C1D4BB81200B42813 /* CreateUserViewController.swift in Sources */,
 				09FF68931D3EC18800EF4551 /* ViewController.swift in Sources */,
+				096F21941D4BACAE00B42813 /* YelpClient.swift in Sources */,
 				09FF68911D3EC18800EF4551 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
