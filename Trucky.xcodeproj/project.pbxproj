@@ -22,7 +22,8 @@
 		09FF68A91D3EC18800EF4551 /* TruckyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FF68A81D3EC18800EF4551 /* TruckyTests.swift */; };
 		09FF68B41D3EC18800EF4551 /* TruckyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FF68B31D3EC18800EF4551 /* TruckyUITests.swift */; };
 		09FF68C21D3EC1C000EF4551 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 09FF68C11D3EC1C000EF4551 /* GoogleService-Info.plist */; };
-		EC4ABBC28A8354153EA44DC6 /* Pods_Trucky.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5194AA8F6EB282C7F786CB0C /* Pods_Trucky.framework */; };
+		7BDAB5F61D501B98006531B3 /* Trucks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDAB5F51D501B98006531B3 /* Trucks.swift */; };
+		BF09CB8D0799F40003C370F2 /* libPods-Trucky.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 49277AF471F85DF648866376 /* libPods-Trucky.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,9 +65,10 @@
 		09FF68B31D3EC18800EF4551 /* TruckyUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TruckyUITests.swift; sourceTree = "<group>"; };
 		09FF68B51D3EC18800EF4551 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		09FF68C11D3EC1C000EF4551 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		5194AA8F6EB282C7F786CB0C /* Pods_Trucky.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Trucky.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		49277AF471F85DF648866376 /* libPods-Trucky.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Trucky.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6E0E4B358E120246D05E2083 /* Pods-Trucky.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Trucky.release.xcconfig"; path = "Pods/Target Support Files/Pods-Trucky/Pods-Trucky.release.xcconfig"; sourceTree = "<group>"; };
 		729D30F36C980294FBFDF0D9 /* Pods-Trucky.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Trucky.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Trucky/Pods-Trucky.debug.xcconfig"; sourceTree = "<group>"; };
+		7BDAB5F51D501B98006531B3 /* Trucks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Trucks.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,7 +78,7 @@
 			files = (
 				095F09BA1D400CEA007E8F5B /* CoreLocation.framework in Frameworks */,
 				095F09B01D400658007E8F5B /* MapKit.framework in Frameworks */,
-				EC4ABBC28A8354153EA44DC6 /* Pods_Trucky.framework in Frameworks */,
+				BF09CB8D0799F40003C370F2 /* libPods-Trucky.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -128,6 +130,7 @@
 				095F09B51D400768007E8F5B /* TruckViewController.swift */,
 				09FF68941D3EC18800EF4551 /* Main.storyboard */,
 				096F21991D4BB29500B42813 /* Business.swift */,
+				7BDAB5F51D501B98006531B3 /* Trucks.swift */,
 				096F21931D4BACAE00B42813 /* YelpClient.swift */,
 				09FF689A1D3EC18800EF4551 /* Assets.xcassets */,
 				09FF689C1D3EC18800EF4551 /* LaunchScreen.storyboard */,
@@ -170,7 +173,7 @@
 			children = (
 				095F09B91D400CEA007E8F5B /* CoreLocation.framework */,
 				095F09AF1D400658007E8F5B /* MapKit.framework */,
-				5194AA8F6EB282C7F786CB0C /* Pods_Trucky.framework */,
+				49277AF471F85DF648866376 /* libPods-Trucky.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -182,12 +185,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 09FF68B81D3EC18800EF4551 /* Build configuration list for PBXNativeTarget "Trucky" */;
 			buildPhases = (
-				F0BB91500D9DC16FEAA25FB1 /* Check Pods Manifest.lock */,
+				F0BB91500D9DC16FEAA25FB1 /* 📦 Check Pods Manifest.lock */,
 				09FF68891D3EC18800EF4551 /* Sources */,
 				09FF688A1D3EC18800EF4551 /* Frameworks */,
 				09FF688B1D3EC18800EF4551 /* Resources */,
-				ECB4F103F19FACDE30A53B56 /* Embed Pods Frameworks */,
-				F61163FC1B19AC11AFABBC17 /* Copy Pods Resources */,
+				ECB4F103F19FACDE30A53B56 /* 📦 Embed Pods Frameworks */,
+				F61163FC1B19AC11AFABBC17 /* 📦 Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -306,14 +309,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		ECB4F103F19FACDE30A53B56 /* Embed Pods Frameworks */ = {
+		ECB4F103F19FACDE30A53B56 /* 📦 Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "📦 Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -321,14 +324,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Trucky/Pods-Trucky-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		F0BB91500D9DC16FEAA25FB1 /* Check Pods Manifest.lock */ = {
+		F0BB91500D9DC16FEAA25FB1 /* 📦 Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "📦 Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -336,14 +339,14 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		F61163FC1B19AC11AFABBC17 /* Copy Pods Resources */ = {
+		F61163FC1B19AC11AFABBC17 /* 📦 Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "📦 Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -362,6 +365,7 @@
 				096F219A1D4BB29500B42813 /* Business.swift in Sources */,
 				09FF68991D3EC18800EF4551 /* Trucky.xcdatamodeld in Sources */,
 				096F219C1D4BB81200B42813 /* CreateUserViewController.swift in Sources */,
+				7BDAB5F61D501B98006531B3 /* Trucks.swift in Sources */,
 				09FF68931D3EC18800EF4551 /* ViewController.swift in Sources */,
 				096F21941D4BACAE00B42813 /* YelpClient.swift in Sources */,
 				09FF68911D3EC18800EF4551 /* AppDelegate.swift in Sources */,

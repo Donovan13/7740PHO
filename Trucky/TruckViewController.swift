@@ -26,6 +26,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     var user = FIRAuth.auth()?.currentUser!
     
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -46,11 +47,35 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     }
     
     override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(true)
+        super.viewWillAppear(false)
         
     }
     
     
+    
+    func loadUsers() {
+        self.ref.child("Users").observeSingleEventOfType(.Value, withBlock: { snapshot in
+            self.users = []
+            if let snapshot = snapshot.children.allObjects as? [FIRDataSnapshot] {
+                for snap in snapshot {
+                    if let postDictionary = snap.value as? Dictionary<String, AnyObject> {
+                        let user = User(dictionary: postDictionary)
+                        self.users.insert(user, atIndex: 0)
+                    }
+                }
+            }
+            for player in self.users {
+//                print(player.userUID)
+//                let userLatitude = player.userLatitude
+//                let userLongitude = player.userLongitude
+//                let username = player.username
+//                let userLevel = player.level
+//                let annotationForUsers = CustomAnnotation(coordinate: CLLocationCoordinate2DMake(userLatitude, userLongitude), title: username, subtitle: userLevel)
+//                self.mapView.addAnnotations([annotationForUsers])
+            }
+        })
+    }
+
     
     func mapView(mapView: MKMapView, didUpdateUserLocation userLocation: MKUserLocation) {
         let userL = userLocation.coordinate
@@ -60,7 +85,8 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
             self.ref.child("Users").child(user!.uid).updateChildValues(["Location": "\(userL)"])
             print("\(userL)")
         } else {
-            //            errorAlert("error", message: "print")
+            
+            errorAlert("", message: "")
         }
         
         
