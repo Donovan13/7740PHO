@@ -138,11 +138,11 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         
 //        mapView.setRegion(MKCoordinateRegionMake(userLoc, MKCoordinateSpanMake(0.5, 0.5)), animated: true)
         
-        self.userDefaults.setValue(userLat, forKey: "Latitude")
-        self.userDefaults.setValue(userLong, forKey: "Longitude")
+        self.userDefaults.setValue(userLat, forKey: "latitude")
+        self.userDefaults.setValue(userLong, forKey: "longitude")
         
         if user != nil {
-            self.ref.child("Trucks").child(user!.uid).updateChildValues(["Latitude": "\(userLat)", "Longitude": "\(userLong)"])
+            self.ref.child("Trucks").child(user!.uid).updateChildValues(["latitude": userLat, "longitude": userLong])
             
             
             print("\(userLat)")
@@ -181,6 +181,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     @IBAction func reloadButton(sender: AnyObject) {
         
         loadTrucks()
+//        mapView.removeAnnotations([])
         
     }
     
