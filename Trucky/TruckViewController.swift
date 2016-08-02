@@ -24,26 +24,36 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     let locationManager = CLLocationManager()
     var ref:FIRDatabaseReference!
     var user = FIRAuth.auth()?.currentUser!
+    var truck = [Trucks]()
+    let userDefaults = NSUserDefaults.standardUserDefaults()
+    var truckAnnotation = MKPointAnnotation()
     
+
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        Business.searchWithTerm("Food Trucks", completion: { (businesses: [Business]!, error: NSError!) -> Void in
-            self.businesses = businesses
-            
-            for business in businesses {
-                print(business.name!)
-                print(business.address!)
-            }
-        })
+        
+        
+        //        Business.searchWithTerm("Food Trucks", completion: { (businesses: [Business]!, error: NSError!) -> Void in
+        //            self.businesses = businesses
+        //
+        //            for business in businesses {
+        //                print(business.name!)
+        //                print(business.address!)
+        //            }
+        //        })
         
         
         locationManager.requestAlwaysAuthorization()
         mapView.showsUserLocation = true
         self.ref = FIRDatabase.database().reference()
         locationManager.startUpdatingLocation()
+        
+        loadTrucks()
+        
+        print(truck.count)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -53,45 +63,100 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     
     
     
-    func loadUsers() {
-        self.ref.child("Users").observeSingleEventOfType(.Value, withBlock: { snapshot in
-            self.users = []
-            if let snapshot = snapshot.children.allObjects as? [FIRDataSnapshot] {
+    func loadTrucks() {
+        self.ref.child("Trucks").observeSingleEventOfType(.Value, withBlock: { snapshots in
+            
+            self.truck = []
+            
+            if let snapshot = snapshots.children.allObjects as? [FIRDataSnapshot] {
                 for snap in snapshot {
                     if let postDictionary = snap.value as? Dictionary<String, AnyObject> {
-                        let user = User(dictionary: postDictionary)
-                        self.users.insert(user, atIndex: 0)
+                        let truck = Trucks(dictionary: postDictionary)
+                        self.truck.insert(truck, atIndex: 0)
                     }
                 }
             }
-            for player in self.users {
-//                print(player.userUID)
-//                let userLatitude = player.userLatitude
-//                let userLongitude = player.userLongitude
-//                let username = player.username
-//                let userLevel = player.level
-//                let annotationForUsers = CustomAnnotation(coordinate: CLLocationCoordinate2DMake(userLatitude, userLongitude), title: username, subtitle: userLevel)
-//                self.mapView.addAnnotations([annotationForUsers])
+            for truck in self.truck {
+                
+                let latitude = truck.latitude
+                let longitude = truck.longitude
+                let truckName = truck.truckName
+                let website = truck.website
+                
+                let pin = MKPointAnnotation()
+                
+
+                pin.coordinate.latitude = latitude
+                pin.coordinate.longitude = longitude
+                pin.title = truckName
+                pin.subtitle = website
+                
+                
+                
+                self.mapView.addAnnotations([pin])
+                
+                //                print(player.userUID)
+//                                let userLatitude = player.userLatitude
+//                                let userLongitude = player.userLongitude
+//                                let username = player.username
+//                                let userLevel = player.level
+                //                let annotationForUsers = CustomAnnotation(coordinate: CLLocationCoordinate2DMake(userLatitude, userLongitude), title: username, subtitle: userLevel)
+                //                self.mapView.addAnnotations([annotationForUsers])
             }
         })
     }
-
     
+    
+    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+//        if annotation .isEqual(mapView.userLocation) {
+//            return nil
+//        } else if annotation.isEqual(truckAnnotation){
+//        let pin = MKAnnotationView (annotation: annotation, reuseIdentifier: nil)
+//            pin.canShowCallout = true
+//        }
+        if annotation.isEqual(MKPointAnnotation) {
+        
+            let pin = MKAnnotationView(annotation: annotation, reuseIdentifier: nil)
+            pin.canShowCallout = true
+            
+            return pin
+
+            
+            
+        } else {
+            return nil
+                    }
+        
+    }
+
     func mapView(mapView: MKMapView, didUpdateUserLocation userLocation: MKUserLocation) {
-        let userL = userLocation.coordinate
-        mapView.setRegion(MKCoordinateRegionMake(userL, MKCoordinateSpanMake(0.5, 0.5)), animated: true)
+        
+        let userLoc = userLocation.coordinate
+        let userLat = userLocation.coordinate.latitude
+        let userLong = userLocation.coordinate.longitude
+        
+        
+//        mapView.setRegion(MKCoordinateRegionMake(userLoc, MKCoordinateSpanMake(0.5, 0.5)), animated: true)
+        
+        self.userDefaults.setValue(userLat, forKey: "Latitude")
+        self.userDefaults.setValue(userLong, forKey: "Longitude")
         
         if user != nil {
-            self.ref.child("Users").child(user!.uid).updateChildValues(["Location": "\(userL)"])
-            print("\(userL)")
+            self.ref.child("Trucks").child(user!.uid).updateChildValues(["Latitude": "\(userLat)", "Longitude": "\(userLong)"])
+            
+            
+            print("\(userLat)")
         } else {
             
-            errorAlert("", message: "")
+            //            errorAlert("", message: "")
         }
         
         
         
     }
+    
+    
+
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return businesses.count
@@ -112,6 +177,13 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         }
         
     }
+    
+    @IBAction func reloadButton(sender: AnyObject) {
+        
+        loadTrucks()
+        
+    }
+    
     
     
     func errorAlert(title: String, message: String) {

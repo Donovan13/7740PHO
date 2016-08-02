@@ -12,7 +12,7 @@ import Foundation
 class Trucks: NSObject {
     
     var userUID: String
-    var username: String
+    var truckName: String
     var website: String
     
     var latitude: Double
@@ -21,8 +21,8 @@ class Trucks: NSObject {
     
     init(dictionary: Dictionary<String, AnyObject>) {
         
-        userUID = dictionary["userUid"] as! String
-        username = dictionary["username"] as! String
+        userUID = dictionary["uid"] as! String
+        truckName = dictionary["TruckName"] as! String
         website = dictionary["website"] as! String
         latitude = dictionary["latitude"] as! Double
         longitude = dictionary["longitude"] as! Double

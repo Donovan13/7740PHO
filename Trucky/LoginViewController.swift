@@ -11,13 +11,14 @@ import Firebase
 import CoreLocation
 
 
-class ViewController: UIViewController,CLLocationManagerDelegate {
+class LoginViewController: UIViewController,CLLocationManagerDelegate {
 
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextfield: UITextField!
     
     var ref:FIRDatabaseReference!
     
+    let userDefaults = NSUserDefaults.standardUserDefaults()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,14 +36,19 @@ class ViewController: UIViewController,CLLocationManagerDelegate {
         FIRAuth.auth()?.signInWithEmail(emailTextField.text!, password: passwordTextfield.text!, completion: {
             user, error in
             
-            if error != nil{
+            if error != nil {
                 print(error?.localizedDescription)
                 
                 print ("Incorrect")
                 
             }
             else if user != nil {
-                self.performSegueWithIdentifier("LogInSeg", sender: self)
+                
+                
+                self.userDefaults.setValue(user?.uid, forKey: "uid")
+                
+                
+                self.performSegueWithIdentifier("LogInSegue", sender: self)
                 //                self.dismissViewControllerAnimated(true, completion: nil)
                 print ("Successful Login")
                 

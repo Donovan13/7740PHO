@@ -10,7 +10,7 @@ import UIKit
 import Firebase
 import CoreLocation
 
-class CreateUserViewController: UIViewController, CLLocationManagerDelegate {
+class CreateTruckViewController: UIViewController, CLLocationManagerDelegate {
 
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
@@ -19,6 +19,8 @@ class CreateUserViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var businessNameTextField: UITextField!
     
     var ref:FIRDatabaseReference!
+    
+    let userDefaults = NSUserDefaults.standardUserDefaults()
     
     
     override func viewDidLoad() {
@@ -42,12 +44,21 @@ class CreateUserViewController: UIViewController, CLLocationManagerDelegate {
                 
                 self.errorAlert("Error", message: "\(error?.localizedDescription)")
                 
-            } else if user != nil {
+            } else {
                 print ("User Created")
-                self.ref.child("Users").child(user!.uid).setValue(["uid": user!.uid, "Business Name": self.businessNameTextField.text!, "Website": self.websiteTextField.text!])
+                
+                let longitude = self.userDefaults.valueForKey("Longitude")
+                let latitude = self.userDefaults.valueForKey("Latitude")
+                
+//                let longitude = self.userDefaults.stringForKey("Longitude")
+//                let latitude = self.userDefaults.stringForKey("Latitude")
+                
+                
+                self.ref.child("Trucks").child(user!.uid).setValue(["uid": user!.uid, "TruckName": self.businessNameTextField.text!, "website": self.websiteTextField.text!, "longitude": longitude!, "latitude": latitude!])
+                
+//                self.dismissViewControllerAnimated(true, completion: nil)
                 self.performSegueWithIdentifier("createUserSegue", sender: self)
                 
-                //                self.dismissViewControllerAnimated(true, completion: nil)
                 
                 
             }

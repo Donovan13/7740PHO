@@ -12,9 +12,9 @@
 		095F09BA1D400CEA007E8F5B /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 095F09B91D400CEA007E8F5B /* CoreLocation.framework */; };
 		096F21941D4BACAE00B42813 /* YelpClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096F21931D4BACAE00B42813 /* YelpClient.swift */; };
 		096F219A1D4BB29500B42813 /* Business.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096F21991D4BB29500B42813 /* Business.swift */; };
-		096F219C1D4BB81200B42813 /* CreateUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096F219B1D4BB81200B42813 /* CreateUserViewController.swift */; };
+		096F219C1D4BB81200B42813 /* CreateTruckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096F219B1D4BB81200B42813 /* CreateTruckViewController.swift */; };
 		09FF68911D3EC18800EF4551 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FF68901D3EC18800EF4551 /* AppDelegate.swift */; };
-		09FF68931D3EC18800EF4551 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FF68921D3EC18800EF4551 /* ViewController.swift */; };
+		09FF68931D3EC18800EF4551 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FF68921D3EC18800EF4551 /* LoginViewController.swift */; };
 		09FF68961D3EC18800EF4551 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 09FF68941D3EC18800EF4551 /* Main.storyboard */; };
 		09FF68991D3EC18800EF4551 /* Trucky.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 09FF68971D3EC18800EF4551 /* Trucky.xcdatamodeld */; };
 		09FF689B1D3EC18800EF4551 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 09FF689A1D3EC18800EF4551 /* Assets.xcassets */; };
@@ -49,10 +49,10 @@
 		095F09B91D400CEA007E8F5B /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		096F21931D4BACAE00B42813 /* YelpClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YelpClient.swift; sourceTree = "<group>"; };
 		096F21991D4BB29500B42813 /* Business.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Business.swift; sourceTree = "<group>"; };
-		096F219B1D4BB81200B42813 /* CreateUserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateUserViewController.swift; sourceTree = "<group>"; };
+		096F219B1D4BB81200B42813 /* CreateTruckViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateTruckViewController.swift; sourceTree = "<group>"; };
 		09FF688D1D3EC18800EF4551 /* Trucky.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Trucky.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		09FF68901D3EC18800EF4551 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		09FF68921D3EC18800EF4551 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		09FF68921D3EC18800EF4551 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		09FF68951D3EC18800EF4551 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		09FF68981D3EC18800EF4551 /* Trucky.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Trucky.xcdatamodel; sourceTree = "<group>"; };
 		09FF689A1D3EC18800EF4551 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -125,8 +125,8 @@
 			isa = PBXGroup;
 			children = (
 				09FF68901D3EC18800EF4551 /* AppDelegate.swift */,
-				09FF68921D3EC18800EF4551 /* ViewController.swift */,
-				096F219B1D4BB81200B42813 /* CreateUserViewController.swift */,
+				09FF68921D3EC18800EF4551 /* LoginViewController.swift */,
+				096F219B1D4BB81200B42813 /* CreateTruckViewController.swift */,
 				095F09B51D400768007E8F5B /* TruckViewController.swift */,
 				09FF68941D3EC18800EF4551 /* Main.storyboard */,
 				096F21991D4BB29500B42813 /* Business.swift */,
@@ -364,9 +364,9 @@
 				095F09B61D400768007E8F5B /* TruckViewController.swift in Sources */,
 				096F219A1D4BB29500B42813 /* Business.swift in Sources */,
 				09FF68991D3EC18800EF4551 /* Trucky.xcdatamodeld in Sources */,
-				096F219C1D4BB81200B42813 /* CreateUserViewController.swift in Sources */,
+				096F219C1D4BB81200B42813 /* CreateTruckViewController.swift in Sources */,
 				7BDAB5F61D501B98006531B3 /* Trucks.swift in Sources */,
-				09FF68931D3EC18800EF4551 /* ViewController.swift in Sources */,
+				09FF68931D3EC18800EF4551 /* LoginViewController.swift in Sources */,
 				096F21941D4BACAE00B42813 /* YelpClient.swift in Sources */,
 				09FF68911D3EC18800EF4551 /* AppDelegate.swift in Sources */,
 			);
@@ -515,6 +515,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Donovan.Trucky;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -527,6 +528,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Donovan.Trucky;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
