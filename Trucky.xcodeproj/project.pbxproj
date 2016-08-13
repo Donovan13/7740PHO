@@ -22,7 +22,6 @@
 		09FF68A91D3EC18800EF4551 /* TruckyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FF68A81D3EC18800EF4551 /* TruckyTests.swift */; };
 		09FF68B41D3EC18800EF4551 /* TruckyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FF68B31D3EC18800EF4551 /* TruckyUITests.swift */; };
 		09FF68C21D3EC1C000EF4551 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 09FF68C11D3EC1C000EF4551 /* GoogleService-Info.plist */; };
-		7BDAB5F61D501B98006531B3 /* Trucks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDAB5F51D501B98006531B3 /* Trucks.swift */; };
 		BF09CB8D0799F40003C370F2 /* libPods-Trucky.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 49277AF471F85DF648866376 /* libPods-Trucky.a */; };
 /* End PBXBuildFile section */
 
@@ -68,7 +67,6 @@
 		49277AF471F85DF648866376 /* libPods-Trucky.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Trucky.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6E0E4B358E120246D05E2083 /* Pods-Trucky.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Trucky.release.xcconfig"; path = "Pods/Target Support Files/Pods-Trucky/Pods-Trucky.release.xcconfig"; sourceTree = "<group>"; };
 		729D30F36C980294FBFDF0D9 /* Pods-Trucky.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Trucky.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Trucky/Pods-Trucky.debug.xcconfig"; sourceTree = "<group>"; };
-		7BDAB5F51D501B98006531B3 /* Trucks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Trucks.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,7 +128,6 @@
 				095F09B51D400768007E8F5B /* TruckViewController.swift */,
 				09FF68941D3EC18800EF4551 /* Main.storyboard */,
 				096F21991D4BB29500B42813 /* Business.swift */,
-				7BDAB5F51D501B98006531B3 /* Trucks.swift */,
 				096F21931D4BACAE00B42813 /* YelpClient.swift */,
 				09FF689A1D3EC18800EF4551 /* Assets.xcassets */,
 				09FF689C1D3EC18800EF4551 /* LaunchScreen.storyboard */,
@@ -249,6 +246,7 @@
 				TargetAttributes = {
 					09FF688C1D3EC18800EF4551 = {
 						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = 7G99974HDG;
 					};
 					09FF68A31D3EC18800EF4551 = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -365,7 +363,6 @@
 				096F219A1D4BB29500B42813 /* Business.swift in Sources */,
 				09FF68991D3EC18800EF4551 /* Trucky.xcdatamodeld in Sources */,
 				096F219C1D4BB81200B42813 /* CreateTruckViewController.swift in Sources */,
-				7BDAB5F61D501B98006531B3 /* Trucks.swift in Sources */,
 				09FF68931D3EC18800EF4551 /* LoginViewController.swift in Sources */,
 				096F21941D4BACAE00B42813 /* YelpClient.swift in Sources */,
 				09FF68911D3EC18800EF4551 /* AppDelegate.swift in Sources */,
@@ -511,6 +508,7 @@
 			baseConfigurationReference = 729D30F36C980294FBFDF0D9 /* Pods-Trucky.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = Trucky/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Donovan.Trucky;
@@ -524,6 +522,7 @@
 			baseConfigurationReference = 6E0E4B358E120246D05E2083 /* Pods-Trucky.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = Trucky/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = Donovan.Trucky;

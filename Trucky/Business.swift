@@ -10,15 +10,34 @@ import UIKit
 
 class Business: NSObject {
     let name: String?
-    let address: String?
-    let imageURL: NSURL?
-    let categories: String?
-    let distance: String?
-    let ratingImageURL: NSURL?
-    let reviewCount: NSNumber?
+    var fullAddress: String?
+    var imageURL: NSURL?
+    //    let categories: String?
+    //    let distance: String?
+    var ratingImageURL: NSURL?
+    var reviewCount: NSNumber?
+    let id: String?
+    let phone: String?
+    let zip: String?
+    let latitude: Double?
+    let longitude: Double?
+    
+    
     
     init(dictionary: NSDictionary) {
+        
+        id = dictionary["id"] as? String
         name = dictionary["name"] as? String
+        phone = dictionary["display_phone"] as? String
+        zip = dictionary["location.postal_code"] as? String
+        latitude = dictionary["latitude"] as? Double
+        longitude = dictionary["longitude"] as? Double
+        reviewCount = dictionary["review_count"] as? NSNumber
+        ratingImageURL = dictionary["rating_img_url"] as? NSURL
+        imageURL = dictionary["image_url"] as? NSURL
+        fullAddress = dictionary["location.display_address"] as? String
+        
+        
         
         let imageURLString = dictionary["image_url"] as? String
         if imageURLString != nil {
@@ -43,27 +62,27 @@ class Business: NSObject {
                 address += neighborhoods![0] as! String
             }
         }
-        self.address = address
+        self.fullAddress = address
         
-        let categoriesArray = dictionary["categories"] as? [[String]]
-        if categoriesArray != nil {
-            var categoryNames = [String]()
-            for category in categoriesArray! {
-                let categoryName = category[0]
-                categoryNames.append(categoryName)
-            }
-            categories = categoryNames.joinWithSeparator(", ")
-        } else {
-            categories = nil
-        }
+        //        let categoriesArray = dictionary["categories"] as? [[String]]
+        //        if categoriesArray != nil {
+        //            var categoryNames = [String]()
+        //            for category in categoriesArray! {
+        //                let categoryName = category[0]
+        //                categoryNames.append(categoryName)
+        //            }
+        //            categories = categoryNames.joinWithSeparator(", ")
+        //        } else {
+        //            categories = nil
+        //        }
         
-        let distanceMeters = dictionary["distance"] as? NSNumber
-        if distanceMeters != nil {
-            let milesPerMeter = 0.000621371
-            distance = String(format: "%.2f mi", milesPerMeter * distanceMeters!.doubleValue)
-        } else {
-            distance = nil
-        }
+        //        let distanceMeters = dictionary["distance"] as? NSNumber
+        //        if distanceMeters != nil {
+        //            let milesPerMeter = 0.000621371
+        //            distance = String(format: "%.2f mi", milesPerMeter * distanceMeters!.doubleValue)
+        //        } else {
+        //            distance = nil
+        //        }
         
         let ratingImageURLString = dictionary["rating_img_url_large"] as? String
         if ratingImageURLString != nil {
@@ -84,11 +103,13 @@ class Business: NSObject {
         return businesses
     }
     
-    class func searchWithTerm(term: String, completion: ([Business]!, NSError!) -> Void) {
-        YelpClient.sharedInstance.searchWithTerm(term, completion: completion)
+    class func searchWithTerm(term: String, location: String, completion: ([Business]!, NSError!) -> Void) {
+        YelpClient.sharedInstance.searchWithTerm(term, location: location, completion: completion)
+        //        YelpClient.sharedInstance.searchWithTerm(term, completion: completion)
     }
     
-    class func searchWithTerm(term: String, sort: YelpSortMode?, categories: [String]?, deals: Bool?, completion: ([Business]!, NSError!) -> Void) -> Void {
-        YelpClient.sharedInstance.searchWithTerm(term, sort: sort, categories: categories, deals: deals, completion: completion)
+    class func searchWithTerm(term: String, location: String, sort: YelpSortMode?, categories: [String]?, deals: Bool?, completion: ([Business]!, NSError!) -> Void) -> Void {
+        YelpClient.sharedInstance.searchWithTerm(term, location: location, sort: sort, categories: categories, deals: deals, completion: completion)
+        //        YelpClient.sharedInstance.searchWithTerm(term, sort: sort, categories: categories, deals: deals, completion: completion)
     }
 }

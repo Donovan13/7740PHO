@@ -12,7 +12,7 @@ import CoreLocation
 
 
 class LoginViewController: UIViewController,CLLocationManagerDelegate {
-
+    
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextfield: UITextField!
     
@@ -28,7 +28,7 @@ class LoginViewController: UIViewController,CLLocationManagerDelegate {
     
     
     @IBAction func backButton(sender: AnyObject) {
-        dismissViewControllerAnimated(true) { 
+        dismissViewControllerAnimated(true) {
         }
     }
     

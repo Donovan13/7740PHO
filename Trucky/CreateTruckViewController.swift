@@ -11,30 +11,35 @@ import Firebase
 import CoreLocation
 
 class CreateTruckViewController: UIViewController, CLLocationManagerDelegate {
-
+    
+    @IBOutlet weak var yelpImage: UIImageView!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var confirmPassword: UITextField!
-    @IBOutlet weak var websiteTextField: UITextField!
+    @IBOutlet weak var zipTextField: UITextField!
     @IBOutlet weak var businessNameTextField: UITextField!
+    @IBOutlet weak var addressTextView: UITextView!
     
     var ref:FIRDatabaseReference!
-    
+    var businesses = [Business]()
     let userDefaults = NSUserDefaults.standardUserDefaults()
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.ref = FIRDatabase.database().reference()
-
-
     }
+    
     @IBAction func backButton(sender: AnyObject) {
         dismissViewControllerAnimated(true) {
         }
     }
     
     @IBAction func createUser(sender: AnyObject) {
+        for business in self.businesses {
+            print(business)
+        }
+        
         FIRAuth.auth()?.createUserWithEmail(emailTextField.text!, password: passwordTextField.text!, completion: {
             user, error in
             
@@ -47,31 +52,79 @@ class CreateTruckViewController: UIViewController, CLLocationManagerDelegate {
             } else {
                 print ("User Created")
                 
-                let longitude = self.userDefaults.valueForKey("Longitude")
-                let latitude = self.userDefaults.valueForKey("Latitude")
+                let longitude = self.userDefaults.valueForKey("longitude")
+                let latitude = self.userDefaults.valueForKey("latitude")
                 
-//                let longitude = self.userDefaults.stringForKey("Longitude")
-//                let latitude = self.userDefaults.stringForKey("Latitude")
+                let dictionary = [
+                    "uid": user!.uid,
+                    "truckName": self.businessNameTextField.text,
+                    "zip": self.zipTextField.text!,
+                    "address": self.businesses.first!.fullAddress,
+                    "imageURL": "\(self.businesses.first!.imageURL!)",
+                    "ratingImageURL": "\(self.businesses.first!.ratingImageURL!)",
+                    "reviewCount": self.businesses.first!.reviewCount,
+                    "phone": self.businesses.first!.phone,
+                    "latitude": latitude,
+                    "longitude": longitude]
                 
                 
-                self.ref.child("Trucks").child(user!.uid).setValue(["uid": user!.uid, "TruckName": self.businessNameTextField.text!, "website": self.websiteTextField.text!, "longitude": longitude!, "latitude": latitude!])
+                self.ref.child("Trucks").child(user!.uid).setValue(dictionary as? Dictionary<String, AnyObject>)
                 
-//                self.dismissViewControllerAnimated(true, completion: nil)
                 self.performSegueWithIdentifier("createUserSegue", sender: self)
-                
-                
                 
             }
             
         })
     }
     
-        func errorAlert(title: String, message: String) {
-            let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
-            let action = UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default, handler: nil)
-            alert.addAction(action)
-            presentViewController(alert, animated: true, completion: nil)
-        }
+    
+    func search(name: String, location: String) {
+        let userLatitude = userDefaults.doubleForKey("latitude")
+        let userLongitude = userDefaults.doubleForKey("longitude")
+        
+        Business.searchWithTerm("\(name)", location: "\(location)" , completion: { (businesses: [Business]!, error: NSError!) -> Void in
+            
+            self.businesses = businesses
+            
+            let truckAddress = self.businesses.first?.fullAddress
+            let truckPhone = self.businesses.first?.phone
+            self.addressTextView.text = "\(truckAddress!) \(truckPhone!)"
+            
+            
+            let urlImage =  UIImage(data: NSData(contentsOfURL: NSURL(string:"\(businesses.first!.imageURL!)")!)!)
+            self.yelpImage.image = urlImage
+            
+            print(businesses.first?.imageURL)
+            
+            //            print(businesses.first!.name!)
+            //            print(businesses.first!.imageURL!)
+            
+            for business in businesses {
+                //                print(business.name)
+                //                print(business.address!)
+                //                print(business.id)
+                //                print(business.imageURL)
+            }
+        })
     }
+    
+    func errorAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+        let action = UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default, handler: nil)
+        alert.addAction(action)
+        presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    @IBAction func matchTruck(sender: AnyObject) {
+        
+        search(businessNameTextField.text!, location: zipTextField.text!)
+        
+        
+        
+        
+    }
+    
+    
+}
 
 
