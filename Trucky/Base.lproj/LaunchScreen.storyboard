@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -16,7 +17,34 @@
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="truck" translatesAutoresizingMaskIntoConstraints="NO" id="ysQ-fG-oTK">
+                                <rect key="frame" x="55" y="146" width="491" height="307"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="  Copyright (c) 2016 Donovan &amp; Chingu. All rights reserved." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bib-XX-llk">
+                                <rect key="frame" x="75" y="552" width="451" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Trucky" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iRX-pb-YKp">
+                                <rect key="frame" x="221" y="45" width="158" height="66"/>
+                                <fontDescription key="fontDescription" name="HoeflerText-Regular" family="Hoefler Text" pointSize="50"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="ysQ-fG-oTK" secondAttribute="trailing" constant="34" id="F5Y-Kz-h8B"/>
+                            <constraint firstItem="ysQ-fG-oTK" firstAttribute="top" secondItem="iRX-pb-YKp" secondAttribute="bottom" constant="35" id="dhG-cj-MpY"/>
+                            <constraint firstItem="iRX-pb-YKp" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="hCf-ty-6EL"/>
+                            <constraint firstItem="Bib-XX-llk" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="n0w-c1-iFT"/>
+                            <constraint firstItem="Bib-XX-llk" firstAttribute="top" secondItem="ysQ-fG-oTK" secondAttribute="bottom" constant="99" id="oeV-5e-zqG"/>
+                            <constraint firstItem="ysQ-fG-oTK" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="pp0-0b-o7F"/>
+                            <constraint firstItem="ysQ-fG-oTK" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" constant="35" id="rxI-Dv-9Ek"/>
+                            <constraint firstItem="iRX-pb-YKp" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" constant="25" id="wsf-fn-5wc"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -24,4 +52,7 @@
             <point key="canvasLocation" x="53" y="375"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="truck" width="680" height="414"/>
+    </resources>
 </document>

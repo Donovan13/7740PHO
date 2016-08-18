@@ -16,7 +16,6 @@ import Firebase
 
 class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, UITableViewDataSource {
     
-    @IBOutlet weak var hideMap: UISegmentedControl!
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var tableView: UITableView!
     
@@ -36,7 +35,6 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         mapView.showsUserLocation = true
         locationManager.startUpdatingLocation()
         loadTrucks()
-        
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -123,7 +121,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         let userLoc = userLocation.coordinate
         let userLat = userLocation.coordinate.latitude
         let userLong = userLocation.coordinate.longitude
-        
+
 //        mapView.setRegion(MKCoordinateRegionMake(userLoc, MKCoordinateSpanMake(0.5, 0.5)), animated: true)
         
         self.userDefaults.setValue(userLat, forKey: "latitude")
@@ -142,30 +140,40 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
             //            errorAlert("", message: "")
         }
         
-        
-        
     }
-    
-    
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return businesses.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("CellID", forIndexPath: indexPath)
+        let cell = tableView.dequeueReusableCellWithIdentifier("TruckSegue", forIndexPath: indexPath)
         return cell
-        
     }
     
-    @IBAction func hideMapButtonPressed(sender: UISegmentedControl) {
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
+        var selectedCell:UITableViewCell
+        selectedCell = tableView.cellForRowAtIndexPath(indexPath)!
+        //        var location = businesses[indexPath.row].coordinate
+        //resolution
+        //        var span = MKCoordinateSpanMake(0.01, 0.01)
+        //        var region = MKCoordinateRegion(center: location,span:span)
+        //move to the specific area!
+        //        self.mapView.setRegion(region, animated: true)
+        tableView.reloadData()
+    }
+    
+    @IBAction func showListButton(sender: AnyObject) {
         
-        if sender.selectedSegmentIndex == 0 {
-            mapView.hidden = false
-        } else {
-            mapView.hidden = true
+        if (sender.titleLabel!?.text == "Hide List") {
+            sender.setTitle("Show List", forState:  UIControlState.Normal)
+            tableView.hidden = true
         }
-        
+        else
+        {
+            sender.setTitle("Hide List", forState:  UIControlState.Normal)
+            tableView.hidden = false
+        }
     }
     
     @IBAction func reloadButton(sender: AnyObject) {
@@ -173,7 +181,6 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         mapView.removeAnnotations(mapView.annotations)
         loadTrucks()
     }
-    
     
     func errorAlert(title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)

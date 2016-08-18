@@ -21,13 +21,15 @@
       "scale" : "3x"
     },
     {
-      "idiom" : "iphone",
       "size" : "60x60",
+      "idiom" : "iphone",
+      "filename" : "Screen Shot 2016-08-18 at 4.52.26 PM 2.png",
       "scale" : "2x"
     },
     {
-      "idiom" : "iphone",
       "size" : "60x60",
+      "idiom" : "iphone",
+      "filename" : "Screen Shot 2016-08-18 at 4.52.26 PM.png",
       "scale" : "3x"
     }
   ],
