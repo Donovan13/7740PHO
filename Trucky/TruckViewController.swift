@@ -32,7 +32,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         
         locationManager.requestAlwaysAuthorization()
         self.ref = FIRDatabase.database().reference()
-        mapView.showsUserLocation = true
+        mapView.showsUserLocation = false
         locationManager.startUpdatingLocation()
         loadTrucks()
     }
@@ -81,15 +81,16 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
                 let truckZip = truck.zip
                 
                 
-                let pin = MKPointAnnotation()
-                
-                pin.coordinate.latitude = latitude!
-                pin.coordinate.longitude = longitude!
-                pin.title = truckName
-                pin.subtitle = truckZip
                 
                 
-                self.mapView.addAnnotations([pin])
+                self.truckAnnotation.coordinate.latitude = latitude!
+                self.truckAnnotation.coordinate.longitude = longitude!
+                self.truckAnnotation.title = truckName
+                self.truckAnnotation.subtitle = truckZip
+                
+                
+                self.mapView.addAnnotation(self.truckAnnotation)
+                
                 
                 //                print(player.userUID)
                 //                                let userLatitude = player.userLatitude
@@ -103,16 +104,19 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     }
     
     
+    
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
         if annotation.isEqual(mapView.userLocation) {
             return nil
         } else if annotation.isEqual(truckAnnotation){
             let pin = MKAnnotationView (annotation: annotation, reuseIdentifier: nil)
+            pin.image = scaleUIImageToSize(UIImage(named: "truck")!, size: CGSizeMake(50, 50))
             pin.canShowCallout = true
             pin.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)
             return pin
         } else {
             return nil
+            
         }
     }
     
@@ -121,8 +125,11 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         let userLoc = userLocation.coordinate
         let userLat = userLocation.coordinate.latitude
         let userLong = userLocation.coordinate.longitude
-
-//        mapView.setRegion(MKCoordinateRegionMake(userLoc, MKCoordinateSpanMake(0.5, 0.5)), animated: true)
+        
+        
+        
+        
+        //        mapView.setRegion(MKCoordinateRegionMake(userLoc, MKCoordinateSpanMake(0.5, 0.5)), animated: true)
         
         self.userDefaults.setValue(userLat, forKey: "latitude")
         self.userDefaults.setValue(userLong, forKey: "longitude")
@@ -132,13 +139,15 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         
         if user != nil {
             self.ref.child("Trucks").child(user!.uid).updateChildValues(["latitude": userLat, "longitude": userLong])
-            
             print("\(userLat)")
             
         } else {
             
             //            errorAlert("", message: "")
         }
+        
+        
+        
         
     }
     
@@ -188,5 +197,19 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         alert.addAction(action)
         presentViewController(alert, animated: true, completion: nil)
     }
+    
+    func scaleUIImageToSize(let image: UIImage, let size: CGSize) -> UIImage {
+        let hasAlpha = true
+        let scale: CGFloat = 0.0 // Automatically use scale factor of main screen
+        UIGraphicsBeginImageContextWithOptions(size, !hasAlpha, scale)
+        image.drawInRect(CGRect(origin: CGPointZero, size: size))
+        let scaledImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return scaledImage
+    }
+    
+    
+    
+    
     
 }
