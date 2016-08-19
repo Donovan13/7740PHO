@@ -32,7 +32,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         
         locationManager.requestAlwaysAuthorization()
         self.ref = FIRDatabase.database().reference()
-        mapView.showsUserLocation = false
+        mapView.showsUserLocation = true
         locationManager.startUpdatingLocation()
         loadTrucks()
     }
@@ -157,12 +157,27 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("TruckSegue", forIndexPath: indexPath)
+        for truck in self.businesses {
+            
+
+            let truckName = truck.name
+            var truckRating = truck.ratingImageURL
+            let truckReviewCount = truck.reviewCount
+            
+            
+            cell.textLabel?.text = truckName
+//            cell.detailTextLabel?.text = "\(truckReviewCount)"
+         
+            
+            
+        }
         return cell
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
         var selectedCell:UITableViewCell
         selectedCell = tableView.cellForRowAtIndexPath(indexPath)!
+        
         //        var location = businesses[indexPath.row].coordinate
         //resolution
         //        var span = MKCoordinateSpanMake(0.01, 0.01)
