@@ -181,9 +181,10 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         
             cell.businessLabel?.text = truckName
             cell.addressLabel?.text = truckAddress
-            cell.businessImage?.image = UIImage(data: NSData(contentsOfURL: NSURL(string:"\(truckImage)")!)!)!
-            cell.reviewImage?.image = UIImage(data: NSData(contentsOfURL: NSURL(string:"\(truckRating)")!)!)!
-            cell.reviewLabel?.text = "\(truckReviewCount)"
+            
+            cell.businessImage?.image = UIImage(data: NSData(contentsOfURL: NSURL(string:truckImage!)!)!)!
+            cell.reviewImage?.image = UIImage(data: NSData(contentsOfURL: NSURL(string:truckRating!)!)!)!
+            cell.reviewLabel?.text = "\(truckReviewCount!)"
             
             
         }

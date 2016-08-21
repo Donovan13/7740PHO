@@ -12,10 +12,10 @@ import UIKit
 class Truck: NSObject {
     let truckName: String?
     var address: String?
-    var imageURL: NSURL?
+    var imageURL: String?
     //    let categories: String?
     //    let distance: String?
-    var ratingImageURL: NSURL?
+    var ratingImageURL: String?
     var reviewCount: NSNumber?
     let uid: String?
     let phone: String?
@@ -31,8 +31,8 @@ class Truck: NSObject {
         truckName = dictionary["truckName"] as? String
         zip = dictionary["zip"] as? String
         address = dictionary["address"] as? String
-        imageURL = dictionary["imageURL"] as? NSURL
-        ratingImageURL = dictionary["ratingImageURL"] as? NSURL
+        imageURL = dictionary["imageURL"] as? String
+        ratingImageURL = dictionary["ratingImageURL"] as? String
         
         reviewCount = dictionary["reviewCount"] as? NSNumber
         phone = dictionary["phone"] as? String
