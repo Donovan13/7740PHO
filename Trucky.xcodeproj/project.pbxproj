@@ -14,6 +14,9 @@
 		096F21941D4BACAE00B42813 /* YelpClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096F21931D4BACAE00B42813 /* YelpClient.swift */; };
 		096F219A1D4BB29500B42813 /* Business.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096F21991D4BB29500B42813 /* Business.swift */; };
 		096F219C1D4BB81200B42813 /* CreateTruckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096F219B1D4BB81200B42813 /* CreateTruckViewController.swift */; };
+		09ADB7051D67BE3900890CDB /* Truck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09ADB7041D67BE3900890CDB /* Truck.swift */; };
+		09ADB7071D67C1E100890CDB /* CustomAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09ADB7061D67C1E100890CDB /* CustomAnnotation.swift */; };
+		09D4B2471D6A318B002676D1 /* BusinessTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D4B2461D6A318B002676D1 /* BusinessTableViewCell.swift */; };
 		09FF68911D3EC18800EF4551 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FF68901D3EC18800EF4551 /* AppDelegate.swift */; };
 		09FF68931D3EC18800EF4551 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FF68921D3EC18800EF4551 /* LoginViewController.swift */; };
 		09FF68961D3EC18800EF4551 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 09FF68941D3EC18800EF4551 /* Main.storyboard */; };
@@ -51,6 +54,9 @@
 		096F21931D4BACAE00B42813 /* YelpClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YelpClient.swift; sourceTree = "<group>"; };
 		096F21991D4BB29500B42813 /* Business.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Business.swift; sourceTree = "<group>"; };
 		096F219B1D4BB81200B42813 /* CreateTruckViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateTruckViewController.swift; sourceTree = "<group>"; };
+		09ADB7041D67BE3900890CDB /* Truck.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Truck.swift; sourceTree = "<group>"; };
+		09ADB7061D67C1E100890CDB /* CustomAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomAnnotation.swift; sourceTree = "<group>"; };
+		09D4B2461D6A318B002676D1 /* BusinessTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BusinessTableViewCell.swift; sourceTree = "<group>"; };
 		09FF688D1D3EC18800EF4551 /* Trucky.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Trucky.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		09FF68901D3EC18800EF4551 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		09FF68921D3EC18800EF4551 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -130,7 +136,10 @@
 				095F09B51D400768007E8F5B /* TruckViewController.swift */,
 				0957DB281D6621DA00B38BB2 /* BusinessProfileViewController.swift */,
 				09FF68941D3EC18800EF4551 /* Main.storyboard */,
+				09ADB7061D67C1E100890CDB /* CustomAnnotation.swift */,
 				096F21991D4BB29500B42813 /* Business.swift */,
+				09ADB7041D67BE3900890CDB /* Truck.swift */,
+				09D4B2461D6A318B002676D1 /* BusinessTableViewCell.swift */,
 				096F21931D4BACAE00B42813 /* YelpClient.swift */,
 				09FF689A1D3EC18800EF4551 /* Assets.xcassets */,
 				09FF689C1D3EC18800EF4551 /* LaunchScreen.storyboard */,
@@ -417,7 +426,10 @@
 				096F219C1D4BB81200B42813 /* CreateTruckViewController.swift in Sources */,
 				09FF68931D3EC18800EF4551 /* LoginViewController.swift in Sources */,
 				096F21941D4BACAE00B42813 /* YelpClient.swift in Sources */,
+				09ADB7071D67C1E100890CDB /* CustomAnnotation.swift in Sources */,
 				09FF68911D3EC18800EF4551 /* AppDelegate.swift in Sources */,
+				09ADB7051D67BE3900890CDB /* Truck.swift in Sources */,
+				09D4B2471D6A318B002676D1 /* BusinessTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

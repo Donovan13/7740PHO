@@ -57,13 +57,13 @@ class CreateTruckViewController: UIViewController, CLLocationManagerDelegate {
                 
                 let dictionary = [
                     "uid": user!.uid,
-                    "name": self.businessNameTextField.text,
-                    "location.postal_code": self.zipTextField.text!,
-                    "location.display_address": self.businesses.first!.fullAddress,
-                    "image_url": "\(self.businesses.first!.imageURL!)",
-                    "rating_img_url": "\(self.businesses.first!.ratingImageURL!)",
-                    "review_count": self.businesses.first!.reviewCount,
-                    "display_phone": self.businesses.first!.phone,
+                    "truckName": self.businessNameTextField.text,
+                    "zip": self.zipTextField.text!,
+                    "address": self.businesses.first!.fullAddress,
+                    "imageURL": "\(self.businesses.first!.imageURL!)",
+                    "ratingImageURL": "\(self.businesses.first!.ratingImageURL!)",
+                    "reviewCount": self.businesses.first!.reviewCount,
+                    "phone": self.businesses.first!.phone,
                     "latitude": latitude,
                     "longitude": longitude]
                 

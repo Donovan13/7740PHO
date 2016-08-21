@@ -18,13 +18,17 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var tableView: UITableView!
+
     
     var businesses = [Business]()
+    var trucks = [Truck]()
     let locationManager = CLLocationManager()
     var ref:FIRDatabaseReference!
     var user = FIRAuth.auth()?.currentUser!
     let userDefaults = NSUserDefaults.standardUserDefaults()
     var truckAnnotation = MKPointAnnotation()
+    
+    let mobileAnnotation = MKPointAnnotation()
     
     
     override func viewDidLoad() {
@@ -32,9 +36,20 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         
         locationManager.requestAlwaysAuthorization()
         self.ref = FIRDatabase.database().reference()
+        
+        mapView.delegate = self
+        
         mapView.showsUserLocation = true
         locationManager.startUpdatingLocation()
         loadTrucks()
+        
+        
+        let latitude = 41.89374
+        let longitude = -87.6375187
+        mobileAnnotation.coordinate = CLLocationCoordinate2DMake(latitude, longitude)
+        mobileAnnotation.title = "Food Truck"
+        mapView.addAnnotation(mobileAnnotation)
+//        mapView.setRegion(MKCoordinateRegionMake(mobileAnnotation.coordinate, MKCoordinateSpanMake(0.1, 0.1)), animated: true)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -61,45 +76,40 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     func loadTrucks() {
         self.ref.child("Trucks").observeSingleEventOfType(.Value, withBlock: { snapshots in
             
-            self.businesses = []
+            self.trucks = []
             
             if let snapshot = snapshots.children.allObjects as? [FIRDataSnapshot] {
                 for snap in snapshot {
                     if let postDictionary = snap.value as? Dictionary<String, AnyObject> {
-                        let business = Business(dictionary: postDictionary)
-                        self.businesses.insert(business, atIndex: 0)
+                        let trucks = Truck(dictionary: postDictionary)
+                        self.trucks.insert(trucks, atIndex: 0)
                     }
+                }
+                for truck in self.trucks {
+                    
+                    let latitude = truck.latitude
+                    let longitude = truck.longitude
+                    let truckName = truck.truckName
+                    let truckZip = truck.zip
+                    
+                    
+                    
+                    
+                    self.truckAnnotation.coordinate.latitude = latitude!
+                    self.truckAnnotation.coordinate.longitude = longitude!
+                    self.truckAnnotation.title = truckName
+                    self.truckAnnotation.subtitle = truckZip
+                    
+                    
+                    self.mapView.addAnnotation(self.truckAnnotation)
+                    
+
+                    
                 }
             }
             
+            self.tableView.reloadData()
             
-            for truck in self.businesses {
-                
-                let latitude = truck.latitude
-                let longitude = truck.longitude
-                let truckName = truck.name
-                let truckZip = truck.zip
-                
-                
-                
-                
-                self.truckAnnotation.coordinate.latitude = latitude!
-                self.truckAnnotation.coordinate.longitude = longitude!
-                self.truckAnnotation.title = truckName
-                self.truckAnnotation.subtitle = truckZip
-                
-                
-                self.mapView.addAnnotation(self.truckAnnotation)
-                
-                
-                //                print(player.userUID)
-                //                                let userLatitude = player.userLatitude
-                //                                let userLongitude = player.userLongitude
-                //                                let username = player.username
-                //                                let userLevel = player.level
-                //                let annotationForUsers = CustomAnnotation(coordinate: CLLocationCoordinate2DMake(userLatitude, userLongitude), title: username, subtitle: userLevel)
-                //                self.mapView.addAnnotations([annotationForUsers])
-            }
         })
     }
     
@@ -152,22 +162,28 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return businesses.count
+        return trucks.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("TruckSegue", forIndexPath: indexPath)
-        for truck in self.businesses {
+        let cell = tableView.dequeueReusableCellWithIdentifier("BusinessTableViewCell") as! BusinessTableViewCell
+
+        
+        for truck in self.trucks {
             
 
-            let truckName = truck.name
-            var truckRating = truck.ratingImageURL
+            let truckName = truck.truckName
+            let truckAddress = truck.address
+            let truckImage = truck.imageURL
+            let truckRating = truck.ratingImageURL
             let truckReviewCount = truck.reviewCount
             
-            
-            cell.textLabel?.text = truckName
-//            cell.detailTextLabel?.text = "\(truckReviewCount)"
-         
+        
+            cell.businessLabel?.text = truckName
+            cell.addressLabel?.text = truckAddress
+            cell.businessImage?.image = UIImage(data: NSData(contentsOfURL: NSURL(string:"\(truckImage)")!)!)!
+            cell.reviewImage?.image = UIImage(data: NSData(contentsOfURL: NSURL(string:"\(truckRating)")!)!)!
+            cell.reviewLabel?.text = "\(truckReviewCount)"
             
             
         }
@@ -178,13 +194,25 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         var selectedCell:UITableViewCell
         selectedCell = tableView.cellForRowAtIndexPath(indexPath)!
         
+        performSegueWithIdentifier("detailSegue", sender: self)
+        
+
+        
+        
         //        var location = businesses[indexPath.row].coordinate
         //resolution
         //        var span = MKCoordinateSpanMake(0.01, 0.01)
         //        var region = MKCoordinateRegion(center: location,span:span)
         //move to the specific area!
         //        self.mapView.setRegion(region, animated: true)
-        tableView.reloadData()
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "detailSegue" {
+            let detailVC = segue.destinationViewController as! BusinessProfileViewController
+            detailVC.truckName = "hello"
+            
+        }
     }
     
     @IBAction func showListButton(sender: AnyObject) {

@@ -13,6 +13,10 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
     
     var ref:FIRDatabaseReference!
     var businesses = [Business]()
+    
+    var trucks = [Truck]()
+    
+    var truckName:String?
     let userDefaults = NSUserDefaults.standardUserDefaults()
     
     override func viewDidLoad() {
@@ -32,6 +36,7 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
             let cell: UITableViewCell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "titleSegue")
+            cell.textLabel?.text = self.truckName
             
             //set data here
             return cell
