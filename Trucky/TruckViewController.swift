@@ -104,21 +104,21 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     }
     
     
-    
-    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
-        if annotation.isEqual(mapView.userLocation) {
-            return nil
-        } else if annotation.isEqual(truckAnnotation){
-            let pin = MKAnnotationView (annotation: annotation, reuseIdentifier: nil)
-            pin.image = scaleUIImageToSize(UIImage(named: "truck")!, size: CGSizeMake(50, 50))
-            pin.canShowCallout = true
-            pin.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)
-            return pin
-        } else {
-            return nil
-            
-        }
-    }
+//    
+//    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+//        if annotation.isEqual(mapView.userLocation) {
+//            return nil
+//        } else if annotation.isEqual(truckAnnotation){
+//            let pin = MKAnnotationView (annotation: annotation, reuseIdentifier: nil)
+//            pin.image = scaleUIImageToSize(UIImage(named: "truck")!, size: CGSizeMake(50, 50))
+//            pin.canShowCallout = true
+//            pin.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)
+//            return pin
+//        } else {
+//            return nil
+//            
+//        }
+//    }
     
     func mapView(mapView: MKMapView, didUpdateUserLocation userLocation: MKUserLocation) {
         
