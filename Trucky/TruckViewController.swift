@@ -79,8 +79,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
             self.businesses = businesses
             for business in businesses {
                 print(business.name!)
-                //                        print(business.address!)
-                //                        print(business.id)
+
             }
         })
     }
@@ -149,8 +148,6 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     
     func mapView(mapView: MKMapView, didUpdateUserLocation userLocation: MKUserLocation) {
         
-//        didFindMyLocation = true
-
         let userLoc = userLocation.coordinate
         let userLat = userLocation.coordinate.latitude
         let userLong = userLocation.coordinate.longitude
@@ -161,9 +158,6 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
 
         
         self.tableView.reloadData()
-        
-        
-        //        mapView.setRegion(MKCoordinateRegionMake(userLoc, MKCoordinateSpanMake(0.5, 0.5)), animated: true)
         
         self.userDefaults.setValue(userLat, forKey: "latitude")
         self.userDefaults.setValue(userLong, forKey: "longitude")
@@ -181,12 +175,6 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         }
         
     }
-    
-    //    func getDistanceTo(locationCooridnate: CLLocationCoordinate2D) {
-    //        let request = MKDirectionsRequest()
-    //        request.source = MKMapItem.mapItemForCurrentLocation()
-    //        request.destination = MKMapItem(placemark: )
-    //    }
     
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -232,23 +220,9 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
        var selectedCell = tableView.cellForRowAtIndexPath(indexPath)!
-        
+       
         performSegueWithIdentifier("detailSegue", sender: self)
         
-        
-        
-    
-        performSegueWithIdentifier("detailSegue", sender: self)
-        
-
-        
-        
-        //        var location = businesses[indexPath.row].coordinate
-        //resolution
-        //        var span = MKCoordinateSpanMake(0.01, 0.01)
-        //        var region = MKCoordinateRegion(center: location,span:span)
-        //move to the specific area!
-        //        self.mapView.setRegion(region, animated: true)
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -259,14 +233,6 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
             let truck = trucks[indexPath!.row]
             detailVC.trucks = truck
         }
-        //        detailVC.title = "hi"
-        
-        
-        //        if segue.identifier == "detailSegue" {
-        //            let detailVC = segue.destinationViewController as! BusinessProfileViewController
-        //            detailVC.truckName = "hello"
-        
-        //        }
 
     }
     

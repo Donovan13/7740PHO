@@ -95,17 +95,8 @@ class CreateTruckViewController: UIViewController, CLLocationManagerDelegate {
             self.yelpImage.image = urlImage
             
             print(businesses.first?.imageURL)
-            
-            //            print(businesses.first!.name!)
-            //            print(businesses.first!.imageURL!)
-            
-            for business in businesses {
-                //                print(business.name)
-                //                print(business.address!)
-                //                print(business.id)
-                //                print(business.imageURL)
-            }
-        })
+
+            })
     }
     
     func errorAlert(title: String, message: String) {
