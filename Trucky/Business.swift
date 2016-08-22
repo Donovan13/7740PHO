@@ -12,8 +12,7 @@ class Business: NSObject {
     let name: String?
     var fullAddress: String?
     var imageURL: NSURL?
-    //    let categories: String?
-    //    let distance: String?
+    let categories: String?
     var ratingImageURL: NSURL?
     var reviewCount: NSNumber?
     let id: String?
@@ -25,17 +24,16 @@ class Business: NSObject {
     
     
     init(dictionary: NSDictionary) {
-        
-        id = dictionary["id"] as? String
         name = dictionary["name"] as? String
+        fullAddress = dictionary["location.display_address"] as? String
+        imageURL = dictionary["image_url"] as? NSURL
+        ratingImageURL = dictionary["rating_img_url"] as? NSURL
+        reviewCount = dictionary["review_count"] as? NSNumber
+        id = dictionary["id"] as? String
         phone = dictionary["display_phone"] as? String
         zip = dictionary["location.postal_code"] as? String
         latitude = dictionary["latitude"] as? Double
         longitude = dictionary["longitude"] as? Double
-        reviewCount = dictionary["review_count"] as? NSNumber
-        ratingImageURL = dictionary["rating_img_url"] as? NSURL
-        imageURL = dictionary["image_url"] as? NSURL
-        fullAddress = dictionary["location.display_address"] as? String
         
         
         
@@ -64,17 +62,17 @@ class Business: NSObject {
         }
         self.fullAddress = address
         
-        //        let categoriesArray = dictionary["categories"] as? [[String]]
-        //        if categoriesArray != nil {
-        //            var categoryNames = [String]()
-        //            for category in categoriesArray! {
-        //                let categoryName = category[0]
-        //                categoryNames.append(categoryName)
-        //            }
-        //            categories = categoryNames.joinWithSeparator(", ")
-        //        } else {
-        //            categories = nil
-        //        }
+                let categoriesArray = dictionary["categories"] as? [[String]]
+                if categoriesArray != nil {
+                    var categoryNames = [String]()
+                    for category in categoriesArray! {
+                        let categoryName = category[0]
+                        categoryNames.append(categoryName)
+                    }
+                    categories = categoryNames.joinWithSeparator(", ")
+                } else {
+                    categories = nil
+                }
         
         //        let distanceMeters = dictionary["distance"] as? NSNumber
         //        if distanceMeters != nil {

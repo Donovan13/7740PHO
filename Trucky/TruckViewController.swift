@@ -90,7 +90,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
                     let latitude = truck.latitude
                     let longitude = truck.longitude
                     let truckName = truck.truckName
-                    let truckZip = truck.zip
+                    let truckReviews = truck.reviewCount
                     
                     
                     
@@ -98,7 +98,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
                     self.truckAnnotation.coordinate.latitude = latitude!
                     self.truckAnnotation.coordinate.longitude = longitude!
                     self.truckAnnotation.title = truckName
-                    self.truckAnnotation.subtitle = truckZip
+                    self.truckAnnotation.subtitle = "\(truckReviews!) reviews on Yelp"
                     
                     
                     self.mapView.addAnnotation(self.truckAnnotation)
@@ -120,14 +120,21 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
             return nil
         } else if annotation.isEqual(truckAnnotation){
             let pin = MKAnnotationView (annotation: annotation, reuseIdentifier: nil)
-            pin.image = scaleUIImageToSize(UIImage(named: "truck")!, size: CGSizeMake(50, 50))
+            
+//            pin.image = scaleUIImageToSize(UIImage(named: "truck")!, size: CGSizeMake(50, 50))
             pin.canShowCallout = true
             pin.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)
+            pin.leftCalloutAccessoryView = UIButton(type: .Custom)
+            
             return pin
         } else {
             return nil
             
         }
+    }
+    
+    func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        self.performSegueWithIdentifier("detailSegue", sender: view)
     }
     
     func mapView(mapView: MKMapView, didUpdateUserLocation userLocation: MKUserLocation) {
@@ -156,9 +163,6 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
             //            errorAlert("", message: "")
         }
         
-        
-        
-        
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -178,10 +182,9 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         
             cell.businessLabel?.text = truckName
             cell.addressLabel?.text = truckAddress
-            
             cell.businessImage?.image = UIImage(data: NSData(contentsOfURL: NSURL(string:truckImage!)!)!)!
             cell.reviewImage?.image = UIImage(data: NSData(contentsOfURL: NSURL(string:truckRating!)!)!)!
-            cell.reviewLabel?.text = "\(truckReviewCount!)"
+            cell.reviewLabel?.text = "\(truckReviewCount!) reviews on Yelp"
         
         return cell
     }
@@ -189,7 +192,6 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
         var selectedCell:UITableViewCell
         selectedCell = tableView.cellForRowAtIndexPath(indexPath)!
-        
         performSegueWithIdentifier("detailSegue", sender: self)
         
 
@@ -210,6 +212,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         let detailVC = segue.destinationViewController as! BusinessProfileViewController
         let truck = trucks[indexPath!.row]
         detailVC.trucks = truck
+        
         }
 //        detailVC.title = "hi"
         
