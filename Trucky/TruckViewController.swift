@@ -167,16 +167,13 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("BusinessTableViewCell") as! BusinessTableViewCell
+        let post = trucks[indexPath.row]
 
-        
-        for truck in self.trucks {
-            
-
-            let truckName = truck.truckName
-            let truckAddress = truck.address
-            let truckImage = truck.imageURL
-            let truckRating = truck.ratingImageURL
-            let truckReviewCount = truck.reviewCount
+            let truckName = post.truckName
+            let truckAddress = post.address
+            let truckImage = post.imageURL
+            let truckRating = post.ratingImageURL
+            let truckReviewCount = post.reviewCount
             
         
             cell.businessLabel?.text = truckName
@@ -185,9 +182,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
             cell.businessImage?.image = UIImage(data: NSData(contentsOfURL: NSURL(string:truckImage!)!)!)!
             cell.reviewImage?.image = UIImage(data: NSData(contentsOfURL: NSURL(string:truckRating!)!)!)!
             cell.reviewLabel?.text = "\(truckReviewCount!)"
-            
-            
-        }
+        
         return cell
     }
     
@@ -210,10 +205,20 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "detailSegue" {
-            let detailVC = segue.destinationViewController as! BusinessProfileViewController
-            detailVC.truckName = "hello"
-            
+//        let cell = sender as! BusinessTableViewCell
+        let indexPath = self.tableView.indexPathForSelectedRow
+        let detailVC = segue.destinationViewController as! BusinessProfileViewController
+        let truck = trucks[indexPath!.row]
+        detailVC.trucks = truck
         }
+//        detailVC.title = "hi"
+        
+        
+//        if segue.identifier == "detailSegue" {
+//            let detailVC = segue.destinationViewController as! BusinessProfileViewController
+//            detailVC.truckName = "hello"
+        
+//        }
     }
     
     @IBAction func showListButton(sender: AnyObject) {

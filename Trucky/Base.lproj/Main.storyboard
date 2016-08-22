@@ -403,7 +403,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="wtb-6Z-VRU">
-                                <rect key="frame" x="0.0" y="20" width="600" height="580"/>
+                                <rect key="frame" x="0.0" y="58" width="600" height="542"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="titleSegue" textLabel="9tI-2a-rRj" detailTextLabel="4L7-VY-FS7" style="IBUITableViewCellStyleSubtitle" id="YUI-zH-pvd">
@@ -628,12 +628,21 @@
                                     <outlet property="delegate" destination="iL6-c3-66T" id="4D7-fq-fTx"/>
                                 </connections>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hub-h0-MfQ">
+                                <rect key="frame" x="20" y="20" width="34" height="30"/>
+                                <state key="normal" title="Back"/>
+                                <connections>
+                                    <action selector="backButton:" destination="iL6-c3-66T" eventType="touchUpInside" id="2HA-Oc-BD0"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="pb8-49-8Cw" firstAttribute="top" secondItem="wtb-6Z-VRU" secondAttribute="bottom" id="L08-M0-rdM"/>
+                            <constraint firstItem="Hub-h0-MfQ" firstAttribute="top" secondItem="Zcs-te-nDU" secondAttribute="bottom" id="RuC-51-Djk"/>
+                            <constraint firstItem="Hub-h0-MfQ" firstAttribute="leading" secondItem="aNS-mF-6Az" secondAttribute="leadingMargin" id="fyZ-O2-uhH"/>
                             <constraint firstItem="wtb-6Z-VRU" firstAttribute="leading" secondItem="aNS-mF-6Az" secondAttribute="leading" id="lep-YN-HD3"/>
-                            <constraint firstItem="wtb-6Z-VRU" firstAttribute="top" secondItem="Zcs-te-nDU" secondAttribute="bottom" id="pZR-bl-yCC"/>
+                            <constraint firstItem="wtb-6Z-VRU" firstAttribute="top" secondItem="Zcs-te-nDU" secondAttribute="bottom" constant="38" id="pZR-bl-yCC"/>
                             <constraint firstAttribute="trailing" secondItem="wtb-6Z-VRU" secondAttribute="trailing" id="z3J-da-VoF"/>
                         </constraints>
                     </view>

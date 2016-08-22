@@ -14,9 +14,8 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
     var ref:FIRDatabaseReference!
     var businesses = [Business]()
     
-    var trucks = [Truck]()
+    var trucks: Truck!
     
-    var truckName:String?
     let userDefaults = NSUserDefaults.standardUserDefaults()
     
     override func viewDidLoad() {
@@ -35,52 +34,55 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
-            let cell: UITableViewCell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "titleSegue")
-            cell.textLabel?.text = self.truckName
             
-            //set data here
+            let cell = tableView.dequeueReusableCellWithIdentifier("titleSegue", forIndexPath: indexPath) 
+            
+//            cell.textLabel?.text = trucks.truckName
+            cell.detailTextLabel?.text = trucks.truckName
+            
             return cell
         }
         else if indexPath.row == 1 {
-            let cell: UITableViewCell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "phoneSegue")
-            cell.detailTextLabel?.text = self.businesses.first!.phone
-            //set data here
+            let cell = tableView.dequeueReusableCellWithIdentifier("phoneSegue", forIndexPath: indexPath)
+            cell.detailTextLabel?.text = trucks.phone
             return cell
         }
         else if indexPath.row == 2 {
-            let cell: UITableViewCell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "websiteSegue")
-            //set data here
+            let cell = tableView.dequeueReusableCellWithIdentifier("websiteSegue", forIndexPath: indexPath)
+//            cell.detailTextLabel?.text = trucks.website
             return cell
         }
         else if indexPath.row == 3 {
-            let cell: UITableViewCell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "addressSegue")
-            //set data here
+            let cell = tableView.dequeueReusableCellWithIdentifier("addressSegue", forIndexPath: indexPath)
+            cell.detailTextLabel?.text = trucks.address
             return cell
         }
         else if indexPath.row == 4 {
-            let cell: UITableViewCell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "hoursSegue")
-            //set data here
+            let cell = tableView.dequeueReusableCellWithIdentifier("hoursSegue", forIndexPath: indexPath)
+//            cell.detailTextLabel?.text = trucks.hours
             return cell
         }
         else if indexPath.row == 5 {
-            let cell: UITableViewCell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "categorySegue")
-            //set data here
+            let cell = tableView.dequeueReusableCellWithIdentifier("categorySegue", forIndexPath: indexPath)
+//            cell.detailTextLabel?.text = trucks.category
             return cell
         }
         else if indexPath.row == 6 {
-            let cell: UITableViewCell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "priceSegue")
-            //set data here
+            let cell = tableView.dequeueReusableCellWithIdentifier("priceSegue", forIndexPath: indexPath)
             return cell
         }
         else if indexPath.row == 7 {
-            let cell: UITableViewCell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "photoSegue")
-            //set data here
+            let cell = tableView.dequeueReusableCellWithIdentifier("photoSegue", forIndexPath: indexPath)
             return cell
         }
         else {
-            let cell: UITableViewCell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "reviewSegue")
-            //set data here
+            let cell = tableView.dequeueReusableCellWithIdentifier("reviewSegue", forIndexPath: indexPath)
             return cell
+        }
+    }
+    
+    @IBAction func backButton(sender: AnyObject) {
+        dismissViewControllerAnimated(true) {
         }
     }
 }

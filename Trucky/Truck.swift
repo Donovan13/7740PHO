@@ -13,8 +13,7 @@ class Truck: NSObject {
     let truckName: String?
     var address: String?
     var imageURL: String?
-    //    let categories: String?
-    //    let distance: String?
+//    let categories: Array?
     var ratingImageURL: String?
     var reviewCount: NSNumber?
     let uid: String?
@@ -26,16 +25,15 @@ class Truck: NSObject {
     
     
     init(dictionary: NSDictionary) {
-        
-        uid = dictionary["uid"] as? String
         truckName = dictionary["truckName"] as? String
-        zip = dictionary["zip"] as? String
         address = dictionary["address"] as? String
         imageURL = dictionary["imageURL"] as? String
+//        categories = dictionary["categories"]? as Array
         ratingImageURL = dictionary["ratingImageURL"] as? String
-        
         reviewCount = dictionary["reviewCount"] as? NSNumber
+        uid = dictionary["uid"] as? String
         phone = dictionary["phone"] as? String
+        zip = dictionary["zip"] as? String
         latitude = dictionary["latitude"] as? Double
         longitude = dictionary["longitude"] as? Double
     }
