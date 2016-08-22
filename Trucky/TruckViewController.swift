@@ -103,12 +103,16 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
                     let latitude = truck.latitude
                     let longitude = truck.longitude
                     let truckName = truck.truckName
-                    let truckZip = truck.zip
 
+                    let truckReviews = truck.reviewCount
+                    
+                    
+                    
+                    
                     self.truckAnnotation.coordinate.latitude = latitude!
                     self.truckAnnotation.coordinate.longitude = longitude!
                     self.truckAnnotation.title = truckName
-                    self.truckAnnotation.subtitle = truckZip
+                    self.truckAnnotation.subtitle = "\(truckReviews!) reviews on Yelp"
                     
                     self.mapView.addAnnotation(self.truckAnnotation)
                     
@@ -121,25 +125,27 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     }
     
     
+    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+        if annotation.isEqual(mapView.userLocation) {
+            return nil
+        } else if annotation.isEqual(truckAnnotation){
+            let pin = MKAnnotationView (annotation: annotation, reuseIdentifier: nil)
+            
+//            pin.image = scaleUIImageToSize(UIImage(named: "truck")!, size: CGSizeMake(50, 50))
+            pin.canShowCallout = true
+            pin.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)
+            pin.leftCalloutAccessoryView = UIButton(type: .Custom)
+            
+            return pin
+        } else {
+            return nil
+            
+        }
+    }
     
-    
-    //
-    //    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
-    //        if annotation.isEqual(mapView.userLocation) {
-    //            return nil
-    //        } else if annotation.isEqual(truckAnnotation){
-    //            let pin = MKAnnotationView (annotation: annotation, reuseIdentifier: nil)
-    //            pin.image = scaleUIImageToSize(UIImage(named: "truck")!, size: CGSizeMake(50, 50))
-    //            pin.canShowCallout = true
-    //            pin.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)
-    //            return pin
-    //        } else {
-    //            return nil
-    //
-    //        }
-    //    }
-    
-    
+    func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        self.performSegueWithIdentifier("detailSegue", sender: view)
+    }
     
     func mapView(mapView: MKMapView, didUpdateUserLocation userLocation: MKUserLocation) {
         
@@ -173,9 +179,6 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
             
             //            errorAlert("", message: "")
         }
-        
-        
-        
         
     }
     
@@ -219,6 +222,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         cell.businessImage?.image = UIImage(data: NSData(contentsOfURL: NSURL(string:truckImage!)!)!)!
         cell.reviewImage?.image = UIImage(data: NSData(contentsOfURL: NSURL(string:truckRating!)!)!)!
         cell.reviewLabel?.text = "\(truckReviewCount!)"
+
         
         return cell
     }
@@ -233,7 +237,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         
         
         
-        
+    
         performSegueWithIdentifier("detailSegue", sender: self)
         
 
