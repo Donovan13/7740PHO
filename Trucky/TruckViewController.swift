@@ -18,6 +18,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var tableView: UITableView!
+
     
     
     var businesses = [Business]()
@@ -30,6 +31,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     
     let mobileAnnotation = MKPointAnnotation()
     
+
     var locationOne: CLLocation?
     
     var userLocation: MKUserLocation?
@@ -38,14 +40,15 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         var didFindMyLocation = false
 
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.ref = FIRDatabase.database().reference()
+
         locationManager.delegate = self
         mapView.delegate = self
         locationManager.requestAlwaysAuthorization()
+
 
         mapView.showsUserLocation = true
         locationManager.startUpdatingLocation()
@@ -58,7 +61,8 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         mobileAnnotation.coordinate = CLLocationCoordinate2DMake(latitude, longitude)
         mobileAnnotation.title = "Food Truck"
         mapView.addAnnotation(mobileAnnotation)
-        //        mapView.setRegion(MKCoordinateRegionMake(mobileAnnotation.coordinate, MKCoordinateSpanMake(0.1, 0.1)), animated: true)
+
+//        mapView.setRegion(MKCoordinateRegionMake(mobileAnnotation.coordinate, MKCoordinateSpanMake(0.1, 0.1)), animated: true)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -100,7 +104,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
                     let longitude = truck.longitude
                     let truckName = truck.truckName
                     let truckZip = truck.zip
-                    
+
                     self.truckAnnotation.coordinate.latitude = latitude!
                     self.truckAnnotation.coordinate.longitude = longitude!
                     self.truckAnnotation.title = truckName
@@ -230,6 +234,11 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         
         
         
+        performSegueWithIdentifier("detailSegue", sender: self)
+        
+
+        
+        
         //        var location = businesses[indexPath.row].coordinate
         //resolution
         //        var span = MKCoordinateSpanMake(0.01, 0.01)
@@ -254,6 +263,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         //            detailVC.truckName = "hello"
         
         //        }
+
     }
     
     @IBAction func showListButton(sender: AnyObject) {
