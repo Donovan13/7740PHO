@@ -273,7 +273,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="125" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="AT8-Hc-OSz">
-                                <rect key="frame" x="0.0" y="359" width="600" height="202"/>
+                                <rect key="frame" x="0.0" y="408" width="600" height="153"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="BusinessTableViewCell" rowHeight="125" id="dkq-Pw-w2K" userLabel="BusinessTableViewCell" customClass="BusinessTableViewCell" customModule="Trucky" customModuleProvider="target">
@@ -365,7 +365,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="hPQ-vr-3gg" firstAttribute="top" secondItem="AT8-Hc-OSz" secondAttribute="bottom" constant="3" id="7RG-Ol-OKQ"/>
-                            <constraint firstItem="AT8-Hc-OSz" firstAttribute="top" secondItem="Qxr-CQ-57P" secondAttribute="topMargin" constant="359" id="KEk-70-vld"/>
+                            <constraint firstItem="AT8-Hc-OSz" firstAttribute="top" secondItem="Qxr-CQ-57P" secondAttribute="topMargin" constant="408" id="KEk-70-vld"/>
                             <constraint firstItem="AT8-Hc-OSz" firstAttribute="leading" secondItem="Qxr-CQ-57P" secondAttribute="leadingMargin" constant="-20" id="QJ1-oL-h9P"/>
                             <constraint firstItem="Hvm-Pi-TxS" firstAttribute="top" secondItem="SMJ-cB-ALq" secondAttribute="bottom" constant="6" id="QeU-Mv-pNQ"/>
                             <constraint firstAttribute="trailingMargin" secondItem="AT8-Hc-OSz" secondAttribute="trailing" constant="-20" id="Vg1-S5-9Kj"/>
