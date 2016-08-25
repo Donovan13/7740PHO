@@ -18,7 +18,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var tableView: UITableView!
-
+    
     
     
     var businesses = [Business]()
@@ -27,42 +27,41 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     var ref:FIRDatabaseReference!
     var user = FIRAuth.auth()?.currentUser!
     let userDefaults = NSUserDefaults.standardUserDefaults()
-    var truckAnnotation = CustomAnnotations()
     
     let mobileAnnotation = MKPointAnnotation()
     
-
+    
     var locationOne: CLLocation?
     
     var userLocation: MKUserLocation?
     
     
-        var didFindMyLocation = false
-
+    var didFindMyLocation = false
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.ref = FIRDatabase.database().reference()
-
+        
         locationManager.delegate = self
         mapView.delegate = self
         locationManager.requestAlwaysAuthorization()
-
-
+        
+        
         mapView.showsUserLocation = true
         locationManager.startUpdatingLocation()
-    
+        
         loadTrucks()
         
         
-        let latitude = 41.89374
-        let longitude = -87.6375187
-        mobileAnnotation.coordinate = CLLocationCoordinate2DMake(latitude, longitude)
-        mobileAnnotation.title = "Food Truck"
-        mapView.addAnnotation(mobileAnnotation)
-
-//        mapView.setRegion(MKCoordinateRegionMake(mobileAnnotation.coordinate, MKCoordinateSpanMake(0.1, 0.1)), animated: true)
+        //        let latitude = 41.89374
+        //        let longitude = -87.6375187
+        //        mobileAnnotation.coordinate = CLLocationCoordinate2DMake(latitude, longitude)
+        //        mobileAnnotation.title = "Food Truck"
+        //        mapView.addAnnotation(mobileAnnotation)
+        
+        //        mapView.setRegion(MKCoordinateRegionMake(mobileAnnotation.coordinate, MKCoordinateSpanMake(0.1, 0.1)), animated: true)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -79,7 +78,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
             self.businesses = businesses
             for business in businesses {
                 print(business.name!)
-
+                
             }
         })
     }
@@ -98,24 +97,21 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
                     }
                 }
                 for truck in self.trucks {
+                    let truckAnnotation = CustomAnnotations()
                     
-                    let latitude = truck.latitude
-                    let longitude = truck.longitude
-                    let truckName = truck.truckName
+                    truckAnnotation.coordinate.latitude = truck.latitude!
+                    truckAnnotation.coordinate.longitude = truck.longitude!
+                    truckAnnotation.title = truck.truckName
+                    truckAnnotation.subtitle = "\(truck.reviewCount!) reviews on Yelp"
+                    truckAnnotation.truckCA = truck
+                    
+//                    let qualityOfServiceClass = QOS_CLASS_BACKGROUND
+//                    let backgroundQueue = dispatch_get_global_queue(qualityOfServiceClass, 0)
+//                    dispatch_async(backgroundQueue) {
+                        self.mapView.addAnnotation(truckAnnotation)
 
-                    let truckReviews = truck.reviewCount
+//                    }
                     
-                    let truckDetail = truck
-                    
-                    
-                    
-                    self.truckAnnotation.coordinate.latitude = latitude!
-                    self.truckAnnotation.coordinate.longitude = longitude!
-                    self.truckAnnotation.title = truckName
-                    self.truckAnnotation.subtitle = "\(truckReviews!) reviews on Yelp"
-                    self.truckAnnotation.truckCA = truckDetail
-                    
-                    self.mapView.addAnnotation(self.truckAnnotation)
                     
                 }
             }
@@ -125,24 +121,43 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         })
     }
     
+    //    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+    //        if let annotation = annotation as? CustomAnnotations {
+    //            let identifier = "pin"
+    //            var view: MKPinAnnotationView
+    //            if let dequeuedView = mapView.dequeueReusableAnnotationViewWithIdentifier(identifier)
+    //                as? MKPinAnnotationView {
+    //                dequeuedView.annotation = annotation
+    //                view = dequeuedView
+    //            } else {
+    //                view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+    //                //view = MKPinAnnotationView(annotation: <#T##MKAnnotation?#>, reuseIdentifier: <#T##String?#>)
+    //                view.canShowCallout = true
+    //                view.calloutOffset = CGPoint(x: -5, y: 5)
+    //                view.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)
+    //            }
+    //            return view
+    //        }
+    //        return nil
+    //    }
     
-    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
-        if annotation.isEqual(mapView.userLocation) {
-            return nil
-        } else if annotation.isEqual(truckAnnotation){
-            let pin = MKAnnotationView (annotation: annotation, reuseIdentifier: nil)
-            
-            pin.image = scaleUIImageToSize(UIImage(named: "truck")!, size: CGSizeMake(10, 10))
-            pin.canShowCallout = true
-            pin.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)
-            pin.leftCalloutAccessoryView = UIButton(type: .Custom)
-            
-            return pin
-        } else {
-            return nil
-            
+        func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+            if annotation.isEqual(mapView.userLocation) {
+                return nil
+            } else if annotation.isEqual(annotation as! CustomAnnotations){
+                let pin = MKAnnotationView (annotation: annotation, reuseIdentifier: nil)
+    
+                pin.image = scaleUIImageToSize(UIImage(named: "truck")!, size: CGSizeMake(10, 10))
+                pin.canShowCallout = true
+                pin.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)
+                pin.leftCalloutAccessoryView = UIButton(type: .Custom)
+    
+                return pin
+            } else {
+                return nil
+    
+            }
         }
-    }
     
     func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         let annotation = view.annotation as! CustomAnnotations
@@ -158,7 +173,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         
         
         locationOne = CLLocation(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude)
-
+        
         
         self.tableView.reloadData()
         
@@ -195,11 +210,11 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         
         
         if locationOne != nil {
-        
-        let distance = location.distanceFromLocation(locationOne!)
+            
+            let distance = location.distanceFromLocation(locationOne!)
             let inMiles = distance * 0.000621371192
-            cell.distanceLabel.text = (String(format: "%.2f Miles Away", inMiles))
-
+            cell.distanceLabel.text = (String(format: "%.2fm Away", inMiles))
+            
         }
         
         
@@ -210,7 +225,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         cell.businessImage?.image = UIImage(data: NSData(contentsOfURL: NSURL(string:truckImage!)!)!)!
         cell.reviewImage?.image = UIImage(data: NSData(contentsOfURL: NSURL(string:truckRating!)!)!)!
         cell.reviewLabel?.text = "\(truckReviewCount!)"
-
+        
         
         return cell
     }
@@ -219,27 +234,42 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
-       var selectedCell = tableView.cellForRowAtIndexPath(indexPath)!
-       
+        var selectedCell = tableView.cellForRowAtIndexPath(indexPath)!
+        
         performSegueWithIdentifier("detailSegue", sender: self)
         
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "detailSegue" {
-            //        let cell = sender as! BusinessTableViewCell
-            let indexPath = self.tableView.indexPathForSelectedRow
-            let detailVC = segue.destinationViewController as! BusinessProfileViewController
-            let truck = trucks[indexPath!.row]
-            detailVC.trucks = truck
-        } else if segue.identifier == "annotationDetailSegue" {
-            let detailVC = segue.destinationViewController as! BusinessProfileViewController
-            let annotation = sender as! CustomAnnotations
-            detailVC.trucks = annotation.truckCA
+//        if segue.identifier == "detailSegue" {
+//            //        let cell = sender as! BusinessTableViewCell
+//            let indexPath = self.tableView.indexPathForSelectedRow
+//            let detailVC = segue.destinationViewController as! BusinessProfileViewController
+//            let truck = trucks[indexPath!.row]
+//            detailVC.trucks = truck
+//        } else if segue.identifier == "annotationDetailSegue" {
+//            let detailVC = segue.destinationViewController as! BusinessProfileViewController
+//            let annotation = sender as! CustomAnnotations
+//            detailVC.trucks = annotation.truckCA
+//        }
+//        
+//        
+        if let identifier = segue.identifier {
+            switch identifier {
+            case "detailSegue":
+                let indexPath = self.tableView.indexPathForSelectedRow
+                let detailVC = segue.destinationViewController as! BusinessProfileViewController
+                let truck = trucks[indexPath!.row]
+                detailVC.trucks = truck
+            case "annotationDetailSegue":
+                let detailVC = segue.destinationViewController as! BusinessProfileViewController
+                let annotation = sender as! CustomAnnotations
+                detailVC.trucks = annotation.truckCA
+            default: break
+            }
         }
         
         
-
     }
     
     @IBAction func showListButton(sender: AnyObject) {
@@ -261,18 +291,18 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         loadTrucks()
     }
     
-//    //    Location Delegate Methods
-//    override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
-//        if !didFindMyLocation {
-//            let myLocation:CLLocation = change![NSKeyValueChangeNewKey] as! CLLocation
-//            mapView.setCenterCoordinate(myLocation.coordinate, animated: false)
-//            
-////            mapView.camera = GMSCameraPosition.cameraWithTarget(myLocation.coordinate, zoom: 15.0)
-////            mapView.settings.myLocationButton = true
-//            didFindMyLocation = true
-//        }
-//    }
-
+    //    //    Location Delegate Methods
+    //    override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
+    //        if !didFindMyLocation {
+    //            let myLocation:CLLocation = change![NSKeyValueChangeNewKey] as! CLLocation
+    //            mapView.setCenterCoordinate(myLocation.coordinate, animated: false)
+    //
+    ////            mapView.camera = GMSCameraPosition.cameraWithTarget(myLocation.coordinate, zoom: 15.0)
+    ////            mapView.settings.myLocationButton = true
+    //            didFindMyLocation = true
+    //        }
+    //    }
+    
     
     
     func errorAlert(title: String, message: String) {
