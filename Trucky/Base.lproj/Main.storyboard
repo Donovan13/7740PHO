@@ -384,6 +384,7 @@
                         <outlet property="mapView" destination="BbI-6f-a7f" id="lAV-G5-drg"/>
                         <outlet property="tableView" destination="AT8-Hc-OSz" id="r9u-JE-11S"/>
                         <segue destination="iL6-c3-66T" kind="show" identifier="detailSegue" id="2XA-gi-oSt"/>
+                        <segue destination="iL6-c3-66T" kind="show" identifier="annotationDetailSegue" id="Jok-xT-yNd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YAp-zT-x4v" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -649,10 +650,11 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qBK-Wd-4ks" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1198" y="63"/>
+            <point key="canvasLocation" x="-1474" y="-85"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="caW-5R-oWI"/>
+        <segue reference="Jok-xT-yNd"/>
     </inferredMetricsTieBreakers>
 </document>

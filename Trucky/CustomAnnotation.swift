@@ -11,11 +11,7 @@ import MapKit
 
 
 class CustomAnnotations: MKPointAnnotation {
-    var imageName: UIImage!
-    var name: String!
-    var subname: String!
-    
-    
+    var truckCA: Truck!
     
     
     

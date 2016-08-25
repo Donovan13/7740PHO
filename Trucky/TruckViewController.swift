@@ -27,7 +27,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     var ref:FIRDatabaseReference!
     var user = FIRAuth.auth()?.currentUser!
     let userDefaults = NSUserDefaults.standardUserDefaults()
-    var truckAnnotation = MKPointAnnotation()
+    var truckAnnotation = CustomAnnotations()
     
     let mobileAnnotation = MKPointAnnotation()
     
@@ -105,6 +105,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
 
                     let truckReviews = truck.reviewCount
                     
+                    let truckDetail = truck
                     
                     
                     
@@ -112,6 +113,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
                     self.truckAnnotation.coordinate.longitude = longitude!
                     self.truckAnnotation.title = truckName
                     self.truckAnnotation.subtitle = "\(truckReviews!) reviews on Yelp"
+                    self.truckAnnotation.truckCA = truckDetail
                     
                     self.mapView.addAnnotation(self.truckAnnotation)
                     
@@ -130,7 +132,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         } else if annotation.isEqual(truckAnnotation){
             let pin = MKAnnotationView (annotation: annotation, reuseIdentifier: nil)
             
-//            pin.image = scaleUIImageToSize(UIImage(named: "truck")!, size: CGSizeMake(50, 50))
+            pin.image = scaleUIImageToSize(UIImage(named: "truck")!, size: CGSizeMake(10, 10))
             pin.canShowCallout = true
             pin.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)
             pin.leftCalloutAccessoryView = UIButton(type: .Custom)
@@ -143,7 +145,8 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     }
     
     func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        self.performSegueWithIdentifier("detailSegue", sender: view)
+        let annotation = view.annotation as! CustomAnnotations
+        self.performSegueWithIdentifier("annotationDetailSegue", sender: annotation)
     }
     
     func mapView(mapView: MKMapView, didUpdateUserLocation userLocation: MKUserLocation) {
@@ -161,9 +164,6 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         
         self.userDefaults.setValue(userLat, forKey: "latitude")
         self.userDefaults.setValue(userLong, forKey: "longitude")
-        
-        //        search()
-        
         
         if user != nil {
             self.ref.child("Trucks").child(user!.uid).updateChildValues(["latitude": userLat, "longitude": userLong])
@@ -232,7 +232,13 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
             let detailVC = segue.destinationViewController as! BusinessProfileViewController
             let truck = trucks[indexPath!.row]
             detailVC.trucks = truck
+        } else if segue.identifier == "annotationDetailSegue" {
+            let detailVC = segue.destinationViewController as! BusinessProfileViewController
+            let annotation = sender as! CustomAnnotations
+            detailVC.trucks = annotation.truckCA
         }
+        
+        
 
     }
     
