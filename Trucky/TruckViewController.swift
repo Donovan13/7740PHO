@@ -30,13 +30,12 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     
     let mobileAnnotation = MKPointAnnotation()
     
-    
     var locationOne: CLLocation?
     
     var userLocation: MKUserLocation?
     
     
-    var didFindMyLocation = false
+//    var didFindMyLocation = false
     
     
     override func viewDidLoad() {
@@ -54,6 +53,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         
         loadTrucks()
         
+        self.mapView.setUserTrackingMode(MKUserTrackingMode.Follow, animated: true)
         
         //        let latitude = 41.89374
         //        let longitude = -87.6375187
@@ -147,7 +147,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
             } else if annotation.isEqual(annotation as! CustomAnnotations){
                 let pin = MKAnnotationView (annotation: annotation, reuseIdentifier: nil)
     
-                pin.image = scaleUIImageToSize(UIImage(named: "truck")!, size: CGSizeMake(10, 10))
+                pin.image = scaleUIImageToSize(UIImage(named: "truck")!, size: CGSizeMake(30,30))
                 pin.canShowCallout = true
                 pin.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)
                 pin.leftCalloutAccessoryView = UIButton(type: .Custom)
@@ -166,6 +166,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     
     func mapView(mapView: MKMapView, didUpdateUserLocation userLocation: MKUserLocation) {
         
+        
         let userLoc = userLocation.coordinate
         let userLat = userLocation.coordinate.latitude
         let userLong = userLocation.coordinate.longitude
@@ -173,7 +174,6 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         
         
         locationOne = CLLocation(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude)
-        
         
         self.tableView.reloadData()
         
@@ -199,33 +199,18 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("BusinessTableViewCell") as! BusinessTableViewCell
         let post = trucks[indexPath.row]
-        
-        let truckName = post.truckName
-        let truckAddress = post.address
-        let truckImage = post.imageURL
-        let truckRating = post.ratingImageURL
-        let truckReviewCount = post.reviewCount
-        
         let location = CLLocation(latitude: post.latitude!, longitude: post.longitude!)
         
-        
+        cell.businessLabel?.text = post.truckName
+        cell.addressLabel?.text = post.address
+        cell.businessImage?.image = UIImage(data: NSData(contentsOfURL: NSURL(string:post.imageURL!)!)!)!
+        cell.reviewImage?.image = UIImage(data: NSData(contentsOfURL: NSURL(string:post.ratingImageURL!)!)!)!
+        cell.reviewLabel?.text = "\(post.reviewCount!)"
         if locationOne != nil {
-            
             let distance = location.distanceFromLocation(locationOne!)
             let inMiles = distance * 0.000621371192
             cell.distanceLabel.text = (String(format: "%.2fm Away", inMiles))
-            
         }
-        
-        
-        
-        
-        cell.businessLabel?.text = truckName
-        cell.addressLabel?.text = truckAddress
-        cell.businessImage?.image = UIImage(data: NSData(contentsOfURL: NSURL(string:truckImage!)!)!)!
-        cell.reviewImage?.image = UIImage(data: NSData(contentsOfURL: NSURL(string:truckRating!)!)!)!
-        cell.reviewLabel?.text = "\(truckReviewCount!)"
-        
         
         return cell
     }
@@ -234,26 +219,11 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
-        var selectedCell = tableView.cellForRowAtIndexPath(indexPath)!
-        
         performSegueWithIdentifier("detailSegue", sender: self)
         
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-//        if segue.identifier == "detailSegue" {
-//            //        let cell = sender as! BusinessTableViewCell
-//            let indexPath = self.tableView.indexPathForSelectedRow
-//            let detailVC = segue.destinationViewController as! BusinessProfileViewController
-//            let truck = trucks[indexPath!.row]
-//            detailVC.trucks = truck
-//        } else if segue.identifier == "annotationDetailSegue" {
-//            let detailVC = segue.destinationViewController as! BusinessProfileViewController
-//            let annotation = sender as! CustomAnnotations
-//            detailVC.trucks = annotation.truckCA
-//        }
-//        
-//        
         if let identifier = segue.identifier {
             switch identifier {
             case "detailSegue":
@@ -268,8 +238,6 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
             default: break
             }
         }
-        
-        
     }
     
     @IBAction func showListButton(sender: AnyObject) {
@@ -291,18 +259,18 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         loadTrucks()
     }
     
-    //    //    Location Delegate Methods
-    //    override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
-    //        if !didFindMyLocation {
-    //            let myLocation:CLLocation = change![NSKeyValueChangeNewKey] as! CLLocation
-    //            mapView.setCenterCoordinate(myLocation.coordinate, animated: false)
-    //
-    ////            mapView.camera = GMSCameraPosition.cameraWithTarget(myLocation.coordinate, zoom: 15.0)
-    ////            mapView.settings.myLocationButton = true
-    //            didFindMyLocation = true
-    //        }
-    //    }
-    
+        //    Location Delegate Methods
+//        override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
+//            if !didFindMyLocation {
+//                locationOne = change![NSKeyValueChangeNewKey] as? CLLocation
+//                mapView.setCenterCoordinate(locationOne!.coordinate, animated: false)
+//    
+//    //            mapView.camera = GMSCameraPosition.cameraWithTarget(myLocation.coordinate, zoom: 15.0)
+//    //            mapView.settings.myLocationButton = true
+//                didFindMyLocation = true
+//            }
+//        }
+//    
     
     
     func errorAlert(title: String, message: String) {
