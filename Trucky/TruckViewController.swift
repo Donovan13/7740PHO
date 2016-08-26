@@ -147,7 +147,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
             } else if annotation.isEqual(annotation as! CustomAnnotations){
                 let pin = MKAnnotationView (annotation: annotation, reuseIdentifier: nil)
     
-                pin.image = scaleUIImageToSize(UIImage(named: "truck")!, size: CGSizeMake(10, 10))
+                pin.image = scaleUIImageToSize(UIImage(named: "truck")!, size: CGSizeMake(40, 40))
                 pin.canShowCallout = true
                 pin.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)
                 pin.leftCalloutAccessoryView = UIButton(type: .Custom)
@@ -217,15 +217,17 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
             
         }
         
-        
-        
-        
         cell.businessLabel?.text = truckName
         cell.addressLabel?.text = truckAddress
-        cell.businessImage?.image = UIImage(data: NSData(contentsOfURL: NSURL(string:truckImage!)!)!)!
         cell.reviewImage?.image = UIImage(data: NSData(contentsOfURL: NSURL(string:truckRating!)!)!)!
         cell.reviewLabel?.text = "\(truckReviewCount!)"
         
+        if post.profileImage != nil {
+        
+        cell.businessImage?.image = conversion(post.profileImage!)
+        } else {
+        cell.businessImage?.image = UIImage(data: NSData(contentsOfURL: NSURL(string:truckImage!)!)!)!
+        }
         
         return cell
     }
@@ -322,8 +324,14 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         return scaledImage
     }
     
+    @IBAction func editProfileButton(sender: AnyObject) {
+        self.performSegueWithIdentifier("mapToEditSegue", sender: self)
+    }
     
-    
-    
+    func conversion(photo: String) -> UIImage {
+        let imageData = NSData(base64EncodedString: photo, options: [] )
+        let image = UIImage(data: imageData!)
+        return image!
+    }
     
 }
