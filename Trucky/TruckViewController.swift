@@ -208,7 +208,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
             
             cell.businessImage?.image = conversion(post.profileImage!)
         } else {
-            cell.businessImage?.image = UIImage(data: NSData(contentsOfURL: NSURL(string:truckImage!)!)!)!
+            cell.businessImage?.image = UIImage(data: NSData(contentsOfURL: NSURL(string:post.imageURL!)!)!)!
         }
         cell.reviewImage?.image = UIImage(data: NSData(contentsOfURL: NSURL(string:post.ratingImageURL!)!)!)!
         cell.reviewLabel?.text = "\(post.reviewCount!)"
