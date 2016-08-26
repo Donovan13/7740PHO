@@ -148,6 +148,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
                 let pin = MKAnnotationView (annotation: annotation, reuseIdentifier: nil)
     
                 pin.image = scaleUIImageToSize(UIImage(named: "truck")!, size: CGSizeMake(30,30))
+
                 pin.canShowCallout = true
                 pin.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)
                 pin.leftCalloutAccessoryView = UIButton(type: .Custom)
@@ -203,7 +204,12 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         
         cell.businessLabel?.text = post.truckName
         cell.addressLabel?.text = post.address
-        cell.businessImage?.image = UIImage(data: NSData(contentsOfURL: NSURL(string:post.imageURL!)!)!)!
+        if post.profileImage != nil {
+            
+            cell.businessImage?.image = conversion(post.profileImage!)
+        } else {
+            cell.businessImage?.image = UIImage(data: NSData(contentsOfURL: NSURL(string:truckImage!)!)!)!
+        }
         cell.reviewImage?.image = UIImage(data: NSData(contentsOfURL: NSURL(string:post.ratingImageURL!)!)!)!
         cell.reviewLabel?.text = "\(post.reviewCount!)"
         if locationOne != nil {
@@ -290,8 +296,14 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         return scaledImage
     }
     
+    @IBAction func editProfileButton(sender: AnyObject) {
+        self.performSegueWithIdentifier("mapToEditSegue", sender: self)
+    }
     
-    
-    
+    func conversion(photo: String) -> UIImage {
+        let imageData = NSData(base64EncodedString: photo, options: [] )
+        let image = UIImage(data: imageData!)
+        return image!
+    }
     
 }

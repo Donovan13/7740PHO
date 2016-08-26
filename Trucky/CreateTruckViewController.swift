@@ -69,6 +69,7 @@ class CreateTruckViewController: UIViewController, CLLocationManagerDelegate {
                 
                 
                 self.ref.child("Trucks").child(user!.uid).setValue(dictionary as? Dictionary<String, AnyObject>)
+                self.userDefaults.setValue(user?.uid, forKey: "uid")
                 
                 self.performSegueWithIdentifier("createUserSegue", sender: self)
                 

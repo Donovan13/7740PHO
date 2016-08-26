@@ -82,6 +82,99 @@
             </objects>
             <point key="canvasLocation" x="259" y="-664"/>
         </scene>
+        <!--Edit Profile View Controller-->
+        <scene sceneID="7ic-ut-27v">
+            <objects>
+                <viewController id="q5q-jW-QJE" customClass="EditProfileViewController" customModule="Trucky" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="c21-Qq-qrd"/>
+                        <viewControllerLayoutGuide type="bottom" id="CbU-j8-wEW"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="AIU-Wx-TCq">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Taf-Lw-iCq">
+                                <rect key="frame" x="243" y="471" width="92" height="30"/>
+                                <state key="normal" title="Upload Menu"/>
+                                <connections>
+                                    <action selector="menuPhotoButton:" destination="q5q-jW-QJE" eventType="touchUpInside" id="WUm-SM-e5d"/>
+                                </connections>
+                            </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="pgc-Mp-Wux">
+                                <rect key="frame" x="214" y="110" width="150" height="150"/>
+                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="150" id="B0i-Uh-e8E"/>
+                                    <constraint firstAttribute="width" constant="150" id="auS-Da-k9g"/>
+                                </constraints>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="hrP-yQ-6Rz">
+                                <rect key="frame" x="229" y="313" width="120" height="150"/>
+                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="150" id="ofE-Tg-WlB"/>
+                                    <constraint firstAttribute="width" constant="120" id="xQE-fB-s0L"/>
+                                </constraints>
+                            </imageView>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Website" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kMB-iQ-ZyR">
+                                <rect key="frame" x="182" y="59" width="214" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Truck Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jDy-mk-MxW">
+                                <rect key="frame" x="231" y="20" width="117" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jgf-2T-ScK">
+                                <rect key="frame" x="240" y="550" width="98" height="30"/>
+                                <state key="normal" title="Save Changes"/>
+                                <connections>
+                                    <action selector="saveButton:" destination="q5q-jW-QJE" eventType="touchUpInside" id="7Pr-gZ-BF4"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PRp-7q-BoV">
+                                <rect key="frame" x="213" y="268" width="151" height="30"/>
+                                <state key="normal" title="Update Profile Picture"/>
+                                <connections>
+                                    <action selector="profilePhotoButton:" destination="q5q-jW-QJE" eventType="touchUpInside" id="aId-rM-LVa"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="jgf-2T-ScK" firstAttribute="centerX" secondItem="AIU-Wx-TCq" secondAttribute="centerX" constant="-11" id="7Y9-oV-k5F"/>
+                            <constraint firstItem="hrP-yQ-6Rz" firstAttribute="centerX" secondItem="AIU-Wx-TCq" secondAttribute="centerX" constant="-11" id="IJ2-No-q0x"/>
+                            <constraint firstItem="Taf-Lw-iCq" firstAttribute="top" secondItem="hrP-yQ-6Rz" secondAttribute="bottom" constant="8" id="LEB-av-jxY"/>
+                            <constraint firstItem="pgc-Mp-Wux" firstAttribute="centerX" secondItem="AIU-Wx-TCq" secondAttribute="centerX" constant="-11" id="Lzb-8g-wZt"/>
+                            <constraint firstItem="PRp-7q-BoV" firstAttribute="top" secondItem="pgc-Mp-Wux" secondAttribute="bottom" constant="8" id="M3V-wA-WAA"/>
+                            <constraint firstItem="jgf-2T-ScK" firstAttribute="top" secondItem="Taf-Lw-iCq" secondAttribute="bottom" constant="49" id="MaO-5T-Qgw"/>
+                            <constraint firstItem="kMB-iQ-ZyR" firstAttribute="top" secondItem="jDy-mk-MxW" secondAttribute="bottom" constant="18" id="SDi-0G-nkQ"/>
+                            <constraint firstItem="pgc-Mp-Wux" firstAttribute="top" secondItem="kMB-iQ-ZyR" secondAttribute="bottom" constant="21" id="Zji-Jm-KAj"/>
+                            <constraint firstItem="jDy-mk-MxW" firstAttribute="top" secondItem="c21-Qq-qrd" secondAttribute="bottom" id="e2M-CR-TXD"/>
+                            <constraint firstItem="jDy-mk-MxW" firstAttribute="centerX" secondItem="AIU-Wx-TCq" secondAttribute="centerX" constant="-10.5" id="gJ5-zg-saH"/>
+                            <constraint firstItem="hrP-yQ-6Rz" firstAttribute="top" secondItem="PRp-7q-BoV" secondAttribute="bottom" constant="15" id="krh-7R-L3M"/>
+                            <constraint firstItem="PRp-7q-BoV" firstAttribute="centerX" secondItem="AIU-Wx-TCq" secondAttribute="centerX" constant="-11.5" id="uai-Xa-cWy"/>
+                            <constraint firstItem="kMB-iQ-ZyR" firstAttribute="centerX" secondItem="AIU-Wx-TCq" secondAttribute="centerX" constant="-11" id="utB-A5-tIu"/>
+                            <constraint firstItem="Taf-Lw-iCq" firstAttribute="centerX" secondItem="AIU-Wx-TCq" secondAttribute="centerX" constant="-11" id="wIb-TX-kkL"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="menuButton" destination="Taf-Lw-iCq" id="JIk-cg-86I"/>
+                        <outlet property="menuImageView" destination="hrP-yQ-6Rz" id="cjs-eu-elh"/>
+                        <outlet property="profileImageView" destination="pgc-Mp-Wux" id="2m9-wa-fDO"/>
+                        <outlet property="profilepictureButton" destination="PRp-7q-BoV" id="SYM-oy-Fib"/>
+                        <outlet property="truckLabel" destination="jDy-mk-MxW" id="ALt-OI-moQ"/>
+                        <outlet property="websiteTextField" destination="kMB-iQ-ZyR" id="05D-Aq-LY1"/>
+                        <segue destination="Ruc-lo-W4k" kind="show" identifier="editToMapSegue" id="83W-ak-mQX"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MMm-R2-yz2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1032" y="64"/>
+        </scene>
         <!--Create Truck View Controller-->
         <scene sceneID="Otk-UC-02B">
             <objects>
@@ -216,7 +309,7 @@
                         <outlet property="passwordTextField" destination="jsu-EZ-xJj" id="5Qc-0f-iqc"/>
                         <outlet property="yelpImage" destination="wHL-Xy-rWP" id="Fb2-H9-mIB"/>
                         <outlet property="zipTextField" destination="Yke-nd-q5s" id="zrZ-mn-pOY"/>
-                        <segue destination="Ruc-lo-W4k" kind="show" identifier="createUserSegue" id="XMN-Fy-E2u"/>
+                        <segue destination="q5q-jW-QJE" kind="show" identifier="createUserSegue" id="agN-JL-lDt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="J0s-SI-6m3" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -361,6 +454,13 @@
                                     <outlet property="delegate" destination="Ruc-lo-W4k" id="6nk-IP-kPr"/>
                                 </connections>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pV1-rg-vPk">
+                                <rect key="frame" x="533" y="15" width="44" height="30"/>
+                                <state key="normal" title="Profile"/>
+                                <connections>
+                                    <action selector="editProfileButton:" destination="Ruc-lo-W4k" eventType="touchUpInside" id="6Y2-8r-Dtv"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -375,7 +475,9 @@
                             <constraint firstItem="FKo-Gk-T8V" firstAttribute="top" secondItem="GdG-Lx-Hjz" secondAttribute="bottom" constant="3" id="Z7r-vZ-8at"/>
                             <constraint firstAttribute="trailingMargin" secondItem="BbI-6f-a7f" secondAttribute="trailing" constant="-20" id="bJ9-W3-xfD"/>
                             <constraint firstItem="Hvm-Pi-TxS" firstAttribute="top" secondItem="AT8-Hc-OSz" secondAttribute="bottom" constant="39" id="ctl-QH-gWD"/>
+                            <constraint firstItem="pV1-rg-vPk" firstAttribute="top" secondItem="Qxr-CQ-57P" secondAttribute="topMargin" constant="15" id="dK0-jz-3Rd"/>
                             <constraint firstItem="FKo-Gk-T8V" firstAttribute="centerX" secondItem="Qxr-CQ-57P" secondAttribute="centerX" id="dXa-jQ-YaO"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="pV1-rg-vPk" secondAttribute="trailing" constant="3" id="jBw-yk-kh6"/>
                             <constraint firstItem="BbI-6f-a7f" firstAttribute="top" secondItem="Qxr-CQ-57P" secondAttribute="topMargin" constant="44" id="qFC-s1-AKf"/>
                             <constraint firstItem="Hvm-Pi-TxS" firstAttribute="top" secondItem="BbI-6f-a7f" secondAttribute="bottom" constant="39" id="vfH-HC-aLR"/>
                         </constraints>
@@ -385,11 +487,12 @@
                         <outlet property="tableView" destination="AT8-Hc-OSz" id="r9u-JE-11S"/>
                         <segue destination="iL6-c3-66T" kind="show" identifier="detailSegue" id="2XA-gi-oSt"/>
                         <segue destination="iL6-c3-66T" kind="show" identifier="annotationDetailSegue" id="Jok-xT-yNd"/>
+                        <segue destination="q5q-jW-QJE" kind="show" identifier="mapToEditSegue" id="zYT-J1-j4J"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YAp-zT-x4v" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-736" y="-635"/>
+            <point key="canvasLocation" x="259" y="1015"/>
         </scene>
         <!--Business Profile View Controller-->
         <scene sceneID="5W7-dQ-of6">
@@ -650,11 +753,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qBK-Wd-4ks" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1474" y="-85"/>
+            <point key="canvasLocation" x="578" y="1835"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="caW-5R-oWI"/>
+        <segue reference="83W-ak-mQX"/>
+        <segue reference="zYT-J1-j4J"/>
         <segue reference="Jok-xT-yNd"/>
     </inferredMetricsTieBreakers>
 </document>
