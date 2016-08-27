@@ -82,9 +82,6 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
             return cell
         }
     }
+
     
-    @IBAction func backButton(sender: AnyObject) {
-        dismissViewControllerAnimated(true) {
-        }
-    }
 }

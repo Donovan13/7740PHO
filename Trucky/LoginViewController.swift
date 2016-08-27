@@ -27,10 +27,6 @@ class LoginViewController: UIViewController,CLLocationManagerDelegate {
     }
     
     
-    @IBAction func backButton(sender: AnyObject) {
-        dismissViewControllerAnimated(true) {
-        }
-    }
     
     @IBAction func loginButtonTapped(sender: AnyObject) {
         FIRAuth.auth()?.signInWithEmail(emailTextField.text!, password: passwordTextfield.text!, completion: {
