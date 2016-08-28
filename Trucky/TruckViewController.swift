@@ -305,5 +305,14 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         let image = UIImage(data: imageData!)
         return image!
     }
+   
+    @IBAction func centerLocationButton(sender: AnyObject) {
+        self.mapView.setUserTrackingMode(MKUserTrackingMode.Follow, animated: true)
+
+//        let span = MKCoordinateSpanMake(0.075, 0.075)
+//        let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: userLocation!.coordinate.latitude, longitude: userLocation!.coordinate.longitude), span: span)
+//        mapView.setRegion(region, animated: true)
+    }
+
     
 }
