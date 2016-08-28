@@ -30,10 +30,6 @@ class CreateTruckViewController: UIViewController, CLLocationManagerDelegate {
         self.ref = FIRDatabase.database().reference()
     }
     
-    @IBAction func backButton(sender: AnyObject) {
-        dismissViewControllerAnimated(true) {
-        }
-    }
     
     @IBAction func createUser(sender: AnyObject) {
         for business in self.businesses {
