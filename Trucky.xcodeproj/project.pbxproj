@@ -132,19 +132,11 @@
 		09FF688F1D3EC18800EF4551 /* Trucky */ = {
 			isa = PBXGroup;
 			children = (
-				09FF68901D3EC18800EF4551 /* AppDelegate.swift */,
-				09FF68921D3EC18800EF4551 /* LoginViewController.swift */,
-				096F219B1D4BB81200B42813 /* CreateTruckViewController.swift */,
-				090AE2BE1D6F9CDE000BAFBD /* EditProfileViewController.swift */,
-				095F09B51D400768007E8F5B /* TruckViewController.swift */,
-				0957DB281D6621DA00B38BB2 /* BusinessProfileViewController.swift */,
+				7B390EAC1D73C685003EAD59 /* ViewControllers */,
+				7B390EAD1D73C6A4003EAD59 /* Customs */,
 				09FF68941D3EC18800EF4551 /* Main.storyboard */,
-				09ADB7061D67C1E100890CDB /* CustomAnnotation.swift */,
-				096F21991D4BB29500B42813 /* Business.swift */,
-				09ADB7041D67BE3900890CDB /* Truck.swift */,
-				09D4B2461D6A318B002676D1 /* BusinessTableViewCell.swift */,
-				096F21931D4BACAE00B42813 /* YelpClient.swift */,
 				09FF689A1D3EC18800EF4551 /* Assets.xcassets */,
+				09FF68901D3EC18800EF4551 /* AppDelegate.swift */,
 				09FF689C1D3EC18800EF4551 /* LaunchScreen.storyboard */,
 				09FF689F1D3EC18800EF4551 /* Info.plist */,
 				09FF68C11D3EC1C000EF4551 /* GoogleService-Info.plist */,
@@ -178,6 +170,30 @@
 				6E0E4B358E120246D05E2083 /* Pods-Trucky.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		7B390EAC1D73C685003EAD59 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				09FF68921D3EC18800EF4551 /* LoginViewController.swift */,
+				096F219B1D4BB81200B42813 /* CreateTruckViewController.swift */,
+				095F09B51D400768007E8F5B /* TruckViewController.swift */,
+				0957DB281D6621DA00B38BB2 /* BusinessProfileViewController.swift */,
+				090AE2BE1D6F9CDE000BAFBD /* EditProfileViewController.swift */,
+			);
+			name = ViewControllers;
+			sourceTree = "<group>";
+		};
+		7B390EAD1D73C6A4003EAD59 /* Customs */ = {
+			isa = PBXGroup;
+			children = (
+				09ADB7061D67C1E100890CDB /* CustomAnnotation.swift */,
+				096F21991D4BB29500B42813 /* Business.swift */,
+				09ADB7041D67BE3900890CDB /* Truck.swift */,
+				09D4B2461D6A318B002676D1 /* BusinessTableViewCell.swift */,
+				096F21931D4BACAE00B42813 /* YelpClient.swift */,
+			);
+			name = Customs;
 			sourceTree = "<group>";
 		};
 		86A6BBF02A39C4C17595840A /* Frameworks */ = {
