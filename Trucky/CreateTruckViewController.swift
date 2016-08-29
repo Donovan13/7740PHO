@@ -36,6 +36,8 @@ class CreateTruckViewController: UIViewController, CLLocationManagerDelegate {
             print(business)
         }
         
+        if passwordTextField.text == confirmPassword.text {
+        
         FIRAuth.auth()?.createUserWithEmail(emailTextField.text!, password: passwordTextField.text!, completion: {
             user, error in
             
@@ -72,6 +74,11 @@ class CreateTruckViewController: UIViewController, CLLocationManagerDelegate {
             }
             
         })
+        }
+        else {
+            errorAlert("Passwords do not match", message: "Please try again")
+        }
+        
     }
     
     
@@ -106,8 +113,6 @@ class CreateTruckViewController: UIViewController, CLLocationManagerDelegate {
     @IBAction func matchTruck(sender: AnyObject) {
         
         search(businessNameTextField.text!, location: zipTextField.text!)
-        
-        
         
         
     }

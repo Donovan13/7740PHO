@@ -247,13 +247,6 @@
                                     <action selector="matchTruck:" destination="lLu-LS-0GJ" eventType="touchUpInside" id="xdY-dQ-xh2"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="wHL-Xy-rWP">
-                                <rect key="frame" x="209" y="192" width="182" height="128"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="182" id="JJR-Ne-TCE"/>
-                                    <constraint firstAttribute="height" constant="128" id="x6Y-1x-ShS"/>
-                                </constraints>
-                            </imageView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="blA-jY-fpY">
                                 <rect key="frame" x="209" y="328" width="182" height="80"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -264,6 +257,13 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="wHL-Xy-rWP">
+                                <rect key="frame" x="225" y="192" width="150" height="128"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="150" id="JJR-Ne-TCE"/>
+                                    <constraint firstAttribute="height" constant="128" id="x6Y-1x-ShS"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -314,13 +314,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SMJ-cB-ALq">
-                                <rect key="frame" x="533" y="564" width="47" height="30"/>
-                                <state key="normal" title="Reload"/>
-                                <connections>
-                                    <action selector="reloadButton:" destination="Ruc-lo-W4k" eventType="touchUpInside" id="0ZP-9i-JBk"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hPQ-vr-3gg">
                                 <rect key="frame" x="250" y="564" width="101" height="30"/>
                                 <constraints>
@@ -333,7 +326,7 @@
                                 </connections>
                             </button>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="BbI-6f-a7f">
-                                <rect key="frame" x="0.0" y="64" width="600" height="497"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="561"/>
                                 <connections>
                                     <outlet property="delegate" destination="Ruc-lo-W4k" id="MIw-ac-kqK"/>
                                 </connections>
@@ -387,9 +380,9 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Distance" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pBN-1E-C80" userLabel="Distance Label">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Distance" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pBN-1E-C80" userLabel="Distance Label">
                                                     <rect key="frame" x="525" y="8" width="67" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -427,29 +420,44 @@
                                     <outlet property="delegate" destination="Ruc-lo-W4k" id="6nk-IP-kPr"/>
                                 </connections>
                             </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="36i-cV-z3v">
-                                <rect key="frame" x="14" y="564" width="59" height="30"/>
-                                <state key="normal" title="Location"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="36i-cV-z3v">
+                                <rect key="frame" x="20" y="564" width="30" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="Fns-2u-fKY"/>
+                                    <constraint firstAttribute="width" constant="30" id="eCU-0c-jsN"/>
+                                </constraints>
+                                <state key="normal" title="Location" image="location"/>
                                 <connections>
                                     <action selector="centerLocationButton:" destination="Ruc-lo-W4k" eventType="touchUpInside" id="y9Y-az-mIo"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SMJ-cB-ALq">
+                                <rect key="frame" x="555" y="564" width="30" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="30" id="2or-Zb-oZB"/>
+                                    <constraint firstAttribute="height" constant="30" id="AAY-HL-pKv"/>
+                                </constraints>
+                                <state key="normal" title="Reload" image="reload"/>
+                                <connections>
+                                    <action selector="reloadButton:" destination="Ruc-lo-W4k" eventType="touchUpInside" id="0ZP-9i-JBk"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="36i-cV-z3v" firstAttribute="leading" secondItem="Qxr-CQ-57P" secondAttribute="leadingMargin" constant="-6" id="2qZ-o9-p5f"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="SMJ-cB-ALq" secondAttribute="trailing" constant="-5" id="1fv-yW-9qk"/>
                             <constraint firstItem="hPQ-vr-3gg" firstAttribute="top" secondItem="AT8-Hc-OSz" secondAttribute="bottom" constant="3" id="7RG-Ol-OKQ"/>
                             <constraint firstItem="AT8-Hc-OSz" firstAttribute="top" secondItem="Qxr-CQ-57P" secondAttribute="topMargin" constant="408" id="KEk-70-vld"/>
                             <constraint firstItem="AT8-Hc-OSz" firstAttribute="leading" secondItem="Qxr-CQ-57P" secondAttribute="leadingMargin" constant="-20" id="QJ1-oL-h9P"/>
-                            <constraint firstItem="Hvm-Pi-TxS" firstAttribute="top" secondItem="SMJ-cB-ALq" secondAttribute="bottom" constant="6" id="QeU-Mv-pNQ"/>
                             <constraint firstAttribute="trailingMargin" secondItem="AT8-Hc-OSz" secondAttribute="trailing" constant="-20" id="Vg1-S5-9Kj"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="SMJ-cB-ALq" secondAttribute="trailing" id="VkM-9i-PNx"/>
                             <constraint firstItem="BbI-6f-a7f" firstAttribute="leading" secondItem="Qxr-CQ-57P" secondAttribute="leadingMargin" constant="-20" id="Y6s-BW-3KJ"/>
                             <constraint firstItem="hPQ-vr-3gg" firstAttribute="centerX" secondItem="Qxr-CQ-57P" secondAttribute="centerX" id="YNE-95-ZOf"/>
                             <constraint firstAttribute="trailingMargin" secondItem="BbI-6f-a7f" secondAttribute="trailing" constant="-20" id="bJ9-W3-xfD"/>
                             <constraint firstItem="Hvm-Pi-TxS" firstAttribute="top" secondItem="AT8-Hc-OSz" secondAttribute="bottom" constant="39" id="ctl-QH-gWD"/>
-                            <constraint firstItem="BbI-6f-a7f" firstAttribute="top" secondItem="Qxr-CQ-57P" secondAttribute="topMargin" constant="64" id="qFC-s1-AKf"/>
-                            <constraint firstItem="Hvm-Pi-TxS" firstAttribute="top" secondItem="36i-cV-z3v" secondAttribute="bottom" constant="6" id="uWc-yX-xdm"/>
+                            <constraint firstItem="Hvm-Pi-TxS" firstAttribute="top" secondItem="36i-cV-z3v" secondAttribute="bottom" constant="6" id="foh-2S-dpw"/>
+                            <constraint firstItem="36i-cV-z3v" firstAttribute="leading" secondItem="Qxr-CQ-57P" secondAttribute="leadingMargin" id="hnY-RL-Svs"/>
+                            <constraint firstItem="BbI-6f-a7f" firstAttribute="top" secondItem="Qxr-CQ-57P" secondAttribute="topMargin" id="qFC-s1-AKf"/>
+                            <constraint firstItem="Hvm-Pi-TxS" firstAttribute="top" secondItem="SMJ-cB-ALq" secondAttribute="bottom" constant="6" id="tBg-58-9Vh"/>
                             <constraint firstItem="Hvm-Pi-TxS" firstAttribute="top" secondItem="BbI-6f-a7f" secondAttribute="bottom" constant="39" id="vfH-HC-aLR"/>
                         </constraints>
                     </view>
@@ -760,9 +768,13 @@
             <point key="canvasLocation" x="-549" y="1015"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="location" width="310" height="310"/>
+        <image name="reload" width="256" height="256"/>
+    </resources>
     <inferredMetricsTieBreakers>
         <segue reference="caW-5R-oWI"/>
-        <segue reference="zYT-J1-j4J"/>
         <segue reference="Jok-xT-yNd"/>
+        <segue reference="zYT-J1-j4J"/>
     </inferredMetricsTieBreakers>
 </document>
