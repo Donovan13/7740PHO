@@ -332,6 +332,12 @@
                                     <action selector="showListButton:" destination="Ruc-lo-W4k" eventType="touchUpInside" id="A9V-xE-LF8"/>
                                 </connections>
                             </button>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="BbI-6f-a7f">
+                                <rect key="frame" x="0.0" y="64" width="600" height="497"/>
+                                <connections>
+                                    <outlet property="delegate" destination="Ruc-lo-W4k" id="MIw-ac-kqK"/>
+                                </connections>
+                            </mapView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="125" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="AT8-Hc-OSz">
                                 <rect key="frame" x="0.0" y="408" width="600" height="153"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -421,15 +427,17 @@
                                     <outlet property="delegate" destination="Ruc-lo-W4k" id="6nk-IP-kPr"/>
                                 </connections>
                             </tableView>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="BbI-6f-a7f">
-                                <rect key="frame" x="0.0" y="64" width="600" height="497"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="36i-cV-z3v">
+                                <rect key="frame" x="14" y="564" width="59" height="30"/>
+                                <state key="normal" title="Location"/>
                                 <connections>
-                                    <outlet property="delegate" destination="Ruc-lo-W4k" id="MIw-ac-kqK"/>
+                                    <action selector="centerLocationButton:" destination="Ruc-lo-W4k" eventType="touchUpInside" id="y9Y-az-mIo"/>
                                 </connections>
-                            </mapView>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="36i-cV-z3v" firstAttribute="leading" secondItem="Qxr-CQ-57P" secondAttribute="leadingMargin" constant="-6" id="2qZ-o9-p5f"/>
                             <constraint firstItem="hPQ-vr-3gg" firstAttribute="top" secondItem="AT8-Hc-OSz" secondAttribute="bottom" constant="3" id="7RG-Ol-OKQ"/>
                             <constraint firstItem="AT8-Hc-OSz" firstAttribute="top" secondItem="Qxr-CQ-57P" secondAttribute="topMargin" constant="408" id="KEk-70-vld"/>
                             <constraint firstItem="AT8-Hc-OSz" firstAttribute="leading" secondItem="Qxr-CQ-57P" secondAttribute="leadingMargin" constant="-20" id="QJ1-oL-h9P"/>
@@ -441,6 +449,7 @@
                             <constraint firstAttribute="trailingMargin" secondItem="BbI-6f-a7f" secondAttribute="trailing" constant="-20" id="bJ9-W3-xfD"/>
                             <constraint firstItem="Hvm-Pi-TxS" firstAttribute="top" secondItem="AT8-Hc-OSz" secondAttribute="bottom" constant="39" id="ctl-QH-gWD"/>
                             <constraint firstItem="BbI-6f-a7f" firstAttribute="top" secondItem="Qxr-CQ-57P" secondAttribute="topMargin" constant="64" id="qFC-s1-AKf"/>
+                            <constraint firstItem="Hvm-Pi-TxS" firstAttribute="top" secondItem="36i-cV-z3v" secondAttribute="bottom" constant="6" id="uWc-yX-xdm"/>
                             <constraint firstItem="Hvm-Pi-TxS" firstAttribute="top" secondItem="BbI-6f-a7f" secondAttribute="bottom" constant="39" id="vfH-HC-aLR"/>
                         </constraints>
                     </view>
