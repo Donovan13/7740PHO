@@ -18,7 +18,12 @@ class CreateTruckViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var confirmPassword: UITextField!
     @IBOutlet weak var zipTextField: UITextField!
     @IBOutlet weak var businessNameTextField: UITextField!
-    @IBOutlet weak var addressTextView: UITextView!
+    @IBOutlet weak var businessTextField: UILabel!
+    @IBOutlet weak var reviewsTextField: UILabel!
+    @IBOutlet weak var categoryTextField: UILabel!
+    @IBOutlet weak var ratingsImageView: UIImageView!
+    @IBOutlet weak var addressTextField: UILabel!
+    
     
     var ref:FIRDatabaseReference!
     var businesses = [Business]()
@@ -92,9 +97,11 @@ class CreateTruckViewController: UIViewController, CLLocationManagerDelegate {
             
             let truckAddress = self.businesses.first?.fullAddress
             let truckPhone = self.businesses.first?.phone
-            self.addressTextView.text = "\(truckAddress!) \(truckPhone!)"
-            
-            
+            self.addressTextField.text = "\(truckAddress!)"
+            self.businessTextField.text = self.businesses.first?.name
+            let ratingsImage = UIImage(data: NSData(contentsOfURL: NSURL(string: "\(businesses.first!.ratingImageURL!)")!)!)
+            self.ratingsImageView.image = ratingsImage
+            self.reviewsTextField?.text = "\(self.businesses.first!.reviewCount!) reviews on Yelp"
             let urlImage =  UIImage(data: NSData(contentsOfURL: NSURL(string:"\(businesses.first!.imageURL!)")!)!)
             self.yelpImage.image = urlImage
             

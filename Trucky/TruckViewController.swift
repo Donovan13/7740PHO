@@ -143,7 +143,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         cell.businessLabel?.text = post.truckName
         cell.addressLabel?.text = post.address
         cell.reviewImage?.image = UIImage(data: NSData(contentsOfURL: NSURL(string:post.ratingImageURL!)!)!)!
-        cell.reviewLabel?.text = "\(post.reviewCount!)"
+        cell.reviewLabel?.text = "\(post.reviewCount!) reviews on Yelp"
         
         if userlocation != nil {
             let distance = location.distanceFromLocation(userlocation!)
