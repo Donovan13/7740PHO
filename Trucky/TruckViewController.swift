@@ -49,6 +49,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         self.navigationController?.navigationBar.translucent = true
 
         self.navigationController!.navigationBar.titleTextAttributes = [ NSFontAttributeName: UIFont(name: "times", size: 20)!]
+    
 
         loadTrucks()
     }
@@ -111,7 +112,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         
         let userLat = userLocation.coordinate.latitude
         let userLong = userLocation.coordinate.longitude
-        
+        print(userLocation)
         userlocation = CLLocation(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude)
         
         self.tableView.reloadData()
@@ -140,7 +141,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         let post = trucks[indexPath.row]
         let location = CLLocation(latitude: post.latitude!, longitude: post.longitude!)
         
-        cell.businessLabel?.text = post.truckName
+        cell.businessLabel?.text = post.truckName?.capitalizedString
         cell.addressLabel?.text = post.address
         cell.reviewImage?.image = UIImage(data: NSData(contentsOfURL: NSURL(string:post.ratingImageURL!)!)!)!
         cell.reviewLabel?.text = "\(post.reviewCount!) reviews on Yelp"
@@ -203,9 +204,9 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         loadTrucks()
     }
     
-    @IBAction func editProfileButton(sender: AnyObject) {
-        self.performSegueWithIdentifier("mapToEditSegue", sender: self)
-    }
+//    @IBAction func editProfileButton(sender: AnyObject) {
+//        self.performSegueWithIdentifier("mapToEditSegue", sender: self)
+//    }
     
     @IBAction func centerLocationButton(sender: AnyObject) {
         mapView.setUserTrackingMode(MKUserTrackingMode.Follow, animated: true)
@@ -270,7 +271,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
                     
                     truckAnnotation.coordinate.latitude = truck.latitude!
                     truckAnnotation.coordinate.longitude = truck.longitude!
-                    truckAnnotation.title = truck.truckName
+                    truckAnnotation.title = truck.truckName?.capitalizedString
                     truckAnnotation.subtitle = "\(truck.reviewCount!) reviews on Yelp"
                     truckAnnotation.truckCA = truck
                     //                    let qualityOfServiceClass = QOS_CLASS_BACKGROUND
@@ -283,7 +284,6 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
             self.tableView.reloadData()
         })
     }
-    
     
     
 }
