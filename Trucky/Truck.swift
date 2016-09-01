@@ -21,6 +21,7 @@ class Truck: NSObject {
     let profileImage: String?
     let latitude: Double?
     let longitude: Double?
+    let activeLocation: String?
     
     
     
@@ -38,5 +39,6 @@ class Truck: NSObject {
         profileImage = dictionary["profileImage"] as? String
         latitude = dictionary["latitude"] as? Double
         longitude = dictionary["longitude"] as? Double
+        activeLocation = dictionary["activeLocation"] as? String
     }
 }

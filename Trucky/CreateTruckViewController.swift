@@ -48,11 +48,12 @@ class CreateTruckViewController: UIViewController, CLLocationManagerDelegate {
             
             
             
+            
             if error != nil {
                 
                 self.errorAlert("Error", message: "\(error?.localizedDescription)")
                 
-            } else {
+            } else if user != nil {
                 print ("User Created")
                 
                 let longitude = self.userDefaults.valueForKey("longitude")
@@ -68,11 +69,13 @@ class CreateTruckViewController: UIViewController, CLLocationManagerDelegate {
                     "reviewCount": self.businesses.first!.reviewCount,
                     "phone": self.businesses.first!.phone,
                     "latitude": latitude,
-                    "longitude": longitude]
+                    "longitude": longitude,
+                    "activeLocation" : "false"]
                 
                 
                 self.ref.child("Trucks").child(user!.uid).setValue(dictionary as? Dictionary<String, AnyObject>)
-                self.userDefaults.setValue(user?.uid, forKey: "uid")
+                
+//                self.userDefaults.setValue(user?.uid, forKey: "uid")
                 
                 self.performSegueWithIdentifier("createUserSegue", sender: self)
                 

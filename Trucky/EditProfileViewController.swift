@@ -27,8 +27,11 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.ref = FIRDatabase.database().reference()
+        
+        ref = FIRDatabase.database().reference()
         print("\(userDefaults.stringForKey("uid"))")
+        
+        currentUser()
     }
     
     @IBAction func profilePhotoButton(sender: AnyObject) {
@@ -85,6 +88,34 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         self.performSegueWithIdentifier("editToMapSegue", sender: self)
         
         
+    }
+    func currentUser() {
+        
+        
+        let userUID = userDefaults.stringForKey("uid")
+        if userUID != nil {
+            
+            ref.child("Trucks").child(userUID!).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
+                let userImage = snapshot.value!["imageURL"] as! String
+                let profileImage = snapshot.value!["profileImage"]
+                
+                if profileImage != nil {
+                    self.profileImageView.image = self.conversion(profileImage as! String)
+                } else {
+                    self.profileImageView.image = UIImage(data: NSData(contentsOfURL: NSURL(string:userImage)!)!)
+                }
+            })
+            
+        }
+        else {
+            print("No users logged in")
+        }
+    }
+    
+    func conversion(photo: String) -> UIImage {
+        let imageData = NSData(base64EncodedString: photo, options: [] )
+        let image = UIImage(data: imageData!)
+        return image!
     }
     
     func imageConversion(image: UIImage) -> String {

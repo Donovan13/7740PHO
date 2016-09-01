@@ -22,7 +22,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     @IBOutlet weak var tableView: UITableView!
     
     //    MARK: Var & Let
-    var ref:FIRDatabaseReference!
+    var ref:FIRDatabaseReference?
     var user = FIRAuth.auth()?.currentUser!
     var businesses = [Business]()
     var trucks = [Truck]()
@@ -37,7 +37,6 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         ref = FIRDatabase.database().reference()
         
         locationManager.requestAlwaysAuthorization()
-        locationManager.startUpdatingLocation()
         locationManager.delegate = self
         
         mapView.delegate = self
@@ -47,16 +46,25 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.translucent = true
-
+        
         self.navigationController!.navigationBar.titleTextAttributes = [ NSFontAttributeName: UIFont(name: "times", size: 20)!]
-    
-
-        loadTrucks()
+        
+//        let qualityOfServiceClass = QOS_CLASS_BACKGROUND
+//        let backgroundQueue = dispatch_get_global_queue(qualityOfServiceClass, 0)
+//        dispatch_async(backgroundQueue) {
+//            self.loadTrucks()
+//        }
+        //        loadTrucks()
+        
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(false)
-        
+        let qualityOfServiceClass = QOS_CLASS_BACKGROUND
+        let backgroundQueue = dispatch_get_global_queue(qualityOfServiceClass, 0)
+        dispatch_async(backgroundQueue) {
+            self.loadTrucks()
+        }
     }
     
     
@@ -112,7 +120,6 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         
         let userLat = userLocation.coordinate.latitude
         let userLong = userLocation.coordinate.longitude
-        print(userLocation)
         userlocation = CLLocation(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude)
         
         self.tableView.reloadData()
@@ -120,9 +127,9 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         self.userDefaults.setValue(userLat, forKey: "latitude")
         self.userDefaults.setValue(userLong, forKey: "longitude")
         
-        if user != nil {
-            self.ref.child("Trucks").child(user!.uid).updateChildValues(["latitude": userLat, "longitude": userLong])
-            print("\(userLat)")
+        if userDefaults.stringForKey("uid") != nil {
+            self.ref!.child("Trucks").child(userDefaults.stringForKey("uid")!).updateChildValues(["latitude": userLat, "longitude": userLong])
+            //            print("\(userLat)")
             
         } else {
             //            errorAlert("", message: "")
@@ -204,13 +211,21 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         loadTrucks()
     }
     
-//    @IBAction func editProfileButton(sender: AnyObject) {
-//        self.performSegueWithIdentifier("mapToEditSegue", sender: self)
-//    }
+    //    @IBAction func editProfileButton(sender: AnyObject) {
+    //        self.performSegueWithIdentifier("mapToEditSegue", sender: self)
+    //    }
     
     @IBAction func centerLocationButton(sender: AnyObject) {
         mapView.setUserTrackingMode(MKUserTrackingMode.Follow, animated: true)
     }
+    
+    @IBAction func userButton(sender: AnyObject) {
+        
+    }
+    
+    
+    
+    
     
     
     
@@ -255,10 +270,11 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     }
     
     func loadTrucks() {
-        self.ref.child("Trucks").observeSingleEventOfType(.Value, withBlock: { snapshots in
+        
+        self.ref!.child("Trucks").observeSingleEventOfType(.Value, withBlock: { snapshots in
             
             self.trucks = []
-    
+            
             if let snapshot = snapshots.children.allObjects as? [FIRDataSnapshot] {
                 for snap in snapshot {
                     if let postDictionary = snap.value as? Dictionary<String, AnyObject> {
@@ -267,18 +283,21 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
                     }
                 }
                 for truck in self.trucks {
-                    let truckAnnotation = CustomAnnotations()
-                    
-                    truckAnnotation.coordinate.latitude = truck.latitude!
-                    truckAnnotation.coordinate.longitude = truck.longitude!
-                    truckAnnotation.title = truck.truckName?.capitalizedString
-                    truckAnnotation.subtitle = "\(truck.reviewCount!) reviews on Yelp"
-                    truckAnnotation.truckCA = truck
-                    //                    let qualityOfServiceClass = QOS_CLASS_BACKGROUND
-                    //                    let backgroundQueue = dispatch_get_global_queue(qualityOfServiceClass, 0)
-                    //                    dispatch_async(backgroundQueue) {
-                    self.mapView.addAnnotation(truckAnnotation)
-                    //                    }
+                    if truck.activeLocation == "true" {
+                        
+                        let truckAnnotation = CustomAnnotations()
+                        
+                        truckAnnotation.coordinate.latitude = truck.latitude!
+                        truckAnnotation.coordinate.longitude = truck.longitude!
+                        truckAnnotation.title = truck.truckName?.capitalizedString
+                        truckAnnotation.subtitle = "\(truck.reviewCount!) reviews on Yelp"
+                        truckAnnotation.truckCA = truck
+                        //                    let qualityOfServiceClass = QOS_CLASS_BACKGROUND
+                        //                    let backgroundQueue = dispatch_get_global_queue(qualityOfServiceClass, 0)
+                        //                    dispatch_async(backgroundQueue) {
+                        self.mapView.addAnnotation(truckAnnotation)
+                        //                    }
+                    }
                 }
             }
             self.tableView.reloadData()
