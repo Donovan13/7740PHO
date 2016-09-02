@@ -38,6 +38,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         
         locationManager.requestAlwaysAuthorization()
         locationManager.delegate = self
+        locationManager.startUpdatingLocation()
         
         mapView.delegate = self
         mapView.showsUserLocation = true
@@ -65,6 +66,8 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         dispatch_async(backgroundQueue) {
             self.loadTrucks()
         }
+        
+
     }
     
     
@@ -134,6 +137,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         } else {
             //            errorAlert("", message: "")
         }
+        
     }
     
     
@@ -217,7 +221,13 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     
     @IBAction func centerLocationButton(sender: AnyObject) {
         mapView.setUserTrackingMode(MKUserTrackingMode.Follow, animated: true)
-    }
+        let latitude = userlocation?.coordinate.latitude
+        let longitude = userlocation?.coordinate.longitude
+        let span = MKCoordinateSpanMake(0.075, 0.075)
+        let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: latitude!, longitude: longitude!), span: span)
+        mapView.setRegion(region, animated: true)
+        
+            }
     
     @IBAction func userButton(sender: AnyObject) {
         

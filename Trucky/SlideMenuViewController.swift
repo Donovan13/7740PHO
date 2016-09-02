@@ -89,11 +89,10 @@ class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableVie
         
         
         if self.locationSwitch.on == true {
-            locationManager.startUpdatingLocation()
             ref.child("Trucks").child(userUID!).updateChildValues(["activeLocation": "true"])
             userDefaults.setValue("true", forKey: "activeLocation")
         } else {
-            locationManager.stopUpdatingLocation()
+
             ref.child("Trucks").child(userUID!).updateChildValues(["activeLocation": "false"])
             userDefaults.setValue("false", forKey: "activeLocation")
         }
