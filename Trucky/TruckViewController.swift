@@ -20,6 +20,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     //    MARK: Outlets
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var menuButton: UIButton!
     
     //    MARK: Var & Let
     var ref:FIRDatabaseReference?
@@ -50,24 +51,25 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         
         self.navigationController!.navigationBar.titleTextAttributes = [ NSFontAttributeName: UIFont(name: "times", size: 20)!]
         
-//        let qualityOfServiceClass = QOS_CLASS_BACKGROUND
-//        let backgroundQueue = dispatch_get_global_queue(qualityOfServiceClass, 0)
-//        dispatch_async(backgroundQueue) {
-//            self.loadTrucks()
-//        }
+        
+        //        let qualityOfServiceClass = QOS_CLASS_BACKGROUND
+        //        let backgroundQueue = dispatch_get_global_queue(qualityOfServiceClass, 0)
+        //        dispatch_async(backgroundQueue) {
+        //            self.loadTrucks()
+        //        }
         //        loadTrucks()
         
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(false)
-        let qualityOfServiceClass = QOS_CLASS_BACKGROUND
-        let backgroundQueue = dispatch_get_global_queue(qualityOfServiceClass, 0)
-        dispatch_async(backgroundQueue) {
+        //        let qualityOfServiceClass = QOS_CLASS_BACKGROUND
+        //        let backgroundQueue = dispatch_get_global_queue(qualityOfServiceClass, 0)
+        dispatch_async(dispatch_get_main_queue()) {
             self.loadTrucks()
         }
         
-
+        
     }
     
     
@@ -154,7 +156,6 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         
         cell.businessLabel?.text = post.truckName?.capitalizedString
         cell.addressLabel?.text = post.address
-        cell.reviewImage?.image = UIImage(data: NSData(contentsOfURL: NSURL(string:post.ratingImageURL!)!)!)!
         cell.reviewLabel?.text = "\(post.reviewCount!) reviews on Yelp"
         
         if userlocation != nil {
@@ -163,10 +164,14 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
             cell.distanceLabel.text = (String(format: "%.2fm Away", inMiles))
         }
         
-        if post.profileImage != nil {
-            cell.businessImage?.image = conversion(post.profileImage!)
-        } else {
-            cell.businessImage?.image = UIImage(data: NSData(contentsOfURL: NSURL(string:post.imageURL!)!)!)!
+        dispatch_async(dispatch_get_main_queue()) {
+            cell.reviewImage?.image = UIImage(data: NSData(contentsOfURL: NSURL(string:post.ratingImageURL!)!)!)!
+            
+            if post.profileImage != nil {
+                cell.businessImage?.image = self.conversion(post.profileImage!)
+            } else {
+                cell.businessImage?.image = UIImage(data: NSData(contentsOfURL: NSURL(string:post.imageURL!)!)!)!
+            }
         }
         
         return cell
@@ -211,13 +216,13 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     }
     
     @IBAction func reloadButton(sender: AnyObject) {
-        mapView.removeAnnotations(mapView.annotations)
-        loadTrucks()
+        dispatch_async(dispatch_get_main_queue()) {
+            self.mapView.removeAnnotations(self.mapView.annotations)
+            self.loadTrucks()
+        }
+        
     }
     
-    //    @IBAction func editProfileButton(sender: AnyObject) {
-    //        self.performSegueWithIdentifier("mapToEditSegue", sender: self)
-    //    }
     
     @IBAction func centerLocationButton(sender: AnyObject) {
         mapView.setUserTrackingMode(MKUserTrackingMode.Follow, animated: true)
@@ -227,10 +232,19 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: latitude!, longitude: longitude!), span: span)
         mapView.setRegion(region, animated: true)
         
-            }
+    }
     
-    @IBAction func userButton(sender: AnyObject) {
+    
+    @IBAction func menuButtonTapped(sender: AnyObject) {
+        let userUID = userDefaults.stringForKey("uid")
         
+        
+        if userUID != nil {
+            self.performSegueWithIdentifier("mapToMenuSegue", sender: self)
+            
+        } else {
+            self.performSegueWithIdentifier("mapToLoginSegue", sender: self)
+        }
     }
     
     
@@ -238,8 +252,8 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     
     
     
-    
     //    MARK: Custom Functions
+    
     func errorAlert(title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
         let action = UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default, handler: nil)
@@ -305,12 +319,15 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
                         //                    let qualityOfServiceClass = QOS_CLASS_BACKGROUND
                         //                    let backgroundQueue = dispatch_get_global_queue(qualityOfServiceClass, 0)
                         //                    dispatch_async(backgroundQueue) {
-                        self.mapView.addAnnotation(truckAnnotation)
-                        //                    }
+                        dispatch_async(dispatch_get_main_queue()) {
+                            self.mapView.addAnnotation(truckAnnotation)
+                        }
                     }
                 }
             }
-            self.tableView.reloadData()
+            dispatch_async(dispatch_get_main_queue()) {
+                self.tableView.reloadData()
+            }
         })
     }
     

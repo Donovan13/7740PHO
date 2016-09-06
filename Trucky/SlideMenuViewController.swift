@@ -43,11 +43,11 @@ class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableVie
             
             
             let cell = tableView.dequeueReusableCellWithIdentifier("loginCell", forIndexPath: indexPath)
-            cell.textLabel?.text = "Log Out"
+            cell.textLabel?.text = "Edit Profile"
             return cell
         } else {
             let cell = tableView.dequeueReusableCellWithIdentifier("logoutCell", forIndexPath: indexPath)
-            cell.textLabel?.text = "Log in"
+            cell.textLabel?.text = "Log Out"
             return cell
             
             
@@ -60,26 +60,25 @@ class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableVie
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
         
         if indexPath.row == 0 {
+            performSegueWithIdentifier("menuToEditSegue", sender: self)
+            
+        }
+        
+        
+        
+        else if indexPath.row == 1 {
             
             if FIRAuth.auth()?.currentUser != nil {
                 do {
                     try FIRAuth.auth()?.signOut()
                     userDefaults.setValue(nil, forKey: "uid")
-                    
+                    dismissViewControllerAnimated(true, completion: nil)
+
                 } catch let error as NSError {
                     print(error.localizedDescription)
                 }
             }
         }
-        else {
-            performSegueWithIdentifier("menuToLoginSegue", sender: self)
-            
-        }
-        
-    }
-    
-    @IBAction func editDetailsButton(sender: AnyObject) {
-        performSegueWithIdentifier("menuToEditSegue", sender: self)
         
     }
     
@@ -117,13 +116,16 @@ class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableVie
                 let userImage = snapshot.value!["imageURL"] as! String
                 let profileImage = snapshot.value!["profileImage"]
                 let activeLocation = snapshot.value!["activeLocation"] as! String
+                let truckName = snapshot.value!["truckName"] as! String
                 
+                self.nameLabel.text = "\(truckName)".capitalizedString
+
                 
-//                if profileImage != nil {
-//                    self.logoImageView.image = self.conversion(profileImage as! String)
-//                } else {
+                if profileImage != nil {
+                    self.logoImageView.image = self.conversion(profileImage as! String)
+                } else {
                     self.logoImageView.image = UIImage(data: NSData(contentsOfURL: NSURL(string:userImage)!)!)
-//                }
+                }
                 if activeLocation == "true" {
                     self.locationSwitch.on = true
                 } else {

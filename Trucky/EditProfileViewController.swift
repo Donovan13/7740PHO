@@ -72,16 +72,18 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     
     @IBAction func saveButton(sender: AnyObject) {
         
-        let profileImg = imageConversion(self.profileImageView.image!)
-        let menuImg = imageConversion(self.menuImageView.image!)
         let userUID = userDefaults.stringForKey("uid")
         
+        let profileImg = imageConversion(self.profileImageView.image!)
+        let menuImg = imageConversion(self.menuImageView.image!)
+        let truckWebsite = websiteTextField.text
         
         self.userDefaults.setValue(profileImg, forKey: "profileImage")
         self.userDefaults.setValue(menuImg, forKey: "menuImage")
+        self.userDefaults.setValue(truckWebsite, forKey: "website")
         
         
-        self.ref.child("Trucks").child(userUID!).updateChildValues(["profileImage": profileImg, "menuImage": menuImg])
+        self.ref.child("Trucks").child(userUID!).updateChildValues(["profileImage": profileImg, "menuImage": menuImg, "website": truckWebsite!])
         
         
         
@@ -98,16 +100,29 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
             ref.child("Trucks").child(userUID!).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
                 let userImage = snapshot.value!["imageURL"] as! String
                 let profileImage = snapshot.value!["profileImage"]
+                let website = snapshot.value!["website"] as? String
+                let menu = snapshot.value!["menuImage"]
                 
                 if profileImage != nil {
                     self.profileImageView.image = self.conversion(profileImage as! String)
                 } else {
                     self.profileImageView.image = UIImage(data: NSData(contentsOfURL: NSURL(string:userImage)!)!)
                 }
+                
+                if menu != nil {
+                    self.menuImageView.image = self.conversion((menu as? String)!)
+                } else {
+                    self.menuImageView.image = UIImage(named: "menu")
+                }
+                
+                if website != nil {
+                    self.websiteTextField.text = website
+                } else {
+                    self.websiteTextField.text = nil
+                }
             })
             
-        }
-        else {
+        } else {
             print("No users logged in")
         }
     }
