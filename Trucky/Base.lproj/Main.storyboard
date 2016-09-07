@@ -217,7 +217,7 @@
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="pgc-Mp-Wux">
-                                <rect key="frame" x="214" y="171" width="150" height="150"/>
+                                <rect key="frame" x="121" y="171" width="150" height="150"/>
                                 <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="150" id="B0i-Uh-e8E"/>
@@ -232,8 +232,11 @@
                                     <constraint firstAttribute="width" constant="120" id="xQE-fB-s0L"/>
                                 </constraints>
                             </imageView>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Website" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kMB-iQ-ZyR">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Website" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kMB-iQ-ZyR">
                                 <rect key="frame" x="182" y="120" width="214" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="214" id="p4h-YU-F4V"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
@@ -244,39 +247,63 @@
                                     <action selector="saveButton:" destination="q5q-jW-QJE" eventType="touchUpInside" id="7Pr-gZ-BF4"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PRp-7q-BoV">
-                                <rect key="frame" x="213" y="329" width="151" height="30"/>
-                                <state key="normal" title="Update Profile Picture"/>
-                                <connections>
-                                    <action selector="profilePhotoButton:" destination="q5q-jW-QJE" eventType="touchUpInside" id="aId-rM-LVa"/>
-                                </connections>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Truck Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jDy-mk-MxW">
                                 <rect key="frame" x="231" y="78" width="117" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tDb-WK-Z8R">
+                                <rect key="frame" x="308" y="171" width="150" height="150"/>
+                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="150" id="3Bs-eQ-uY9"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="150" id="6yT-8H-qbq"/>
+                                    <constraint firstAttribute="width" constant="150" id="FTn-Xm-vUz"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="150" id="Je0-S1-JMJ"/>
+                                </constraints>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PRp-7q-BoV">
+                                <rect key="frame" x="121" y="329" width="151" height="30"/>
+                                <state key="normal" title="Update Profile Picture"/>
+                                <connections>
+                                    <action selector="profilePhotoButton:" destination="q5q-jW-QJE" eventType="touchUpInside" id="aId-rM-LVa"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dIx-Ol-OD9">
+                                <rect key="frame" x="316" y="329" width="135" height="30"/>
+                                <state key="normal" title="Update Logo Image"/>
+                                <connections>
+                                    <action selector="logoPhotoButton:" destination="q5q-jW-QJE" eventType="touchUpInside" id="dfP-oy-9AQ"/>
+                                    <action selector="profilePhotoButton:" destination="q5q-jW-QJE" eventType="touchUpInside" id="680-xa-gY5"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="jgf-2T-ScK" firstAttribute="centerX" secondItem="AIU-Wx-TCq" secondAttribute="centerX" constant="-11" id="7Y9-oV-k5F"/>
+                            <constraint firstItem="tDb-WK-Z8R" firstAttribute="centerX" secondItem="AIU-Wx-TCq" secondAttribute="centerX" constant="83" id="Dwf-YT-O0a"/>
                             <constraint firstItem="hrP-yQ-6Rz" firstAttribute="centerX" secondItem="AIU-Wx-TCq" secondAttribute="centerX" constant="-11" id="IJ2-No-q0x"/>
                             <constraint firstItem="Taf-Lw-iCq" firstAttribute="top" secondItem="hrP-yQ-6Rz" secondAttribute="bottom" constant="8" id="LEB-av-jxY"/>
-                            <constraint firstItem="pgc-Mp-Wux" firstAttribute="centerX" secondItem="AIU-Wx-TCq" secondAttribute="centerX" constant="-11" id="Lzb-8g-wZt"/>
+                            <constraint firstItem="pgc-Mp-Wux" firstAttribute="centerX" secondItem="AIU-Wx-TCq" secondAttribute="centerX" constant="-104" id="Lzb-8g-wZt"/>
                             <constraint firstItem="PRp-7q-BoV" firstAttribute="top" secondItem="pgc-Mp-Wux" secondAttribute="bottom" constant="8" id="M3V-wA-WAA"/>
                             <constraint firstItem="jgf-2T-ScK" firstAttribute="top" secondItem="Taf-Lw-iCq" secondAttribute="bottom" constant="8" id="MaO-5T-Qgw"/>
+                            <constraint firstItem="dIx-Ol-OD9" firstAttribute="centerX" secondItem="AIU-Wx-TCq" secondAttribute="centerX" constant="83.5" id="RRs-0l-k0Q"/>
                             <constraint firstItem="kMB-iQ-ZyR" firstAttribute="top" secondItem="jDy-mk-MxW" secondAttribute="bottom" constant="21" id="SDi-0G-nkQ"/>
                             <constraint firstItem="pgc-Mp-Wux" firstAttribute="top" secondItem="kMB-iQ-ZyR" secondAttribute="bottom" constant="21" id="Zji-Jm-KAj"/>
                             <constraint firstItem="jDy-mk-MxW" firstAttribute="top" secondItem="c21-Qq-qrd" secondAttribute="bottom" constant="14" id="e2M-CR-TXD"/>
                             <constraint firstItem="jDy-mk-MxW" firstAttribute="centerX" secondItem="AIU-Wx-TCq" secondAttribute="centerX" constant="-10.5" id="gJ5-zg-saH"/>
                             <constraint firstItem="hrP-yQ-6Rz" firstAttribute="top" secondItem="PRp-7q-BoV" secondAttribute="bottom" constant="15" id="krh-7R-L3M"/>
-                            <constraint firstItem="PRp-7q-BoV" firstAttribute="centerX" secondItem="AIU-Wx-TCq" secondAttribute="centerX" constant="-11.5" id="uai-Xa-cWy"/>
+                            <constraint firstItem="tDb-WK-Z8R" firstAttribute="top" secondItem="kMB-iQ-ZyR" secondAttribute="bottom" constant="21" id="m0v-xj-gEZ"/>
+                            <constraint firstItem="dIx-Ol-OD9" firstAttribute="top" secondItem="tDb-WK-Z8R" secondAttribute="bottom" constant="8" id="rwH-Pv-Cbo"/>
+                            <constraint firstItem="PRp-7q-BoV" firstAttribute="centerX" secondItem="AIU-Wx-TCq" secondAttribute="centerX" constant="-103.5" id="uai-Xa-cWy"/>
                             <constraint firstItem="kMB-iQ-ZyR" firstAttribute="centerX" secondItem="AIU-Wx-TCq" secondAttribute="centerX" constant="-11" id="utB-A5-tIu"/>
                             <constraint firstItem="Taf-Lw-iCq" firstAttribute="centerX" secondItem="AIU-Wx-TCq" secondAttribute="centerX" constant="-11" id="wIb-TX-kkL"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="logoImageView" destination="tDb-WK-Z8R" id="igA-9s-1cp"/>
+                        <outlet property="logoPictureButton" destination="dIx-Ol-OD9" id="vsg-jk-Viz"/>
                         <outlet property="menuButton" destination="Taf-Lw-iCq" id="JIk-cg-86I"/>
                         <outlet property="menuImageView" destination="hrP-yQ-6Rz" id="cjs-eu-elh"/>
                         <outlet property="profileImageView" destination="pgc-Mp-Wux" id="2m9-wa-fDO"/>

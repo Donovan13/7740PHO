@@ -118,11 +118,14 @@ class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableVie
                 let profileImage = snapshot.value!["profileImage"]
                 let activeLocation = snapshot.value!["activeLocation"] as! String
                 let truckName = snapshot.value!["truckName"] as! String
+                let logoImage = snapshot.value!["logoimage"]
                 
                 self.nameLabel.text = "\(truckName)".capitalizedString
 
                 
-                if profileImage != nil {
+                if logoImage != nil {
+                    self.logoImageView.image = self.conversion(logoImage as! String)
+                } else if profileImage != nil {
                     self.logoImageView.image = self.conversion(profileImage as! String)
                 } else {
                     self.logoImageView.image = UIImage(data: NSData(contentsOfURL: NSURL(string:userImage)!)!)
