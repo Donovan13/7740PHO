@@ -121,27 +121,84 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         self.performSegueWithIdentifier("annotationDetailSegue", sender: annotation)
     }
     
-    func mapView(mapView: MKMapView, didUpdateUserLocation userLocation: MKUserLocation) {
+//    func mapView(mapView: MKMapView, didUpdateUserLocation userLocation: MKUserLocation) {
+//        
+//        let userLat = userLocation.coordinate.latitude
+//        let userLong = userLocation.coordinate.longitude
+//        userlocation = CLLocation(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude)
+//        
+//        self.tableView.reloadData()
+//        
+//        self.userDefaults.setValue(userLat, forKey: "latitude")
+//        self.userDefaults.setValue(userLong, forKey: "longitude")
+//        print ("\(userLat)")
+//        
+//        if userDefaults.stringForKey("uid") != nil {
+//            self.ref!.child("Trucks").child(userDefaults.stringForKey("uid")!).updateChildValues(["latitude": userLat, "longitude": userLong])
+//            //            print("\(userLat)")
+//            
+//        } else {
+//            //            errorAlert("", message: "")
+//        }
+//        
+//    }
+    
+    func locationManager(manager: CLLocationManager, didUpdateToLocation newLocation: CLLocation, fromLocation oldLocation: CLLocation) {
         
-        let userLat = userLocation.coordinate.latitude
-        let userLong = userLocation.coordinate.longitude
-        userlocation = CLLocation(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude)
+        let userLat = newLocation.coordinate.latitude
+        let userLon = newLocation.coordinate.longitude
+        let userUID = userDefaults.stringForKey("uid")
+        userlocation = CLLocation(latitude: userLat, longitude: userLon)
         
-        self.tableView.reloadData()
         
         self.userDefaults.setValue(userLat, forKey: "latitude")
-        self.userDefaults.setValue(userLong, forKey: "longitude")
+        self.userDefaults.setValue(userLon, forKey: "longitude")
+        
+        
+        CLGeocoder().reverseGeocodeLocation(newLocation, completionHandler: {(placemarks, error) -> Void in
+            
+            if error != nil {
+                print("Reverse geocoder failed with error" + error!.localizedDescription)
+                return
+            }
+            
+            if placemarks!.count > 0 {
+                let pm = placemarks![0]
+
+                
+                let address = "\(pm.subThoroughfare!) \(pm.thoroughfare!), \(pm.locality!) \(pm.administrativeArea!) \(pm.postalCode!)"
+                
+                if self.userDefaults.stringForKey("uid") != nil {
+                    self.ref!.child("Trucks").child(userUID!).updateChildValues(["address": address])
+                }
+            }
+            else {
+                print("Problem with the data received from geocoder")
+            }
+        })
+        
+        
+        
         
         if userDefaults.stringForKey("uid") != nil {
-            self.ref!.child("Trucks").child(userDefaults.stringForKey("uid")!).updateChildValues(["latitude": userLat, "longitude": userLong])
-            //            print("\(userLat)")
-            
-        } else {
-            //            errorAlert("", message: "")
+            self.ref!.child("Trucks").child(userUID!).updateChildValues(["latitude": userLat, "longitude": userLon])
         }
         
-    }
+        
+        
+        
+        
+        if UIApplication.sharedApplication().applicationState == .Active {
+            print("active")
+        } else {
+            print("updated:\(newLocation)")
+        }
     
+    
+    
+    
+    
+    }
     
     
     //    MARK: TableView Delegate
@@ -153,6 +210,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         let cell = tableView.dequeueReusableCellWithIdentifier("BusinessTableViewCell") as! BusinessTableViewCell
         let post = trucks[indexPath.row]
         let location = CLLocation(latitude: post.latitude!, longitude: post.longitude!)
+    
         
         cell.businessLabel?.text = post.truckName?.capitalizedString
         cell.addressLabel?.text = post.address
