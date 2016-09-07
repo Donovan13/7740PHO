@@ -18,6 +18,9 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     @IBOutlet weak var menuImageView: UIImageView!
     @IBOutlet weak var profilepictureButton: UIButton!
     @IBOutlet weak var menuButton: UIButton!
+    @IBOutlet weak var logoImageView: UIImageView!
+    @IBOutlet weak var logoPictureButton: UIButton!
+    
     
     var ref:FIRDatabaseReference!
     var businesses = [Business]()
@@ -33,10 +36,23 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         
         currentUser()
     }
+    @IBAction func logoPhotoButton(sender: AnyObject) {
+        logoPictureButton.selected = true
+        menuButton.selected = false
+        profilepictureButton.selected = false
+        
+        let picker = UIImagePickerController()
+        picker.delegate = self
+        picker.sourceType = .PhotoLibrary
+        
+        presentViewController(picker, animated: true, completion: nil)
+    }
     
     @IBAction func profilePhotoButton(sender: AnyObject) {
         profilepictureButton.selected = true
         menuButton.selected = false
+        logoPictureButton.selected = false
+        
         let picker = UIImagePickerController()
         picker.delegate = self
         picker.sourceType = .PhotoLibrary
@@ -49,6 +65,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     @IBAction func menuPhotoButton(sender: AnyObject) {
         menuButton.selected = true
         profilepictureButton.selected = false
+        logoPictureButton.selected = false
         
         let picker = UIImagePickerController()
         picker.delegate = self
@@ -76,14 +93,18 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         
         let profileImg = imageConversion(self.profileImageView.image!)
         let menuImg = imageConversion(self.menuImageView.image!)
+        let logoImg = imageConversion(self.logoImageView.image!)
         let truckWebsite = websiteTextField.text
+
         
         self.userDefaults.setValue(profileImg, forKey: "profileImage")
         self.userDefaults.setValue(menuImg, forKey: "menuImage")
         self.userDefaults.setValue(truckWebsite, forKey: "website")
+        self.userDefaults.setValue(logoImg, forKey: "logoImage")
         
         
-        self.ref.child("Trucks").child(userUID!).updateChildValues(["profileImage": profileImg, "menuImage": menuImg, "website": truckWebsite!])
+        
+        self.ref.child("Trucks").child(userUID!).updateChildValues(["profileImage": profileImg, "menuImage": menuImg, "website": truckWebsite!, "logoImage": logoImg])
         
         
         
@@ -99,9 +120,10 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
             
             ref.child("Trucks").child(userUID!).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
                 let userImage = snapshot.value!["imageURL"] as! String
-                let profileImage = snapshot.value!["profileImage"]
+                let profileImage = snapshot.value?["profileImage"]
                 let website = snapshot.value!["website"] as? String
-                let menu = snapshot.value!["menuImage"]
+                let menu = snapshot.value?["menuImage"]
+                let logoImage = snapshot.value?["logoImage"] as? String
                 
                 if profileImage != nil {
                     self.profileImageView.image = self.conversion(profileImage as! String)
@@ -119,6 +141,12 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
                     self.websiteTextField.text = website
                 } else {
                     self.websiteTextField.text = nil
+                }
+                
+                if logoImage != nil {
+                    self.logoImageView.image = self.conversion(logoImage!)
+                } else {
+                    print("No Logo Uploaded")
                 }
             })
             
