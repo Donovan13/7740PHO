@@ -194,7 +194,9 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
             print("updated:\(newLocation)")
         }
     
-    
+        if UIApplication.sharedApplication().applicationState == .Inactive {
+            print("inactive")
+        }
     
     
     

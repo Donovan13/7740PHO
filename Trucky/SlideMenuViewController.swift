@@ -122,11 +122,11 @@ class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableVie
                 self.nameLabel.text = "\(truckName)".capitalizedString
 
                 
-                if profileImage != nil {
-                    self.logoImageView.image = self.conversion(profileImage as! String)
-                } else {
+//                if profileImage != nil {
+//                    self.logoImageView.image = self.conversion(profileImage as! String)
+//                } else {
                     self.logoImageView.image = UIImage(data: NSData(contentsOfURL: NSURL(string:userImage)!)!)
-                }
+//                }
                 if activeLocation == "true" {
                     self.locationSwitch.on = true
                 } else {
