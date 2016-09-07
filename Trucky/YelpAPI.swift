@@ -17,17 +17,17 @@ let yelpConsumerSecret = "ALoBgJzLrhQ0sN1UqsZJzhzgCek"
 let yelpToken = "-ZmkbnmXSnClCrMd2sotIU9HiNd3JSes"
 let yelpTokenSecret = "Geu21r8e9ahDwjudz5Sa_V2MKKo"
 
-class YelpClientPS: BDBOAuth1RequestOperationManager {
+class YelpAPI: BDBOAuth1RequestOperationManager {
     var accessToken: String!
     var accessSecret: String!
     
-    class var sharedInstance : YelpClientPS {
+    class var sharedInstance : YelpAPI {
         struct Static {
-            static var instance : YelpClientPS!
+            static var instance : YelpAPI!
             static var token : dispatch_once_t = 0
         }
         dispatch_once(&Static.token) {
-            Static.instance = YelpClientPS(consumerKey: yelpConsumerKey, consumerSecret: yelpConsumerSecret, accessToken: yelpToken, accessSecret: yelpTokenSecret)
+            Static.instance = YelpAPI(consumerKey: yelpConsumerKey, consumerSecret: yelpConsumerSecret, accessToken: yelpToken, accessSecret: yelpTokenSecret)
         }
         return Static.instance!
     }
@@ -36,7 +36,7 @@ class YelpClientPS: BDBOAuth1RequestOperationManager {
         self.accessToken = accessToken
         self.accessSecret = accessSecret
         
-        let baseURL = NSURL(string: "https://api.yelp.com/v2/phone_search?")
+        let baseURL = NSURL(string: "https://api.yelp.com/v2/")
         super.init(baseURL: baseURL, consumerKey: key, consumerSecret: secret)
         
         let token = BDBOAuth1Credential(token: accessToken, secret: accessSecret, expiration: nil)
@@ -47,8 +47,24 @@ class YelpClientPS: BDBOAuth1RequestOperationManager {
         super.init(coder: aDecoder)
     }
     
-    func searchWithNumber(phoneNumber: Int, completion: ([Business]!, NSError!) -> Void) -> AFHTTPRequestOperation {
-        return searchWithNumber(phoneNumber, completion: completion)
+    func searchWithNumber(phoneNumber: String, completion: ([Business]!, error: NSError!) -> Void) -> AFHTTPRequestOperation {
+        
+        let parameters: [String: AnyObject] = ["phone": phoneNumber]
+            
+        return self.GET("phone_search", parameters: parameters, success: { (operation: AFHTTPRequestOperation!, response: AnyObject!) -> Void in
+            let dictionaries = response["businesses"] as? [NSDictionary]
+            if dictionaries != nil {
+                completion(Business.businesses(array: dictionaries!), error: nil)
+            }
+            }, failure: { (operation: AFHTTPRequestOperation?, error: NSError!) -> Void in
+                completion(nil, error: error)
+        })!
+        
     }
+    
+    
+    
+    
+    
     
 }

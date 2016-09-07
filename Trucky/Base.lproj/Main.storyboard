@@ -926,8 +926,8 @@
         <image name="sideMenu" width="200" height="200"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="s9o-uU-rdu"/>
         <segue reference="83W-ak-mQX"/>
+        <segue reference="agN-JL-lDt"/>
         <segue reference="B1M-Sw-cGi"/>
         <segue reference="2XA-gi-oSt"/>
     </inferredMetricsTieBreakers>

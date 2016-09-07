@@ -62,7 +62,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     }
     
     override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(false)
+        super.viewWillAppear(true)
         //        let qualityOfServiceClass = QOS_CLASS_BACKGROUND
         //        let backgroundQueue = dispatch_get_global_queue(qualityOfServiceClass, 0)
         dispatch_async(dispatch_get_main_queue()) {
@@ -285,11 +285,11 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     
     
     @IBAction func centerLocationButton(sender: AnyObject) {
-        mapView.setUserTrackingMode(MKUserTrackingMode.Follow, animated: true)
         let latitude = userlocation?.coordinate.latitude
         let longitude = userlocation?.coordinate.longitude
         let span = MKCoordinateSpanMake(0.075, 0.075)
         let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: latitude!, longitude: longitude!), span: span)
+        mapView.setUserTrackingMode(MKUserTrackingMode.Follow, animated: true)
         mapView.setRegion(region, animated: true)
         
     }
@@ -339,19 +339,6 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     
     
     //    MARK: Load Functions
-    func search() {
-        let userLatitude = userDefaults.doubleForKey("latitude")
-        let userLongitude = userDefaults.doubleForKey("longitude")
-        
-        Business.searchWithTerm("Food Trucks", location: "\(userLatitude),\(userLongitude)" , completion: { (businesses: [Business]!, error: NSError!) -> Void in
-            
-            self.businesses = businesses
-            for business in businesses {
-                print(business.name!)
-                
-            }
-        })
-    }
     
     func loadTrucks() {
         

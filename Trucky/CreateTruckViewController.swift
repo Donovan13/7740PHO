@@ -90,27 +90,17 @@ class CreateTruckViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     
-    func search(name: String, location: String) {
-        let userLatitude = userDefaults.doubleForKey("latitude")
-        let userLongitude = userDefaults.doubleForKey("longitude")
+    func search(phoneNumber: String) {
         
-        Business.searchWithTerm("\(name)", location: "\(location)" , completion: { (businesses: [Business]!, error: NSError!) -> Void in
+        Business.searchWithNumber(phoneNumber, completion: { (businesses: [Business]!, error: NSError!) -> Void in
+            if error != nil {
+                self.errorAlert("error", message: error.localizedDescription)
+            } else {
+                print(businesses.first?.name)
+            }
             
-            self.businesses = businesses
-            
-            let truckAddress = self.businesses.first?.fullAddress
-            let truckPhone = self.businesses.first?.phone
-            self.addressTextField.text = "\(truckAddress!)"
-            self.businessTextField.text = self.businesses.first?.name
-            let ratingsImage = UIImage(data: NSData(contentsOfURL: NSURL(string: "\(businesses.first!.ratingImageURL!)")!)!)
-            self.ratingsImageView.image = ratingsImage
-            self.reviewsTextField?.text = "\(self.businesses.first!.reviewCount!) reviews on Yelp"
-            let urlImage =  UIImage(data: NSData(contentsOfURL: NSURL(string:"\(businesses.first!.imageURL!)")!)!)
-            self.yelpImage.image = urlImage
-            
-            print(businesses.first?.imageURL)
+        })
 
-            })
     }
     
     func errorAlert(title: String, message: String) {
@@ -122,7 +112,8 @@ class CreateTruckViewController: UIViewController, CLLocationManagerDelegate {
     
     @IBAction func matchTruck(sender: AnyObject) {
         
-        search(businessNameTextField.text!, location: zipTextField.text!)
+//        search(businessNameTextField.text!, location: zipTextField.text!)
+        search(businessNameTextField.text!)
         
         
     }

@@ -101,10 +101,8 @@ class Business: NSObject {
         return businesses
     }
     
-    class func searchWithTerm(term: String, location: String, completion: ([Business]!, NSError!) -> Void) {
-        YelpClient.sharedInstance.searchWithTerm(term, location: location, completion: completion)
-        //        YelpClient.sharedInstance.searchWithTerm(term, completion: completion)
+    class func searchWithNumber(phoneNumber: String, completion: ([Business]!, NSError!) -> Void) {
+        YelpAPI.sharedInstance.searchWithNumber(phoneNumber, completion: completion)
     }
-    
     
 }
