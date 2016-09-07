@@ -120,10 +120,10 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
             
             ref.child("Trucks").child(userUID!).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
                 let userImage = snapshot.value!["imageURL"] as! String
-                let profileImage = snapshot.value!["profileImage"]
+                let profileImage = snapshot.value?["profileImage"]
                 let website = snapshot.value!["website"] as? String
-                let menu = snapshot.value!["menuImage"]
-                let logoImage = snapshot.value!["logoImage"]
+                let menu = snapshot.value?["menuImage"]
+                let logoImage = snapshot.value?["logoImage"] as? String
                 
                 if profileImage != nil {
                     self.profileImageView.image = self.conversion(profileImage as! String)
@@ -144,7 +144,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
                 }
                 
                 if logoImage != nil {
-                    self.logoImageView.image = self.conversion(logoImage as! String)
+                    self.logoImageView.image = self.conversion(logoImage!)
                 } else {
                     print("No Logo Uploaded")
                 }
