@@ -100,25 +100,36 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     
     //    MARK: MapView Delegate
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+
+        
+        
         if annotation.isEqual(mapView.userLocation) {
             return nil
         } else if annotation.isEqual(annotation as! CustomAnnotations){
             let pin = MKAnnotationView (annotation: annotation, reuseIdentifier: nil)
             
+            
+            let icon = scaleUIImageToSize(UIImage(named: "login")!, size: CGSizeMake(30,30))
+            let iconFrame = UIImageView(image: icon)
+            
             pin.image = scaleUIImageToSize(UIImage(named: "truck")!, size: CGSizeMake(30,30))
             pin.canShowCallout = true
             pin.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)
-            pin.leftCalloutAccessoryView = UIButton(type: .Custom)
+            pin.leftCalloutAccessoryView = iconFrame
+            
+            
             
             return pin
         } else {
             return nil
+            
         }
     }
     
     func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         let annotation = view.annotation as! CustomAnnotations
         self.performSegueWithIdentifier("annotationDetailSegue", sender: annotation)
+        
     }
     
 //    func mapView(mapView: MKMapView, didUpdateUserLocation userLocation: MKUserLocation) {
@@ -178,14 +189,9 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         })
         
         
-        
-        
         if userDefaults.stringForKey("uid") != nil {
             self.ref!.child("Trucks").child(userUID!).updateChildValues(["latitude": userLat, "longitude": userLon])
         }
-        
-        
-        
         
         
         if UIApplication.sharedApplication().applicationState == .Active {
@@ -197,7 +203,6 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         if UIApplication.sharedApplication().applicationState == .Inactive {
             print("inactive")
         }
-    
     
     
     }

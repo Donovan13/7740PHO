@@ -79,9 +79,11 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         if self.profilepictureButton.selected == true {
             self.profileImageView.image = info[UIImagePickerControllerOriginalImage] as? UIImage
             dismissViewControllerAnimated(true, completion: nil)
-            
         } else if self.menuButton.selected == true{
             self.menuImageView.image = info[UIImagePickerControllerOriginalImage] as? UIImage
+            dismissViewControllerAnimated(true, completion: nil)
+        } else if self.logoPictureButton.selected == true {
+            self.logoImageView.image = info[UIImagePickerControllerOriginalImage] as? UIImage
             dismissViewControllerAnimated(true, completion: nil)
         }
         
