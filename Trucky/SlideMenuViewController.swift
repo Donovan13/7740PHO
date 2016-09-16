@@ -121,6 +121,10 @@ class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableVie
                 let logoImage = snapshot.value?["logoImage"] as? String
                 
                 self.nameLabel.text = "\(truckName)".capitalizedString
+                self.logoImageView.layer.cornerRadius = self.logoImageView.frame.size.width / 2
+                self.logoImageView.clipsToBounds = true
+//                self.logoImageView.layer.borderWidth = 3.0
+//                self.logoImageView.layer.borderColor = UIColor .blueColor().CGColor
 
                 
                 if logoImage != nil {

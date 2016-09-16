@@ -110,7 +110,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     
     //    MARK: MapView Delegate
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
-        
+
         
         
         if annotation.isEqual(mapView.userLocation) {
@@ -119,6 +119,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
             let pin = MKAnnotationView (annotation: annotation, reuseIdentifier: nil)
             
             
+
             let icon = scaleUIImageToSize(UIImage(named: "login")!, size: CGSizeMake(30,30))
             let iconFrame = UIImageView(image: icon)
             
@@ -126,6 +127,10 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
             pin.canShowCallout = true
             pin.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)
             pin.leftCalloutAccessoryView = iconFrame
+            pin.leftCalloutAccessoryView?.layer.cornerRadius = (pin.leftCalloutAccessoryView?.frame.size.width)! / 2
+            pin.leftCalloutAccessoryView?.clipsToBounds = true
+
+            
             
             
             
@@ -136,12 +141,13 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         }
     }
     
+    
     func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         let annotation = view.annotation as! CustomAnnotations
         self.performSegueWithIdentifier("annotationDetailSegue", sender: annotation)
         
     }
-    
+
     
     func locationManager(manager: CLLocationManager, didUpdateToLocation newLocation: CLLocation, fromLocation oldLocation: CLLocation) {
         
@@ -216,9 +222,22 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
             let distance = location.distanceFromLocation(userlocation!)
             let inMiles = distance * 0.000621371192
             cell.distanceLabel.text = (String(format: "%.2fm Away", inMiles))
+            
+//            func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+//                if segue.identifier == "detailSegue" {
+//                    
+//                    let detailVC = segue.destinationViewController as! BusinessProfileViewController
+//                    detailVC.distanceOfTruck = cell.distanceLabel.text
+//                    
+//                }
+//            }
+            
+            
+            
         }
         
         dispatch_async(dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0)) {
+
             cell.reviewImage?.image = UIImage(data: NSData(contentsOfURL: NSURL(string:post.ratingImageURL!)!)!)!
             
             if post.profileImage != nil {

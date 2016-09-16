@@ -106,7 +106,12 @@ class CreateTruckViewController: UIViewController, CLLocationManagerDelegate {
             if error != nil {
                 
             } else {
-                print(businesses.first?.name)
+                self.businessTextField.text = businesses.first?.name
+                self.reviewsTextField.text = "\(businesses.first?.reviewCount) reviews on Yelp"
+                self.ratingsImageView.image = UIImage(data: NSData(contentsOfURL: NSURL(string:"\(businesses.first?.ratingImageURL!)")!)!)
+                self.yelpImage.image = UIImage(data: NSData(contentsOfURL: NSURL(string:"\(businesses.first?.imageURL!)")!)!)
+                    
+                
             }
         })
         
@@ -126,6 +131,7 @@ class CreateTruckViewController: UIViewController, CLLocationManagerDelegate {
         
         
     }
+    
     
     
 }

@@ -13,5 +13,5 @@ import MapKit
 class CustomAnnotations: MKPointAnnotation {
     
     var truckCA: Truck!
-    
 }
+
