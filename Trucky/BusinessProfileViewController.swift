@@ -17,10 +17,9 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
     var truckName:String?
     var trucks: Truck!
     var userlocation: CLLocation?
-    
-    
     let userDefaults = NSUserDefaults.standardUserDefaults()
     
+    @IBOutlet weak var tableView: UITableView!
     
     
     
@@ -68,7 +67,7 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
             }
             
             
-            cell.backgroundColor! = UIColor.clearColor()
+            cell.backgroundColor? = UIColor.clearColor()
             return cell
         }
         else if indexPath.row == 1 {
@@ -116,6 +115,21 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
         } else {
             return 50
     }
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
+        if indexPath.row == 2 {
+            performSegueWithIdentifier("detailToWebSegue", sender: self)
+            
+        }
+    }
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "detailToWebSegue" {
+
+            let detailVC = segue.destinationViewController as! WebViewController
+            detailVC.businessURL = trucks.website
+
+        }
     }
     
 }

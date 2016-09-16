@@ -100,13 +100,13 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     
     //    MARK: MapView Delegate
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
-
         
         
         if annotation.isEqual(mapView.userLocation) {
             return nil
         } else if annotation.isEqual(annotation as! CustomAnnotations){
             let pin = MKAnnotationView (annotation: annotation, reuseIdentifier: nil)
+            
             
             
             let icon = scaleUIImageToSize(UIImage(named: "login")!, size: CGSizeMake(30,30))
@@ -126,33 +126,13 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         }
     }
     
+    
     func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         let annotation = view.annotation as! CustomAnnotations
         self.performSegueWithIdentifier("annotationDetailSegue", sender: annotation)
         
     }
-    
-//    func mapView(mapView: MKMapView, didUpdateUserLocation userLocation: MKUserLocation) {
-//        
-//        let userLat = userLocation.coordinate.latitude
-//        let userLong = userLocation.coordinate.longitude
-//        userlocation = CLLocation(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude)
-//        
-//        self.tableView.reloadData()
-//        
-//        self.userDefaults.setValue(userLat, forKey: "latitude")
-//        self.userDefaults.setValue(userLong, forKey: "longitude")
-//        print ("\(userLat)")
-//        
-//        if userDefaults.stringForKey("uid") != nil {
-//            self.ref!.child("Trucks").child(userDefaults.stringForKey("uid")!).updateChildValues(["latitude": userLat, "longitude": userLong])
-//            //            print("\(userLat)")
-//            
-//        } else {
-//            //            errorAlert("", message: "")
-//        }
-//        
-//    }
+  
     
     func locationManager(manager: CLLocationManager, didUpdateToLocation newLocation: CLLocation, fromLocation oldLocation: CLLocation) {
         
@@ -175,7 +155,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
             
             if placemarks!.count > 0 {
                 let pm = placemarks![0]
-
+                
                 
                 let address = "\(pm.subThoroughfare!) \(pm.thoroughfare!), \(pm.locality!) \(pm.administrativeArea!) \(pm.postalCode!)"
                 
@@ -195,16 +175,16 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         
         
         if UIApplication.sharedApplication().applicationState == .Active {
-            print("active")
+            //print("active")
         } else {
             print("updated:\(newLocation)")
         }
-    
+        
         if UIApplication.sharedApplication().applicationState == .Inactive {
             print("inactive")
         }
-    
-    
+        
+        
     }
     
     
@@ -217,7 +197,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         let cell = tableView.dequeueReusableCellWithIdentifier("BusinessTableViewCell") as! BusinessTableViewCell
         let post = trucks[indexPath.row]
         let location = CLLocation(latitude: post.latitude!, longitude: post.longitude!)
-    
+        
         
         cell.businessLabel?.text = post.truckName?.capitalizedString
         cell.addressLabel?.text = post.address
@@ -326,14 +306,14 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         presentViewController(alert, animated: true, completion: nil)
     }
     
-    func scaleUIImageToSize(let image: UIImage, let size: CGSize) -> UIImage {
+    func scaleUIImageToSize( image: UIImage, size: CGSize) -> UIImage {
         let hasAlpha = true
         let scale: CGFloat = 0.0 // Automatically use scale factor of main screen
         UIGraphicsBeginImageContextWithOptions(size, !hasAlpha, scale)
         image.drawInRect(CGRect(origin: CGPointZero, size: size))
         let scaledImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
-        return scaledImage
+        return scaledImage!
     }
     
     func conversion(photo: String) -> UIImage {
