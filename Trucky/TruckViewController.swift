@@ -108,7 +108,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
             let pin = MKAnnotationView (annotation: annotation, reuseIdentifier: nil)
             
             
-            
+
             let icon = scaleUIImageToSize(UIImage(named: "login")!, size: CGSizeMake(30,30))
             let iconFrame = UIImageView(image: icon)
             
@@ -116,6 +116,10 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
             pin.canShowCallout = true
             pin.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)
             pin.leftCalloutAccessoryView = iconFrame
+            pin.leftCalloutAccessoryView?.layer.cornerRadius = (pin.leftCalloutAccessoryView?.frame.size.width)! / 2
+            pin.leftCalloutAccessoryView?.clipsToBounds = true
+
+            
             
             
             
@@ -207,7 +211,21 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
             let distance = location.distanceFromLocation(userlocation!)
             let inMiles = distance * 0.000621371192
             cell.distanceLabel.text = (String(format: "%.2fm Away", inMiles))
+            
+//            func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+//                if segue.identifier == "detailSegue" {
+//                    
+//                    let detailVC = segue.destinationViewController as! BusinessProfileViewController
+//                    detailVC.distanceOfTruck = cell.distanceLabel.text
+//                    
+//                }
+//            }
+            
+            
+            
         }
+        
+
         
         dispatch_async(dispatch_get_main_queue()) {
             cell.reviewImage?.image = UIImage(data: NSData(contentsOfURL: NSURL(string:post.ratingImageURL!)!)!)!

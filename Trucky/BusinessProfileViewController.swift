@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 import CoreLocation
+import MapKit
 
 class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -18,6 +19,9 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
     var trucks: Truck!
     var userlocation: CLLocation?
     let userDefaults = NSUserDefaults.standardUserDefaults()
+//    var distanceOfTruck:String!
+
+    
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -53,18 +57,23 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
         if indexPath.row == 0 {
             
             let cell = tableView.dequeueReusableCellWithIdentifier("titleSegue") as! DetailTableViewCell
-            let location = CLLocation(latitude: trucks.latitude!, longitude: trucks.longitude!)
+//            let location = CLLocation(latitude: trucks.latitude!, longitude: trucks.longitude!)
             
             
             cell.truckNameLabel?.text = trucks.truckName?.capitalizedString
             cell.reviewsLabel?.text = "\(trucks.reviewCount!) reviews on Yelp"
             cell.ratingsImageView.image = UIImage(data: NSData(contentsOfURL: NSURL(string:trucks.ratingImageURL!)!)!)!
             
-            if userlocation != nil {
-                let distance = location.distanceFromLocation(userlocation!)
-                let inMiles = distance * 0.000621371192
-                cell.distanceLabel.text = (String(format: "%.2fm Away", inMiles))
-            }
+            
+//            cell.distanceLabel.text = "\(distanceOfTruck!)"
+            
+            
+            
+//            if userlocation != nil {
+//                let distance = location.distanceFromLocation(userlocation!)
+//                let inMiles = distance * 0.000621371192
+//                cell.distanceLabel.text = (String(format: "%.2fm Away", inMiles))
+//            }
             
             
             cell.backgroundColor? = UIColor.clearColor()
@@ -118,9 +127,15 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
-        if indexPath.row == 2 {
+          if indexPath.row == 1 {
+
+            callNumber(trucks.phone!)
+            
+        } else if indexPath.row == 2 {
             performSegueWithIdentifier("detailToWebSegue", sender: self)
             
+        } else if indexPath.row == 3 {
+            openMapForPlace()
         }
     }
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -129,6 +144,37 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
             let detailVC = segue.destinationViewController as! WebViewController
             detailVC.businessURL = trucks.website
 
+        }
+    }
+    
+    func openMapForPlace() {
+        
+        let lat : NSString = "\(self.trucks.latitude!)"
+        let lng : NSString = "\(self.trucks.longitude!)"
+        
+        let latitude:CLLocationDegrees =  lat.doubleValue
+        let longitude:CLLocationDegrees =  lng.doubleValue
+        
+        let regionDistance:CLLocationDistance = 5000
+        let coordinates = CLLocationCoordinate2DMake(latitude, longitude)
+        let regionSpan = MKCoordinateRegionMakeWithDistance(coordinates, regionDistance, regionDistance)
+        let options = [
+            MKLaunchOptionsMapCenterKey: NSValue(MKCoordinate: regionSpan.center),
+            MKLaunchOptionsMapSpanKey: NSValue(MKCoordinateSpan: regionSpan.span)
+        ]
+        let placemark = MKPlacemark(coordinate: coordinates, addressDictionary: nil)
+        let mapItem = MKMapItem(placemark: placemark)
+        mapItem.name = "\(self.trucks.truckName!)".capitalizedString
+        mapItem.openInMapsWithLaunchOptions(options)
+        
+    }
+    
+    private func callNumber(phoneNumber:String) {
+        if let phoneCallURL:NSURL = NSURL(string:"tel://\(phoneNumber)") {
+            let application:UIApplication = UIApplication.sharedApplication()
+            if (application.canOpenURL(phoneCallURL)) {
+                application.openURL(phoneCallURL);
+            }
         }
     }
     

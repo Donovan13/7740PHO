@@ -24,6 +24,7 @@ class Truck: NSObject {
     let activeLocation: String?
     let website: String?
     let iconImage: String?
+    let distance: String?
     
     
     
@@ -43,5 +44,6 @@ class Truck: NSObject {
         activeLocation = dictionary["activeLocation"] as? String
         website = dictionary["website"] as? String
         iconImage = dictionary["iconImage"] as? String
+        distance = dictionary["distance"] as? String
     }
 }
