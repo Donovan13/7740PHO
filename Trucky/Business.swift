@@ -105,4 +105,8 @@ class Business: NSObject {
         YelpAPI.sharedInstance.searchWithNumber(phoneNumber, completion: completion)
     }
     
+    class func searchWithID(businessID: String, completion: ([Business]!, NSError!) -> Void) {
+        YelpAPI.sharedInstance.searchWithID(businessID, completion: completion)
+    }
+    
 }

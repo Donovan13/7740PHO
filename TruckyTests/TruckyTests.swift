@@ -7,6 +7,8 @@
 //
 
 import XCTest
+
+
 @testable import Trucky
 
 class TruckyTests: XCTestCase {

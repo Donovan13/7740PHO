@@ -24,8 +24,6 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     
     //    MARK: Var & Let
     var ref:FIRDatabaseReference?
-    var user = FIRAuth.auth()?.currentUser!
-    var businesses = [Business]()
     var trucks = [Truck]()
     
     let userDefaults = NSUserDefaults.standardUserDefaults()
@@ -51,28 +49,40 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         
         self.navigationController!.navigationBar.titleTextAttributes = [ NSFontAttributeName: UIFont(name: "times", size: 20)!]
         
-        
-        //        let qualityOfServiceClass = QOS_CLASS_BACKGROUND
-        //        let backgroundQueue = dispatch_get_global_queue(qualityOfServiceClass, 0)
-        //        dispatch_async(backgroundQueue) {
-        //            self.loadTrucks()
-        //        }
-        //        loadTrucks()
+     
+        dispatch_async(dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0)) {
+            self.loadTrucks()
+        }
         
     }
     
     override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(true)
-        //        let qualityOfServiceClass = QOS_CLASS_BACKGROUND
-        //        let backgroundQueue = dispatch_get_global_queue(qualityOfServiceClass, 0)
-        dispatch_async(dispatch_get_main_queue()) {
-            self.loadTrucks()
-        }
-        
-        
+        super.viewWillAppear(false)
+        __getMemoryUsedPer1()
     }
-    
-    
+    override func didReceiveMemoryWarning() {
+        print("help")
+
+    }
+    func __getMemoryUsedPer1() -> Float
+    {
+        let MACH_TASK_BASIC_INFO_COUNT = (sizeof(mach_task_basic_info_data_t) / sizeof(natural_t))
+        let name = mach_task_self_
+        let flavor = task_flavor_t(MACH_TASK_BASIC_INFO)
+        var size = mach_msg_type_number_t(MACH_TASK_BASIC_INFO_COUNT)
+        let infoPointer = UnsafeMutablePointer<mach_task_basic_info>.alloc(1)
+        let kerr = task_info(name, flavor, UnsafeMutablePointer(infoPointer), &size)
+        let info = infoPointer.move()
+        infoPointer.dealloc(1)
+        if kerr == KERN_SUCCESS
+        {
+            let used_bytes: Float = Float(info.resident_size)
+            let total_bytes: Float = Float(NSProcessInfo.processInfo().physicalMemory)
+            print("Used: \(used_bytes / 1024.0 / 1024.0) MB out of \(total_bytes / 1024.0 / 1024.0) MB (\(used_bytes * 100.0 / total_bytes)%%)")
+            return used_bytes / total_bytes
+        }
+        return 1
+    }
     
     
     //    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
@@ -100,7 +110,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     
     //    MARK: MapView Delegate
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
-
+        
         
         
         if annotation.isEqual(mapView.userLocation) {
@@ -132,27 +142,6 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         
     }
     
-//    func mapView(mapView: MKMapView, didUpdateUserLocation userLocation: MKUserLocation) {
-//        
-//        let userLat = userLocation.coordinate.latitude
-//        let userLong = userLocation.coordinate.longitude
-//        userlocation = CLLocation(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude)
-//        
-//        self.tableView.reloadData()
-//        
-//        self.userDefaults.setValue(userLat, forKey: "latitude")
-//        self.userDefaults.setValue(userLong, forKey: "longitude")
-//        print ("\(userLat)")
-//        
-//        if userDefaults.stringForKey("uid") != nil {
-//            self.ref!.child("Trucks").child(userDefaults.stringForKey("uid")!).updateChildValues(["latitude": userLat, "longitude": userLong])
-//            //            print("\(userLat)")
-//            
-//        } else {
-//            //            errorAlert("", message: "")
-//        }
-//        
-//    }
     
     func locationManager(manager: CLLocationManager, didUpdateToLocation newLocation: CLLocation, fromLocation oldLocation: CLLocation) {
         
@@ -169,13 +158,13 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         CLGeocoder().reverseGeocodeLocation(newLocation, completionHandler: {(placemarks, error) -> Void in
             
             if error != nil {
-                print("Reverse geocoder failed with error" + error!.localizedDescription)
+                //print("Reverse geocoder failed with error" + error!.localizedDescription)
                 return
             }
             
             if placemarks!.count > 0 {
                 let pm = placemarks![0]
-
+                
                 
                 let address = "\(pm.subThoroughfare!) \(pm.thoroughfare!), \(pm.locality!) \(pm.administrativeArea!) \(pm.postalCode!)"
                 
@@ -195,16 +184,16 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         
         
         if UIApplication.sharedApplication().applicationState == .Active {
-            print("active")
+            //print("active")
         } else {
             print("updated:\(newLocation)")
         }
-    
+        
         if UIApplication.sharedApplication().applicationState == .Inactive {
             print("inactive")
         }
-    
-    
+        
+        
     }
     
     
@@ -217,7 +206,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         let cell = tableView.dequeueReusableCellWithIdentifier("BusinessTableViewCell") as! BusinessTableViewCell
         let post = trucks[indexPath.row]
         let location = CLLocation(latitude: post.latitude!, longitude: post.longitude!)
-    
+        
         
         cell.businessLabel?.text = post.truckName?.capitalizedString
         cell.addressLabel?.text = post.address
@@ -229,7 +218,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
             cell.distanceLabel.text = (String(format: "%.2fm Away", inMiles))
         }
         
-        dispatch_async(dispatch_get_main_queue()) {
+        dispatch_async(dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0)) {
             cell.reviewImage?.image = UIImage(data: NSData(contentsOfURL: NSURL(string:post.ratingImageURL!)!)!)!
             
             if post.profileImage != nil {
@@ -326,14 +315,14 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         presentViewController(alert, animated: true, completion: nil)
     }
     
-    func scaleUIImageToSize(let image: UIImage, let size: CGSize) -> UIImage {
+    func scaleUIImageToSize( image: UIImage, size: CGSize) -> UIImage {
         let hasAlpha = true
         let scale: CGFloat = 0.0 // Automatically use scale factor of main screen
         UIGraphicsBeginImageContextWithOptions(size, !hasAlpha, scale)
         image.drawInRect(CGRect(origin: CGPointZero, size: size))
         let scaledImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
-        return scaledImage
+        return scaledImage!
     }
     
     func conversion(photo: String) -> UIImage {
@@ -368,18 +357,14 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
                         truckAnnotation.title = truck.truckName?.capitalizedString
                         truckAnnotation.subtitle = "\(truck.reviewCount!) reviews on Yelp"
                         truckAnnotation.truckCA = truck
-                        //                    let qualityOfServiceClass = QOS_CLASS_BACKGROUND
-                        //                    let backgroundQueue = dispatch_get_global_queue(qualityOfServiceClass, 0)
-                        //                    dispatch_async(backgroundQueue) {
-                        dispatch_async(dispatch_get_main_queue()) {
-                            self.mapView.addAnnotation(truckAnnotation)
-                        }
+                        
+                        self.mapView.addAnnotation(truckAnnotation)
+                        
                     }
                 }
             }
-            dispatch_async(dispatch_get_main_queue()) {
-                self.tableView.reloadData()
-            }
+            self.tableView.reloadData()
+            
         })
     }
     

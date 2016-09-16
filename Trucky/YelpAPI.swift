@@ -55,6 +55,7 @@ class YelpAPI: BDBOAuth1RequestOperationManager {
             let dictionaries = response["businesses"] as? [NSDictionary]
             if dictionaries != nil {
                 completion(Business.businesses(array: dictionaries!), error: nil)
+                
             }
             }, failure: { (operation: AFHTTPRequestOperation?, error: NSError!) -> Void in
                 completion(nil, error: error)
@@ -62,6 +63,25 @@ class YelpAPI: BDBOAuth1RequestOperationManager {
         
     }
     
+    
+    func searchWithID(businessID: String, completion: ([Business]!, error: NSError!) -> Void) -> AFHTTPRequestOperation {
+        
+        
+        return self.GET("business/\(businessID)" , parameters: nil, success: { (operation: AFHTTPRequestOperation, response: AnyObject!) in
+            let dictionaries = response as? [NSDictionary]
+            if dictionaries != nil {
+                completion(Business.businesses(array: dictionaries!), error: nil)
+                
+            } else {
+            print("\(dictionaries)")
+            }
+            }, failure: { (operation: AFHTTPRequestOperation?, error: NSError!) -> Void in
+                completion(nil, error: error)
+                print(error.localizedDescription)
+        })!
+        
+        
+    }
     
     
     

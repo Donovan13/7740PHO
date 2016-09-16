@@ -34,6 +34,7 @@ class LoginViewController: UIViewController,CLLocationManagerDelegate {
             
             if error != nil {
                 print(error?.localizedDescription)
+                print(error!.localizedFailureReason)
                 
                 print ("Incorrect")
                 

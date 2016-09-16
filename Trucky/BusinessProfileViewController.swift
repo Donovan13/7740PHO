@@ -68,7 +68,7 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
             }
             
             
-            cell.backgroundColor! = UIColor.clearColor()
+            cell.backgroundColor? = UIColor.clearColor()
             return cell
         }
         else if indexPath.row == 1 {

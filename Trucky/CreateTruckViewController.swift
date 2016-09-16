@@ -68,6 +68,7 @@ class CreateTruckViewController: UIViewController, CLLocationManagerDelegate {
                     "ratingImageURL": "\(self.businesses.first!.ratingImageURL!)",
                     "reviewCount": self.businesses.first!.reviewCount,
                     "phone": self.businesses.first!.phone,
+                    "categories": self.businesses.first?.categories,
                     "latitude": latitude,
                     "longitude": longitude,
                     "activeLocation" : "false"]
@@ -92,15 +93,23 @@ class CreateTruckViewController: UIViewController, CLLocationManagerDelegate {
     
     func search(phoneNumber: String) {
         
-        Business.searchWithNumber(phoneNumber, completion: { (businesses: [Business]!, error: NSError!) -> Void in
+//        Business.searchWithNumber(phoneNumber, completion: { (businesses: [Business]!, error: NSError!) -> Void in
+//            if error != nil {
+//                self.errorAlert("error", message: error.localizedDescription)
+//            } else {
+//                print(businesses.first?.name)
+//            }
+//            
+//        })
+
+        Business.searchWithID(phoneNumber, completion: { (businesses: [Business]!, error: NSError!) -> Void in
             if error != nil {
-                self.errorAlert("error", message: error.localizedDescription)
+                
             } else {
                 print(businesses.first?.name)
             }
-            
         })
-
+        
     }
     
     func errorAlert(title: String, message: String) {
