@@ -15,6 +15,7 @@ class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableVie
     @IBOutlet weak var logoImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var locationSwitch: UISwitch!
+    @IBOutlet weak var tableView: UITableView!
     
     let userDefaults = NSUserDefaults.standardUserDefaults()
     let locationManager = CLLocationManager()
@@ -28,9 +29,39 @@ class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableVie
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.translucent = true
-        
+
         currentUser()
         
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        // Add a background view to the table view
+        let backgroundImage = UIImage(named: "backSlide")
+        let imageView = UIImageView(image: backgroundImage)
+        self.tableView.backgroundView = imageView
+        
+        
+        // no lines where there aren't cells
+        tableView.tableFooterView = UIView(frame: CGRectZero)
+        
+        // center and scale background image
+        imageView.contentMode = .ScaleAspectFill
+        
+        // Set the background color to match better
+        tableView.backgroundColor = .redColor()
+        
+        // blur it
+        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Light)
+        let blurView = UIVisualEffectView(effect: blurEffect)
+        blurView.frame = imageView.bounds
+        imageView.addSubview(blurView)
+    }
+    
+    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        // translucent cell backgrounds so we can see the image but still easily read the contents
+        cell.backgroundColor = UIColor(white: 0.5, alpha: 0)
     }
     
     

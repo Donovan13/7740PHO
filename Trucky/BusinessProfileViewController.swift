@@ -19,7 +19,7 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
     var trucks: Truck!
     var userlocation: CLLocation?
     let userDefaults = NSUserDefaults.standardUserDefaults()
-//    var distanceOfTruck:String!
+    var distanceOfTruck:String!
 
     
     
@@ -32,6 +32,45 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
         super.viewDidLoad()
         self.ref = FIRDatabase.database().reference()
         
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.translucent = true
+        
+        self.navigationController!.navigationBar.titleTextAttributes = [ NSFontAttributeName: UIFont(name: "times", size: 20)!]
+
+
+        
+    }
+    
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        // Add a background view to the table view
+        let backgroundImage = UIImage(named: "tacos")
+        let imageView = UIImageView(image: backgroundImage)
+        self.tableView.backgroundView = imageView
+
+        
+        // no lines where there aren't cells
+        tableView.tableFooterView = UIView(frame: CGRectZero)
+        
+        // center and scale background image
+        imageView.contentMode = .ScaleAspectFill
+        
+        // Set the background color to match better
+        tableView.backgroundColor = .redColor()
+        
+        // blur it
+        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Light)
+        let blurView = UIVisualEffectView(effect: blurEffect)
+        blurView.frame = imageView.bounds
+        imageView.addSubview(blurView)
+    }
+    
+    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        // translucent cell backgrounds so we can see the image but still easily read the contents
+        cell.backgroundColor = UIColor(white: 0.5, alpha: 0)
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -39,21 +78,20 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 9
+        return 5
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let tableImage = UIImage (named: "tacos")
-        let iconFrame = UIImageView(image: tableImage)
+//        let tableImage = UIImage (named: "tacos")
+//        let iconFrame = UIImageView(image: tableImage)
+        
         //        iconFrame.contentMode = .ScaleAspectFit
         //        if iconFrame.bounds.size.width > (UIImage).size.width && iconFrame.bounds.size.height > (UIImage).size.height {
         //        iconFrame.contentMode = UIViewContentMode.ScaleAspectFit
         //        }
-        tableView.backgroundView = iconFrame
-        
-        tableView.backgroundColor = UIColor .clearColor()
-        
+//        tableView.backgroundView = iconFrame
+//        tableView.backgroundColor = UIColor .clearColor()
         if indexPath.row == 0 {
             
             let cell = tableView.dequeueReusableCellWithIdentifier("titleSegue") as! DetailTableViewCell
@@ -65,17 +103,8 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
             cell.ratingsImageView.image = UIImage(data: NSData(contentsOfURL: NSURL(string:trucks.ratingImageURL!)!)!)!
             
             
-//            cell.distanceLabel.text = "\(distanceOfTruck!)"
+            cell.distanceLabel.text = "\(distanceOfTruck!)"
             
-            
-            
-//            if userlocation != nil {
-//                let distance = location.distanceFromLocation(userlocation!)
-//                let inMiles = distance * 0.000621371192
-//                cell.distanceLabel.text = (String(format: "%.2fm Away", inMiles))
-//            }
-            
-            cell.backgroundColor? = UIColor.clearColor()
             return cell
         }
         else if indexPath.row == 1 {
@@ -94,21 +123,8 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
             return cell
         }
         else if indexPath.row == 4 {
-            let cell = tableView.dequeueReusableCellWithIdentifier("hoursSegue", forIndexPath: indexPath)
-            //            cell.detailTextLabel?.text = trucks.hours
-            return cell
-        }
-        else if indexPath.row == 5 {
             let cell = tableView.dequeueReusableCellWithIdentifier("categorySegue", forIndexPath: indexPath)
             //            cell.detailTextLabel?.text = trucks.category
-            return cell
-        }
-        else if indexPath.row == 6 {
-            let cell = tableView.dequeueReusableCellWithIdentifier("priceSegue", forIndexPath: indexPath)
-            return cell
-        }
-        else if indexPath.row == 7 {
-            let cell = tableView.dequeueReusableCellWithIdentifier("photoSegue", forIndexPath: indexPath)
             return cell
         }
         else {

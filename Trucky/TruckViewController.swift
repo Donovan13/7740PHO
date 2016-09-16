@@ -222,17 +222,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
             let distance = location.distanceFromLocation(userlocation!)
             let inMiles = distance * 0.000621371192
             cell.distanceLabel.text = (String(format: "%.2fm Away", inMiles))
-            
-//            func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-//                if segue.identifier == "detailSegue" {
-//                    
-//                    let detailVC = segue.destinationViewController as! BusinessProfileViewController
-//                    detailVC.distanceOfTruck = cell.distanceLabel.text
-//                    
-//                }
-//            }
-            
-            
+        
             
         }
         
@@ -263,9 +253,12 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
             switch identifier {
             case "detailSegue":
                 let indexPath = self.tableView.indexPathForSelectedRow
+                let cell = tableView.cellForRowAtIndexPath(indexPath!) as! BusinessTableViewCell
                 let detailVC = segue.destinationViewController as! BusinessProfileViewController
                 let truck = trucks[indexPath!.row]
                 detailVC.trucks = truck
+                detailVC.distanceOfTruck = cell.distanceLabel.text
+
             case "annotationDetailSegue":
                 let detailVC = segue.destinationViewController as! BusinessProfileViewController
                 let annotation = sender as! CustomAnnotations
