@@ -20,8 +20,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="K05-CY-bVr">
-                                <frame key="frameInset" width="375" height="667"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="K05-CY-bVr">
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="loginCell" textLabel="gak-G7-sPO" rowHeight="36" style="IBUITableViewCellStyleDefault" id="QCY-3Y-ReD">
@@ -34,7 +33,7 @@
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="gak-G7-sPO">
                                                     <frame key="frameInset" minX="15" width="345" height="35"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <fontDescription key="fontDescription" name="TimesNewRomanPSMT" family="Times New Roman" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -54,7 +53,7 @@
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="wk4-CF-rGU">
                                                     <frame key="frameInset" minX="15" width="345" height="35"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <fontDescription key="fontDescription" name="TimesNewRomanPSMT" family="Times New Roman" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -72,13 +71,13 @@
                                 </connections>
                             </tableView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Truck Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EgH-rV-qjd">
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" name="TimesNewRomanPSMT" family="Times New Roman" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Share Location" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cbd-OT-tSQ">
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" name="TimesNewRomanPSMT" family="Times New Roman" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="JrQ-4Z-DuR">
@@ -96,19 +95,19 @@
                                 </constraints>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="U1F-LV-QZe" firstAttribute="top" secondItem="K05-CY-bVr" secondAttribute="bottom" id="0F0-J3-iLR"/>
                             <constraint firstItem="Cbd-OT-tSQ" firstAttribute="leading" secondItem="OAT-sW-vfv" secondAttribute="leadingMargin" id="BVI-eQ-wfh"/>
-                            <constraint firstItem="EgH-rV-qjd" firstAttribute="top" secondItem="pQu-H7-NL3" secondAttribute="bottom" constant="201" id="EU5-h6-lwI"/>
+                            <constraint firstItem="EgH-rV-qjd" firstAttribute="top" secondItem="pQu-H7-NL3" secondAttribute="bottom" constant="96" id="EU5-h6-lwI"/>
                             <constraint firstAttribute="trailingMargin" secondItem="K05-CY-bVr" secondAttribute="trailing" constant="-16" id="Ert-lt-fNx"/>
                             <constraint firstItem="JrQ-4Z-DuR" firstAttribute="top" secondItem="EgH-rV-qjd" secondAttribute="bottom" constant="28" id="J3W-8R-hB6"/>
                             <constraint firstItem="JZd-dA-LEi" firstAttribute="centerX" secondItem="OAT-sW-vfv" secondAttribute="centerX" id="Vio-3C-V8b"/>
-                            <constraint firstItem="K05-CY-bVr" firstAttribute="top" secondItem="EgH-rV-qjd" secondAttribute="bottom" constant="9.5" id="Xqt-RC-rs3"/>
+                            <constraint firstItem="K05-CY-bVr" firstAttribute="top" secondItem="EgH-rV-qjd" secondAttribute="bottom" constant="13" id="Xqt-RC-rs3"/>
                             <constraint firstItem="EgH-rV-qjd" firstAttribute="centerX" secondItem="OAT-sW-vfv" secondAttribute="centerX" id="iQJ-yy-gOa"/>
                             <constraint firstItem="JrQ-4Z-DuR" firstAttribute="trailing" secondItem="OAT-sW-vfv" secondAttribute="trailingMargin" id="kS9-HF-BnG"/>
                             <constraint firstItem="K05-CY-bVr" firstAttribute="leading" secondItem="OAT-sW-vfv" secondAttribute="leadingMargin" constant="-16" id="lWh-Xk-i54"/>
-                            <constraint firstItem="JZd-dA-LEi" firstAttribute="top" secondItem="OAT-sW-vfv" secondAttribute="topMargin" constant="127" id="otQ-AS-fog"/>
+                            <constraint firstItem="JZd-dA-LEi" firstAttribute="top" secondItem="OAT-sW-vfv" secondAttribute="topMargin" constant="22" id="otQ-AS-fog"/>
                             <constraint firstItem="Cbd-OT-tSQ" firstAttribute="top" secondItem="EgH-rV-qjd" secondAttribute="bottom" constant="33" id="x4C-g8-OL1"/>
                         </constraints>
                     </view>
@@ -484,7 +483,8 @@
                                     <action selector="showListButton:" destination="Ruc-lo-W4k" eventType="touchUpInside" id="A9V-xE-LF8"/>
                                 </connections>
                             </button>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="BbI-6f-a7f">
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="BbI-6f-a7f">
+                                <frame key="frameInset" width="1000" height="1000"/>
                                 <connections>
                                     <outlet property="delegate" destination="Ruc-lo-W4k" id="MIw-ac-kqK"/>
                                 </connections>
@@ -951,9 +951,9 @@
         <image name="sideMenu" width="200" height="200"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="83W-ak-mQX"/>
-        <segue reference="s9o-uU-rdu"/>
-        <segue reference="6Pl-oM-29y"/>
         <segue reference="2XA-gi-oSt"/>
+        <segue reference="83W-ak-mQX"/>
+        <segue reference="agN-JL-lDt"/>
+        <segue reference="B1M-Sw-cGi"/>
     </inferredMetricsTieBreakers>
 </document>
