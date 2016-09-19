@@ -58,13 +58,14 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(false)
-        __getMemoryUsedPer1()
+
     }
     override func didReceiveMemoryWarning() {
         print("help")
-
     }
-    func __getMemoryUsedPer1() -> Float
+    
+    
+    func _getMemoryUsedPer1() -> Float
     {
         let MACH_TASK_BASIC_INFO_COUNT = (sizeof(mach_task_basic_info_data_t) / sizeof(natural_t))
         let name = mach_task_self_
@@ -378,6 +379,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
             self.tableView.reloadData()
             
         })
+        self.ref?.child("Trucks").observeEventType(FIRDataEventType.ChildChanged, withBlock: <#T##(FIRDataSnapshot) -> Void#>)
     }
     
     
