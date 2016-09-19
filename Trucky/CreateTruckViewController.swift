@@ -71,7 +71,7 @@ class CreateTruckViewController: UIViewController, CLLocationManagerDelegate {
                     "activeLocation" : "false"]
 //
                 
-                self.ref.child("Trucks").child(user!.uid).setValue(dictionary as? Dictionary<String, AnyObject>)
+                self.ref.child("Trucks").child("inactive").child(user!.uid).setValue(dictionary as? Dictionary<String, AnyObject>)
                 
 //                self.userDefaults.setValue(user?.uid, forKey: "uid")
                 
