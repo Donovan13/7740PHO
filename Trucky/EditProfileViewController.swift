@@ -10,7 +10,7 @@ import UIKit
 import CoreImage
 import Firebase
 
-class EditProfileViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate{
+class EditProfileViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource{
     
     @IBOutlet weak var truckLabel: UILabel!
     @IBOutlet weak var websiteTextField: UITextField!
@@ -23,7 +23,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     
     
     var ref:FIRDatabaseReference!
-    var businesses = [Business]()
+    var currentTrucks = [Truck]()
     let userDefaults = NSUserDefaults.standardUserDefaults()
     
     
@@ -75,6 +75,9 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         
     }
     
+    
+    
+    
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         if self.profilepictureButton.selected == true {
             self.profileImageView.image = info[UIImagePickerControllerOriginalImage] as? UIImage
@@ -114,6 +117,12 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         
         
     }
+    
+    
+    
+    
+    
+    
     func currentUser() {
         
         
@@ -126,6 +135,9 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
                 let website = snapshot.value!["website"] as? String
                 let menu = snapshot.value?["menuImage"]as? String
                 let logoImage = snapshot.value?["logoImage"] as? String
+                
+                
+//                currentTrucks.append(snapshot)
                 
                 if profileImage != nil {
                     self.profileImageView.image = self.conversion(profileImage!)
@@ -168,4 +180,31 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         let base64String = data!.base64EncodedStringWithOptions([])
         return base64String
     }
+    
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 4
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+        if indexPath.row == 0 {
+            let cell = tableView.dequeueReusableCellWithIdentifier("imageCell") as! ImageTableViewCell
+            return cell
+            
+        } else {
+            let cell = tableView.dequeueReusableCellWithIdentifier("textCell") as! TextTableViewCell
+            return cell
+            
+        }
+        
+        
+        
+    }
+    
+    
+    
 }

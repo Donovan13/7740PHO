@@ -212,7 +212,6 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("BusinessTableViewCell") as! BusinessTableViewCell
         let post = trucks[indexPath.row]
-        let location = CLLocation(latitude: post.latitude!, longitude: post.longitude!)
         
         
         cell.businessLabel?.text = post.truckName?.capitalizedString
@@ -220,6 +219,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         cell.reviewLabel?.text = "\(post.reviewCount!) reviews on Yelp"
         
         if userlocation != nil {
+            let location = CLLocation(latitude: post.latitude!, longitude: post.longitude!)
             let distance = location.distanceFromLocation(userlocation!)
             let inMiles = distance * 0.000621371192
             cell.distanceLabel.text = (String(format: "%.2fm Away", inMiles))

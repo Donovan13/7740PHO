@@ -16,7 +16,6 @@ class CreateTruckViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var confirmPassword: UITextField!
-    @IBOutlet weak var zipTextField: UITextField!
     @IBOutlet weak var businessNameTextField: UITextField!
     @IBOutlet weak var businessTextField: UILabel!
     @IBOutlet weak var reviewsTextField: UILabel!

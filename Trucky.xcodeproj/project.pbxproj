@@ -18,6 +18,7 @@
 		0971AB861D8BCA41008B756D /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0971AB851D8BCA41008B756D /* WebViewController.swift */; };
 		097ED68F1D8B4ED9002B4B9B /* CustomAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097ED68E1D8B4ED9002B4B9B /* CustomAnnotationView.swift */; };
 		0985FD071D90A4FF0082C922 /* ImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0985FD061D90A4FF0082C922 /* ImageTableViewCell.swift */; };
+		0985FD091D90A6C00082C922 /* TextTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0985FD081D90A6C00082C922 /* TextTableViewCell.swift */; };
 		09ADB7051D67BE3900890CDB /* Truck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09ADB7041D67BE3900890CDB /* Truck.swift */; };
 		09ADB7071D67C1E100890CDB /* CustomAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09ADB7061D67C1E100890CDB /* CustomAnnotation.swift */; };
 		09C926D11D75402100605B67 /* SlideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C926D01D75402100605B67 /* SlideMenuViewController.swift */; };
@@ -64,6 +65,7 @@
 		0971AB851D8BCA41008B756D /* WebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		097ED68E1D8B4ED9002B4B9B /* CustomAnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomAnnotationView.swift; sourceTree = "<group>"; };
 		0985FD061D90A4FF0082C922 /* ImageTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageTableViewCell.swift; sourceTree = "<group>"; };
+		0985FD081D90A6C00082C922 /* TextTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextTableViewCell.swift; sourceTree = "<group>"; };
 		099DE8CA1D8CB10E0006AE62 /* Trucky.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Trucky.entitlements; sourceTree = "<group>"; };
 		09ADB7041D67BE3900890CDB /* Truck.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Truck.swift; sourceTree = "<group>"; };
 		09ADB7061D67C1E100890CDB /* CustomAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomAnnotation.swift; sourceTree = "<group>"; };
@@ -209,6 +211,7 @@
 				095834291D83426700EBDF9A /* DetailTableViewCell.swift */,
 				09D4B2461D6A318B002676D1 /* BusinessTableViewCell.swift */,
 				0985FD061D90A4FF0082C922 /* ImageTableViewCell.swift */,
+				0985FD081D90A6C00082C922 /* TextTableViewCell.swift */,
 			);
 			name = Customs;
 			sourceTree = "<group>";
@@ -302,6 +305,9 @@
 						SystemCapabilities = {
 							com.apple.ApplePay = {
 								enabled = 0;
+							};
+							com.apple.Keychain = {
+								enabled = 1;
 							};
 						};
 					};
@@ -463,6 +469,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0985FD091D90A6C00082C922 /* TextTableViewCell.swift in Sources */,
 				095F09B61D400768007E8F5B /* TruckViewController.swift in Sources */,
 				097ED68F1D8B4ED9002B4B9B /* CustomAnnotationView.swift in Sources */,
 				09C926D11D75402100605B67 /* SlideMenuViewController.swift in Sources */,
@@ -628,6 +635,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Trucky/Trucky.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 7G99974HDG;
@@ -648,6 +656,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Trucky/Trucky.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 7G99974HDG;
