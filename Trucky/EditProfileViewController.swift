@@ -93,6 +93,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         
         let userUID = userDefaults.stringForKey("uid")
         
+        
         let profileImg = imageConversion(self.profileImageView.image!)
         let menuImg = imageConversion(self.menuImageView.image!)
         let logoImg = imageConversion(self.logoImageView.image!)
@@ -103,7 +104,6 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         self.userDefaults.setValue(menuImg, forKey: "menuImage")
         self.userDefaults.setValue(truckWebsite, forKey: "website")
         self.userDefaults.setValue(logoImg, forKey: "logoImage")
-        
         
         
         self.ref.child("Trucks").child(userUID!).updateChildValues(["profileImage": profileImg, "menuImage": menuImg, "website": truckWebsite!, "logoImage": logoImg])
@@ -122,19 +122,19 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
             
             ref.child("Trucks").child(userUID!).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
                 let userImage = snapshot.value!["imageURL"] as! String
-                let profileImage = snapshot.value?["profileImage"]
+                let profileImage = snapshot.value?["profileImage"] as? String
                 let website = snapshot.value!["website"] as? String
-                let menu = snapshot.value?["menuImage"]
+                let menu = snapshot.value?["menuImage"]as? String
                 let logoImage = snapshot.value?["logoImage"] as? String
                 
                 if profileImage != nil {
-                    self.profileImageView.image = self.conversion(profileImage as! String)
+                    self.profileImageView.image = self.conversion(profileImage!)
                 } else {
                     self.profileImageView.image = UIImage(data: NSData(contentsOfURL: NSURL(string:userImage)!)!)
                 }
                 
                 if menu != nil {
-                    self.menuImageView.image = self.conversion((menu as? String)!)
+                    self.menuImageView.image = self.conversion((menu)!)
                 } else {
                     self.menuImageView.image = UIImage(named: "menu")
                 }

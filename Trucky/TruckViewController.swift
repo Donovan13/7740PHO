@@ -53,7 +53,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         dispatch_async(dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0)) {
             self.loadTrucks()
         }
-        
+    
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -227,7 +227,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
             
         }
         
-        dispatch_async(dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0)) {
+//        dispatch_async(dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0)) {
 
             cell.reviewImage?.image = UIImage(data: NSData(contentsOfURL: NSURL(string:post.ratingImageURL!)!)!)!
             
@@ -236,7 +236,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
             } else {
                 cell.businessImage?.image = UIImage(data: NSData(contentsOfURL: NSURL(string:post.imageURL!)!)!)!
             }
-        }
+//        }
         
         return cell
     }
@@ -368,7 +368,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
                         truckAnnotation.coordinate.latitude = truck.latitude!
                         truckAnnotation.coordinate.longitude = truck.longitude!
                         truckAnnotation.title = truck.truckName?.capitalizedString
-                        truckAnnotation.subtitle = "\(truck.reviewCount!) reviews on Yelp"
+                        truckAnnotation.subtitle = truck.categories
                         truckAnnotation.truckCA = truck
                         
                         self.mapView.addAnnotation(truckAnnotation)
@@ -379,7 +379,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
             self.tableView.reloadData()
             
         })
-        self.ref?.child("Trucks").observeEventType(FIRDataEventType.ChildChanged, withBlock: <#T##(FIRDataSnapshot) -> Void#>)
+        
     }
     
     

@@ -42,6 +42,7 @@ class Business: NSObject {
         
         phone = dictionary["display_phone"] as? String
         reviewCount = dictionary["review_count"] as? NSNumber
+
         
         let categoriesArray = dictionary["categories"] as? [[String]]
         if categoriesArray != nil {
