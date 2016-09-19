@@ -26,7 +26,7 @@ class CreateTruckViewController: UIViewController, CLLocationManagerDelegate {
     
     
     var ref:FIRDatabaseReference!
-    var businesses = [Business]()
+    var currentBusinesses = [Business]()
     let userDefaults = NSUserDefaults.standardUserDefaults()
     
     
@@ -37,9 +37,7 @@ class CreateTruckViewController: UIViewController, CLLocationManagerDelegate {
     
     
     @IBAction func createUser(sender: AnyObject) {
-        for business in self.businesses {
-            print(business)
-        }
+        
         
         if passwordTextField.text == confirmPassword.text {
         
@@ -61,18 +59,16 @@ class CreateTruckViewController: UIViewController, CLLocationManagerDelegate {
                 
                 let dictionary = [
                     "uid": user!.uid,
-                    "truckName": self.businessNameTextField.text,
-                    "zip": self.zipTextField.text!,
-                    "address": self.businesses.first!.fullAddress,
-                    "imageURL": "\(self.businesses.first!.imageURL!)",
-                    "ratingImageURL": "\(self.businesses.first!.ratingImageURL!)",
-                    "reviewCount": self.businesses.first!.reviewCount,
-                    "phone": self.businesses.first!.phone,
-                    "categories": self.businesses.first?.categories,
+                    "truckName": self.currentBusinesses.first!.name,
+                    "imageURL": "\(self.currentBusinesses.first!.imageURL!)",
+                    "ratingImageURL": "\(self.currentBusinesses.first!.ratingImageURL!)",
+                    "reviewCount": self.currentBusinesses.first!.reviewCount,
+                    "phone": self.currentBusinesses.first!.phone,
+                    "categories": self.currentBusinesses.first?.categories,
                     "latitude": latitude,
                     "longitude": longitude,
                     "activeLocation" : "false"]
-                
+//
                 
                 self.ref.child("Trucks").child(user!.uid).setValue(dictionary as? Dictionary<String, AnyObject>)
                 
@@ -93,28 +89,29 @@ class CreateTruckViewController: UIViewController, CLLocationManagerDelegate {
     
     func search(phoneNumber: String) {
         
-//        Business.searchWithNumber(phoneNumber, completion: { (businesses: [Business]!, error: NSError!) -> Void in
-//            if error != nil {
-//                self.errorAlert("error", message: error.localizedDescription)
-//            } else {
-//                print(businesses.first?.name)
-//            }
-//            
-//        })
-
-        Business.searchWithID(phoneNumber, completion: { (businesses: [Business]!, error: NSError!) -> Void in
+        Business.searchWithNumber(phoneNumber, completion: { (businesses: [Business]!, error: NSError!) -> Void in
             if error != nil {
-                
+                self.errorAlert("error", message: error.localizedDescription)
             } else {
-                self.businessTextField.text = businesses.first?.name
-                self.reviewsTextField.text = "\(businesses.first?.reviewCount) reviews on Yelp"
-                self.ratingsImageView.image = UIImage(data: NSData(contentsOfURL: NSURL(string:"\(businesses.first?.ratingImageURL!)")!)!)
-                self.yelpImage.image = UIImage(data: NSData(contentsOfURL: NSURL(string:"\(businesses.first?.imageURL!)")!)!)
-                    
+                self.currentBusinesses.insert(businesses.first!, atIndex: 0)
                 
             }
+            
         })
-        
+
+//        Business.searchWithID(phoneNumber, completion: { (businesses: [Business]!, error: NSError!) -> Void in
+//            if error != nil {
+//                
+//            } else {
+//                self.businessTextField.text = businesses.first?.name
+//                self.reviewsTextField.text = "\(businesses.first?.reviewCount) reviews on Yelp"
+//                self.ratingsImageView.image = UIImage(data: NSData(contentsOfURL: NSURL(string:"\(businesses.first?.ratingImageURL!)")!)!)
+//                self.yelpImage.image = UIImage(data: NSData(contentsOfURL: NSURL(string:"\(businesses.first?.imageURL!)")!)!)
+//                    
+//                
+//            }
+//        })
+//        
     }
     
     func errorAlert(title: String, message: String) {

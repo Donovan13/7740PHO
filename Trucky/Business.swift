@@ -10,14 +10,12 @@ import UIKit
 
 class Business: NSObject {
     let name: String?
-    var fullAddress: String?
     var imageURL: NSURL?
     let categories: String?
     var ratingImageURL: NSURL?
     var reviewCount: NSNumber?
     let id: String?
     let phone: String?
-    let zip: String?
     let latitude: Double?
     let longitude: Double?
     
@@ -25,13 +23,11 @@ class Business: NSObject {
     
     init(dictionary: NSDictionary) {
         name = dictionary["name"] as? String
-        fullAddress = dictionary["location.display_address"] as? String
         imageURL = dictionary["image_url"] as? NSURL
         ratingImageURL = dictionary["rating_img_url"] as? NSURL
         reviewCount = dictionary["review_count"] as? NSNumber
         id = dictionary["id"] as? String
         phone = dictionary["display_phone"] as? String
-        zip = dictionary["location.postal_code"] as? String
         latitude = dictionary["latitude"] as? Double
         longitude = dictionary["longitude"] as? Double
         
@@ -43,24 +39,6 @@ class Business: NSObject {
         } else {
             imageURL = nil
         }
-        
-        let location = dictionary["location"] as? NSDictionary
-        var address = ""
-        if location != nil {
-            let addressArray = location!["address"] as? NSArray
-            if addressArray != nil && addressArray!.count > 0 {
-                address = addressArray![0] as! String
-            }
-            
-            let neighborhoods = location!["neighborhoods"] as? NSArray
-            if neighborhoods != nil && neighborhoods!.count > 0 {
-                if !address.isEmpty {
-                    address += ", "
-                }
-                address += neighborhoods![0] as! String
-            }
-        }
-        self.fullAddress = address
         
                 let categoriesArray = dictionary["categories"] as? [[String]]
                 if categoriesArray != nil {

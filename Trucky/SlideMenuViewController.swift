@@ -146,7 +146,7 @@ class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableVie
             
             ref.child("Trucks").child(userUID!).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
                 let userImage = snapshot.value!["imageURL"] as! String
-                let profileImage = snapshot.value?["profileImage"]
+                let profileImage = snapshot.value?["profileImage"] as? String
                 let activeLocation = snapshot.value!["activeLocation"] as! String
                 let truckName = snapshot.value!["truckName"] as! String
                 let logoImage = snapshot.value?["logoImage"] as? String
@@ -161,7 +161,7 @@ class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableVie
                 if logoImage != nil {
                     self.logoImageView.image = self.conversion(logoImage!)
                 } else if profileImage != nil {
-                    self.logoImageView.image = self.conversion(profileImage as! String)
+                    self.logoImageView.image = self.conversion(profileImage!)
                 } else {
                     self.logoImageView.image = UIImage(data: NSData(contentsOfURL: NSURL(string:userImage)!)!)
                 }

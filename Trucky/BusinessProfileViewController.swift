@@ -124,7 +124,7 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
         }
         else if indexPath.row == 4 {
             let cell = tableView.dequeueReusableCellWithIdentifier("categorySegue", forIndexPath: indexPath)
-            //            cell.detailTextLabel?.text = trucks.category
+            cell.detailTextLabel?.text = trucks.categories
             return cell
         }
         else {
