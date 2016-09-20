@@ -20,12 +20,8 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
     var userlocation: CLLocation?
     let userDefaults = NSUserDefaults.standardUserDefaults()
     var distanceOfTruck:String!
-
-    
     
     @IBOutlet weak var tableView: UITableView!
-    
-    
     
     
     override func viewDidLoad() {
@@ -37,11 +33,7 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
         self.navigationController?.navigationBar.translucent = true
         
         self.navigationController!.navigationBar.titleTextAttributes = [ NSFontAttributeName: UIFont(name: "times", size: 20)!]
-
-
-        
     }
-    
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -50,7 +42,6 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
         let backgroundImage = UIImage(named: "tacos")
         let imageView = UIImageView(image: backgroundImage)
         self.tableView.backgroundView = imageView
-
         
         // no lines where there aren't cells
         tableView.tableFooterView = UIView(frame: CGRectZero)
@@ -78,59 +69,33 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return 4
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-//        let tableImage = UIImage (named: "tacos")
-//        let iconFrame = UIImageView(image: tableImage)
-        
-        //        iconFrame.contentMode = .ScaleAspectFit
-        //        if iconFrame.bounds.size.width > (UIImage).size.width && iconFrame.bounds.size.height > (UIImage).size.height {
-        //        iconFrame.contentMode = UIViewContentMode.ScaleAspectFit
-        //        }
-//        tableView.backgroundView = iconFrame
-//        tableView.backgroundColor = UIColor .clearColor()
         if indexPath.row == 0 {
-            
             let cell = tableView.dequeueReusableCellWithIdentifier("titleSegue") as! DetailTableViewCell
-//            let location = CLLocation(latitude: trucks.latitude!, longitude: trucks.longitude!)
-            
-            
             cell.truckNameLabel?.text = trucks.truckName?.capitalizedString
             cell.reviewsLabel?.text = "\(trucks.reviewCount!) reviews on Yelp"
             cell.ratingsImageView.image = UIImage(data: NSData(contentsOfURL: NSURL(string:trucks.ratingImageURL!)!)!)!
-            
-            
             cell.distanceLabel.text = "\(distanceOfTruck!)"
             
             return cell
-        }
-        else if indexPath.row == 1 {
+        } else if indexPath.row == 1 {
             let cell = tableView.dequeueReusableCellWithIdentifier("phoneSegue", forIndexPath: indexPath)
             cell.detailTextLabel?.text = trucks.phone
             return cell
-        }
-        else if indexPath.row == 2 {
+        } else if indexPath.row == 2 {
             let cell = tableView.dequeueReusableCellWithIdentifier("websiteSegue", forIndexPath: indexPath)
             cell.detailTextLabel?.text = trucks.website
             return cell
-        }
-        else if indexPath.row == 3 {
+        } else {
             let cell = tableView.dequeueReusableCellWithIdentifier("addressSegue", forIndexPath: indexPath)
             cell.detailTextLabel?.text = trucks.address
             return cell
         }
-        else if indexPath.row == 4 {
-            let cell = tableView.dequeueReusableCellWithIdentifier("categorySegue", forIndexPath: indexPath)
-            cell.detailTextLabel?.text = trucks.categories
-            return cell
-        }
-        else {
-            let cell = tableView.dequeueReusableCellWithIdentifier("reviewSegue", forIndexPath: indexPath)
-            return cell
-        }
+        
     }
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if indexPath.row == 0 {
@@ -138,12 +103,12 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
             return 120
         } else {
             return 50
-    }
+        }
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
-          if indexPath.row == 1 {
-
+        if indexPath.row == 1 {
+            
             callNumber(trucks.phone!)
             
         } else if indexPath.row == 2 {
@@ -155,10 +120,9 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
     }
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "detailToWebSegue" {
-
+            
             let detailVC = segue.destinationViewController as! WebViewController
             detailVC.businessURL = trucks.website
-
         }
     }
     

@@ -49,16 +49,16 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         
         self.navigationController!.navigationBar.titleTextAttributes = [ NSFontAttributeName: UIFont(name: "times", size: 20)!]
         
-     
+        
         dispatch_async(dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0)) {
             self.loadTrucks()
         }
-    
+        
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(false)
-
+        
     }
     override func didReceiveMemoryWarning() {
         print("help")
@@ -111,7 +111,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     
     //    MARK: MapView Delegate
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
-
+        
         
         
         if annotation.isEqual(mapView.userLocation) {
@@ -120,7 +120,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
             let pin = MKAnnotationView (annotation: annotation, reuseIdentifier: nil)
             
             
-
+            
             let icon = scaleUIImageToSize(UIImage(named: "login")!, size: CGSizeMake(30,30))
             let iconFrame = UIImageView(image: icon)
             
@@ -130,15 +130,10 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
             pin.leftCalloutAccessoryView = iconFrame
             pin.leftCalloutAccessoryView?.layer.cornerRadius = (pin.leftCalloutAccessoryView?.frame.size.width)! / 2
             pin.leftCalloutAccessoryView?.clipsToBounds = true
-
-            
-            
-            
             
             return pin
         } else {
             return nil
-            
         }
     }
     
@@ -148,7 +143,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         self.performSegueWithIdentifier("annotationDetailSegue", sender: annotation)
         
     }
-
+    
     
     func locationManager(manager: CLLocationManager, didUpdateToLocation newLocation: CLLocation, fromLocation oldLocation: CLLocation) {
         
@@ -200,7 +195,6 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
             print("inactive")
         }
         
-        
     }
     
     
@@ -216,27 +210,26 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         
         cell.businessLabel?.text = post.truckName?.capitalizedString
         cell.addressLabel?.text = post.address
-//        cell.reviewLabel?.text = "\(post.reviewCount!) reviews on Yelp"
+        cell.reviewLabel?.text = "\(post.reviewCount!) reviews on Yelp"
         
         if userlocation != nil {
             let location = CLLocation(latitude: post.latitude!, longitude: post.longitude!)
             let distance = location.distanceFromLocation(userlocation!)
             let inMiles = distance * 0.000621371192
             cell.distanceLabel.text = (String(format: "%.2fm Away", inMiles))
-        
             
         }
         
-//        dispatch_async(dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0)) {
-
-            cell.reviewImage?.image = UIImage(data: NSData(contentsOfURL: NSURL(string:post.ratingImageURL!)!)!)!
-            
-            if post.profileImage != nil {
-                cell.businessImage?.image = self.conversion(post.profileImage!)
-            } else {
-                cell.businessImage?.image = UIImage(data: NSData(contentsOfURL: NSURL(string:post.imageURL!)!)!)!
-            }
-//        }
+        //        dispatch_async(dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0)) {
+        
+        cell.reviewImage?.image = UIImage(data: NSData(contentsOfURL: NSURL(string:post.ratingImageURL!)!)!)!
+        
+        if post.profileImage != nil {
+            cell.businessImage?.image = self.conversion(post.profileImage!)
+        } else {
+            cell.businessImage?.image = UIImage(data: NSData(contentsOfURL: NSURL(string:post.imageURL!)!)!)!
+        }
+        //        }
         
         return cell
     }
@@ -245,8 +238,6 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         performSegueWithIdentifier("detailSegue", sender: self)
         
     }
-    
-    
     
     //    MARK:PrepareForSegue
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -259,7 +250,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
                 let truck = trucks[indexPath!.row]
                 detailVC.trucks = truck
                 detailVC.distanceOfTruck = cell.distanceLabel.text
-
+                
             case "annotationDetailSegue":
                 let detailVC = segue.destinationViewController as! BusinessProfileViewController
                 let annotation = sender as! CustomAnnotations
@@ -268,7 +259,6 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
             }
         }
     }
-    
     
     //    MARK: IBActions
     @IBAction func showListButton(sender: AnyObject) {
@@ -290,7 +280,6 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         
     }
     
-    
     @IBAction func centerLocationButton(sender: AnyObject) {
         let latitude = userlocation?.coordinate.latitude
         let longitude = userlocation?.coordinate.longitude
@@ -300,7 +289,6 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         mapView.setRegion(region, animated: true)
         
     }
-    
     
     @IBAction func menuButtonTapped(sender: AnyObject) {
         let userUID = userDefaults.stringForKey("uid")
@@ -313,10 +301,6 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
             self.performSegueWithIdentifier("mapToLoginSegue", sender: self)
         }
     }
-    
-    
-    
-    
     
     
     //    MARK: Custom Functions
@@ -361,23 +345,19 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
                     }
                 }
                 for truck in self.trucks {
-                        let truckAnnotation = CustomAnnotations()
-                        
-                        truckAnnotation.coordinate.latitude = truck.latitude!
-                        truckAnnotation.coordinate.longitude = truck.longitude!
-                        truckAnnotation.title = truck.truckName?.capitalizedString
-                        truckAnnotation.subtitle = truck.categories
-                        truckAnnotation.truckCA = truck
-                        
-                        self.mapView.addAnnotation(truckAnnotation)
-                        
+                    let truckAnnotation = CustomAnnotations()
+                    
+                    truckAnnotation.coordinate.latitude = truck.latitude!
+                    truckAnnotation.coordinate.longitude = truck.longitude!
+                    truckAnnotation.title = truck.truckName?.capitalizedString
+                    //                        truckAnnotation.subtitle = truck.categories
+                    truckAnnotation.truckCA = truck
+                    
+                    self.mapView.addAnnotation(truckAnnotation)
                 }
             }
             self.tableView.reloadData()
             
         })
-        
     }
-    
-    
 }

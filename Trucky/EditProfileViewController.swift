@@ -10,24 +10,21 @@ import UIKit
 import CoreImage
 import Firebase
 
-
-protocol logoImagePickerDelegate {
-    func pickImage()
-}
-protocol profileImagePickerDelegate {
-    func pickImage()
-}
-protocol menuImagePickerDelegate {
-    func pickImage()
-}
-
-class EditProfileViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource, logoImagePickerDelegate, menuImagePickerDelegate, profileImagePickerDelegate{
+class EditProfileViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    
+    @IBOutlet weak var truckNameLabel: UILabel!
+    @IBOutlet weak var logoImageView: UIImageView!
+    @IBOutlet weak var profileImageView: UIImageView!
+    @IBOutlet weak var menuImageView: UIImageView!
+    @IBOutlet weak var logoPictureButton: UIButton!
+    @IBOutlet weak var profilePictureButton: UIButton!
+    @IBOutlet weak var menuPictureButton: UIButton!
+    @IBOutlet weak var websiteTextField: UITextField!
     
     var ref:FIRDatabaseReference!
     var currentTrucks = [Truck]()
     let userDefaults = NSUserDefaults.standardUserDefaults()
-    
-    @IBOutlet weak var tableView: UITableView!
     
     
     override func viewDidLoad() {
@@ -36,73 +33,32 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         ref = FIRDatabase.database().reference()
         print("\(userDefaults.stringForKey("uid"))")
         
-//        currentUser()
+        currentUser()
     }
-    
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
-        
-        let cell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0)) as? ImageTableViewCell
-        cell?.menuImageView.image = info[UIImagePickerControllerOriginalImage] as? UIImage
-        dismissViewControllerAnimated(true, completion: nil)
-//        if self.profilePictureButton.selected == true {
-//            self.profileImageView.image = info[UIImagePickerControllerOriginalImage] as? UIImage
-//            dismissViewControllerAnimated(true, completion: nil)
-//        } else if self.menuPictureButton.selected == true{
-//            self.menuImageView.image = info[UIImagePickerControllerOriginalImage] as? UIImage
-//            dismissViewControllerAnimated(true, completion: nil)
-//        } else if self.logoPictureButton.selected == true {
-//            self.logoImageView.image = info[UIImagePickerControllerOriginalImage] as? UIImage
-//            dismissViewControllerAnimated(true, completion: nil)
-//        }
-        
-    }
-    
-    func pickImage() {
-        
-        let imagePicker = UIImagePickerController()
-        imagePicker.delegate = self
-        imagePicker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
-        imagePicker.allowsEditing = false
-        self.presentViewController(imagePicker, animated: true, completion: nil)
-    }
-
-    
-
-    
     
     @IBAction func saveButton(sender: AnyObject) {
         
         let userUID = userDefaults.stringForKey("uid")
-//        
-//        
-//        let profileImg = imageConversion(self.profileImageView.image!)
-//        let menuImg = imageConversion(self.menuImageView.image!)
-//        let logoImg = imageConversion(self.logoImageView.image!)
-//        let truckWebsite = websiteTextField.text
-//
-//        
-//        self.userDefaults.setValue(profileImg, forKey: "profileImage")
-//        self.userDefaults.setValue(menuImg, forKey: "menuImage")
-//        self.userDefaults.setValue(truckWebsite, forKey: "website")
-//        self.userDefaults.setValue(logoImg, forKey: "logoImage")
-//        
-//        
-//        self.ref.child("Trucks").child(userUID!).updateChildValues(["profileImage": profileImg, "menuImage": menuImg, "website": truckWebsite!, "logoImage": logoImg])
-//        
-//        
-//        
-//        self.performSegueWithIdentifier("editToMapSegue", sender: self)
         
+        let profileImg = imageConversion(self.profileImageView.image!)
+        let menuImg = imageConversion(self.menuImageView.image!)
+        let logoImg = imageConversion(self.logoImageView.image!)
+        let truckWebsite = websiteTextField.text
+        
+        
+        self.userDefaults.setValue(profileImg, forKey: "profileImage")
+        self.userDefaults.setValue(menuImg, forKey: "menuImage")
+        self.userDefaults.setValue(truckWebsite, forKey: "website")
+        self.userDefaults.setValue(logoImg, forKey: "logoImage")
+        
+        
+        self.ref.child("Trucks").child(userUID!).updateChildValues(["profileImage": profileImg, "menuImage": menuImg, "website": truckWebsite!, "logoImage": logoImg])
+        
+        self.performSegueWithIdentifier("editToMapSegue", sender: self)
         
     }
     
-    
-    
-    
-    
-    
     func currentUser() {
-        
         
         let userUID = userDefaults.stringForKey("uid")
         if userUID != nil {
@@ -114,32 +70,29 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
                 let menu = snapshot.value?["menuImage"]as? String
                 let logoImage = snapshot.value?["logoImage"] as? String
                 
+                if profileImage != nil {
+                    self.profileImageView.image = self.conversion(profileImage!)
+                } else {
+                    self.profileImageView.image = UIImage(data: NSData(contentsOfURL: NSURL(string:userImage)!)!)
+                }
                 
-//                currentTrucks.append(snapshot)
+                if menu != nil {
+                    self.menuImageView.image = self.conversion((menu)!)
+                } else {
+                    self.menuImageView.image = UIImage(named: "menu")
+                }
                 
-//                if profileImage != nil {
-//                    self.profileImageView.image = self.conversion(profileImage!)
-//                } else {
-//                    self.profileImageView.image = UIImage(data: NSData(contentsOfURL: NSURL(string:userImage)!)!)
-//                }
-//                
-//                if menu != nil {
-//                    self.menuImageView.image = self.conversion((menu)!)
-//                } else {
-//                    self.menuImageView.image = UIImage(named: "menu")
-//                }
-//                
-//                if website != nil {
-//                    self.websiteTextField.text = website
-//                } else {
-//                    self.websiteTextField.text = nil
-//                }
-//                
-//                if logoImage != nil {
-//                    self.logoImageView.image = self.conversion(logoImage!)
-//                } else {
-//                    print("No Logo Uploaded")
-//                }
+                if website != nil {
+                    self.websiteTextField.text = website
+                } else {
+                    self.websiteTextField.text = nil
+                }
+                
+                if logoImage != nil {
+                    self.logoImageView.image = self.conversion(logoImage!)
+                } else {
+                    print("No Logo Uploaded")
+                }
             })
             
         } else {
@@ -159,47 +112,26 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         return base64String
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
-    }
-    
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         
-        if indexPath.row == 0 {
-            let cell = tableView.dequeueReusableCellWithIdentifier("imageCell") as! ImageTableViewCell
-            if cell.logoPictureButton.selected == true {
-                cell.logoDelegate = self
-            }
-            
-
-//            cell.profileDelegate = self
-//            cell.menuDelegate = self
-            return cell
-            
-        } else {
-            let cell = tableView.dequeueReusableCellWithIdentifier("textCell") as! TextTableViewCell
-        
-            return cell
-            
-        }
-        
-        
-        
-    }
-    
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        if indexPath.row == 0 {
-            
-            return 200
-        } else {
-            return 50
+        if self.profilePictureButton.selected == true {
+            self.profileImageView.image = info[UIImagePickerControllerOriginalImage] as? UIImage
+            dismissViewControllerAnimated(true, completion: nil)
+        } else if self.menuPictureButton.selected == true{
+            self.menuImageView.image = info[UIImagePickerControllerOriginalImage] as? UIImage
+            dismissViewControllerAnimated(true, completion: nil)
+        } else if self.logoPictureButton.selected == true {
+            self.logoImageView.image = info[UIImagePickerControllerOriginalImage] as? UIImage
+            dismissViewControllerAnimated(true, completion: nil)
         }
     }
     
-    
-    
+    func pickImage() {
+        
+        let imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        imagePicker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
+        imagePicker.allowsEditing = false
+        self.presentViewController(imagePicker, animated: true, completion: nil)
+    }
 }

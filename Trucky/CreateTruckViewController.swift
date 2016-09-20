@@ -39,45 +39,45 @@ class CreateTruckViewController: UIViewController, CLLocationManagerDelegate {
         
         
         if passwordTextField.text == confirmPassword.text {
-        
-        FIRAuth.auth()?.createUserWithEmail(emailTextField.text!, password: passwordTextField.text!, completion: {
-            user, error in
             
-            
-            
-            
-            if error != nil {
+            FIRAuth.auth()?.createUserWithEmail(emailTextField.text!, password: passwordTextField.text!, completion: {
+                user, error in
                 
-                self.errorAlert("Error", message: "\(error?.localizedDescription)")
                 
-            } else if user != nil {
-                print ("User Created")
                 
-                let longitude = self.userDefaults.valueForKey("longitude")
-                let latitude = self.userDefaults.valueForKey("latitude")
                 
-                let dictionary = [
-                    "uid": user!.uid,
-
-                    "truckName": self.currentBusinesses.first!.name,
-                    "imageURL": "\(self.currentBusinesses.first!.imageURL!)",
-                    "ratingImageURL": "\(self.currentBusinesses.first!.ratingImageURL!)",
-                    "reviewCount": self.currentBusinesses.first!.reviewCount,
-                    "phone": self.currentBusinesses.first!.phone,
-                    "categories": self.currentBusinesses.first?.categories,
-                    "latitude": latitude,
-                    "longitude": longitude]
-//
+                if error != nil {
+                    
+                    self.errorAlert("Error", message: "\(error?.localizedDescription)")
+                    
+                } else if user != nil {
+                    print ("User Created")
+                    
+                    let longitude = self.userDefaults.valueForKey("longitude")
+                    let latitude = self.userDefaults.valueForKey("latitude")
+                    
+                    let dictionary = [
+                        "uid": user!.uid,
+                        
+                        "truckName": self.currentBusinesses.first!.name,
+                        "imageURL": "\(self.currentBusinesses.first!.imageURL!)",
+                        "ratingImageURL": "\(self.currentBusinesses.first!.ratingImageURL!)",
+                        "reviewCount": self.currentBusinesses.first!.reviewCount,
+                        "phone": self.currentBusinesses.first!.phone,
+                        "categories": self.currentBusinesses.first?.categories,
+                        "latitude": latitude,
+                        "longitude": longitude]
+                    //
+                    
+                    self.ref.child("Trucks").child("inactive").child(user!.uid).setValue(dictionary as? Dictionary<String, AnyObject>)
+                    
+                    //                self.userDefaults.setValue(user?.uid, forKey: "uid")
+                    
+                    self.performSegueWithIdentifier("createUserSegue", sender: self)
+                    
+                }
                 
-                self.ref.child("Trucks").child("inactive").child(user!.uid).setValue(dictionary as? Dictionary<String, AnyObject>)
-                
-//                self.userDefaults.setValue(user?.uid, forKey: "uid")
-                
-                self.performSegueWithIdentifier("createUserSegue", sender: self)
-                
-            }
-            
-        })
+            })
         }
         else {
             errorAlert("Passwords do not match", message: "Please try again")
@@ -92,13 +92,13 @@ class CreateTruckViewController: UIViewController, CLLocationManagerDelegate {
             if error != nil {
                 self.errorAlert("error", message: error.localizedDescription)
             } else {
-
+                
                 self.currentBusinesses.insert(businesses.first!, atIndex: 0)
                 
             }
             
         })
-
+        
     }
     
     func errorAlert(title: String, message: String) {
@@ -110,7 +110,7 @@ class CreateTruckViewController: UIViewController, CLLocationManagerDelegate {
     
     @IBAction func matchTruck(sender: AnyObject) {
         
-//        search(businessNameTextField.text!, location: zipTextField.text!)
+        //        search(businessNameTextField.text!, location: zipTextField.text!)
         search(businessNameTextField.text!)
         
         

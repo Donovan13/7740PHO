@@ -34,6 +34,29 @@ class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableVie
         
     }
     
+    @IBAction func locationSwitcher(sender: AnyObject) {
+        let userUID = userDefaults.stringForKey("uid")
+        
+        
+        if self.locationSwitch.on == true {
+            locationManager.startUpdatingLocation()
+            ref.child("Trucks").child(userUID!).updateChildValues(["activeLocation": "true"])
+            userDefaults.setValue("true", forKey: "activeLocation")
+        } else {
+            locationManager.stopUpdatingLocation()
+            ref.child("Trucks").child(userUID!).updateChildValues(["activeLocation": "false"])
+            userDefaults.setValue("false", forKey: "activeLocation")
+        }
+    }
+    
+    
+    func errorAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+        let action = UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default, handler: nil)
+        alert.addAction(action)
+        presentViewController(alert, animated: true, completion: nil)
+    }
+    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -80,13 +103,8 @@ class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableVie
             let cell = tableView.dequeueReusableCellWithIdentifier("logoutCell", forIndexPath: indexPath)
             cell.textLabel?.text = "Log Out"
             return cell
-            
-            
         }
     }
-    
-    
-    
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
         
@@ -94,9 +112,7 @@ class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableVie
             performSegueWithIdentifier("menuToEditSegue", sender: self)
             
         }
-        
-        
-        
+            
         else if indexPath.row == 1 {
             
             if FIRAuth.auth()?.currentUser != nil {
@@ -104,43 +120,17 @@ class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableVie
                     try FIRAuth.auth()?.signOut()
                     userDefaults.setValue(nil, forKey: "uid")
                     dismissViewControllerAnimated(true, completion: nil)
-
+                    
                 } catch let error as NSError {
                     print(error.localizedDescription)
                 }
             }
         }
-        
-    }
-    
-    
-    @IBAction func locationSwitcher(sender: AnyObject) {
-        let userUID = userDefaults.stringForKey("uid")
-        
-        
-        if self.locationSwitch.on == true {
-            locationManager.startUpdatingLocation()
-            ref.child("Trucks").child(userUID!).updateChildValues(["activeLocation": "true"])
-            userDefaults.setValue("true", forKey: "activeLocation")
-        } else {
-            locationManager.stopUpdatingLocation()
-            ref.child("Trucks").child(userUID!).updateChildValues(["activeLocation": "false"])
-            userDefaults.setValue("false", forKey: "activeLocation")
-        }
-    }
-    
-    
-    func errorAlert(title: String, message: String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
-        let action = UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default, handler: nil)
-        alert.addAction(action)
-        presentViewController(alert, animated: true, completion: nil)
     }
     
     func currentUser() {
         
         let userUID = userDefaults.stringForKey("uid")
-
         
         if userUID != nil {
             

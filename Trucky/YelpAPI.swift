@@ -50,7 +50,7 @@ class YelpAPI: BDBOAuth1RequestOperationManager {
     func searchWithNumber(phoneNumber: String, completion: ([Business]!, error: NSError!) -> Void) -> AFHTTPRequestOperation {
         
         let parameters: [String: AnyObject] = ["phone": phoneNumber]
-            
+        
         return self.GET("phone_search", parameters: parameters, success: { (operation: AFHTTPRequestOperation!, response: AnyObject!) -> Void in
             let dictionaries = response["businesses"] as? [NSDictionary]
             if dictionaries != nil {
@@ -70,14 +70,14 @@ class YelpAPI: BDBOAuth1RequestOperationManager {
         
         return self.GET("business/\(businessID)" , parameters: nil, success: { (operation: AFHTTPRequestOperation, response: AnyObject!) in
             
-
+            
             let dictionary = response as! Dictionary<String, AnyObject>
             
             if response != nil {
                 completion(Business.businesses(dictionary: dictionary), error: nil)
                 
             } else {
-            print("\(response)")
+                print("\(response)")
             }
             }, failure: { (operation: AFHTTPRequestOperation?, error: NSError!) -> Void in
                 completion(nil, error: error)
