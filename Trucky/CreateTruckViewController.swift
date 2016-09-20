@@ -16,7 +16,6 @@ class CreateTruckViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var confirmPassword: UITextField!
-    @IBOutlet weak var zipTextField: UITextField!
     @IBOutlet weak var businessNameTextField: UITextField!
     @IBOutlet weak var businessTextField: UILabel!
     @IBOutlet weak var reviewsTextField: UILabel!
@@ -67,8 +66,7 @@ class CreateTruckViewController: UIViewController, CLLocationManagerDelegate {
                     "phone": self.currentBusinesses.first!.phone,
                     "categories": self.currentBusinesses.first?.categories,
                     "latitude": latitude,
-                    "longitude": longitude,
-                    "activeLocation" : "false"]
+                    "longitude": longitude]
 //
                 
                 self.ref.child("Trucks").child("inactive").child(user!.uid).setValue(dictionary as? Dictionary<String, AnyObject>)

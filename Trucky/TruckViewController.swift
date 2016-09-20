@@ -349,7 +349,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     
     func loadTrucks() {
         
-        self.ref!.child("Trucks").observeSingleEventOfType(.Value, withBlock: { snapshots in
+        self.ref!.child("Trucks").child("active").observeSingleEventOfType(.Value, withBlock: { snapshots in
             
             self.trucks = []
             
@@ -361,8 +361,6 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
                     }
                 }
                 for truck in self.trucks {
-                    if truck.activeLocation == "true" {
-                        
                         let truckAnnotation = CustomAnnotations()
                         
                         truckAnnotation.coordinate.latitude = truck.latitude!
@@ -373,7 +371,6 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
                         
                         self.mapView.addAnnotation(truckAnnotation)
                         
-                    }
                 }
             }
             self.tableView.reloadData()
