@@ -216,7 +216,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         
         cell.businessLabel?.text = post.truckName?.capitalizedString
         cell.addressLabel?.text = post.address
-        cell.reviewLabel?.text = "\(post.reviewCount!) reviews on Yelp"
+//        cell.reviewLabel?.text = "\(post.reviewCount!) reviews on Yelp"
         
         if userlocation != nil {
             let location = CLLocation(latitude: post.latitude!, longitude: post.longitude!)

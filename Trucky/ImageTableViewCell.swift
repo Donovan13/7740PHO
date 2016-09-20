@@ -8,8 +8,16 @@
 
 import UIKit
 
-class ImageTableViewCell: UITableViewCell {
 
+
+class ImageTableViewCell: UITableViewCell, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+
+    var logoDelegate : logoImagePickerDelegate?
+    var profileDelegate : profileImagePickerDelegate?
+    var menuDelegate : menuImagePickerDelegate?
+    
+    
+    
     @IBOutlet weak var truckNameLabel: UILabel!
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var logoImageView: UIImageView!
@@ -18,4 +26,15 @@ class ImageTableViewCell: UITableViewCell {
     @IBOutlet weak var logoPictureButton: UIButton!
     @IBOutlet weak var menuPictureButton: UIButton!
 
+    @IBAction func updateLogoButton(sender: AnyObject) {
+        logoDelegate?.pickImage()
+    }
+    @IBAction func updateProfileButton(sender: AnyObject) {
+        profileDelegate?.pickImage()
+    }
+    @IBAction func updateMenuButton(sender: AnyObject) {
+        menuDelegate?.pickImage()
+    }
+
+    
 }
