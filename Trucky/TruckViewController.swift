@@ -14,7 +14,7 @@ import Firebase
 
 
 
-class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate {
+class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate, ReloadTrucksDelegate {
     
     
     //    MARK: Outlets
@@ -23,9 +23,11 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     @IBOutlet weak var menuButton: UIButton!
     
     //    MARK: Var & Let
-    var ref:FIRDatabaseReference?
+
     var trucks = [Truck]()
+    var loggedInTruck: Truck?
     
+    let firebaseController = FirebaseController.sharedConnection
     let userDefaults = NSUserDefaults.standardUserDefaults()
     let locationManager = CLLocationManager()
     var userlocation: CLLocation?
@@ -33,11 +35,15 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        ref = FIRDatabase.database().reference()
+//        self.loggedInTruck = firebaseController.getLoggedInUser()
+        
         
         locationManager.requestAlwaysAuthorization()
         locationManager.delegate = self
         locationManager.startUpdatingLocation()
+        
+        tableView.delegate = self
+        tableView.dataSource = self
         
         mapView.delegate = self
         mapView.showsUserLocation = true
@@ -51,13 +57,15 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         
      
         dispatch_async(dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0)) {
-            self.loadTrucks()
+//            self.loadTrucks()
         }
     
     }
     
     override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(false)
+        super.viewWillAppear(true)
+        self.firebaseController.reloadTrucksDelegate = self
+        self.reloadTrucks()
 
     }
     override func didReceiveMemoryWarning() {
@@ -176,7 +184,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
                 let address = "\(pm.subThoroughfare!) \(pm.thoroughfare!), \(pm.locality!) \(pm.administrativeArea!) \(pm.postalCode!)"
                 
                 if self.userDefaults.stringForKey("uid") != nil {
-                    self.ref!.child("Trucks").child(userUID!).updateChildValues(["address": address])
+//                    self.truckRef.child(userUID!).updateChildValues(["address": address])
                 }
             }
             else {
@@ -186,7 +194,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         
         
         if userDefaults.stringForKey("uid") != nil {
-            self.ref!.child("Trucks").child(userUID!).updateChildValues(["latitude": userLat, "longitude": userLon])
+//            self.truckRef.child("Trucks").child(userUID!).updateChildValues(["latitude": userLat, "longitude": userLon])
         }
         
         
@@ -219,23 +227,23 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
 //        cell.reviewLabel?.text = "\(post.reviewCount!) reviews on Yelp"
         
         if userlocation != nil {
-            let location = CLLocation(latitude: post.latitude!, longitude: post.longitude!)
-            let distance = location.distanceFromLocation(userlocation!)
-            let inMiles = distance * 0.000621371192
-            cell.distanceLabel.text = (String(format: "%.2fm Away", inMiles))
+//            let location = CLLocation(latitude: post.latitude!, longitude: post.longitude!)
+//            let distance = location.distanceFromLocation(userlocation!)
+//            let inMiles = distance * 0.000621371192
+//            cell.distanceLabel.text = (String(format: "%.2fm Away", inMiles))
         
             
         }
         
 //        dispatch_async(dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0)) {
 
-            cell.reviewImage?.image = UIImage(data: NSData(contentsOfURL: NSURL(string:post.ratingImageURL!)!)!)!
-            
-            if post.profileImage != nil {
-                cell.businessImage?.image = self.conversion(post.profileImage!)
-            } else {
-                cell.businessImage?.image = UIImage(data: NSData(contentsOfURL: NSURL(string:post.imageURL!)!)!)!
-            }
+//            cell.reviewImage?.image = UIImage(data: NSData(contentsOfURL: NSURL(string:post.ratingImageURL!)!)!)!
+        
+//            if post.profileImage != nil {
+//                cell.businessImage?.image = self.conversion(post.profileImage!)
+//            } else {
+//                cell.businessImage?.image = UIImage(data: NSData(contentsOfURL: NSURL(string:post.imageURL!)!)!)!
+//            }
 //        }
         
         return cell
@@ -285,7 +293,6 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     @IBAction func reloadButton(sender: AnyObject) {
         dispatch_async(dispatch_get_main_queue()) {
             self.mapView.removeAnnotations(self.mapView.annotations)
-            self.loadTrucks()
         }
         
     }
@@ -344,40 +351,13 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         return image!
     }
     
-    
-    //    MARK: Load Functions
-    
-    func loadTrucks() {
-        
-        self.ref!.child("Trucks").child("active").observeSingleEventOfType(.Value, withBlock: { snapshots in
-            
-            self.trucks = []
-            
-            if let snapshot = snapshots.children.allObjects as? [FIRDataSnapshot] {
-                for snap in snapshot {
-                    if let postDictionary = snap.value as? Dictionary<String, AnyObject> {
-                        let trucks = Truck(dictionary: postDictionary)
-                        self.trucks.insert(trucks, atIndex: 0)
-                    }
-                }
-                for truck in self.trucks {
-                        let truckAnnotation = CustomAnnotations()
-                        
-                        truckAnnotation.coordinate.latitude = truck.latitude!
-                        truckAnnotation.coordinate.longitude = truck.longitude!
-                        truckAnnotation.title = truck.truckName?.capitalizedString
-                        truckAnnotation.subtitle = truck.categories
-                        truckAnnotation.truckCA = truck
-                        
-                        self.mapView.addAnnotation(truckAnnotation)
-                        
-                }
-            }
+    func reloadTrucks() {
+        dispatch_async(dispatch_get_main_queue()) {
+            self.trucks = self.firebaseController.getActiveTrucks()
             self.tableView.reloadData()
-            
-        })
-        
+        }
     }
+    
     
     
 }

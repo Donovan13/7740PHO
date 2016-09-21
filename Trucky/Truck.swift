@@ -6,10 +6,15 @@
 //  Copyright © 2016 Kyle. All rights reserved.
 //
 
-import Foundation
 import UIKit
+import Firebase
 
-class Truck: NSObject {
+func ==(lhs:Truck, rhs:Truck) -> Bool {
+    return lhs.uid == rhs.uid
+}
+
+
+struct Truck: Equatable {
     let truckName: String?
     var address: String?
     var imageURL: String?
@@ -28,22 +33,21 @@ class Truck: NSObject {
     
     
     
-    init(dictionary: NSDictionary) {
-
-        truckName = dictionary["truckName"] as? String
-        address = dictionary["address"] as? String
-        imageURL = dictionary["imageURL"] as? String
-        ratingImageURL = dictionary["ratingImageURL"] as? String
-        reviewCount = dictionary["reviewCount"] as? NSNumber
-        uid = dictionary["uid"] as? String
-        phone = dictionary["phone"] as? String
-        profileImage = dictionary["profileImage"] as? String
-        latitude = dictionary["latitude"] as? Double
-        longitude = dictionary["longitude"] as? Double
-        activeLocation = dictionary["activeLocation"] as? String
-        website = dictionary["website"] as? String
-        iconImage = dictionary["iconImage"] as? String
-        distance = dictionary["distance"] as? String
-        categories = dictionary["categories"] as? String
+    init(snapshot: FIRDataSnapshot) {
+        truckName = snapshot.value!["truckName"] as? String
+        address = snapshot.value!["address"] as? String
+        imageURL = snapshot.value!["imageURL"] as? String
+        ratingImageURL = snapshot.value!["ratingImageURL"] as? String
+        reviewCount = snapshot.value!["reviewCount"] as? NSNumber
+        uid = snapshot.value!["uid"] as? String
+        phone = snapshot.value!["phone"] as? String
+        profileImage = snapshot.value!["profileImage"] as? String
+        latitude = snapshot.value!["latitude"] as? Double
+        longitude = snapshot.value!["longitude"] as? Double
+        activeLocation = snapshot.value!["activeLocation"] as? String
+        website = snapshot.value!["website"] as? String
+        iconImage = snapshot.value!["iconImage"] as? String
+        distance = snapshot.value!["distance"] as? String
+        categories = snapshot.value!["categories"] as? String
     }
 }
