@@ -15,6 +15,7 @@ func ==(lhs:Truck, rhs:Truck) -> Bool {
 
 
 struct Truck: Equatable {
+    var email: String?
     let truckName: String?
     var address: String?
     var imageURL: String?
@@ -31,9 +32,19 @@ struct Truck: Equatable {
     let distance: String?
     let categories: String?
     
+    static func image2String(image: UIImage) -> String {
+        let imageData = UIImageJPEGRepresentation(image, 0.15);
+        let imageString = imageData!.base64EncodedStringWithOptions(.Encoding64CharacterLineLength)
+        return imageString
+    }
     
+    static func string2Image(string: String) -> UIImage {
+        let data = NSData(base64EncodedString: string, options: .IgnoreUnknownCharacters)
+        return UIImage(data: data!)!
+    }
     
     init(snapshot: FIRDataSnapshot) {
+        email = snapshot.value!["email"] as? String
         truckName = snapshot.value!["truckName"] as? String
         address = snapshot.value!["address"] as? String
         imageURL = snapshot.value!["imageURL"] as? String
@@ -50,4 +61,8 @@ struct Truck: Equatable {
         distance = snapshot.value!["distance"] as? String
         categories = snapshot.value!["categories"] as? String
     }
+    
+    
+    
+    
 }

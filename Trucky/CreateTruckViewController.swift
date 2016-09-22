@@ -8,9 +8,8 @@
 
 import UIKit
 import Firebase
-import CoreLocation
 
-class CreateTruckViewController: UIViewController, CLLocationManagerDelegate {
+class CreateTruckViewController: UIViewController, UserCreationDelegate, AuthenticationDelegate {
     
     @IBOutlet weak var yelpImage: UIImageView!
     @IBOutlet weak var emailTextField: UITextField!
@@ -24,81 +23,101 @@ class CreateTruckViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var addressTextField: UILabel!
     
     
-    var ref:FIRDatabaseReference!
-    var currentBusinesses = [Business]()
+    var searchedBusiness:Business?
     let userDefaults = NSUserDefaults.standardUserDefaults()
-    
+    let firebaseController = FirebaseController.sharedConnection
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.ref = FIRDatabase.database().reference()
+        self.firebaseController.userCreationDelegate = self
+        self.firebaseController.authenticationDelegate = self
+        
+        
     }
+    
+    @IBAction func matchTruck(sender: AnyObject) {
+        let phoneNumber = businessNameTextField.text
+        
+        Business.searchWithNumber(phoneNumber!, completion: { (businesses: [Business]!, error: NSError!) -> Void in
+            if error == nil {
+                print("found")
+                self.searchedBusiness = businesses.first
+            } else {
+                
+                self.errorAlert("error", message: error.localizedDescription)
+            }
+        })
+        
+    }
+    
+    
+    
     
     
     @IBAction func createUser(sender: AnyObject) {
         
+        let longitude = self.userDefaults.valueForKey("longitude")
+        let latitude = self.userDefaults.valueForKey("latitude")
         
-        if passwordTextField.text == confirmPassword.text {
+        let imageURL = imageURLtoString(searchedBusiness!.imageURL!)
+        let ratingImageURL = imageURLtoString(searchedBusiness!.ratingImageURL!)
         
-        FIRAuth.auth()?.createUserWithEmail(emailTextField.text!, password: passwordTextField.text!, completion: {
-            user, error in
-            
-            
-            
-            
-            if error != nil {
-                
-                self.errorAlert("Error", message: "\(error?.localizedDescription)")
-                
-            } else if user != nil {
-                print ("User Created")
-                
-                let longitude = self.userDefaults.valueForKey("longitude")
-                let latitude = self.userDefaults.valueForKey("latitude")
-                
-                let dictionary = [
-                    "uid": user!.uid,
-
-                    "truckName": self.currentBusinesses.first!.name,
-                    "imageURL": "\(self.currentBusinesses.first!.imageURL!)",
-                    "ratingImageURL": "\(self.currentBusinesses.first!.ratingImageURL!)",
-                    "reviewCount": self.currentBusinesses.first!.reviewCount,
-                    "phone": self.currentBusinesses.first!.phone,
-                    "categories": self.currentBusinesses.first?.categories,
-                    "latitude": latitude,
-                    "longitude": longitude]
-//
-                
-                self.ref.child("Trucks").child("inactive").child(user!.uid).setValue(dictionary as? Dictionary<String, AnyObject>)
-                
-//                self.userDefaults.setValue(user?.uid, forKey: "uid")
-                
-                self.performSegueWithIdentifier("createUserSegue", sender: self)
-                
-            }
-            
-        })
-        }
-        else {
-            errorAlert("Passwords do not match", message: "Please try again")
-        }
+        
+        let dictionary = [
+            "uid": "",
+            "truckName": self.searchedBusiness!.name,
+            "imageURL": imageURL,
+            "ratingImageURL": ratingImageURL,
+            "reviewCount": self.searchedBusiness!.reviewCount,
+            "phone": self.searchedBusiness!.phone,
+            "categories": self.searchedBusiness!.categories,
+            "latitude": latitude,
+            "longitude": longitude]
+        
+        let email = emailTextField.text
+        let password = passwordTextField.text
+        firebaseController.createTruck(email,
+                                       password: password,
+                                       dictionary: dictionary as! Dictionary<String, AnyObject>)
+        
         
     }
     
+    private func imageURLtoString(imageURL: NSURL) -> String {
+        let url = NSURL(string: "\(imageURL)")
+        let data = NSData(contentsOfURL: url!)
+        let image = UIImage(data: data!)
+        let imageData = UIImageJPEGRepresentation(image!, 0.15)
+        let imageString = imageData!.base64EncodedStringWithOptions(.Encoding64CharacterLineLength)
+        return imageString
+    }
     
-    func search(phoneNumber: String) {
+    
+    
+    // MARK: AuthenticationDelegate
+    func userAuthenticationSuccess() {
+        dispatch_async(dispatch_get_main_queue()) {
+            self.performSegueWithIdentifier("createUserSegue", sender: nil)
+        }
+    }
+    
+    func userAuthenticationFail(error:NSError) {
+        errorAlert("Authentication Fail", message: error.localizedDescription)
+        print(error.localizedDescription + "\(error.code)")
+    }
+    
+    func createUserFail(error: NSError) {
+        var message: String
+        switch error.code {
+        case -5:
+            message = "Invalid email address"
+        case -9:
+            message = "The specified email address is already in use"
+        default:
+            message =  "error creating user"
+        }
         
-        Business.searchWithNumber(phoneNumber, completion: { (businesses: [Business]!, error: NSError!) -> Void in
-            if error != nil {
-                self.errorAlert("error", message: error.localizedDescription)
-            } else {
-
-                self.currentBusinesses.insert(businesses.first!, atIndex: 0)
-                
-            }
-            
-        })
-
+        errorAlert("Login Error", message: message)
     }
     
     func errorAlert(title: String, message: String) {
@@ -108,13 +127,13 @@ class CreateTruckViewController: UIViewController, CLLocationManagerDelegate {
         presentViewController(alert, animated: true, completion: nil)
     }
     
-    @IBAction func matchTruck(sender: AnyObject) {
-        
-//        search(businessNameTextField.text!, location: zipTextField.text!)
-        search(businessNameTextField.text!)
-        
-        
-    }
+    
+    
+    
+    
+    
+    
+    
     
     
     

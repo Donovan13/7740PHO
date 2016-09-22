@@ -8,24 +8,55 @@
 
 import Foundation
 import Firebase
+import UIKit
+
+
+protocol UserCreationDelegate {
+    func createUserFail(error: NSError)
+}
+
+protocol AuthenticationDelegate {
+    func userAuthenticationSuccess()
+    func userAuthenticationFail(error: NSError)
+}
+
+protocol LogInUserDelegate {
+    func logInUserDelegate()
+}
+
+protocol ViewUserDelegate {
+    func viewUserLoaded()
+}
+
+protocol ShareTruckDelegate {
+    func activateTruckDelegate()
+    func deactivateTruckDelegate()
+}
 
 protocol ReloadTrucksDelegate {
     func reloadTrucks()
 }
 
+
+
+
 class FirebaseController {
     
     let rootRef = FIRDatabase.database().reference()
-//    let truckRef = FIRDatabase.database().referenceWithPath("Trucks")
+    let truckRef = FIRDatabase.database().referenceWithPath("Trucks")
+    
+    var userCreationDelegate: UserCreationDelegate?
+    var authenticationDelegate: AuthenticationDelegate?
+    var logInUserDelegate: LogInUserDelegate?
+    var viewUserDelegate: ViewUserDelegate?
     var reloadTrucksDelegate: ReloadTrucksDelegate?
-    
-    
+    var sharetruckDelegate: ShareTruckDelegate?
+
     private var trucks = [Truck]()
     private var truck: Truck?
     
     static let sharedConnection = FirebaseController()
  
-    
     init() {
         activeTrucks()
         setupListeners()
@@ -53,7 +84,7 @@ class FirebaseController {
     
     
     private func activeTrucks() {
-        self.rootRef.child("Trucks").child("inactive").observeSingleEventOfType(.Value) { (snapshot: FIRDataSnapshot!) in
+        truckRef.child("Active").observeSingleEventOfType(.Value) { (snapshot: FIRDataSnapshot!) in
             for trucks in snapshot.children {
                 let foodTruck = Truck(snapshot: trucks as! FIRDataSnapshot)
                 self.trucks.append(foodTruck)
@@ -61,8 +92,36 @@ class FirebaseController {
         }
     }
     
+    func createTruck(email: String?, password: String?, dictionary: Dictionary<String, AnyObject>) {
+        FIRAuth.auth()?.createUserWithEmail(email!, password: password!, completion: { (user, error) in
+            if error == nil {
+                let uid = user!.uid
+                self.truckRef.child("Inactive").child(uid).setValue(dictionary)
+                self.truckRef.child("Inactive").child("\(user!.uid)/uid").setValue(uid)
+            } else {
+                self.userCreationDelegate?.createUserFail(error!)
+            }
+        })
+    }
+    
+    func loginTruck(email: String?, password: String?) {
+        FIRAuth.auth()?.signInWithEmail(email!, password: password!, completion: { (user, error) in
+            if error == nil {
+                self.authenticationDelegate?.userAuthenticationSuccess()
+                self.truckRef.child("Active").observeSingleEventOfType(.Value, withBlock: { (snapshot) in
+                    self.truck = Truck(snapshot: snapshot)
+                    self.logInUserDelegate?.logInUserDelegate()
+                })
+            } else {
+                self.authenticationDelegate?.userAuthenticationFail(error!)
+            }
+        })
+    }
+    
+    
+    
     private func setupListeners() {
-        self.rootRef.child("Trucks").observeEventType(.ChildAdded) { (snapshot: FIRDataSnapshot!) in
+        self.truckRef.child("Active").observeEventType(.ChildAdded) { (snapshot: FIRDataSnapshot!) in
             let truck = Truck(snapshot: snapshot)
             if !self.trucks.contains(truck)  {
                 self.trucks.append(truck)
@@ -70,14 +129,14 @@ class FirebaseController {
             self.reloadTrucksDelegate?.reloadTrucks()
         }
         
-        self.rootRef.child("Trucks").observeEventType(.ChildChanged) { (snapshot: FIRDataSnapshot!) in
+        self.truckRef.child("Active").observeEventType(.ChildChanged) { (snapshot: FIRDataSnapshot!) in
             let truck = Truck(snapshot: snapshot)
             let index = self.trucks.indexOf(truck)
             self.trucks[index!] = truck
             self.reloadTrucksDelegate?.reloadTrucks()
         }
         
-        self.rootRef.child("Trucks").observeEventType(.ChildRemoved) { (snapshot: FIRDataSnapshot!) in
+        self.truckRef.child("Active").observeEventType(.ChildRemoved) { (snapshot: FIRDataSnapshot!) in
             let truck = Truck(snapshot: snapshot)
             let index = self.trucks.indexOf(truck)!
             self.trucks.removeAtIndex(index)

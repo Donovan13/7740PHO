@@ -1011,8 +1011,8 @@
         <image name="sideMenu" width="200" height="200"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="LPu-Hr-Tvx"/>
         <segue reference="6Pl-oM-29y"/>
-        <segue reference="83W-ak-mQX"/>
         <segue reference="2XA-gi-oSt"/>
     </inferredMetricsTieBreakers>
 </document>

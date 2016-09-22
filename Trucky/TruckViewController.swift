@@ -69,7 +69,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
 
     }
     override func didReceiveMemoryWarning() {
-        print("help")
+        _getMemoryUsedPer1()
     }
     
     

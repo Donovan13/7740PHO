@@ -11,46 +11,55 @@ import Firebase
 import CoreLocation
 
 
-class LoginViewController: UIViewController,CLLocationManagerDelegate {
+class LoginViewController: UIViewController,CLLocationManagerDelegate, AuthenticationDelegate {
     
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextfield: UITextField!
     
-    var ref:FIRDatabaseReference!
     
+    let firebaseController = FirebaseController.sharedConnection
     let userDefaults = NSUserDefaults.standardUserDefaults()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.ref = FIRDatabase.database().reference()
+        self.firebaseController.authenticationDelegate = self
+
         
     }
     
     
     
     @IBAction func loginButtonTapped(sender: AnyObject) {
-        FIRAuth.auth()?.signInWithEmail(emailTextField.text!, password: passwordTextfield.text!, completion: {
-            user, error in
-            
-            if error != nil {
-                print(error?.localizedDescription)
-                print(error!.localizedFailureReason)
-                
-                print ("Incorrect")
-                
-            }
-            else if user != nil {
-                
-                
-                self.userDefaults.setValue(user?.uid, forKey: "uid")
-                
-                
-                self.performSegueWithIdentifier("LogInSegue", sender: self)
-                //                self.dismissViewControllerAnimated(true, completion: nil)
-                print ("Successful Login")
-                
-            }
-        })
+        let email = emailTextField.text
+        let password = passwordTextfield.text
+        firebaseController.loginTruck(email, password: password)
+        
+    }
+    
+    
+    
+    
+    func userAuthenticationSuccess() {
+        dispatch_async(dispatch_get_main_queue()) {
+            self.performSegueWithIdentifier("LogInSegue", sender: nil)
+        }
+    }
+    
+    func userAuthenticationFail(error:NSError) {
+        print(error.localizedDescription + "\(error.code)")
+        var message: String
+        switch error.code {
+        case -5:
+            message = "Invalid email address"
+        case -6:
+            message = "Incorrect Password"
+        case -8:
+            message = "No account for that email address"
+        default:
+            message =  "error logging in"
+        }
+        
+        errorAlert("Login Error", message: message)
     }
     
     func errorAlert(title: String, message: String) {
@@ -59,6 +68,5 @@ class LoginViewController: UIViewController,CLLocationManagerDelegate {
         alert.addAction(action)
         presentViewController(alert, animated: true, completion: nil)
     }
-    
 }
 
