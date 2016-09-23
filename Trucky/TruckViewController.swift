@@ -56,7 +56,6 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         
      
         dispatch_async(dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0)) {
-//            self.loadTrucks()
         }
     
     }
@@ -121,98 +120,98 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     
     
     //    MARK: MapView Delegate
-    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
-
-        
-        
-        if annotation.isEqual(mapView.userLocation) {
-            return nil
-        } else if annotation.isEqual(annotation as! CustomAnnotations){
-            let pin = MKAnnotationView (annotation: annotation, reuseIdentifier: nil)
-            
-            
-
-            let icon = scaleUIImageToSize(UIImage(named: "login")!, size: CGSizeMake(30,30))
-            let iconFrame = UIImageView(image: icon)
-            
-            pin.image = scaleUIImageToSize(UIImage(named: "truck")!, size: CGSizeMake(30,30))
-            pin.canShowCallout = true
-            pin.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)
-            pin.leftCalloutAccessoryView = iconFrame
-            pin.leftCalloutAccessoryView?.layer.cornerRadius = (pin.leftCalloutAccessoryView?.frame.size.width)! / 2
-            pin.leftCalloutAccessoryView?.clipsToBounds = true
-
-            
-            
-            
-            
-            return pin
-        } else {
-            return nil
-            
-        }
-    }
+//    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+//
+//        
+//        
+//        if annotation.isEqual(mapView.userLocation) {
+//            return nil
+//        } else if annotation.isEqual(annotation as! CustomAnnotations){
+//            let pin = MKAnnotationView (annotation: annotation, reuseIdentifier: nil)
+//            
+//            
+//
+//            let icon = scaleUIImageToSize(UIImage(named: "login")!, size: CGSizeMake(30,30))
+//            let iconFrame = UIImageView(image: icon)
+//            
+//            pin.image = scaleUIImageToSize(UIImage(named: "truck")!, size: CGSizeMake(30,30))
+//            pin.canShowCallout = true
+//            pin.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)
+//            pin.leftCalloutAccessoryView = iconFrame
+//            pin.leftCalloutAccessoryView?.layer.cornerRadius = (pin.leftCalloutAccessoryView?.frame.size.width)! / 2
+//            pin.leftCalloutAccessoryView?.clipsToBounds = true
+//
+//            
+//            
+//            
+//            
+//            return pin
+//        } else {
+//            return nil
+//            
+//        }
+//    }
     
     
-    func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        let annotation = view.annotation as! CustomAnnotations
-        self.performSegueWithIdentifier("annotationDetailSegue", sender: annotation)
-        
-    }
+//    func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+//        let annotation = view.annotation as! CustomAnnotations
+//        self.performSegueWithIdentifier("annotationDetailSegue", sender: annotation)
+//        
+//    }
 
     
-    func locationManager(manager: CLLocationManager, didUpdateToLocation newLocation: CLLocation, fromLocation oldLocation: CLLocation) {
-        
-        let userLat = newLocation.coordinate.latitude
-        let userLon = newLocation.coordinate.longitude
-        let userUID = userDefaults.stringForKey("uid")
-        userlocation = CLLocation(latitude: userLat, longitude: userLon)
-        
-        
-        self.userDefaults.setValue(userLat, forKey: "latitude")
-        self.userDefaults.setValue(userLon, forKey: "longitude")
-        
-        
-        CLGeocoder().reverseGeocodeLocation(newLocation, completionHandler: {(placemarks, error) -> Void in
-            
-            if error != nil {
-                //print("Reverse geocoder failed with error" + error!.localizedDescription)
-                return
-            }
-            
-            if placemarks!.count > 0 {
-                let pm = placemarks![0]
-                
-                
-                let address = "\(pm.subThoroughfare!) \(pm.thoroughfare!), \(pm.locality!) \(pm.administrativeArea!) \(pm.postalCode!)"
-                
-                if self.userDefaults.stringForKey("uid") != nil {
-//                    self.truckRef.child(userUID!).updateChildValues(["address": address])
-                }
-            }
-            else {
-                print("Problem with the data received from geocoder")
-            }
-        })
-        
-        
-        if userDefaults.stringForKey("uid") != nil {
-//            self.truckRef.child("Trucks").child(userUID!).updateChildValues(["latitude": userLat, "longitude": userLon])
-        }
-        
-        
-        if UIApplication.sharedApplication().applicationState == .Active {
-            //print("active")
-        } else {
-            print("updated:\(newLocation)")
-        }
-        
-        if UIApplication.sharedApplication().applicationState == .Inactive {
-            print("inactive")
-        }
-        
-        
-    }
+//    func locationManager(manager: CLLocationManager, didUpdateToLocation newLocation: CLLocation, fromLocation oldLocation: CLLocation) {
+//        
+//        let userLat = newLocation.coordinate.latitude
+//        let userLon = newLocation.coordinate.longitude
+//        let userUID = userDefaults.stringForKey("uid")
+//        userlocation = CLLocation(latitude: userLat, longitude: userLon)
+//        
+//        
+//        self.userDefaults.setValue(userLat, forKey: "latitude")
+//        self.userDefaults.setValue(userLon, forKey: "longitude")
+//        
+//        
+//        CLGeocoder().reverseGeocodeLocation(newLocation, completionHandler: {(placemarks, error) -> Void in
+//            
+//            if error != nil {
+//                //print("Reverse geocoder failed with error" + error!.localizedDescription)
+//                return
+//            }
+//            
+//            if placemarks!.count > 0 {
+//                let pm = placemarks![0]
+//                
+//                
+//                let address = "\(pm.subThoroughfare!) \(pm.thoroughfare!), \(pm.locality!) \(pm.administrativeArea!) \(pm.postalCode!)"
+//                
+//                if self.userDefaults.stringForKey("uid") != nil {
+////                    self.truckRef.child(userUID!).updateChildValues(["address": address])
+//                }
+//            }
+//            else {
+//                print("Problem with the data received from geocoder")
+//            }
+//        })
+//        
+//        
+//        if userDefaults.stringForKey("uid") != nil {
+////            self.truckRef.child("Trucks").child(userUID!).updateChildValues(["latitude": userLat, "longitude": userLon])
+//        }
+//        
+//        
+//        if UIApplication.sharedApplication().applicationState == .Active {
+//            //print("active")
+//        } else {
+//            print("updated:\(newLocation)")
+//        }
+//        
+//        if UIApplication.sharedApplication().applicationState == .Inactive {
+//            print("inactive")
+//        }
+//        
+//        
+//    }
     
     
     //    MARK: TableView Delegate
@@ -313,8 +312,6 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     
     
     @IBAction func menuButtonTapped(sender: AnyObject) {
-        let userUID = userDefaults.stringForKey("uid")
-        
         
         if loggedInTruck != nil {
             self.performSegueWithIdentifier("mapToMenuSegue", sender: self)

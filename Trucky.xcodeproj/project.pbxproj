@@ -303,7 +303,6 @@
 				TargetAttributes = {
 					09FF688C1D3EC18800EF4551 = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = 7G99974HDG;
 						LastSwiftMigration = 0800;
 						SystemCapabilities = {
 							com.apple.ApplePay = {
@@ -642,7 +641,7 @@
 				CODE_SIGN_ENTITLEMENTS = Trucky/Trucky.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 7G99974HDG;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Trucky/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -663,7 +662,7 @@
 				CODE_SIGN_ENTITLEMENTS = Trucky/Trucky.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 7G99974HDG;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Trucky/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
