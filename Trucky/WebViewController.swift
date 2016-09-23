@@ -9,36 +9,34 @@
 import UIKit
 
 class WebViewController: UIViewController, UIWebViewDelegate {
-   
+    
     
     @IBOutlet weak var webView: UIWebView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
-        var businessURL:String!
+    var businessURL:String!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
         
-        override func viewDidLoad() {
-            super.viewDidLoad()
-            
-
-            
-            
         webView.delegate = self
         
-            
         activityIndicator.hidesWhenStopped = true
         activityIndicator.startAnimating()
-
+        
         loadRequestWithString()
-            
-            
-        }
         
-            func loadRequestWithString() {
-                let url = NSURL(string: "http://\(businessURL)")
-                let request = NSURLRequest(URL: url!)
-                webView.loadRequest(request)
-        
-            }
+    }
+    
+    func loadRequestWithString() {
+        let url = NSURL(string: "http://\(businessURL)")
+        let request = NSURLRequest(URL: url!)
+        webView.loadRequest(request)
+    }
+    
+    func webViewDidFinishLoad(webView: UIWebView) {
+        activityIndicator.stopAnimating()
+    }
     
     
     @IBAction func backAction(sender: AnyObject) {
@@ -51,12 +49,6 @@ class WebViewController: UIViewController, UIWebViewDelegate {
         if webView.canGoForward {
             webView.goForward()
         }
-    }
-    
-
-    
-    func webViewDidFinishLoad(webView: UIWebView) {
-        activityIndicator.stopAnimating()
     }
     
     @IBAction func refreshAction(sender: AnyObject) {

@@ -54,10 +54,10 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         
         self.navigationController!.navigationBar.titleTextAttributes = [ NSFontAttributeName: UIFont(name: "times", size: 20)!]
         
-     
+        
         dispatch_async(dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0)) {
         }
-    
+        
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -213,7 +213,6 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
 //        
 //    }
     
-    
     //    MARK: TableView Delegate
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return trucks.count
@@ -226,7 +225,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         
         cell.businessLabel?.text = post.truckName?.capitalizedString
         cell.addressLabel?.text = post.address
-//        cell.reviewLabel?.text = "\(post.reviewCount!) reviews on Yelp"
+        cell.reviewLabel?.text = "\(post.reviewCount!) reviews on Yelp"
         
         if userlocation != nil {
 //            let location = CLLocation(latitude: post.latitude!, longitude: post.longitude!)
@@ -256,8 +255,6 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         
     }
     
-    
-    
     //    MARK:PrepareForSegue
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if let identifier = segue.identifier {
@@ -269,7 +266,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
                 let truck = trucks[indexPath!.row]
                 detailVC.trucks = truck
                 detailVC.distanceOfTruck = cell.distanceLabel.text
-
+                
             case "annotationDetailSegue":
                 let detailVC = segue.destinationViewController as! BusinessProfileViewController
                 let annotation = sender as! CustomAnnotations
@@ -278,7 +275,6 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
             }
         }
     }
-    
     
     //    MARK: IBActions
     @IBAction func showListButton(sender: AnyObject) {
@@ -299,7 +295,6 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         
     }
     
-    
     @IBAction func centerLocationButton(sender: AnyObject) {
         let latitude = userlocation?.coordinate.latitude
         let longitude = userlocation?.coordinate.longitude
@@ -310,7 +305,6 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         
     }
     
-    
     @IBAction func menuButtonTapped(sender: AnyObject) {
         
         if loggedInTruck != nil {
@@ -320,10 +314,6 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
             self.performSegueWithIdentifier("mapToLoginSegue", sender: self)
         }
     }
-    
-    
-    
-    
     
     
     //    MARK: Custom Functions
@@ -357,7 +347,6 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
             self.tableView.reloadData()
         }
     }
-    
     
     
 }

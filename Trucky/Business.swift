@@ -42,7 +42,7 @@ class Business: NSObject {
         
         phone = dictionary["display_phone"] as? String
         reviewCount = dictionary["review_count"] as? NSNumber
-
+        
         
         let categoriesArray = dictionary["categories"] as? [[String]]
         if categoriesArray != nil {
@@ -55,7 +55,7 @@ class Business: NSObject {
         } else {
             categories = nil
         }
-
+        
         ratingImageURL = dictionary["rating_img_url"] as? NSURL
         let ratingImageURLString = dictionary["rating_img_url_small"] as? String
         if ratingImageURLString != nil {
@@ -63,7 +63,7 @@ class Business: NSObject {
         } else {
             ratingImageURL = nil
         }
-
+        
         menu_provider = dictionary["menu_provider"] as? String
         
         
@@ -71,7 +71,7 @@ class Business: NSObject {
         
         
         
-       
+        
         
     }
     

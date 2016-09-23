@@ -28,13 +28,14 @@ class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableVie
     override func viewDidLoad() {
         super.viewDidLoad()
         
-
+        
         
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.translucent = true
         
     }
+
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -72,13 +73,13 @@ class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     func activateTruckDelegate() {
-//        firebaseController.shareTruckLocation(true)
+        //        firebaseController.shareTruckLocation(true)
         errorAlert("Confirmation", message: "Sharing Your Location From Now!")
         
     }
     
     func deactivateTruckDelegate() {
-//        firebaseController.shareTruckLocation(false)
+        //        firebaseController.shareTruckLocation(false)
         errorAlert("Confirmation", message: "Going out of business =(")
     }
     
@@ -106,13 +107,8 @@ class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableVie
             let cell = tableView.dequeueReusableCellWithIdentifier("logoutCell", forIndexPath: indexPath)
             cell.textLabel?.text = "Log Out"
             return cell
-            
-            
         }
     }
-    
-    
-    
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
         
@@ -120,7 +116,7 @@ class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableVie
             performSegueWithIdentifier("menuToEditSegue", sender: self)
             
         }
-        
+            
         else if indexPath.row == 1 {
             
             if FIRAuth.auth()?.currentUser != nil {
@@ -128,7 +124,7 @@ class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableVie
                     try FIRAuth.auth()?.signOut()
                     userDefaults.setValue(nil, forKey: "uid")
                     dismissViewControllerAnimated(true, completion: nil)
-
+                    
                 } catch let error as NSError {
                     print(error.localizedDescription)
                 }
@@ -144,7 +140,7 @@ class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableVie
             firebaseController.shareTruckLocation(true)
         } else {
             firebaseController.shareTruckLocation(false)
-
+            
         }
     }
     
@@ -156,45 +152,45 @@ class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableVie
         presentViewController(alert, animated: true, completion: nil)
     }
     
-//    func currentUser() {
-//        
-//        let userUID = userDefaults.stringForKey("uid")
-//
-//        
-//        if userUID != nil {
-//            
-//            ref.child("Trucks").child(userUID!).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
-//                let userImage = snapshot.value!["imageURL"] as! String
-//                let profileImage = snapshot.value?["profileImage"] as? String
-//                let activeLocation = snapshot.value!["activeLocation"] as! String
-//                let truckName = snapshot.value!["truckName"] as! String
-//                let logoImage = snapshot.value?["logoImage"] as? String
-//                
-//                self.nameLabel.text = "\(truckName)".capitalizedString
-//                self.logoImageView.layer.cornerRadius = self.logoImageView.frame.size.width / 2
-//                self.logoImageView.clipsToBounds = true
-////                self.logoImageView.layer.borderWidth = 3.0
-////                self.logoImageView.layer.borderColor = UIColor .blueColor().CGColor
-//
-//                
-//                if logoImage != nil {
-//                    self.logoImageView.image = self.conversion(logoImage!)
-//                } else if profileImage != nil {
-//                    self.logoImageView.image = self.conversion(profileImage!)
-//                } else {
-//                    self.logoImageView.image = UIImage(data: NSData(contentsOfURL: NSURL(string:userImage)!)!)
-//                }
-//                if activeLocation == "true" {
-//                    self.locationSwitch.on = true
-//                } else {
-//                    self.locationSwitch.on = false
-//                }
-//            })
-//            
-//        }
-//        else {
-//            print("No users logged in")
-//        }
-//    }
+    //    func currentUser() {
+    //
+    //        let userUID = userDefaults.stringForKey("uid")
+    //
+    //
+    //        if userUID != nil {
+    //
+    //            ref.child("Trucks").child(userUID!).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
+    //                let userImage = snapshot.value!["imageURL"] as! String
+    //                let profileImage = snapshot.value?["profileImage"] as? String
+    //                let activeLocation = snapshot.value!["activeLocation"] as! String
+    //                let truckName = snapshot.value!["truckName"] as! String
+    //                let logoImage = snapshot.value?["logoImage"] as? String
+    //
+    //                self.nameLabel.text = "\(truckName)".capitalizedString
+    //                self.logoImageView.layer.cornerRadius = self.logoImageView.frame.size.width / 2
+    //                self.logoImageView.clipsToBounds = true
+    ////                self.logoImageView.layer.borderWidth = 3.0
+    ////                self.logoImageView.layer.borderColor = UIColor .blueColor().CGColor
+    //
+    //
+    //                if logoImage != nil {
+    //                    self.logoImageView.image = self.conversion(logoImage!)
+    //                } else if profileImage != nil {
+    //                    self.logoImageView.image = self.conversion(profileImage!)
+    //                } else {
+    //                    self.logoImageView.image = UIImage(data: NSData(contentsOfURL: NSURL(string:userImage)!)!)
+    //                }
+    //                if activeLocation == "true" {
+    //                    self.locationSwitch.on = true
+    //                } else {
+    //                    self.locationSwitch.on = false
+    //                }
+    //            })
+    //            
+    //        }
+    //        else {
+    //            print("No users logged in")
+    //        }
+    //    }
     
 }

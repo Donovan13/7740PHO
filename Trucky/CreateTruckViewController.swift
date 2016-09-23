@@ -58,11 +58,9 @@ class CreateTruckViewController: UIViewController, UserCreationDelegate, Authent
         
         let longitude = self.userDefaults.valueForKey("longitude")
         let latitude = self.userDefaults.valueForKey("latitude")
-        
         let imageURL = imageURLtoString(searchedBusiness!.imageURL!)
         let ratingImageURL = imageURLtoString(searchedBusiness!.ratingImageURL!)
-        
-        
+                
         let dictionary = [
             "uid": "",
             "truckName": self.searchedBusiness!.name,
@@ -126,13 +124,6 @@ class CreateTruckViewController: UIViewController, UserCreationDelegate, Authent
         alert.addAction(action)
         presentViewController(alert, animated: true, completion: nil)
     }
-    
-    
-    
-    
-    
-    
-    
     
     
     
