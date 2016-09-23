@@ -14,14 +14,21 @@ import Firebase
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    let userDefaults = NSUserDefaults.standardUserDefaults()
 
 
+    override init() {
+        FIRApp.configure()
+        FIRDatabase.database().persistenceEnabled = true
+
+    }
+    
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        
+        userDefaults.setValue(nil, forKey: "uid")
+
+
         UIApplication.sharedApplication().setMinimumBackgroundFetchInterval(
             UIApplicationBackgroundFetchIntervalMinimum)
-        
-        FIRApp.configure()
         
         
         return true

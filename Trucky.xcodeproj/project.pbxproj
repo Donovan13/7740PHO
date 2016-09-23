@@ -31,6 +31,7 @@
 		09FF68B41D3EC18800EF4551 /* TruckyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FF68B31D3EC18800EF4551 /* TruckyUITests.swift */; };
 		09FF68C21D3EC1C000EF4551 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 09FF68C11D3EC1C000EF4551 /* GoogleService-Info.plist */; };
 		76EAB742C5577DDE3D55E0F6 /* Pods_Trucky.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D2C3B4FF9458BA2F8CD8774 /* Pods_Trucky.framework */; };
+		7B2F41CE1D932876004E7A13 /* FirebaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2F41CD1D932876004E7A13 /* FirebaseController.swift */; };
 		7B67BAE81D80C3AB00B0DF03 /* YelpAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B67BAE71D80C3AB00B0DF03 /* YelpAPI.swift */; };
 /* End PBXBuildFile section */
 
@@ -85,6 +86,7 @@
 		2D2C3B4FF9458BA2F8CD8774 /* Pods_Trucky.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Trucky.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6E0E4B358E120246D05E2083 /* Pods-Trucky.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Trucky.release.xcconfig"; path = "Pods/Target Support Files/Pods-Trucky/Pods-Trucky.release.xcconfig"; sourceTree = "<group>"; };
 		729D30F36C980294FBFDF0D9 /* Pods-Trucky.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Trucky.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Trucky/Pods-Trucky.debug.xcconfig"; sourceTree = "<group>"; };
+		7B2F41CD1D932876004E7A13 /* FirebaseController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseController.swift; sourceTree = "<group>"; };
 		7B67BAE71D80C3AB00B0DF03 /* YelpAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YelpAPI.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -203,6 +205,7 @@
 				09ADB7061D67C1E100890CDB /* CustomAnnotation.swift */,
 				096F21991D4BB29500B42813 /* Business.swift */,
 				09ADB7041D67BE3900890CDB /* Truck.swift */,
+				7B2F41CD1D932876004E7A13 /* FirebaseController.swift */,
 				7B67BAE71D80C3AB00B0DF03 /* YelpAPI.swift */,
 				095834291D83426700EBDF9A /* DetailTableViewCell.swift */,
 				09D4B2461D6A318B002676D1 /* BusinessTableViewCell.swift */,
@@ -467,6 +470,7 @@
 				097ED68F1D8B4ED9002B4B9B /* CustomAnnotationView.swift in Sources */,
 				09C926D11D75402100605B67 /* SlideMenuViewController.swift in Sources */,
 				0958342A1D83426700EBDF9A /* DetailTableViewCell.swift in Sources */,
+				7B2F41CE1D932876004E7A13 /* FirebaseController.swift in Sources */,
 				096F219A1D4BB29500B42813 /* Business.swift in Sources */,
 				0957DB291D6621DA00B38BB2 /* BusinessProfileViewController.swift in Sources */,
 				09FF68991D3EC18800EF4551 /* Trucky.xcdatamodeld in Sources */,

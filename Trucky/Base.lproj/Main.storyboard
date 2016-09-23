@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="ezW-l6-AoS">
+=======
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="ezW-l6-AoS">
+>>>>>>> f2cfbaaad9431a0a0f4d16b4020046b3f165025d
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
@@ -458,7 +463,7 @@
                         <outlet property="ratingsImageView" destination="7ic-UM-ylB" id="LfY-iY-Ea6"/>
                         <outlet property="reviewsTextField" destination="elX-LJ-p5b" id="mkD-2I-0UM"/>
                         <outlet property="yelpImage" destination="gKk-zE-Ssv" id="nys-w5-ywk"/>
-                        <segue destination="ezW-l6-AoS" kind="show" identifier="createUserSegue" id="LPu-Hr-Tvx"/>
+                        <segue destination="ezW-l6-AoS" kind="show" identifier="LogInSegue" id="LPu-Hr-Tvx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="J0s-SI-6m3" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -913,7 +918,12 @@
         <image name="sideMenu" width="200" height="200"/>
     </resources>
     <inferredMetricsTieBreakers>
+<<<<<<< HEAD
         <segue reference="83W-ak-mQX"/>
+=======
+        <segue reference="LPu-Hr-Tvx"/>
+        <segue reference="6Pl-oM-29y"/>
+>>>>>>> f2cfbaaad9431a0a0f4d16b4020046b3f165025d
         <segue reference="2XA-gi-oSt"/>
         <segue reference="6Pl-oM-29y"/>
     </inferredMetricsTieBreakers>
