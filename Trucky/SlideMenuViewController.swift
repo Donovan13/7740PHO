@@ -35,29 +35,7 @@ class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableVie
         self.navigationController?.navigationBar.translucent = true
         
     }
-    
-    @IBAction func locationSwitcher(sender: AnyObject) {
-        let userUID = userDefaults.stringForKey("uid")
-        
-        
-        if self.locationSwitch.on == true {
-            locationManager.startUpdatingLocation()
-            ref.child("Trucks").child(userUID!).updateChildValues(["activeLocation": "true"])
-            userDefaults.setValue("true", forKey: "activeLocation")
-        } else {
-            locationManager.stopUpdatingLocation()
-            ref.child("Trucks").child(userUID!).updateChildValues(["activeLocation": "false"])
-            userDefaults.setValue("false", forKey: "activeLocation")
-        }
-    }
-    
-    
-    func errorAlert(title: String, message: String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
-        let action = UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default, handler: nil)
-        alert.addAction(action)
-        presentViewController(alert, animated: true, completion: nil)
-    }
+
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
