@@ -97,7 +97,7 @@ class CreateTruckViewController: UIViewController, UserCreationDelegate, Authent
     // MARK: AuthenticationDelegate
     func userAuthenticationSuccess() {
         dispatch_async(dispatch_get_main_queue()) {
-            self.performSegueWithIdentifier("createUserSegue", sender: nil)
+            self.performSegueWithIdentifier("logInSegue", sender: nil)
         }
     }
     

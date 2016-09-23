@@ -10,7 +10,7 @@ import UIKit
 import CoreLocation
 import Firebase
 
-class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, LogInUserDelegate {
+class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, LogInUserDelegate, ShareTruckDelegate {
     
     @IBOutlet weak var logoImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
@@ -21,7 +21,7 @@ class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableVie
     let locationManager = CLLocationManager()
     
     let firebaseController = FirebaseController.sharedConnection
-    let loggedInTruck: Truck!
+    var loggedInTruck: Truck!
     
     
     
@@ -38,6 +38,12 @@ class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableVie
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        
+        firebaseController.logInUserDelegate = self
+        firebaseController.sharetruckDelegate = self
+        
+        logInUserDelegate()
+        
         
         // Add a background view to the table view
         let backgroundImage = UIImage(named: "backSlide")
@@ -60,6 +66,24 @@ class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableVie
         blurView.frame = imageView.bounds
         imageView.addSubview(blurView)
     }
+    
+    func logInUserDelegate() {
+        loggedInTruck = firebaseController.getLoggedInUser()
+    }
+    
+    func activateTruckDelegate() {
+//        firebaseController.shareTruckLocation(true)
+        errorAlert("Confirmation", message: "Sharing Your Location From Now!")
+        
+    }
+    
+    func deactivateTruckDelegate() {
+//        firebaseController.shareTruckLocation(false)
+        errorAlert("Confirmation", message: "Going out of business =(")
+    }
+    
+    
+    
     
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         // translucent cell backgrounds so we can see the image but still easily read the contents
@@ -115,13 +139,12 @@ class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableVie
     
     
     @IBAction func locationSwitcher(sender: AnyObject) {
-        let userUID = userDefaults.stringForKey("uid")
-        
         
         if self.locationSwitch.on == true {
-            
+            firebaseController.shareTruckLocation(true)
         } else {
-            
+            firebaseController.shareTruckLocation(false)
+
         }
     }
     

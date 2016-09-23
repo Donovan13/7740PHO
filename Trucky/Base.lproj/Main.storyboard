@@ -508,7 +508,7 @@
                         <outlet property="ratingsImageView" destination="7ic-UM-ylB" id="LfY-iY-Ea6"/>
                         <outlet property="reviewsTextField" destination="elX-LJ-p5b" id="mkD-2I-0UM"/>
                         <outlet property="yelpImage" destination="gKk-zE-Ssv" id="nys-w5-ywk"/>
-                        <segue destination="ezW-l6-AoS" kind="show" identifier="createUserSegue" id="LPu-Hr-Tvx"/>
+                        <segue destination="ezW-l6-AoS" kind="show" identifier="LogInSegue" id="LPu-Hr-Tvx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="J0s-SI-6m3" userLabel="First Responder" sceneMemberID="firstResponder"/>

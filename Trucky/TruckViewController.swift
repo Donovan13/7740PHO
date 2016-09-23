@@ -35,7 +35,6 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        self.loggedInTruck = firebaseController.getLoggedInUser()
         
         
         locationManager.requestAlwaysAuthorization()
@@ -66,6 +65,10 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         super.viewWillAppear(true)
         self.firebaseController.reloadTrucksDelegate = self
         self.reloadTrucks()
+        
+        if userDefaults.valueForKey("uid") != nil {
+            loggedInTruck = firebaseController.getLoggedInUser()
+        }
 
     }
     override func didReceiveMemoryWarning() {
@@ -313,7 +316,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         let userUID = userDefaults.stringForKey("uid")
         
         
-        if userUID != nil {
+        if loggedInTruck != nil {
             self.performSegueWithIdentifier("mapToMenuSegue", sender: self)
             
         } else {

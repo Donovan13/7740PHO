@@ -44,6 +44,7 @@ class FirebaseController {
     
     let rootRef = FIRDatabase.database().reference()
     let truckRef = FIRDatabase.database().referenceWithPath("Trucks")
+    let userdefaults = NSUserDefaults.standardUserDefaults()
     
     var userCreationDelegate: UserCreationDelegate?
     var authenticationDelegate: AuthenticationDelegate?
@@ -51,6 +52,7 @@ class FirebaseController {
     var viewUserDelegate: ViewUserDelegate?
     var reloadTrucksDelegate: ReloadTrucksDelegate?
     var sharetruckDelegate: ShareTruckDelegate?
+    
 
     private var trucks = [Truck]()
     private var truck: Truck?
@@ -92,12 +94,29 @@ class FirebaseController {
         }
     }
     
+    func shareTruckLocation(onOff: Bool) {
+        let uid = truck?.uid
+        
+        if onOff == true {
+            truck = Truck(truck: truck!)
+            truckRef.child("Active").child(uid!).setValue(self.truck!.toAnyObject())
+            sharetruckDelegate?.activateTruckDelegate()
+            
+        } else {
+            truckRef.child("Active").child(uid!).removeValue()
+            sharetruckDelegate?.deactivateTruckDelegate()
+        }
+    }
+    
+    
     func createTruck(email: String?, password: String?, dictionary: Dictionary<String, AnyObject>) {
         FIRAuth.auth()?.createUserWithEmail(email!, password: password!, completion: { (user, error) in
             if error == nil {
+                self.loginTruck(email, password: password)
                 let uid = user!.uid
-                self.truckRef.child("Inactive").child(uid).setValue(dictionary)
-                self.truckRef.child("Inactive").child("\(user!.uid)/uid").setValue(uid)
+                self.truckRef.child("Members").child(uid).setValue(dictionary)
+                self.truckRef.child("Members").child("\(user!.uid)/uid").setValue(uid)
+                
             } else {
                 self.userCreationDelegate?.createUserFail(error!)
             }
@@ -108,9 +127,14 @@ class FirebaseController {
         FIRAuth.auth()?.signInWithEmail(email!, password: password!, completion: { (user, error) in
             if error == nil {
                 self.authenticationDelegate?.userAuthenticationSuccess()
-                self.truckRef.child("Active").observeSingleEventOfType(.Value, withBlock: { (snapshot) in
+                let uid = user?.uid
+                self.userdefaults.setValue(uid, forKey: "uid")
+                
+                self.truckRef.child("Members").child(uid!).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
                     self.truck = Truck(snapshot: snapshot)
                     self.logInUserDelegate?.logInUserDelegate()
+                    
+                    
                 })
             } else {
                 self.authenticationDelegate?.userAuthenticationFail(error!)

@@ -29,7 +29,6 @@ struct Truck: Equatable {
     let activeLocation: String?
     let website: String?
     let iconImage: String?
-    let distance: String?
     let categories: String?
     
     static func image2String(image: UIImage) -> String {
@@ -41,6 +40,24 @@ struct Truck: Equatable {
     static func string2Image(string: String) -> UIImage {
         let data = NSData(base64EncodedString: string, options: .IgnoreUnknownCharacters)
         return UIImage(data: data!)!
+    }
+    
+    init(truck: Truck) {
+        self.email = truck.email
+        self.truckName = truck.truckName
+        self.address = truck.address
+        self.imageURL = truck.imageURL
+        self.ratingImageURL = truck.ratingImageURL
+        self.reviewCount = truck.reviewCount
+        self.uid = truck.uid
+        self.phone = truck.phone
+        self.profileImage = truck.phone
+        self.latitude = truck.latitude
+        self.longitude = truck.longitude
+        self.activeLocation = truck.activeLocation
+        self.website = truck.website
+        self.iconImage = truck.iconImage
+        self.categories = truck.categories
     }
     
     init(snapshot: FIRDataSnapshot) {
@@ -58,8 +75,27 @@ struct Truck: Equatable {
         activeLocation = snapshot.value!["activeLocation"] as? String
         website = snapshot.value!["website"] as? String
         iconImage = snapshot.value!["iconImage"] as? String
-        distance = snapshot.value!["distance"] as? String
         categories = snapshot.value!["categories"] as? String
+    }
+    
+    func toAnyObject() -> AnyObject {
+        return [
+//            "email": email!,
+            "truckName": truckName!,
+//            "address": address!,
+            "imageURL": imageURL!,
+            "ratingImageURL": ratingImageURL!,
+            "reviewCount": reviewCount!,
+            "uid": uid!,
+            "phone": phone!,
+//            "profileImage" :profileImage!,
+            "latitude": latitude!,
+            "longitude": longitude!,
+//            "activeLocation": activeLocation!,
+//            "website": website!,
+//            "iconImage": iconImage!,
+            "categories": categories!
+        ]
     }
     
     
