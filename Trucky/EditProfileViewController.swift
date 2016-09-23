@@ -22,18 +22,33 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     @IBOutlet weak var menuPictureButton: UIButton!
     @IBOutlet weak var websiteTextField: UITextField!
     
-    var ref:FIRDatabaseReference!
-    var currentTrucks = [Truck]()
+
+    
     let userDefaults = NSUserDefaults.standardUserDefaults()
+    
+    var loggedInTruck : Truck!
+    
+    let firebaseController = FirebaseController.sharedConnection
+    
+    
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        ref = FIRDatabase.database().reference()
         print("\(userDefaults.stringForKey("uid"))")
         
-        currentUser()
+
+    }
+    
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(true)
+        
+        loggedInTruck = firebaseController.getLoggedInUser()
+        
+        self.truckNameLabel.text = loggedInTruck.truckName
+        
     }
     
     @IBAction func saveButton(sender: AnyObject) {
@@ -46,59 +61,59 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         let truckWebsite = websiteTextField.text
         
         
-        self.userDefaults.setValue(profileImg, forKey: "profileImage")
-        self.userDefaults.setValue(menuImg, forKey: "menuImage")
-        self.userDefaults.setValue(truckWebsite, forKey: "website")
-        self.userDefaults.setValue(logoImg, forKey: "logoImage")
+//        self.userDefaults.setValue(profileImg, forKey: "profileImage")
+//        self.userDefaults.setValue(menuImg, forKey: "menuImage")
+//        self.userDefaults.setValue(truckWebsite, forKey: "website")
+//        self.userDefaults.setValue(logoImg, forKey: "logoImage")
         
-        
-        self.ref.child("Trucks").child(userUID!).updateChildValues(["profileImage": profileImg, "menuImage": menuImg, "website": truckWebsite!, "logoImage": logoImg])
+//        
+//        self.ref.child("Trucks").child(userUID!).updateChildValues(["profileImage": profileImg, "menuImage": menuImg, "website": truckWebsite!, "logoImage": logoImg])
         
         self.performSegueWithIdentifier("editToMapSegue", sender: self)
         
     }
     
-    func currentUser() {
-        
-        let userUID = userDefaults.stringForKey("uid")
-        if userUID != nil {
-            
-            ref.child("Trucks").child(userUID!).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
-                let userImage = snapshot.value!["imageURL"] as! String
-                let profileImage = snapshot.value?["profileImage"] as? String
-                let website = snapshot.value!["website"] as? String
-                let menu = snapshot.value?["menuImage"]as? String
-                let logoImage = snapshot.value?["logoImage"] as? String
-                
-                if profileImage != nil {
-                    self.profileImageView.image = self.conversion(profileImage!)
-                } else {
-                    self.profileImageView.image = UIImage(data: NSData(contentsOfURL: NSURL(string:userImage)!)!)
-                }
-                
-                if menu != nil {
-                    self.menuImageView.image = self.conversion((menu)!)
-                } else {
-                    self.menuImageView.image = UIImage(named: "menu")
-                }
-                
-                if website != nil {
-                    self.websiteTextField.text = website
-                } else {
-                    self.websiteTextField.text = nil
-                }
-                
-                if logoImage != nil {
-                    self.logoImageView.image = self.conversion(logoImage!)
-                } else {
-                    print("No Logo Uploaded")
-                }
-            })
-            
-        } else {
-            print("No users logged in")
-        }
-    }
+//    func currentUser() {
+//        
+//        let userUID = userDefaults.stringForKey("uid")
+//        if userUID != nil {
+//            
+//            ref.child("Trucks").child(userUID!).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
+//                let userImage = snapshot.value!["imageURL"] as! String
+//                let profileImage = snapshot.value?["profileImage"] as? String
+//                let website = snapshot.value!["website"] as? String
+//                let menu = snapshot.value?["menuImage"]as? String
+//                let logoImage = snapshot.value?["logoImage"] as? String
+//                
+//                if profileImage != nil {
+//                    self.profileImageView.image = self.conversion(profileImage!)
+//                } else {
+//                    self.profileImageView.image = UIImage(data: NSData(contentsOfURL: NSURL(string:userImage)!)!)
+//                }
+//                
+//                if menu != nil {
+//                    self.menuImageView.image = self.conversion((menu)!)
+//                } else {
+//                    self.menuImageView.image = UIImage(named: "menu")
+//                }
+//                
+//                if website != nil {
+//                    self.websiteTextField.text = website
+//                } else {
+//                    self.websiteTextField.text = nil
+//                }
+//                
+//                if logoImage != nil {
+//                    self.logoImageView.image = self.conversion(logoImage!)
+//                } else {
+//                    print("No Logo Uploaded")
+//                }
+//            })
+//            
+//        } else {
+//            print("No users logged in")
+//        }
+//    }
     
     func conversion(photo: String) -> UIImage {
         let imageData = NSData(base64EncodedString: photo, options: [] )

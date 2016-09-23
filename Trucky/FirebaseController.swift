@@ -103,6 +103,7 @@ class FirebaseController {
             sharetruckDelegate?.activateTruckDelegate()
             
         } else {
+            
             truckRef.child("Active").child(uid!).removeValue()
             sharetruckDelegate?.deactivateTruckDelegate()
         }
@@ -112,12 +113,14 @@ class FirebaseController {
     func createTruck(email: String?, password: String?, dictionary: Dictionary<String, AnyObject>) {
         FIRAuth.auth()?.createUserWithEmail(email!, password: password!, completion: { (user, error) in
             if error == nil {
+                
                 self.loginTruck(email, password: password)
                 let uid = user!.uid
                 self.truckRef.child("Members").child(uid).setValue(dictionary)
                 self.truckRef.child("Members").child("\(user!.uid)/uid").setValue(uid)
                 
             } else {
+                
                 self.userCreationDelegate?.createUserFail(error!)
             }
         })

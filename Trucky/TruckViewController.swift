@@ -45,6 +45,15 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         tableView.dataSource = self
         
         mapView.delegate = self
+        
+        
+        
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(true)
+        
+        
         mapView.showsUserLocation = true
         mapView.setUserTrackingMode(MKUserTrackingMode.Follow, animated: true)
         
@@ -55,19 +64,15 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         self.navigationController!.navigationBar.titleTextAttributes = [ NSFontAttributeName: UIFont(name: "times", size: 20)!]
         
         
-        dispatch_async(dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0)) {
-        }
         
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(true)
         self.firebaseController.reloadTrucksDelegate = self
         self.reloadTrucks()
         
         if userDefaults.valueForKey("uid") != nil {
             loggedInTruck = firebaseController.getLoggedInUser()
         }
+        
+        
 
     }
     override func didReceiveMemoryWarning() {

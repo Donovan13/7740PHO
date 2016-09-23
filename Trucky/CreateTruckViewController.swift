@@ -35,6 +35,7 @@ class CreateTruckViewController: UIViewController, UserCreationDelegate, Authent
         
     }
     
+    
     @IBAction func matchTruck(sender: AnyObject) {
         let phoneNumber = businessNameTextField.text
         
