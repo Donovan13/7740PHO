@@ -21,9 +21,11 @@ class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableVie
     let locationManager = CLLocationManager()
     
     let firebaseController = FirebaseController.sharedConnection
+    let locationController = LocationService.sharedInstance
+    
     var loggedInTruck: Truck!
     
-    
+    var switchBool = Bool()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,6 +44,8 @@ class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableVie
         
         firebaseController.logInUserDelegate = self
         firebaseController.sharetruckDelegate = self
+        
+        locationSwitch.on = switchBool
         
         logInUserDelegate()
         
@@ -73,13 +77,13 @@ class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     func activateTruckDelegate() {
-        //        firebaseController.shareTruckLocation(true)
+        locationController.startUpdatingLocation()
         errorAlert("Confirmation", message: "Sharing Your Location From Now!")
         
     }
     
     func deactivateTruckDelegate() {
-        //        firebaseController.shareTruckLocation(false)
+        locationController.stopUpdatingLocation()
         errorAlert("Confirmation", message: "Going out of business =(")
     }
     
@@ -138,9 +142,11 @@ class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableVie
         
         if self.locationSwitch.on == true {
             firebaseController.shareTruckLocation(true)
+            switchBool = true
+            
         } else {
             firebaseController.shareTruckLocation(false)
-            
+            switchBool = false
         }
     }
     

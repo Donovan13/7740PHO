@@ -14,7 +14,7 @@ import Firebase
 
 
 
-class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate, ReloadTrucksDelegate {
+class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate, ReloadTrucksDelegate, LocationServiceDelegate {
     
     
     //    MARK: Outlets
@@ -28,24 +28,20 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     var loggedInTruck: Truck?
     
     let firebaseController = FirebaseController.sharedConnection
+    let locationController = LocationService.sharedInstance
     let userDefaults = NSUserDefaults.standardUserDefaults()
-    let locationManager = CLLocationManager()
     var userlocation: CLLocation?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         
-        
-        locationManager.requestAlwaysAuthorization()
-        locationManager.delegate = self
-        locationManager.startUpdatingLocation()
-        
         tableView.delegate = self
         tableView.dataSource = self
-        
         mapView.delegate = self
         
+        firebaseController.reloadTrucksDelegate = self
+        locationController.locationServiceDelegate = self
         
         
     }
@@ -54,18 +50,15 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         super.viewWillAppear(true)
         
         
+        
         mapView.showsUserLocation = true
         mapView.setUserTrackingMode(MKUserTrackingMode.Follow, animated: true)
         
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.translucent = true
-        
         self.navigationController!.navigationBar.titleTextAttributes = [ NSFontAttributeName: UIFont(name: "times", size: 20)!]
-        
-        
-        
-        self.firebaseController.reloadTrucksDelegate = self
+    
         self.reloadTrucks()
         
         if userDefaults.valueForKey("uid") != nil {
@@ -75,13 +68,28 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         
 
     }
+    
+    
+    func updateLocation(currentLocation: CLLocation) {
+        self.userlocation = currentLocation
+        let lat = currentLocation.coordinate.latitude
+        let lon = currentLocation.coordinate.longitude
+        
+        firebaseController.updateTruckLocation(lat, lon: lon)
+        
+    }
+    
+    func updateLocationFailed(error: NSError) {
+        errorAlert("Location Failed", message: error.localizedDescription)
+    }
+
+    
     override func didReceiveMemoryWarning() {
         _getMemoryUsedPer1()
     }
     
     
-    func _getMemoryUsedPer1() -> Float
-    {
+    func _getMemoryUsedPer1() -> Float {
         let MACH_TASK_BASIC_INFO_COUNT = (sizeof(mach_task_basic_info_data_t) / sizeof(natural_t))
         let name = mach_task_self_
         let flavor = task_flavor_t(MACH_TASK_BASIC_INFO)
@@ -90,8 +98,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         let kerr = task_info(name, flavor, UnsafeMutablePointer(infoPointer), &size)
         let info = infoPointer.move()
         infoPointer.dealloc(1)
-        if kerr == KERN_SUCCESS
-        {
+        if kerr == KERN_SUCCESS {
             let used_bytes: Float = Float(info.resident_size)
             let total_bytes: Float = Float(NSProcessInfo.processInfo().physicalMemory)
             print("Used: \(used_bytes / 1024.0 / 1024.0) MB out of \(total_bytes / 1024.0 / 1024.0) MB (\(used_bytes * 100.0 / total_bytes)%%)")
@@ -100,6 +107,8 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         return 1
     }
     
+    
+
     
     //    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
     //        if let annotation = annotation as? CustomAnnotations {
@@ -125,58 +134,48 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     
     
     //    MARK: MapView Delegate
-//    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
-//
-//        
-//        
-//        if annotation.isEqual(mapView.userLocation) {
-//            return nil
-//        } else if annotation.isEqual(annotation as! CustomAnnotations){
-//            let pin = MKAnnotationView (annotation: annotation, reuseIdentifier: nil)
-//            
-//            
-//
-//            let icon = scaleUIImageToSize(UIImage(named: "login")!, size: CGSizeMake(30,30))
-//            let iconFrame = UIImageView(image: icon)
-//            
-//            pin.image = scaleUIImageToSize(UIImage(named: "truck")!, size: CGSizeMake(30,30))
-//            pin.canShowCallout = true
-//            pin.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)
-//            pin.leftCalloutAccessoryView = iconFrame
-//            pin.leftCalloutAccessoryView?.layer.cornerRadius = (pin.leftCalloutAccessoryView?.frame.size.width)! / 2
-//            pin.leftCalloutAccessoryView?.clipsToBounds = true
-//
-//            
-//            
-//            
-//            
-//            return pin
-//        } else {
-//            return nil
-//            
-//        }
-//    }
+    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+
+        
+        
+        if annotation.isEqual(mapView.userLocation) {
+            return nil
+        } else if annotation.isEqual(annotation as! CustomAnnotations){
+            let pin = MKAnnotationView (annotation: annotation, reuseIdentifier: nil)
+            
+            
+
+            let icon = scaleUIImageToSize(UIImage(named: "login")!, size: CGSizeMake(30,30))
+            let iconFrame = UIImageView(image: icon)
+            
+            pin.image = scaleUIImageToSize(UIImage(named: "truck")!, size: CGSizeMake(30,30))
+            pin.canShowCallout = true
+            pin.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)
+            pin.leftCalloutAccessoryView = iconFrame
+            pin.leftCalloutAccessoryView?.layer.cornerRadius = (pin.leftCalloutAccessoryView?.frame.size.width)! / 2
+            pin.leftCalloutAccessoryView?.clipsToBounds = true
+
+            
+            
+            
+            
+            return pin
+        } else {
+            return nil
+            
+        }
+    }
     
     
-//    func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-//        let annotation = view.annotation as! CustomAnnotations
-//        self.performSegueWithIdentifier("annotationDetailSegue", sender: annotation)
-//        
-//    }
+    func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        let annotation = view.annotation as! CustomAnnotations
+        self.performSegueWithIdentifier("annotationDetailSegue", sender: annotation)
+        
+    }
 
     
 //    func locationManager(manager: CLLocationManager, didUpdateToLocation newLocation: CLLocation, fromLocation oldLocation: CLLocation) {
-//        
-//        let userLat = newLocation.coordinate.latitude
-//        let userLon = newLocation.coordinate.longitude
-//        let userUID = userDefaults.stringForKey("uid")
-//        userlocation = CLLocation(latitude: userLat, longitude: userLon)
-//        
-//        
-//        self.userDefaults.setValue(userLat, forKey: "latitude")
-//        self.userDefaults.setValue(userLon, forKey: "longitude")
-//        
-//        
+//
 //        CLGeocoder().reverseGeocodeLocation(newLocation, completionHandler: {(placemarks, error) -> Void in
 //            
 //            if error != nil {

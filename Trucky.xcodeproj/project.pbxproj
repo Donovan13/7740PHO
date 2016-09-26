@@ -33,6 +33,7 @@
 		76EAB742C5577DDE3D55E0F6 /* Pods_Trucky.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D2C3B4FF9458BA2F8CD8774 /* Pods_Trucky.framework */; };
 		7B2F41CE1D932876004E7A13 /* FirebaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2F41CD1D932876004E7A13 /* FirebaseController.swift */; };
 		7B67BAE81D80C3AB00B0DF03 /* YelpAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B67BAE71D80C3AB00B0DF03 /* YelpAPI.swift */; };
+		7B735DE71D95BCE60029D13E /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B735DE61D95BCE60029D13E /* LocationService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -88,6 +89,7 @@
 		729D30F36C980294FBFDF0D9 /* Pods-Trucky.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Trucky.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Trucky/Pods-Trucky.debug.xcconfig"; sourceTree = "<group>"; };
 		7B2F41CD1D932876004E7A13 /* FirebaseController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseController.swift; sourceTree = "<group>"; };
 		7B67BAE71D80C3AB00B0DF03 /* YelpAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YelpAPI.swift; sourceTree = "<group>"; };
+		7B735DE61D95BCE60029D13E /* LocationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,6 +123,8 @@
 		09FF68841D3EC18800EF4551 = {
 			isa = PBXGroup;
 			children = (
+				7B390EAC1D73C685003EAD59 /* ViewControllers */,
+				7B390EAD1D73C6A4003EAD59 /* Customs */,
 				09FF688F1D3EC18800EF4551 /* Trucky */,
 				09FF68A71D3EC18800EF4551 /* TruckyTests */,
 				09FF68B21D3EC18800EF4551 /* TruckyUITests */,
@@ -143,16 +147,14 @@
 		09FF688F1D3EC18800EF4551 /* Trucky */ = {
 			isa = PBXGroup;
 			children = (
-				099DE8CA1D8CB10E0006AE62 /* Trucky.entitlements */,
-				7B390EAC1D73C685003EAD59 /* ViewControllers */,
-				7B390EAD1D73C6A4003EAD59 /* Customs */,
 				09FF68941D3EC18800EF4551 /* Main.storyboard */,
-				09FF689A1D3EC18800EF4551 /* Assets.xcassets */,
 				09FF68901D3EC18800EF4551 /* AppDelegate.swift */,
+				09FF689A1D3EC18800EF4551 /* Assets.xcassets */,
 				09FF689C1D3EC18800EF4551 /* LaunchScreen.storyboard */,
 				09FF689F1D3EC18800EF4551 /* Info.plist */,
 				09FF68C11D3EC1C000EF4551 /* GoogleService-Info.plist */,
 				09FF68971D3EC18800EF4551 /* Trucky.xcdatamodeld */,
+				099DE8CA1D8CB10E0006AE62 /* Trucky.entitlements */,
 			);
 			path = Trucky;
 			sourceTree = "<group>";
@@ -194,23 +196,42 @@
 				0971AB851D8BCA41008B756D /* WebViewController.swift */,
 				09C926D01D75402100605B67 /* SlideMenuViewController.swift */,
 				090AE2BE1D6F9CDE000BAFBD /* EditProfileViewController.swift */,
+				7B735DE51D95BC8B0029D13E /* CustomView */,
 			);
 			name = ViewControllers;
+			path = Trucky;
 			sourceTree = "<group>";
 		};
 		7B390EAD1D73C6A4003EAD59 /* Customs */ = {
 			isa = PBXGroup;
 			children = (
-				097ED68E1D8B4ED9002B4B9B /* CustomAnnotationView.swift */,
-				09ADB7061D67C1E100890CDB /* CustomAnnotation.swift */,
-				096F21991D4BB29500B42813 /* Business.swift */,
-				09ADB7041D67BE3900890CDB /* Truck.swift */,
+				7B735DE61D95BCE60029D13E /* LocationService.swift */,
 				7B2F41CD1D932876004E7A13 /* FirebaseController.swift */,
 				7B67BAE71D80C3AB00B0DF03 /* YelpAPI.swift */,
-				095834291D83426700EBDF9A /* DetailTableViewCell.swift */,
-				09D4B2461D6A318B002676D1 /* BusinessTableViewCell.swift */,
+				7B735DE41D95BC470029D13E /* Custom Objects */,
 			);
 			name = Customs;
+			path = Trucky;
+			sourceTree = "<group>";
+		};
+		7B735DE41D95BC470029D13E /* Custom Objects */ = {
+			isa = PBXGroup;
+			children = (
+				096F21991D4BB29500B42813 /* Business.swift */,
+				09ADB7041D67BE3900890CDB /* Truck.swift */,
+			);
+			name = "Custom Objects";
+			sourceTree = "<group>";
+		};
+		7B735DE51D95BC8B0029D13E /* CustomView */ = {
+			isa = PBXGroup;
+			children = (
+				095834291D83426700EBDF9A /* DetailTableViewCell.swift */,
+				09D4B2461D6A318B002676D1 /* BusinessTableViewCell.swift */,
+				097ED68E1D8B4ED9002B4B9B /* CustomAnnotationView.swift */,
+				09ADB7061D67C1E100890CDB /* CustomAnnotation.swift */,
+			);
+			name = CustomView;
 			sourceTree = "<group>";
 		};
 		86A6BBF02A39C4C17595840A /* Frameworks */ = {
@@ -481,6 +502,7 @@
 				09FF68911D3EC18800EF4551 /* AppDelegate.swift in Sources */,
 				09ADB7051D67BE3900890CDB /* Truck.swift in Sources */,
 				09D4B2471D6A318B002676D1 /* BusinessTableViewCell.swift in Sources */,
+				7B735DE71D95BCE60029D13E /* LocationService.swift in Sources */,
 				0971AB861D8BCA41008B756D /* WebViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

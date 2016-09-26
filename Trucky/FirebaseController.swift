@@ -74,6 +74,8 @@ class FirebaseController {
     
     func getTruckForUID(uid: String) -> Truck? {
         
+//        Guard or conditional? which is more efficient
+        
         guard let index = self.trucks.indexOf({$0.uid == uid}) else { return nil }
         return self.trucks[index]
         
@@ -93,11 +95,17 @@ class FirebaseController {
             }
         }
     }
+
+    func updateTruckLocation(lat: Double, lon: Double) {
+        let uid = truck?.uid
+        truckRef.child("Active").child(uid!).updateChildValues(["latitude": lat, "longitude": lon])
+    }
     
     func shareTruckLocation(onOff: Bool) {
         let uid = truck?.uid
         
         if onOff == true {
+            
             truck = Truck(truck: truck!)
             truckRef.child("Active").child(uid!).setValue(self.truck!.toAnyObject())
             sharetruckDelegate?.activateTruckDelegate()
