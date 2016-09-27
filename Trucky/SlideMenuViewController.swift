@@ -25,7 +25,6 @@ class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableVie
     
     var loggedInTruck: Truck!
     
-    var switchBool = Bool()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,9 +44,8 @@ class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableVie
         firebaseController.logInUserDelegate = self
         firebaseController.sharetruckDelegate = self
         
-        locationSwitch.on = switchBool
-        
         logInUserDelegate()
+        
         
         
         // Add a background view to the table view
@@ -70,6 +68,11 @@ class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableVie
         let blurView = UIVisualEffectView(effect: blurEffect)
         blurView.frame = imageView.bounds
         imageView.addSubview(blurView)
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(true)
+        
     }
     
     func logInUserDelegate() {
@@ -140,13 +143,11 @@ class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableVie
     
     @IBAction func locationSwitcher(sender: AnyObject) {
         
+        
         if self.locationSwitch.on == true {
             firebaseController.shareTruckLocation(true)
-            switchBool = true
-            
         } else {
             firebaseController.shareTruckLocation(false)
-            switchBool = false
         }
     }
     

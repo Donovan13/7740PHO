@@ -14,7 +14,7 @@ import Firebase
 
 
 
-class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate, ReloadTrucksDelegate, LocationServiceDelegate {
+class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, UITableViewDataSource, ReloadTrucksDelegate, LocationServiceDelegate {
     
     
     //    MARK: Outlets
@@ -232,10 +232,10 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         cell.reviewLabel?.text = "\(post.reviewCount!) reviews on Yelp"
         
         if userlocation != nil {
-//            let location = CLLocation(latitude: post.latitude!, longitude: post.longitude!)
-//            let distance = location.distanceFromLocation(userlocation!)
-//            let inMiles = distance * 0.000621371192
-//            cell.distanceLabel.text = (String(format: "%.2fm Away", inMiles))
+            let location = CLLocation(latitude: post.latitude!, longitude: post.longitude!)
+            let distance = location.distanceFromLocation(userlocation!)
+            let inMiles = distance * 0.000621371192
+            cell.distanceLabel.text = (String(format: "%.2fm Away", inMiles))
         
             
         }
