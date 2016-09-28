@@ -24,6 +24,7 @@ class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableVie
     let locationController = LocationService.sharedInstance
     
     var loggedInTruck: Truck!
+    var loggedInCustomer: Customer!
     
     
     override func viewDidLoad() {
@@ -44,7 +45,7 @@ class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableVie
         firebaseController.logInUserDelegate = self
         firebaseController.sharetruckDelegate = self
         
-        logInUserDelegate()
+        logInTruckDelegate()
         
         
         
@@ -75,8 +76,12 @@ class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableVie
         
     }
     
-    func logInUserDelegate() {
-        loggedInTruck = firebaseController.getLoggedInUser()
+    func logInTruckDelegate() {
+        loggedInTruck = firebaseController.getLoggedInTruck()
+    }
+    
+    func loginCustomerDelegate() {
+        loggedInCustomer = firebaseController.getLoggedInCustomer()
     }
     
     func activateTruckDelegate() {
@@ -126,16 +131,16 @@ class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableVie
             
         else if indexPath.row == 1 {
             
-            if FIRAuth.auth()?.currentUser != nil {
-                do {
-                    try FIRAuth.auth()?.signOut()
-                    userDefaults.setValue(nil, forKey: "uid")
-                    dismissViewControllerAnimated(true, completion: nil)
-                    
-                } catch let error as NSError {
-                    print(error.localizedDescription)
-                }
-            }
+//            if FIRAuth.auth()?.currentUser != nil {
+//                do {
+//                    try FIRAuth.auth()?.signOut()
+//                    userDefaults.setValue(nil, forKey: "uid")
+//                    dismissViewControllerAnimated(true, completion: nil)
+//                    
+//                } catch let error as NSError {
+//                    print(error.localizedDescription)
+//                }
+//            }
         }
         
     }

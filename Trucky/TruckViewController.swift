@@ -26,6 +26,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
 
     var trucks = [Truck]()
     var loggedInTruck: Truck?
+    var loggedInCustomer: Customer?
     
     let firebaseController = FirebaseController.sharedConnection
     let locationController = LocationService.sharedInstance
@@ -57,12 +58,19 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.translucent = true
-        self.navigationController!.navigationBar.titleTextAttributes = [ NSFontAttributeName: UIFont(name: "times", size: 20)!]
-    
+        let myShadow = NSShadow()
+        myShadow.shadowBlurRadius = 3
+        myShadow.shadowOffset = CGSize(width: 2, height: 1)
+        myShadow.shadowColor = UIColor.lightGrayColor()
+        self.navigationController!.navigationBar.titleTextAttributes = [ NSShadowAttributeName: myShadow, NSFontAttributeName: UIFont(name: "times", size: 25)! ]
+        
+        
         self.reloadTrucks()
         
-        if userDefaults.valueForKey("uid") != nil {
-            loggedInTruck = firebaseController.getLoggedInUser()
+        if userDefaults.valueForKey("Truck") != nil {
+            loggedInTruck = firebaseController.getLoggedInTruck()
+        } else if userDefaults.valueForKey("Customer") != nil {
+            loggedInCustomer = firebaseController.getLoggedInCustomer()
         }
         
         
@@ -268,13 +276,13 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
                 let cell = tableView.cellForRowAtIndexPath(indexPath!) as! BusinessTableViewCell
                 let detailVC = segue.destinationViewController as! BusinessProfileViewController
                 let truck = trucks[indexPath!.row]
-                detailVC.trucks = truck
+                detailVC.truck = truck
                 detailVC.distanceOfTruck = cell.distanceLabel.text
                 
             case "annotationDetailSegue":
                 let detailVC = segue.destinationViewController as! BusinessProfileViewController
                 let annotation = sender as! CustomAnnotations
-                detailVC.trucks = annotation.truckCA
+                detailVC.truck = annotation.truckCA
             default: break
             }
         }

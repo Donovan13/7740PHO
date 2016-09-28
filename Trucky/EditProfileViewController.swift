@@ -45,7 +45,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
         
-        loggedInTruck = firebaseController.getLoggedInUser()
+        loggedInTruck = firebaseController.getLoggedInTruck()
         
         self.truckNameLabel.text = loggedInTruck.truckName
         
@@ -54,7 +54,6 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     @IBAction func saveButton(sender: AnyObject) {
         
         let userUID = userDefaults.stringForKey("uid")
-        
         let profileImg = imageConversion(self.profileImageView.image!)
         let menuImg = imageConversion(self.menuImageView.image!)
         let logoImg = imageConversion(self.logoImageView.image!)

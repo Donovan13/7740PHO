@@ -1,79 +1,59 @@
 //
-//  CreateUserViewController.swift
+//  CreateCustomerViewController.swift
 //  Trucky
 //
-//  Created by Kyle on 7/29/16.
+//  Created by Kyle on 9/27/16.
 //  Copyright © 2016 Kyle. All rights reserved.
 //
 
 import UIKit
+import CoreImage
 import Firebase
 
-class CreateTruckViewController: UIViewController, UserCreationDelegate, AuthenticationDelegate {
+class CreateCustomerViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UserCreationDelegate, AuthenticationDelegate {
+
     
-    @IBOutlet weak var yelpImage: UIImageView!
+    @IBOutlet weak var nameTextField: UITextField!
+    @IBOutlet weak var cityTextField: UITextField!
+    @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
-    @IBOutlet weak var confirmPassword: UITextField!
-    @IBOutlet weak var businessNameTextField: UITextField!
-    @IBOutlet weak var businessTextField: UILabel!
-    @IBOutlet weak var reviewsTextField: UILabel!
-    @IBOutlet weak var ratingsImageView: UIImageView!
+    @IBOutlet weak var confirmPasswordTextField: UITextField!
+    @IBOutlet weak var profilePictureButton: UIButton!
     
-    
-    var searchedBusiness:Business?
     let userDefaults = NSUserDefaults.standardUserDefaults()
     let firebaseController = FirebaseController.sharedConnection
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.firebaseController.userCreationDelegate = self
         self.firebaseController.authenticationDelegate = self
-        
-        
+    
     }
-    
-    
-    @IBAction func matchTruck(sender: AnyObject) {
-        let phoneNumber = businessNameTextField.text
+
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         
-        Business.searchWithNumber(phoneNumber!, completion: { (businesses: [Business]!, error: NSError!) -> Void in
-            if error == nil {
-                print("found")
-                self.searchedBusiness = businesses.first
-            } else {
-                
-                self.errorAlert("error", message: error.localizedDescription)
-            }
-        })
-        
+        if self.profilePictureButton.selected == true {
+            self.profileImageView.image = info[UIImagePickerControllerOriginalImage] as? UIImage
+            dismissViewControllerAnimated(true, completion: nil)
+            
+        }
     }
-    
-    
-    
-    
     
     @IBAction func createUser(sender: AnyObject) {
+
         
-        let longitude = self.userDefaults.valueForKey("longitude")
-        let latitude = self.userDefaults.valueForKey("latitude")
-        let imageURL = imageURLtoString(searchedBusiness!.imageURL!)
-        let ratingImageURL = imageURLtoString(searchedBusiness!.ratingImageURL!)
-                
         let dictionary = [
             "uid": "",
-            "truckName": self.searchedBusiness!.name,
-            "imageURL": imageURL,
-            "ratingImageURL": ratingImageURL,
-            "reviewCount": self.searchedBusiness!.reviewCount,
-            "phone": self.searchedBusiness!.phone,
-            "categories": self.searchedBusiness!.categories,
-            "latitude": latitude,
-            "longitude": longitude]
+            "customerName": nameTextField.text,
+            "city": cityTextField.text,
+            "profileImage": profileImageView.image]
+
         
         let email = emailTextField.text
         let password = passwordTextField.text
-        firebaseController.createTruck(email,
+        firebaseController.createCustomer(email,
                                        password: password,
                                        dictionary: dictionary as! Dictionary<String, AnyObject>)
         
@@ -94,7 +74,7 @@ class CreateTruckViewController: UIViewController, UserCreationDelegate, Authent
     // MARK: AuthenticationDelegate
     func userAuthenticationSuccess() {
         dispatch_async(dispatch_get_main_queue()) {
-            self.performSegueWithIdentifier("LogInSegue", sender: nil)
+            self.performSegueWithIdentifier("customerLoginSegue", sender: nil)
         }
     }
     
@@ -126,7 +106,14 @@ class CreateTruckViewController: UIViewController, UserCreationDelegate, Authent
     
     
     
+    func pickImage() {
+        
+        let imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        imagePicker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
+        imagePicker.allowsEditing = false
+        self.presentViewController(imagePicker, animated: true, completion: nil)
+    }
     
+   
 }
-
-
