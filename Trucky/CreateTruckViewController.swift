@@ -59,9 +59,12 @@ class CreateTruckViewController: UIViewController, UserCreationDelegate, Authent
         let latitude = self.userDefaults.valueForKey("latitude")
         let imageURL = imageURLtoString(searchedBusiness!.imageURL!)
         let ratingImageURL = imageURLtoString(searchedBusiness!.ratingImageURL!)
-                
+        let email = emailTextField.text
+        let password = passwordTextField.text
+        
         let dictionary = [
             "uid": "",
+            "email": email,
             "truckName": self.searchedBusiness!.name,
             "imageURL": imageURL,
             "ratingImageURL": ratingImageURL,
@@ -71,8 +74,7 @@ class CreateTruckViewController: UIViewController, UserCreationDelegate, Authent
             "latitude": latitude,
             "longitude": longitude]
         
-        let email = emailTextField.text
-        let password = passwordTextField.text
+
         firebaseController.createTruck(email,
                                        password: password,
                                        dictionary: dictionary as! Dictionary<String, AnyObject>)

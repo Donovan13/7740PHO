@@ -43,19 +43,21 @@ class CreateCustomerViewController: UIViewController, UIImagePickerControllerDel
     
     @IBAction func createUser(sender: AnyObject) {
 
+        let imageString = image2String(profileImageView.image!)
+        let email = emailTextField.text
+        let password = passwordTextField.text
         
         let dictionary = [
             "uid": "",
+            "email": email,
             "customerName": nameTextField.text,
             "city": cityTextField.text,
-            "profileImage": profileImageView.image]
+            "profileImage": imageString]
 
         
-        let email = emailTextField.text
-        let password = passwordTextField.text
         firebaseController.createCustomer(email,
                                        password: password,
-                                       dictionary: dictionary as! Dictionary<String, AnyObject>)
+                                       dictionary: dictionary as! Dictionary<String, String>)
         
         
     }
@@ -69,6 +71,12 @@ class CreateCustomerViewController: UIViewController, UIImagePickerControllerDel
         return imageString
     }
     
+    private func image2String(image: UIImage) -> String {
+        let imageData = UIImageJPEGRepresentation(image, 0.15);
+        let imageString = imageData!.base64EncodedStringWithOptions(.Encoding64CharacterLineLength)
+        return imageString
+    }
+
     
     
     // MARK: AuthenticationDelegate

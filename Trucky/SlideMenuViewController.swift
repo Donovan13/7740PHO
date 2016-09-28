@@ -9,6 +9,7 @@
 import UIKit
 import CoreLocation
 import Firebase
+import FirebaseAuth
 
 class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, LogInUserDelegate, ShareTruckDelegate {
     
@@ -131,16 +132,16 @@ class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableVie
             
         else if indexPath.row == 1 {
             
-//            if FIRAuth.auth()?.currentUser != nil {
-//                do {
-//                    try FIRAuth.auth()?.signOut()
-//                    userDefaults.setValue(nil, forKey: "uid")
-//                    dismissViewControllerAnimated(true, completion: nil)
-//                    
-//                } catch let error as NSError {
-//                    print(error.localizedDescription)
-//                }
-//            }
+            if FIRAuth.auth()?.currentUser != nil {
+                do {
+                    try FIRAuth.auth()?.signOut()
+                    userDefaults.setValue(nil, forKey: "uid")
+                    dismissViewControllerAnimated(true, completion: nil)
+                    
+                } catch let error as NSError {
+                    print(error.localizedDescription)
+                }
+            }
         }
         
     }
