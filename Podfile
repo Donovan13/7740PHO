@@ -15,6 +15,7 @@ pod 'Firebase/Database'
 pod 'AFNetworking', '~> 2.6.3'
 pod 'BDBOAuth1Manager'
 pod 'SideMenu', '~> 1.2.1'
+pod 'OAuthSwift'
 
 
 end

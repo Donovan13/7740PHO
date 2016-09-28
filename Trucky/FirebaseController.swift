@@ -114,6 +114,7 @@ class FirebaseController {
             
             truckRef.child("Active").child(uid!).removeValue()
             sharetruckDelegate?.deactivateTruckDelegate()
+            
         }
     }
     
@@ -139,12 +140,12 @@ class FirebaseController {
             if error == nil {
                 self.authenticationDelegate?.userAuthenticationSuccess()
                 let uid = user?.uid
-                self.userdefaults.setValue(uid, forKey: "uid")
                 
                 self.truckRef.child("Members").child(uid!).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
                     self.truck = Truck(snapshot: snapshot)
                     self.logInUserDelegate?.logInUserDelegate()
-                    
+                    self.userdefaults.setValue(uid, forKey: "uid")
+
                     
                 })
             } else {

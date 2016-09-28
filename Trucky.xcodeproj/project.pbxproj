@@ -34,6 +34,7 @@
 		7B2F41CE1D932876004E7A13 /* FirebaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2F41CD1D932876004E7A13 /* FirebaseController.swift */; };
 		7B67BAE81D80C3AB00B0DF03 /* YelpAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B67BAE71D80C3AB00B0DF03 /* YelpAPI.swift */; };
 		7B735DE71D95BCE60029D13E /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B735DE61D95BCE60029D13E /* LocationService.swift */; };
+		7BE966191D9B2BAD0038ABBE /* YelpAPIFusion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BE966181D9B2BAD0038ABBE /* YelpAPIFusion.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -90,6 +91,7 @@
 		7B2F41CD1D932876004E7A13 /* FirebaseController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseController.swift; sourceTree = "<group>"; };
 		7B67BAE71D80C3AB00B0DF03 /* YelpAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YelpAPI.swift; sourceTree = "<group>"; };
 		7B735DE61D95BCE60029D13E /* LocationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
+		7BE966181D9B2BAD0038ABBE /* YelpAPIFusion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YelpAPIFusion.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -208,6 +210,7 @@
 				7B735DE61D95BCE60029D13E /* LocationService.swift */,
 				7B2F41CD1D932876004E7A13 /* FirebaseController.swift */,
 				7B67BAE71D80C3AB00B0DF03 /* YelpAPI.swift */,
+				7BE966181D9B2BAD0038ABBE /* YelpAPIFusion.swift */,
 				7B735DE41D95BC470029D13E /* Custom Objects */,
 			);
 			name = Customs;
@@ -490,6 +493,7 @@
 				097ED68F1D8B4ED9002B4B9B /* CustomAnnotationView.swift in Sources */,
 				09C926D11D75402100605B67 /* SlideMenuViewController.swift in Sources */,
 				0958342A1D83426700EBDF9A /* DetailTableViewCell.swift in Sources */,
+				7BE966191D9B2BAD0038ABBE /* YelpAPIFusion.swift in Sources */,
 				7B2F41CE1D932876004E7A13 /* FirebaseController.swift in Sources */,
 				096F219A1D4BB29500B42813 /* Business.swift in Sources */,
 				0957DB291D6621DA00B38BB2 /* BusinessProfileViewController.swift in Sources */,
