@@ -28,7 +28,7 @@ class CustomerLoginViewController: UIViewController, AuthenticationDelegate  {
     }
 
     
-    @IBAction func loginButtonTapped(sender: AnyObject) {
+    @IBAction func loginCustomer(sender: AnyObject) {
         let email = emailTextField.text
         let password = passwordTextField.text
         firebaseController.loginCustomer(email, password: password)

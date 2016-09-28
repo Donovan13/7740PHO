@@ -135,8 +135,14 @@ class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableVie
             if FIRAuth.auth()?.currentUser != nil {
                 do {
                     try FIRAuth.auth()?.signOut()
-                    userDefaults.setValue(nil, forKey: "uid")
-                    dismissViewControllerAnimated(true, completion: nil)
+                    userDefaults.setValue(nil, forKey: "Truck")
+                    userDefaults.setValue(nil, forKey: "Customer")
+                    
+//                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//                    let vc = storyboard.instantiateViewControllerWithIdentifier("initialVC")
+//                    self.presentViewController(vc, animated: true, completion: nil)
+                    performSegueWithIdentifier("menuToLoginSegue", sender: self)
+//                    dismissViewControllerAnimated(true, completion: nil)
                     
                 } catch let error as NSError {
                     print(error.localizedDescription)

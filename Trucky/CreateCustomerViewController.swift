@@ -41,7 +41,8 @@ class CreateCustomerViewController: UIViewController, UIImagePickerControllerDel
         }
     }
     
-    @IBAction func createUser(sender: AnyObject) {
+    @IBAction func createCustomer(sender: AnyObject) {
+    
 
         let imageString = image2String(profileImageView.image!)
         let email = emailTextField.text

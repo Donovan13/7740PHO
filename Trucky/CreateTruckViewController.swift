@@ -53,8 +53,8 @@ class CreateTruckViewController: UIViewController, UserCreationDelegate, Authent
     
     
     
-    @IBAction func createUser(sender: AnyObject) {
-        
+    @IBAction func createTruck(sender: AnyObject) {
+    
         let longitude = self.userDefaults.valueForKey("longitude")
         let latitude = self.userDefaults.valueForKey("latitude")
         let imageURL = imageURLtoString(searchedBusiness!.imageURL!)
