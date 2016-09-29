@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		090AE2BF1D6F9CDE000BAFBD /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090AE2BE1D6F9CDE000BAFBD /* EditProfileViewController.swift */; };
+		0919D9CE1D9CE9B900DACCFB /* background.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 0919D9CD1D9CE9B900DACCFB /* background.mp4 */; };
 		093DFCC91D9B41FE0052AC9E /* Customer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093DFCC81D9B41FE0052AC9E /* Customer.swift */; };
 		0957DB291D6621DA00B38BB2 /* BusinessProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0957DB281D6621DA00B38BB2 /* BusinessProfileViewController.swift */; };
 		0958342A1D83426700EBDF9A /* DetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095834291D83426700EBDF9A /* DetailTableViewCell.swift */; };
@@ -60,6 +61,7 @@
 
 /* Begin PBXFileReference section */
 		090AE2BE1D6F9CDE000BAFBD /* EditProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
+		0919D9CD1D9CE9B900DACCFB /* background.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = background.mp4; sourceTree = "<group>"; };
 		093DFCC81D9B41FE0052AC9E /* Customer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Customer.swift; sourceTree = "<group>"; };
 		0957DB281D6621DA00B38BB2 /* BusinessProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BusinessProfileViewController.swift; sourceTree = "<group>"; };
 		095834291D83426700EBDF9A /* DetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailTableViewCell.swift; sourceTree = "<group>"; };
@@ -133,6 +135,7 @@
 		09FF68841D3EC18800EF4551 = {
 			isa = PBXGroup;
 			children = (
+				0919D9CD1D9CE9B900DACCFB /* background.mp4 */,
 				7B390EAC1D73C685003EAD59 /* ViewControllers */,
 				7B390EAD1D73C6A4003EAD59 /* Customs */,
 				09FF688F1D3EC18800EF4551 /* Trucky */,
@@ -333,6 +336,7 @@
 				TargetAttributes = {
 					09FF688C1D3EC18800EF4551 = {
 						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = 7G99974HDG;
 						LastSwiftMigration = 0800;
 						SystemCapabilities = {
 							com.apple.ApplePay = {
@@ -384,6 +388,7 @@
 				09FF68C21D3EC1C000EF4551 /* GoogleService-Info.plist in Resources */,
 				09FF689B1D3EC18800EF4551 /* Assets.xcassets in Resources */,
 				09FF68961D3EC18800EF4551 /* Main.storyboard in Resources */,
+				0919D9CE1D9CE9B900DACCFB /* background.mp4 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -675,7 +680,7 @@
 				CODE_SIGN_ENTITLEMENTS = Trucky/Trucky.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 7G99974HDG;
 				INFOPLIST_FILE = Trucky/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -696,7 +701,7 @@
 				CODE_SIGN_ENTITLEMENTS = Trucky/Trucky.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 7G99974HDG;
 				INFOPLIST_FILE = Trucky/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

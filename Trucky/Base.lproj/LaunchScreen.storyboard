@@ -1,8 +1,9 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -19,34 +20,40 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="truck" translatesAutoresizingMaskIntoConstraints="NO" id="ysQ-fG-oTK"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="truck" translatesAutoresizingMaskIntoConstraints="NO" id="ysQ-fG-oTK">
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="ysQ-fG-oTK" secondAttribute="height" multiplier="137:105" id="pZ5-4n-VFL"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Trucky" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iRX-pb-YKp">
+                                <fontDescription key="fontDescription" name="HoeflerText-Regular" family="Hoefler Text" pointSize="60"/>
+                                <color key="textColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="  Copyright (c) 2016 Donovan &amp; Chingu. All rights reserved." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bib-XX-llk">
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Trucky" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iRX-pb-YKp">
-                                <fontDescription key="fontDescription" name="HoeflerText-Regular" family="Hoefler Text" pointSize="50"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="ysQ-fG-oTK" secondAttribute="trailing" constant="34" id="F5Y-Kz-h8B"/>
-                            <constraint firstItem="ysQ-fG-oTK" firstAttribute="top" secondItem="iRX-pb-YKp" secondAttribute="bottom" constant="35" id="dhG-cj-MpY"/>
+                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="Bib-XX-llk" secondAttribute="bottom" constant="20" id="Hvb-G3-eNn"/>
+                            <constraint firstItem="ysQ-fG-oTK" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="Hxp-Xf-pK9"/>
+                            <constraint firstItem="ysQ-fG-oTK" firstAttribute="top" secondItem="iRX-pb-YKp" secondAttribute="bottom" constant="86" id="Kmn-5B-cG1"/>
+                            <constraint firstItem="Bib-XX-llk" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" constant="8" id="ctD-74-TMg"/>
                             <constraint firstItem="iRX-pb-YKp" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="hCf-ty-6EL"/>
-                            <constraint firstItem="Bib-XX-llk" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="n0w-c1-iFT"/>
-                            <constraint firstItem="Bib-XX-llk" firstAttribute="top" secondItem="ysQ-fG-oTK" secondAttribute="bottom" constant="99" id="oeV-5e-zqG"/>
-                            <constraint firstItem="ysQ-fG-oTK" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="pp0-0b-o7F"/>
-                            <constraint firstItem="ysQ-fG-oTK" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" constant="35" id="rxI-Dv-9Ek"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="ysQ-fG-oTK" secondAttribute="trailing" constant="34" id="hhF-eb-UBq"/>
+                            <constraint firstItem="ysQ-fG-oTK" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" constant="35" id="jaP-6g-IP5"/>
+                            <constraint firstItem="Bib-XX-llk" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="jgx-3n-dQG"/>
+                            <constraint firstAttribute="trailing" secondItem="Bib-XX-llk" secondAttribute="trailing" constant="9" id="pIo-tq-K6J"/>
                             <constraint firstItem="iRX-pb-YKp" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" constant="25" id="wsf-fn-5wc"/>
                         </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="53" y="375"/>
+            <point key="canvasLocation" x="52" y="374.66266866566718"/>
         </scene>
     </scenes>
     <resources>
