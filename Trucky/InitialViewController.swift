@@ -22,28 +22,28 @@ class InitialViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Load the video from the app bundle.
-        let videoURL: NSURL = NSBundle.mainBundle().URLForResource("background", withExtension: "mp4")!
-        
-        player = AVPlayer(URL: videoURL)
-        player?.actionAtItemEnd = .None
-        player?.muted = true
-        let playerLayer = AVPlayerLayer(player: player)
-        playerLayer.videoGravity = AVLayerVideoGravityResizeAspectFill
-        playerLayer.zPosition = -1
-        playerLayer.frame = view.frame
-        backgroundView.layer.addSublayer(playerLayer)
-        player?.play()
-        
-        //loop video
-        NSNotificationCenter.defaultCenter().addObserver(self,
-                                                         selector: #selector(InitialViewController.loopVideo),
-                                                         name: AVPlayerItemDidPlayToEndTimeNotification,
-                                                         object: nil)
-    }
-    func loopVideo() {
-        player?.seekToTime(kCMTimeZero)
-        player?.play()
+//        // Load the video from the app bundle.
+//        let videoURL: NSURL = NSBundle.mainBundle().URLForResource("background", withExtension: "mp4")!
+//        
+//        player = AVPlayer(URL: videoURL)
+//        player?.actionAtItemEnd = .None
+//        player?.muted = true
+//        let playerLayer = AVPlayerLayer(player: player)
+//        playerLayer.videoGravity = AVLayerVideoGravityResizeAspectFill
+//        playerLayer.zPosition = -1
+//        playerLayer.frame = view.frame
+//        backgroundView.layer.addSublayer(playerLayer)
+//        player?.play()
+//        
+//        //loop video
+//        NSNotificationCenter.defaultCenter().addObserver(self,
+//                                                         selector: #selector(InitialViewController.loopVideo),
+//                                                         name: AVPlayerItemDidPlayToEndTimeNotification,
+//                                                         object: nil)
+//    }
+//    func loopVideo() {
+//        player?.seekToTime(kCMTimeZero)
+//        player?.play()
     }
     
     override func viewWillAppear(animated: Bool) {

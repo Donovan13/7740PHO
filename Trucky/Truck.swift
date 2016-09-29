@@ -32,7 +32,7 @@ struct Truck: Equatable {
     let categories: String?
     
     static func image2String(image: UIImage) -> String {
-        let imageData = UIImageJPEGRepresentation(image, 0.15);
+        let imageData = UIImageJPEGRepresentation(image, 1);
         let imageString = imageData!.base64EncodedStringWithOptions(.Encoding64CharacterLineLength)
         return imageString
     }

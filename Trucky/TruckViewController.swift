@@ -238,6 +238,10 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         cell.businessLabel?.text = post.truckName?.capitalizedString
         cell.addressLabel?.text = post.address
         cell.reviewLabel?.text = "\(post.reviewCount!) reviews on Yelp"
+        cell.categoryLabel?.text = post.categories
+        cell.reviewImage?.image = string2Image(post.ratingImageURL!)
+        cell.addressLabel?.text = post.address
+        cell.businessImage?.image = string2Image(post.imageURL!)
         
         if userlocation != nil {
             let location = CLLocation(latitude: post.latitude!, longitude: post.longitude!)
@@ -249,16 +253,16 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         }
         
 //        dispatch_async(dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0)) {
-
+//
 //            cell.reviewImage?.image = UIImage(data: NSData(contentsOfURL: NSURL(string:post.ratingImageURL!)!)!)!
-        
+//        
 //            if post.profileImage != nil {
 //                cell.businessImage?.image = self.conversion(post.profileImage!)
 //            } else {
 //                cell.businessImage?.image = UIImage(data: NSData(contentsOfURL: NSURL(string:post.imageURL!)!)!)!
 //            }
 //        }
-        
+//        
         return cell
     }
     
@@ -347,10 +351,10 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         return scaledImage!
     }
     
-    func conversion(photo: String) -> UIImage {
-        let imageData = NSData(base64EncodedString: photo, options: [] )
-        let image = UIImage(data: imageData!)
-        return image!
+
+    func string2Image(string: String) -> UIImage {
+        let data = NSData(base64EncodedString: string, options: .IgnoreUnknownCharacters)
+        return UIImage(data: data!)!
     }
     
     func reloadTrucks() {

@@ -76,7 +76,7 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
             let cell = tableView.dequeueReusableCellWithIdentifier("titleSegue") as! DetailTableViewCell
             cell.truckNameLabel?.text = truck.truckName?.capitalizedString
             cell.reviewsLabel?.text = "\(truck.reviewCount!) reviews on Yelp"
-            cell.ratingsImageView.image = conversion(truck.ratingImageURL!)
+            cell.ratingsImageView.image = string2Image(truck.ratingImageURL!)
             cell.distanceLabel.text = "\(distanceOfTruck!)"
             
             return cell
@@ -154,12 +154,11 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
             }
         }
     }
-    
-    func conversion(photo: String) -> UIImage {
-        let imageData = NSData(base64EncodedString: photo, options: [] )
-        let image = UIImage(data: imageData!)
-        return image!
-    }
 
+    
+    func string2Image(string: String) -> UIImage {
+        let data = NSData(base64EncodedString: string, options: .IgnoreUnknownCharacters)
+        return UIImage(data: data!)!
+    }
     
 }
