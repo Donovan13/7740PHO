@@ -107,7 +107,7 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
         if indexPath.row == 1 {
             
-            callNumber(truck.phone!)
+            errorAlert("\(truck.phone!)", message: "")
             
         } else if indexPath.row == 2 {
             performSegueWithIdentifier("detailToWebSegue", sender: self)
@@ -147,7 +147,7 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
     }
     
     private func callNumber(phoneNumber:String) {
-        if let phoneCallURL:NSURL = NSURL(string:"tel://\(phoneNumber)") {
+        if let phoneCallURL:NSURL = NSURL(string:"\(phoneNumber)") {
             let application:UIApplication = UIApplication.sharedApplication()
             if (application.canOpenURL(phoneCallURL)) {
                 application.openURL(phoneCallURL)
@@ -159,6 +159,19 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
     func string2Image(string: String) -> UIImage {
         let data = NSData(base64EncodedString: string, options: .IgnoreUnknownCharacters)
         return UIImage(data: data!)!
+    }
+    
+    
+    func errorAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+        let action1 = UIAlertAction(title: "Cancel", style: .Default, handler: { (action: UIAlertAction!) in
+        })
+        let action2 = UIAlertAction(title: "Call", style: .Default, handler: { (action: UIAlertAction!) in
+            self.callNumber(self.truck.phone!)
+        })
+        alert.addAction(action1)
+        alert.addAction(action2)
+        presentViewController(alert, animated: true, completion: nil)
     }
     
 }

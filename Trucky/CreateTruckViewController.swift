@@ -19,6 +19,7 @@ class CreateTruckViewController: UIViewController, UserCreationDelegate, Authent
     @IBOutlet weak var businessTextField: UILabel!
     @IBOutlet weak var reviewsTextField: UILabel!
     @IBOutlet weak var ratingsImageView: UIImageView!
+    @IBOutlet weak var categoryLabel: UILabel!
     
     
     var searchedBusiness:Business?
