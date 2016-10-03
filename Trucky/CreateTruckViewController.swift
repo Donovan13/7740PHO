@@ -18,9 +18,8 @@ class CreateTruckViewController: UIViewController, UserCreationDelegate, Authent
     @IBOutlet weak var businessNameTextField: UITextField!
     @IBOutlet weak var businessTextField: UILabel!
     @IBOutlet weak var reviewsTextField: UILabel!
-    @IBOutlet weak var categoryTextField: UILabel!
     @IBOutlet weak var ratingsImageView: UIImageView!
-    @IBOutlet weak var addressTextField: UILabel!
+    @IBOutlet weak var categoryLabel: UILabel!
     
     
     var searchedBusiness:Business?
@@ -55,15 +54,18 @@ class CreateTruckViewController: UIViewController, UserCreationDelegate, Authent
     
     
     
-    @IBAction func createUser(sender: AnyObject) {
-        
+    @IBAction func createTruck(sender: AnyObject) {
+    
         let longitude = self.userDefaults.valueForKey("longitude")
         let latitude = self.userDefaults.valueForKey("latitude")
         let imageURL = imageURLtoString(searchedBusiness!.imageURL!)
         let ratingImageURL = imageURLtoString(searchedBusiness!.ratingImageURL!)
-                
+        let email = emailTextField.text
+        let password = passwordTextField.text
+        
         let dictionary = [
             "uid": "",
+            "email": email,
             "truckName": self.searchedBusiness!.name,
             "imageURL": imageURL,
             "ratingImageURL": ratingImageURL,
@@ -73,8 +75,7 @@ class CreateTruckViewController: UIViewController, UserCreationDelegate, Authent
             "latitude": latitude,
             "longitude": longitude]
         
-        let email = emailTextField.text
-        let password = passwordTextField.text
+
         firebaseController.createTruck(email,
                                        password: password,
                                        dictionary: dictionary as! Dictionary<String, AnyObject>)

@@ -26,6 +26,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
 
     var trucks = [Truck]()
     var loggedInTruck: Truck?
+    var loggedInCustomer: Customer?
     
     let firebaseController = FirebaseController.sharedConnection
     let locationController = LocationService.sharedInstance
@@ -57,12 +58,19 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.translucent = true
-        self.navigationController!.navigationBar.titleTextAttributes = [ NSFontAttributeName: UIFont(name: "times", size: 20)!]
-    
+        let myShadow = NSShadow()
+        myShadow.shadowBlurRadius = 3
+        myShadow.shadowOffset = CGSize(width: 2, height: 1)
+        myShadow.shadowColor = UIColor.lightGrayColor()
+        self.navigationController!.navigationBar.titleTextAttributes = [ NSShadowAttributeName: myShadow, NSFontAttributeName: UIFont(name: "times", size: 25)! ]
+        
+        
         self.reloadTrucks()
         
-        if userDefaults.valueForKey("uid") != nil {
-            loggedInTruck = firebaseController.getLoggedInUser()
+        if userDefaults.valueForKey("Truck") != nil {
+            loggedInTruck = firebaseController.getLoggedInTruck()
+        } else if userDefaults.valueForKey("Customer") != nil {
+            loggedInCustomer = firebaseController.getLoggedInCustomer()
         }
         
         
@@ -230,6 +238,10 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         cell.businessLabel?.text = post.truckName?.capitalizedString
         cell.addressLabel?.text = post.address
         cell.reviewLabel?.text = "\(post.reviewCount!) reviews on Yelp"
+        cell.categoryLabel?.text = post.categories
+        cell.reviewImage?.image = string2Image(post.ratingImageURL!)
+        cell.addressLabel?.text = post.address
+        cell.businessImage?.image = string2Image(post.imageURL!)
         
         if userlocation != nil {
             let location = CLLocation(latitude: post.latitude!, longitude: post.longitude!)
@@ -237,20 +249,20 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
             let inMiles = distance * 0.000621371192
             cell.distanceLabel.text = (String(format: "%.2fm Away", inMiles))
         
-            
+
         }
         
 //        dispatch_async(dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0)) {
-
+//
 //            cell.reviewImage?.image = UIImage(data: NSData(contentsOfURL: NSURL(string:post.ratingImageURL!)!)!)!
-        
+//        
 //            if post.profileImage != nil {
 //                cell.businessImage?.image = self.conversion(post.profileImage!)
 //            } else {
 //                cell.businessImage?.image = UIImage(data: NSData(contentsOfURL: NSURL(string:post.imageURL!)!)!)!
 //            }
 //        }
-        
+//        
         return cell
     }
     
@@ -268,13 +280,13 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
                 let cell = tableView.cellForRowAtIndexPath(indexPath!) as! BusinessTableViewCell
                 let detailVC = segue.destinationViewController as! BusinessProfileViewController
                 let truck = trucks[indexPath!.row]
-                detailVC.trucks = truck
+                detailVC.truck = truck
                 detailVC.distanceOfTruck = cell.distanceLabel.text
                 
             case "annotationDetailSegue":
                 let detailVC = segue.destinationViewController as! BusinessProfileViewController
                 let annotation = sender as! CustomAnnotations
-                detailVC.trucks = annotation.truckCA
+                detailVC.truck = annotation.truckCA
             default: break
             }
         }
@@ -339,10 +351,10 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         return scaledImage!
     }
     
-    func conversion(photo: String) -> UIImage {
-        let imageData = NSData(base64EncodedString: photo, options: [] )
-        let image = UIImage(data: imageData!)
-        return image!
+
+    func string2Image(string: String) -> UIImage {
+        let data = NSData(base64EncodedString: string, options: .IgnoreUnknownCharacters)
+        return UIImage(data: data!)!
     }
     
     func reloadTrucks() {

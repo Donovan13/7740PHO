@@ -32,7 +32,7 @@ class LocationService: NSObject, CLLocationManagerDelegate {
     
     var locationServiceDelegate: LocationServiceDelegate?
     
-    override init() {
+    override init() {  
         super.init()
         
         self.locationManager = CLLocationManager()

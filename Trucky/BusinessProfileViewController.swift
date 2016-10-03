@@ -13,10 +13,9 @@ import MapKit
 
 class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    var ref:FIRDatabaseReference!
-    var businesses = [Business]()
+
     var truckName:String?
-    var trucks: Truck!
+    var truck: Truck!
     var userlocation: CLLocation?
     let userDefaults = NSUserDefaults.standardUserDefaults()
     var distanceOfTruck:String!
@@ -26,7 +25,6 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.ref = FIRDatabase.database().reference()
         
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
@@ -76,23 +74,23 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
         
         if indexPath.row == 0 {
             let cell = tableView.dequeueReusableCellWithIdentifier("titleSegue") as! DetailTableViewCell
-            cell.truckNameLabel?.text = trucks.truckName?.capitalizedString
-            cell.reviewsLabel?.text = "\(trucks.reviewCount!) reviews on Yelp"
-            cell.ratingsImageView.image = UIImage(data: NSData(contentsOfURL: NSURL(string:trucks.ratingImageURL!)!)!)!
+            cell.truckNameLabel?.text = truck.truckName?.capitalizedString
+            cell.reviewsLabel?.text = "\(truck.reviewCount!) reviews on Yelp"
+            cell.ratingsImageView.image = string2Image(truck.ratingImageURL!)
             cell.distanceLabel.text = "\(distanceOfTruck!)"
             
             return cell
         } else if indexPath.row == 1 {
             let cell = tableView.dequeueReusableCellWithIdentifier("phoneSegue", forIndexPath: indexPath)
-            cell.detailTextLabel?.text = trucks.phone
+            cell.detailTextLabel?.text = truck.phone
             return cell
         } else if indexPath.row == 2 {
             let cell = tableView.dequeueReusableCellWithIdentifier("websiteSegue", forIndexPath: indexPath)
-            cell.detailTextLabel?.text = trucks.website
+            cell.detailTextLabel?.text = truck.website
             return cell
         } else {
             let cell = tableView.dequeueReusableCellWithIdentifier("addressSegue", forIndexPath: indexPath)
-            cell.detailTextLabel?.text = trucks.address
+            cell.detailTextLabel?.text = truck.address
             return cell
         }
         
@@ -109,7 +107,7 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
         if indexPath.row == 1 {
             
-            callNumber(trucks.phone!)
+            errorAlert("\(truck.phone!)", message: "")
             
         } else if indexPath.row == 2 {
             performSegueWithIdentifier("detailToWebSegue", sender: self)
@@ -122,14 +120,14 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
         if segue.identifier == "detailToWebSegue" {
             
             let detailVC = segue.destinationViewController as! WebViewController
-            detailVC.businessURL = trucks.website
+            detailVC.businessURL = truck.website
         }
     }
     
     func openMapForPlace() {
         
-        let lat : NSString = "\(self.trucks.latitude!)"
-        let lng : NSString = "\(self.trucks.longitude!)"
+        let lat : NSString = "\(self.truck.latitude!)"
+        let lng : NSString = "\(self.truck.longitude!)"
         
         let latitude:CLLocationDegrees =  lat.doubleValue
         let longitude:CLLocationDegrees =  lng.doubleValue
@@ -143,18 +141,37 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
         ]
         let placemark = MKPlacemark(coordinate: coordinates, addressDictionary: nil)
         let mapItem = MKMapItem(placemark: placemark)
-        mapItem.name = "\(self.trucks.truckName!)".capitalizedString
+        mapItem.name = "\(self.truck.truckName!)".capitalizedString
         mapItem.openInMapsWithLaunchOptions(options)
         
     }
     
     private func callNumber(phoneNumber:String) {
-        if let phoneCallURL:NSURL = NSURL(string:"tel://\(phoneNumber)") {
+        if let phoneCallURL:NSURL = NSURL(string:"\(phoneNumber)") {
             let application:UIApplication = UIApplication.sharedApplication()
             if (application.canOpenURL(phoneCallURL)) {
                 application.openURL(phoneCallURL)
             }
         }
+    }
+
+    
+    func string2Image(string: String) -> UIImage {
+        let data = NSData(base64EncodedString: string, options: .IgnoreUnknownCharacters)
+        return UIImage(data: data!)!
+    }
+    
+    
+    func errorAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+        let action1 = UIAlertAction(title: "Cancel", style: .Default, handler: { (action: UIAlertAction!) in
+        })
+        let action2 = UIAlertAction(title: "Call", style: .Default, handler: { (action: UIAlertAction!) in
+            self.callNumber(self.truck.phone!)
+        })
+        alert.addAction(action1)
+        alert.addAction(action2)
+        presentViewController(alert, animated: true, completion: nil)
     }
     
 }

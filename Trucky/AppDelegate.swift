@@ -9,13 +9,12 @@
 import UIKit
 import CoreData
 import Firebase
+import FirebaseAuth
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    let userDefaults = NSUserDefaults.standardUserDefaults()
-
 
     override init() {
         FIRApp.configure()
@@ -24,11 +23,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        userDefaults.setValue(nil, forKey: "uid")
-
-
-        UIApplication.sharedApplication().setMinimumBackgroundFetchInterval(
-            UIApplicationBackgroundFetchIntervalMinimum)
+        UIApplication.sharedApplication().setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalMinimum)
+        
+        let firebaseController = FirebaseController.sharedConnection
+        
+        FIRAuth.auth()?.addAuthStateDidChangeListener({ (auth, user) in
+            if let user = user {
+                
+                firebaseController.loggedInTruck(user.uid)
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                let initialVC = storyboard.instantiateViewControllerWithIdentifier("truckVC")
+                
+                let navigationController = UINavigationController(rootViewController: initialVC)
+                
+                self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
+                self.window!.rootViewController = navigationController
+                self.window!.makeKeyAndVisible()
+                
+                
+//                self.navigationController?.pushViewController(initialVC, animated: false)
+                
+//                self.window?.rootViewController = initialVC
+//                self.window?.makeKeyAndVisible()
+            }
+        })
+        
         
         
         return true
