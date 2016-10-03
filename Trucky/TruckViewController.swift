@@ -249,7 +249,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
             let inMiles = distance * 0.000621371192
             cell.distanceLabel.text = (String(format: "%.2fm Away", inMiles))
         
-            
+
         }
         
 //        dispatch_async(dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0)) {
