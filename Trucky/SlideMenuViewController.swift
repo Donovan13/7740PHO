@@ -11,7 +11,7 @@ import CoreLocation
 import Firebase
 import FirebaseAuth
 
-class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, LogInUserDelegate, ShareTruckDelegate {
+class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, LogInUserDelegate, ShareTruckDelegate, LogOutUserDelegate {
     
     @IBOutlet weak var logoImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
@@ -38,13 +38,14 @@ class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableVie
         self.navigationController?.navigationBar.translucent = true
         
     }
-
+    
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
         firebaseController.logInUserDelegate = self
         firebaseController.sharetruckDelegate = self
+        firebaseController.logOutUserDelegate = self
         
         logInTruckDelegate()
         
@@ -97,6 +98,42 @@ class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     
+    func logOutUserDelegate() {
+        userDefaults.setValue(nil, forKey: "Truck")
+        userDefaults.setValue(nil, forKey: "Customer")
+        
+        
+        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+        let nav = storyboard.instantiateViewControllerWithIdentifier("initialVC")
+//        self.navigationController?.popToViewController(nav, animated: true)
+        
+        self.view.window?.rootViewController = nav
+        
+        
+        
+        
+        
+//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//        let vice = storyboard.instantiateViewControllerWithIdentifier("initialVC")
+//        let vc = storyboard.instantiateViewControllerWithIdentifier("initialVC")
+//        let navigationController = UINavigationController(rootViewController: vc)
+//        self.navigationController?.popToRootViewControllerAnimated(false)
+        
+        
+        
+//        self.navigationController?.popToRootViewControllerAnimated(true)
+        
+        
+//        self.navigationController?.popToViewController(vice, animated: true)
+        
+//        self.view.window!.rootViewController?.dismissViewControllerAnimated(false, completion: nil)
+
+//        self.navigationController?.pushViewController(navigationController, animated: false)
+        
+//        self.presentViewController(vc, animated: true, completion: nil)
+        //        performSegueWithIdentifier("menuToLoginSegue", sender: self)
+        //                    dismissViewControllerAnimated(true, completion: nil)
+    }
     
     
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
@@ -127,27 +164,8 @@ class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableVie
         
         if indexPath.row == 0 {
             performSegueWithIdentifier("menuToEditSegue", sender: self)
-            
-        }
-            
-        else if indexPath.row == 1 {
-            
-            if FIRAuth.auth()?.currentUser != nil {
-                do {
-                    try FIRAuth.auth()?.signOut()
-                    userDefaults.setValue(nil, forKey: "Truck")
-                    userDefaults.setValue(nil, forKey: "Customer")
-                    
-//                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//                    let vc = storyboard.instantiateViewControllerWithIdentifier("initialVC")
-//                    self.presentViewController(vc, animated: true, completion: nil)
-                    performSegueWithIdentifier("menuToLoginSegue", sender: self)
-//                    dismissViewControllerAnimated(true, completion: nil)
-                    
-                } catch let error as NSError {
-                    print(error.localizedDescription)
-                }
-            }
+        } else if indexPath.row == 1 {
+            firebaseController.logOutUser()
         }
         
     }
@@ -205,7 +223,7 @@ class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableVie
     //                    self.locationSwitch.on = false
     //                }
     //            })
-    //            
+    //
     //        }
     //        else {
     //            print("No users logged in")

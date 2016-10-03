@@ -27,6 +27,10 @@ protocol LogInUserDelegate {
     func loginCustomerDelegate()
 }
 
+protocol LogOutUserDelegate {
+    func logOutUserDelegate()
+}
+
 protocol ViewUserDelegate {
     func viewUserLoaded()
 }
@@ -57,6 +61,7 @@ class FirebaseController {
     var viewUserDelegate: ViewUserDelegate?
     var reloadTrucksDelegate: ReloadTrucksDelegate?
     var sharetruckDelegate: ShareTruckDelegate?
+    var logOutUserDelegate: LogOutUserDelegate?
     
 
     private var trucks = [Truck]()
@@ -118,6 +123,22 @@ class FirebaseController {
     
     func getLoggedInTruck() -> Truck {
         return self.truck!
+    }
+    
+    func logOutUser() {
+        let currentUser = FIRAuth.auth()?.currentUser
+        
+        if currentUser != nil {
+            do {
+                try FIRAuth.auth()?.signOut()
+                let uid = currentUser?.uid
+                logOutUserDelegate?.logOutUserDelegate()
+                truckRef.child("Active").child(uid!).removeValue()
+                
+            } catch let error as NSError {
+                print(error.localizedDescription)
+            }
+        }
     }
     
     func getTruckForUID(uid: String) -> Truck? {
