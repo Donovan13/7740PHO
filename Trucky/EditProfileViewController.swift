@@ -52,14 +52,14 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     }
     
     @IBAction func saveButton(sender: AnyObject) {
-        
-        let userUID = userDefaults.stringForKey("uid")
-        let profileImg = imageConversion(self.profileImageView.image!)
-        let menuImg = imageConversion(self.menuImageView.image!)
-        let logoImg = imageConversion(self.logoImageView.image!)
-        let truckWebsite = websiteTextField.text
-        
-        
+//        
+//        let userUID = userDefaults.stringForKey("uid")
+//        let profileImg = imageConversion(self.profileImageView.image!)
+//        let menuImg = imageConversion(self.menuImageView.image!)
+//        let logoImg = imageConversion(self.logoImageView.image!)
+//        let truckWebsite = websiteTextField.text
+//        
+//        
 //        self.userDefaults.setValue(profileImg, forKey: "profileImage")
 //        self.userDefaults.setValue(menuImg, forKey: "menuImage")
 //        self.userDefaults.setValue(truckWebsite, forKey: "website")

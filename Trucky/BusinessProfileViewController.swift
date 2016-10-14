@@ -150,7 +150,7 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
         if let phoneCallURL:NSURL = NSURL(string:"\(phoneNumber)") {
             let application:UIApplication = UIApplication.sharedApplication()
             if (application.canOpenURL(phoneCallURL)) {
-                application.openURL(phoneCallURL)
+//                application.openURL(phoneCallURL)
             }
         }
     }

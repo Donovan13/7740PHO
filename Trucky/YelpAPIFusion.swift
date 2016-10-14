@@ -29,7 +29,6 @@ class YelpAPIFusion {
     
     func searchWithPhone(phoneNumber: String, completion: ([Business]!, [Reviews]!, error: NSError!) -> Void) {
         let parameters = ["phone": phoneNumber]
-        var jsonData: JSON?
         let accessTokenUrl = "https://api.yelp.com/oauth2/token"
         let yelpParameters = [
             "grant_type" : "client_credentials",

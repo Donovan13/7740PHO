@@ -11,7 +11,6 @@ import Foundation
 import CoreImage
 import Firebase
 import Alamofire
-import SwiftyJSON
 
 class CreateCustomerViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UserCreationDelegate, AuthenticationDelegate {
     
@@ -32,10 +31,6 @@ class CreateCustomerViewController: UIViewController, UIImagePickerControllerDel
         super.viewDidLoad()
         self.firebaseController.userCreationDelegate = self
         self.firebaseController.authenticationDelegate = self
-        
-        let sharedInstace = YelpAPIFusion.sharedInstance
-        print(sharedInstace)
-        
     }
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
@@ -49,74 +44,24 @@ class CreateCustomerViewController: UIViewController, UIImagePickerControllerDel
     
     @IBAction func createCustomer(sender: AnyObject) {
         
-//        let imageString = image2String(profileImageView.image!)
-//        let email = emailTextField.text
-//        let password = passwordTextField.text
-//        
-//        let dictionary = [
-//            "uid": "",
-//            "email": email,
-//            "customerName": nameTextField.text,
-//            "city": cityTextField.text,
-//            "profileImage": imageString]
-//        
-//        firebaseController.createCustomer(email,
-//                                          password: password,
-//                                          dictionary: dictionary as! Dictionary<String, String>)
-//        
+        let imageString = image2String(profileImageView.image!)
+        let email = emailTextField.text
+        let password = passwordTextField.text
+        
+        let dictionary = [
+            "uid": "",
+            "email": email,
+            "customerName": nameTextField.text,
+            "city": cityTextField.text,
+            "profileImage": imageString]
+        
+        firebaseController.createCustomer(email,
+                                          password: password,
+                                          dictionary: dictionary as! Dictionary<String, String>)
         
         
-        let accessTokenUrl = "https://api.yelp.com/oauth2/token"
-        let yelpParameters = [
-            "grant_type" : "client_credentials",
-            "client_id": "bDmceefKP77HVqMmDkreWA",
-            "client_secret": "fHyROuLUncM4GvpoIEI2Z4mKEVEtErvBF83wpivqA1zCAgJxcVWWQfpGpU78kGHy"]
-        var receivedToken: String?
         
-        Alamofire.request(.POST, accessTokenUrl, parameters: yelpParameters, encoding: .URL, headers: nil).responseJSON { (response) in
-            switch response.result {
-            case .Success(let value):
-                let json = JSON(value)
-                let token = json["access_token"].string!
-//                receivedToken = token
                 
-                let header = ["Authorization" : "Bearer \(token)"]
-                
-                Alamofire.request(.GET, "https://api.yelp.com/v3/businesses/search/phone", parameters: ["phone": "+14157492060"], encoding: .URL, headers: header).responseJSON { (responseJSON) in
-                    switch responseJSON.result {
-                    case .Success(let value):
-                        let json = JSON(value)
-                        
-                        
-                            let id = json["businesses"][0]["id"].string
-                            print(id)
-
-                    
-                        
-                    case .Failure(let error):
-                        print(error)
-                    }
-                }
-                Alamofire.request(.GET, "https://api.yelp.com/v3/businesses/olympia-meats-chicago/reviews", parameters: nil, encoding: .URL, headers: header).responseJSON { (responseJSON) in
-                    switch responseJSON.result {
-                    case .Success(let value):
-                        let json = JSON(value)
-//                        print(json)
-                        
-                        
-                    case .Failure(let error):
-                        print(error)
-                    }
-                }
-                
-            case .Failure(let error):
-                print(error)
-            }
-        }
-        
-
-        
-        
     }
     
     private func imageURLtoString(imageURL: NSURL) -> String {

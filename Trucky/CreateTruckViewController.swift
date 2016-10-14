@@ -70,39 +70,54 @@ class CreateTruckViewController: UIViewController, UserCreationDelegate, Authent
     
     
     @IBAction func createTruck(sender: AnyObject) {
-        //
-        let longitude = self.userDefaults.valueForKey("longitude")
-        let latitude = self.userDefaults.valueForKey("latitude")
-        let imageURL = imageURLtoString((searchedBusiness?.imageURL)!)
-        
-        //        let imageURL = imageURLtoString(searchedBusiness!.imageURL!)
+//        let longitude = self.userDefaults.valueForKey("longitude")
+//        let latitude = self.userDefaults.valueForKey("latitude")
         let email = emailTextField.text
         let password = passwordTextField.text
-        
-        let dictionary = [
+        let imageURL = imageURLtoString(searchedBusiness!.imageURL!)
+
+        let dictionary: [String : AnyObject] = [
             "uid": "",
-            "id": searchedBusiness?.id,
-            "truckName": self.searchedBusiness!.name,
+            "id": searchedBusiness!.id,
+            "truckName": self.searchedBusiness!.name!,
             "imageURL": imageURL,
-            "yelpURL": searchedBusiness?.yelpURL,
-            "phone": searchedBusiness!.phone,
-            "rating": searchedBusiness?.rating,
-            "reviewCount": searchedBusiness!.reviewCount,
-            "categories": searchedBusiness!.categories,
-            "cityAndState": searchedBusiness?.cityAndState,
-            "email": email,
-            "latitude": "",
-            "longitude": "",
-            
-            
-            "Reviews": searchedReviews]
-        
+            "yelpURL": searchedBusiness!.yelpURL!,
+            "phone": searchedBusiness!.phone!,
+            "rating": searchedBusiness!.rating!,
+            "reviewCount": searchedBusiness!.reviewCount!,
+            "categories": searchedBusiness!.categories!,
+            "cityAndState": searchedBusiness!.cityAndState!,
+            "email": email!,
+            "latitude": 0,
+            "longitude": 0,
+            "photos" : getPhotos(),
+            "reviews": getReview()
+        ]
         
         firebaseController.createTruck(email,
                                        password: password,
-                                       dictionary: dictionary as! Dictionary<String, AnyObject>)
-        
-        
+                                       dictionary: dictionary)
+    }
+    
+    private func getReview() -> [String: AnyObject] {
+        var reviewDic = [String: AnyObject]()
+        for (index, review) in searchedReviews!.enumerate() {
+            reviewDic["\(index)"] = ["text": review.text!,
+                                     "url": review.url!,
+                                     "rating": review.rating!,
+                                     "timeCreated": review.timeCreated!,
+                                     "username": review.username!]
+        }
+        return reviewDic
+    }
+    
+    private func getPhotos() -> [String] {
+        var photos = [String]()
+        for photo in searchedBusiness!.photos! {
+            let photoString = imageURLtoString(photo)
+            photos.append(photoString)
+        }
+        return photos
     }
     
     private func imageURLtoString(imageURL: String) -> String {
