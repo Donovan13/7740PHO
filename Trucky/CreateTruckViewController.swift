@@ -23,6 +23,7 @@ class CreateTruckViewController: UIViewController, UserCreationDelegate, Authent
     
     
     var searchedBusiness:Business?
+    var searchedReviews:[Reviews]?
     let userDefaults = NSUserDefaults.standardUserDefaults()
     let firebaseController = FirebaseController.sharedConnection
     
@@ -34,48 +35,69 @@ class CreateTruckViewController: UIViewController, UserCreationDelegate, Authent
         
     }
     
-    
-    @IBAction func matchTruck(sender: AnyObject) {
+    @IBAction func searchTruck(sender: AnyObject) {
         let phoneNumber = businessNameTextField.text
         
-        Business.searchWithNumber(phoneNumber!, completion: { (businesses: [Business]!, error: NSError!) -> Void in
+        Business.searchWithNumber(phoneNumber!, completion: { (businesses: [Business]!, reviews: [Reviews]!, error: NSError!) -> Void in
             if error == nil {
-                print("found")
-                self.searchedBusiness = businesses.first
+                
+                if businesses != nil {
+                    self.searchedBusiness = businesses.first
+                    print("found business")
+                }
+                
+                if reviews != nil {
+                    self.searchedReviews = reviews
+                    print("found reviews")
+                }
+                
+                
+                
+                
+                
+                
+                
             } else {
                 
                 self.errorAlert("error", message: error.localizedDescription)
+                
             }
+            
         })
+        
         
     }
     
     
-    
-    
-    
     @IBAction func createTruck(sender: AnyObject) {
-    
+        //
         let longitude = self.userDefaults.valueForKey("longitude")
         let latitude = self.userDefaults.valueForKey("latitude")
-        let imageURL = imageURLtoString(searchedBusiness!.imageURL!)
-        let ratingImageURL = imageURLtoString(searchedBusiness!.ratingImageURL!)
+        let imageURL = imageURLtoString((searchedBusiness?.imageURL)!)
+        
+        //        let imageURL = imageURLtoString(searchedBusiness!.imageURL!)
         let email = emailTextField.text
         let password = passwordTextField.text
         
         let dictionary = [
             "uid": "",
-            "email": email,
+            "id": searchedBusiness?.id,
             "truckName": self.searchedBusiness!.name,
             "imageURL": imageURL,
-            "ratingImageURL": ratingImageURL,
-            "reviewCount": self.searchedBusiness!.reviewCount,
-            "phone": self.searchedBusiness!.phone,
-            "categories": self.searchedBusiness!.categories,
-            "latitude": latitude,
-            "longitude": longitude]
+            "yelpURL": searchedBusiness?.yelpURL,
+            "phone": searchedBusiness!.phone,
+            "rating": searchedBusiness?.rating,
+            "reviewCount": searchedBusiness!.reviewCount,
+            "categories": searchedBusiness!.categories,
+            "cityAndState": searchedBusiness?.cityAndState,
+            "email": email,
+            "latitude": "",
+            "longitude": "",
+            
+            
+            "Reviews": searchedReviews]
         
-
+        
         firebaseController.createTruck(email,
                                        password: password,
                                        dictionary: dictionary as! Dictionary<String, AnyObject>)
@@ -83,8 +105,8 @@ class CreateTruckViewController: UIViewController, UserCreationDelegate, Authent
         
     }
     
-    private func imageURLtoString(imageURL: NSURL) -> String {
-        let url = NSURL(string: "\(imageURL)")
+    private func imageURLtoString(imageURL: String) -> String {
+        let url = NSURL(string: imageURL)
         let data = NSData(contentsOfURL: url!)
         let image = UIImage(data: data!)
         let imageData = UIImageJPEGRepresentation(image!, 0.15)

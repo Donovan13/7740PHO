@@ -10,6 +10,7 @@ import Foundation
 import Firebase
 import FirebaseAuth
 import UIKit
+import SwiftyJSON
 
 
 protocol UserCreationDelegate {
@@ -116,7 +117,6 @@ class FirebaseController {
         return self.customer!
     }
 
-    
     func getActiveTrucks() -> [Truck] {
         return self.trucks
     }
@@ -192,18 +192,7 @@ class FirebaseController {
             if error == nil {
                 self.authenticationDelegate?.userAuthenticationSuccess()
                 let uid = user?.uid
-<<<<<<< HEAD
-                
-                self.truckRef.child("Members").child(uid!).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
-                    self.truck = Truck(snapshot: snapshot)
-                    self.logInUserDelegate?.logInUserDelegate()
-                    self.userdefaults.setValue(uid, forKey: "uid")
-
-                    
-                })
-=======
                 self.loggedInTruck(uid!)
->>>>>>> menu
             } else {
                 self.authenticationDelegate?.userAuthenticationFail(error!)
             }

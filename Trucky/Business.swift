@@ -7,99 +7,119 @@
 //
 
 import UIKit
+import SwiftyJSON
 
 class Business: NSObject {
-    let id: String?
-    let name: String?
-    var imageURL: NSURL?
-    var mobileURL: NSURL?
-    let phone: String?
-    var reviewCount: NSNumber?
-    let categories: String?
-    var ratingImageURL: NSURL?
-    let menu_provider: String?
+    var id: String!
+    var name: String?
+    var imageURL: String?
+    var yelpURL: String?
+    var phone: String?
+    let rating: Double?
+    var reviewCount: Int?
+    let photos: [String]?
+    let hours: [JSON]?
+    var categories: String?
+    let cityAndState: String?
     
-    
-    init(dictionary: Dictionary<String, AnyObject>) {
-        id = dictionary["id"] as? String
-        name = dictionary["name"] as? String
+    init(jsonData: JSON) {
+        id = jsonData["id"].string
+        name = jsonData["name"].string
+        imageURL = jsonData["image_url"].string
+        yelpURL = jsonData["url"].string
+        phone = jsonData["phone"].string
+        rating = jsonData["rating"].double
+        reviewCount = jsonData["review_count"].int
+        hours = jsonData["hours"].array
         
-        imageURL = dictionary["image_url"] as? NSURL
-        let imageURLString = dictionary["image_url"] as? String
-        if imageURLString != nil {
-            imageURL = NSURL(string: imageURLString!)!
+        let photosArray = jsonData["photos"]
+        if photosArray != nil {
+            var i = 0
+            var photoURLs = [String]()
+            while i < photosArray.count {
+                let photoURL = photosArray[i].rawString()
+                print(photoURL)
+                photoURLs.append(photoURL!)
+                i = i + 1
+            }
+            photos = photoURLs
         } else {
-            imageURL = nil
+            photos = [""]
         }
         
-        mobileURL = dictionary["mobile_url"] as? NSURL
-        let mobileURLString = dictionary["mobile_url"] as? String
-        if mobileURLString != nil {
-            mobileURL = NSURL(string: mobileURLString!)!
-        } else {
-            mobileURL = nil
-        }
-        
-        phone = dictionary["display_phone"] as? String
-        reviewCount = dictionary["review_count"] as? NSNumber
-        
-        
-        let categoriesArray = dictionary["categories"] as? [[String]]
+        let categoriesArray = jsonData["categories"]
         if categoriesArray != nil {
+            var i = 0
             var categoryNames = [String]()
-            for category in categoriesArray! {
-                let categoryName = category[0]
-                categoryNames.append(categoryName)
+            while i < categoriesArray.count {
+                let categoryName = categoriesArray[i]["title"].rawString()
+                categoryNames.append(categoryName!)
+                i = i + 1
             }
             categories = categoryNames.joinWithSeparator(", ")
+            print(categories!)
         } else {
-            categories = nil
+            categories = ""
         }
         
-        ratingImageURL = dictionary["rating_img_url"] as? NSURL
-        let ratingImageURLString = dictionary["rating_img_url_small"] as? String
-        if ratingImageURLString != nil {
-            ratingImageURL = NSURL(string: ratingImageURLString!)
-        } else {
-            ratingImageURL = nil
-        }
-        
-        menu_provider = dictionary["menu_provider"] as? String
-        
-        
-        
-        
-        
-        
-        
-        
+        let city = jsonData["location"]["city"].rawString()
+        let state = jsonData["location"]["state"].rawString()
+        cityAndState = "\(city!), \(state!)"
     }
     
-    
-    class func businesses(dictionary dictionary: Dictionary<String,AnyObject>) -> [Business] {
+    class func idBusinesses(array: JSON) -> [Business] {
         var businesses = [Business]()
-        let business = Business(dictionary: dictionary)
+        let business = Business(jsonData: array)
         businesses.append(business)
         
         return businesses
     }
     
-    class func idBusinesses(array array: [NSDictionary]) -> [Business] {
-        var businesses = [Business]()
-        for dictionary in array {
-            let business = Business(dictionary: dictionary as! Dictionary<String, AnyObject>)
-            businesses.append(business)
+    class func reviewBusinesses(array: JSON) -> [Reviews] {
+        var reviews = [Reviews]()
+        var i = 0
+        while i <= array.count {
+            let review = Reviews(reviewJSON: array["reviews"][i])
+            reviews.append(review)
+            i = i + 1
         }
-        return businesses
+        
+        
+        
+        
+        
+        return reviews
     }
     
     
-    class func searchWithNumber(phoneNumber: String, completion: ([Business]!, NSError!) -> Void) {
-        YelpAPI.sharedInstance.searchWithNumber(phoneNumber, completion: completion)
+    class func searchWithNumber(phoneNumber: String, completion: ([Business]!, [Reviews]!, NSError!) -> Void) {
+        YelpAPIFusion.sharedInstance.searchWithPhone(phoneNumber, completion: completion)
     }
     
-    class func searchWithID(businessID: String, completion: ([Business]!, NSError!) -> Void) {
-        YelpAPI.sharedInstance.searchWithID(businessID, completion: completion)
+}
+
+
+class Reviews: NSObject {
+    var text: String?
+    var url: String?
+    var rating: Int?
+    var timeCreated: String?
+    var username: String?
+    //    var userImage: String?
+    
+    init(reviewJSON: JSON) {
+        
+        
+        text = reviewJSON["text"].string
+        url = reviewJSON["url"].string
+        rating = reviewJSON["rating"].int
+        timeCreated = reviewJSON["time_created"].string
+        username = reviewJSON["user"]["name"].string
+        
+        
+        
+        
+        
     }
     
 }
