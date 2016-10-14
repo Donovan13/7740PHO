@@ -27,7 +27,6 @@
 		09E73B511D9B256F006D5C27 /* CreateCustomerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E73B501D9B256F006D5C27 /* CreateCustomerViewController.swift */; };
 		09E73B531D9B2584006D5C27 /* EditCustomerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E73B521D9B2584006D5C27 /* EditCustomerViewController.swift */; };
 		09E73B551D9B25AB006D5C27 /* InitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E73B541D9B25AB006D5C27 /* InitialViewController.swift */; };
-		09F8CA651DB19CD3003C8319 /* GlobalTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F8CA641DB19CD3003C8319 /* GlobalTimer.swift */; };
 		09FF68911D3EC18800EF4551 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FF68901D3EC18800EF4551 /* AppDelegate.swift */; };
 		09FF68931D3EC18800EF4551 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FF68921D3EC18800EF4551 /* LoginViewController.swift */; };
 		09FF68961D3EC18800EF4551 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 09FF68941D3EC18800EF4551 /* Main.storyboard */; };
@@ -82,7 +81,6 @@
 		09E73B501D9B256F006D5C27 /* CreateCustomerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateCustomerViewController.swift; sourceTree = "<group>"; };
 		09E73B521D9B2584006D5C27 /* EditCustomerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditCustomerViewController.swift; sourceTree = "<group>"; };
 		09E73B541D9B25AB006D5C27 /* InitialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialViewController.swift; sourceTree = "<group>"; };
-		09F8CA641DB19CD3003C8319 /* GlobalTimer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalTimer.swift; sourceTree = "<group>"; };
 		09FF688D1D3EC18800EF4551 /* Trucky.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Trucky.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		09FF68901D3EC18800EF4551 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		09FF68921D3EC18800EF4551 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -236,7 +234,6 @@
 		7B735DE41D95BC470029D13E /* Custom Objects */ = {
 			isa = PBXGroup;
 			children = (
-				09F8CA641DB19CD3003C8319 /* GlobalTimer.swift */,
 				096F21991D4BB29500B42813 /* Business.swift */,
 				09ADB7041D67BE3900890CDB /* Truck.swift */,
 				093DFCC81D9B41FE0052AC9E /* Customer.swift */,
@@ -523,7 +520,6 @@
 				09FF68931D3EC18800EF4551 /* LoginViewController.swift in Sources */,
 				09ADB7071D67C1E100890CDB /* CustomAnnotation.swift in Sources */,
 				090AE2BF1D6F9CDE000BAFBD /* EditProfileViewController.swift in Sources */,
-				09F8CA651DB19CD3003C8319 /* GlobalTimer.swift in Sources */,
 				09E73B551D9B25AB006D5C27 /* InitialViewController.swift in Sources */,
 				7B67BAE81D80C3AB00B0DF03 /* YelpAPI.swift in Sources */,
 				09FF68911D3EC18800EF4551 /* AppDelegate.swift in Sources */,
