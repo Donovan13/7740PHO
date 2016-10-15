@@ -92,11 +92,6 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     }
 
     
-    override func didReceiveMemoryWarning() {
-        _getMemoryUsedPer1()
-    }
-    
-    
     func _getMemoryUsedPer1() -> Float {
         let MACH_TASK_BASIC_INFO_COUNT = (sizeof(mach_task_basic_info_data_t) / sizeof(natural_t))
         let name = mach_task_self_
@@ -236,13 +231,13 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         
         
         cell.businessLabel?.text = post.truckName?.capitalizedString
-        cell.addressLabel?.text = post.address
-        cell.reviewLabel?.text = "\(post.reviewCount!) reviews on Yelp"
-        cell.categoryLabel?.text = post.categories
-        cell.reviewImage?.image = string2Image(post.ratingImageURL!)
-        cell.addressLabel?.text = post.address
-        cell.businessImage?.image = string2Image(post.imageURL!)
-        
+//        cell.addressLabel?.text = post.address
+//        cell.reviewLabel?.text = "\(post.reviewCount!) reviews on Yelp"
+//        cell.categoryLabel?.text = post.categories
+//        cell.reviewImage?.image = string2Image(post.ratingImageURL!)
+//        cell.addressLabel?.text = post.address
+//        cell.businessImage?.image = string2Image(post.imageURL!)
+//        
         if userlocation != nil {
             let location = CLLocation(latitude: post.latitude!, longitude: post.longitude!)
             let distance = location.distanceFromLocation(userlocation!)

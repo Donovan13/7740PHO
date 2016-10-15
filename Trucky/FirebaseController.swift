@@ -132,9 +132,9 @@ class FirebaseController {
             do {
                 try FIRAuth.auth()?.signOut()
                 let uid = currentUser?.uid
-                logOutUserDelegate?.logOutUserDelegate()
                 truckRef.child("Active").child(uid!).removeValue()
-                
+                logOutUserDelegate?.logOutUserDelegate()
+
             } catch let error as NSError {
                 print(error.localizedDescription)
             }

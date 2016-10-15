@@ -78,9 +78,9 @@ class CreateTruckViewController: UIViewController, UserCreationDelegate, Authent
 
         let dictionary: [String : AnyObject] = [
             "uid": "",
-            "id": searchedBusiness!.id,
+            "yelpID": searchedBusiness!.id,
             "truckName": self.searchedBusiness!.name!,
-            "imageURL": imageURL,
+            "imageString": imageURL,
             "yelpURL": searchedBusiness!.yelpURL!,
             "phone": searchedBusiness!.phone!,
             "rating": searchedBusiness!.rating!,

@@ -152,11 +152,13 @@ class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableVie
     @IBAction func locationSwitcherTapped(sender: AnyObject) {
         if locationSwitcher.on == true {
             self.errorAlert(self.locationSwitcher)
+            firebaseController.shareTruckLocation(true)
         } else {
             timeLabel.text = ""
             timer.invalidate()
             self.deactivateTruckDelegate()
             userDefaults.setBool(false, forKey: "locShare")
+            firebaseController.shareTruckLocation(true)
 
 
         }

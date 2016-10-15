@@ -9,27 +9,30 @@
 import UIKit
 import Firebase
 
+
 func ==(lhs:Truck, rhs:Truck) -> Bool {
     return lhs.uid == rhs.uid
 }
 
 
 struct Truck: Equatable {
-    var email: String?
-    let truckName: String?
-    var address: String?
-    var imageURL: String?
-    var ratingImageURL: String?
-    var reviewCount: NSNumber?
-    let uid: String?
-    let phone: String?
-    let profileImage: String?
+    let categories: String?
+    let cityAndState: String?
+    let email: String?
+    let id: String?
+    let imageString: String?
     let latitude: Double?
     let longitude: Double?
-    let activeLocation: String?
-    let website: String?
-    let iconImage: String?
-    let categories: String?
+    let phone: String?
+    let photos: Dictionary<String, AnyObject>?
+    let rating: Double?
+    let reviewCount: Int?
+    let reviews: Dictionary<String, AnyObject>?
+    let truckName: String?
+    let uid: String?
+    let yelpURL: String?
+
+    
     
     static func image2String(image: UIImage) -> String {
         let imageData = UIImageJPEGRepresentation(image, 1);
@@ -43,39 +46,42 @@ struct Truck: Equatable {
     }
     
     init(truck: Truck) {
-        self.email = truck.email
-        self.truckName = truck.truckName
-        self.address = truck.address
-        self.imageURL = truck.imageURL
-        self.ratingImageURL = truck.ratingImageURL
-        self.reviewCount = truck.reviewCount
-        self.uid = truck.uid
-        self.phone = truck.phone
-        self.profileImage = truck.phone
-        self.latitude = truck.latitude
-        self.longitude = truck.longitude
-        self.activeLocation = truck.activeLocation
-        self.website = truck.website
-        self.iconImage = truck.iconImage
-        self.categories = truck.categories
+        categories = truck.categories
+        cityAndState = truck.cityAndState
+        email = truck.email
+        id = truck.id
+        imageString = truck.imageString
+        latitude = truck.latitude
+        longitude = truck.longitude
+        phone = truck.phone
+        photos = truck.photos
+        rating = truck.rating
+        reviewCount = truck.reviewCount
+        reviews = truck.reviews
+        truckName = truck.truckName
+        uid = truck.uid
+        yelpURL = truck.yelpURL
     }
     
     init(snapshot: FIRDataSnapshot) {
-        email = snapshot.value!["email"] as? String
-        truckName = snapshot.value!["truckName"] as? String
-        address = snapshot.value!["address"] as? String
-        imageURL = snapshot.value!["imageURL"] as? String
-        ratingImageURL = snapshot.value!["ratingImageURL"] as? String
-        reviewCount = snapshot.value!["reviewCount"] as? NSNumber
-        uid = snapshot.value!["uid"] as? String
-        phone = snapshot.value!["phone"] as? String
-        profileImage = snapshot.value!["profileImage"] as? String
-        latitude = snapshot.value!["latitude"] as? Double
-        longitude = snapshot.value!["longitude"] as? Double
-        activeLocation = snapshot.value!["activeLocation"] as? String
-        website = snapshot.value!["website"] as? String
-        iconImage = snapshot.value!["iconImage"] as? String
-        categories = snapshot.value!["categories"] as? String
+        categories = snapshot.value!["categories"] as! String
+        cityAndState = snapshot.value!["cityAndState"] as! String
+        email = snapshot.value!["email"] as! String
+        id = snapshot.value!["id"] as! String
+        imageString = snapshot.value!["imageString"] as! String
+        latitude = snapshot.value!["latitude"] as! Double
+        longitude = snapshot.value!["longitude"] as! Double
+        phone = snapshot.value!["phone"] as! String
+        photos = snapshot.value!["photos"] as! Dictionary<String, AnyObject>
+        rating = snapshot.value!["rating"] as! Double
+        reviewCount = snapshot.value!["reviewCount"] as! Int
+        reviews = snapshot.value!["reviews"] as! Dictionary<String, AnyObject>
+        truckName = snapshot.value!["truckName"] as! String
+        uid = snapshot.value!["uid"] as! String
+        yelpURL = snapshot.value!["yelpURL"] as! String
+        
+    
+        
     }
     
     func toAnyObject() -> AnyObject {
@@ -83,14 +89,14 @@ struct Truck: Equatable {
 //            "email": email!,
             "truckName": truckName!,
 //            "address": address!,
-            "imageURL": imageURL!,
-            "ratingImageURL": ratingImageURL!,
+//            "imageURL": imageURL!,
+//            "ratingImageURL": ratingImageURL!,
             "reviewCount": reviewCount!,
             "uid": uid!,
             "phone": phone!,
 //            "profileImage" :profileImage!,
-            "latitude": latitude!,
-            "longitude": longitude!,
+//            "latitude": latitude!,
+//            "longitude": longitude!,
 //            "activeLocation": activeLocation!,
 //            "website": website!,
 //            "iconImage": iconImage!,
