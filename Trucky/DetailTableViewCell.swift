@@ -14,5 +14,6 @@ class DetailTableViewCell: UITableViewCell {
     @IBOutlet weak var ratingsImageView: UIImageView!
     @IBOutlet weak var distanceLabel: UILabel!
     @IBOutlet weak var reviewsLabel: UILabel!
+    @IBOutlet weak var yelpButton: UIButton!
 
 }

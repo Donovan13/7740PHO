@@ -18,6 +18,8 @@ class BusinessTableViewCell: UITableViewCell {
     @IBOutlet weak var addressLabel: UILabel!
     @IBOutlet weak var categoryLabel: UILabel!
     @IBOutlet weak var distanceLabel: UILabel!
+    @IBOutlet weak var detailsButton: UIButton!
+    @IBOutlet weak var yelpButton: UIButton!
 
 
 }

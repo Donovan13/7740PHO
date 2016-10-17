@@ -45,6 +45,7 @@ class YelpAPIFusion {
                     
                     Alamofire.request(.GET, "https://api.yelp.com/v3/businesses/search/phone", parameters: parameters, encoding: .URL, headers: self.accessToken).responseJSON { (response) in
                         if response.result.isSuccess {
+//                            print(json["])
                             let value = response.result.value
                             let json = JSON(value!)
                             let id = json["businesses"][0]["id"].rawString()
