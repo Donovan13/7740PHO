@@ -65,7 +65,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         self.navigationController!.navigationBar.titleTextAttributes = [ NSShadowAttributeName: myShadow, NSFontAttributeName: UIFont(name: "times", size: 25)! ]
         
         
-        self.reloadTrucks()
+//        self.reloadTrucks()
         
         if userDefaults.valueForKey("Truck") != nil {
             loggedInTruck = firebaseController.getLoggedInTruck()
@@ -229,15 +229,15 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         let cell = tableView.dequeueReusableCellWithIdentifier("BusinessTableViewCell") as! BusinessTableViewCell
         let post = trucks[indexPath.row]
         
-        
+        cell.businessImage.image = string2Image(post.imageString!)
         cell.businessLabel?.text = post.truckName?.capitalizedString
-//        cell.addressLabel?.text = post.address
-//        cell.reviewLabel?.text = "\(post.reviewCount!) reviews on Yelp"
-//        cell.categoryLabel?.text = post.categories
 //        cell.reviewImage?.image = string2Image(post.ratingImageURL!)
-//        cell.addressLabel?.text = post.address
-//        cell.businessImage?.image = string2Image(post.imageURL!)
-//        
+        
+        cell.reviewLabel?.text = "\(post.reviewCount!) reviews on Yelp"
+        cell.addressLabel.text = post.cityAndState
+
+        cell.categoryLabel?.text = post.categories
+//
         if userlocation != nil {
             let location = CLLocation(latitude: post.latitude!, longitude: post.longitude!)
             let distance = location.distanceFromLocation(userlocation!)

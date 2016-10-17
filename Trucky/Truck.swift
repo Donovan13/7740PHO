@@ -64,21 +64,21 @@ struct Truck: Equatable {
     }
     
     init(snapshot: FIRDataSnapshot) {
-        categories = snapshot.value!["categories"] as! String
-        cityAndState = snapshot.value!["cityAndState"] as! String
-        email = snapshot.value!["email"] as! String
-        id = snapshot.value!["id"] as! String
-        imageString = snapshot.value!["imageString"] as! String
-        latitude = snapshot.value!["latitude"] as! Double
-        longitude = snapshot.value!["longitude"] as! Double
-        phone = snapshot.value!["phone"] as! String
-        photos = snapshot.value!["photos"] as! Dictionary<String, AnyObject>
-        rating = snapshot.value!["rating"] as! Double
-        reviewCount = snapshot.value!["reviewCount"] as! Int
-        reviews = snapshot.value!["reviews"] as! Dictionary<String, AnyObject>
-        truckName = snapshot.value!["truckName"] as! String
-        uid = snapshot.value!["uid"] as! String
-        yelpURL = snapshot.value!["yelpURL"] as! String
+        categories = snapshot.value!["categories"] as? String
+        cityAndState = snapshot.value!["cityAndState"] as? String
+        email = snapshot.value!["email"] as? String
+        id = snapshot.value!["id"] as? String
+        imageString = snapshot.value!["imageString"] as? String
+        latitude = snapshot.value!["latitude"] as? Double
+        longitude = snapshot.value!["longitude"] as? Double
+        phone = snapshot.value!["phone"] as? String
+        photos = snapshot.value!["photos"] as? Dictionary<String, AnyObject>
+        rating = snapshot.value!["rating"] as? Double
+        reviewCount = snapshot.value!["reviewCount"] as? Int
+        reviews = snapshot.value!["reviews"] as? Dictionary<String, AnyObject>
+        truckName = snapshot.value!["truckName"] as? String
+        uid = snapshot.value!["uid"] as? String
+        yelpURL = snapshot.value!["yelpURL"] as? String
         
     
         

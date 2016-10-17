@@ -76,7 +76,7 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
             let cell = tableView.dequeueReusableCellWithIdentifier("titleSegue") as! DetailTableViewCell
             cell.truckNameLabel?.text = truck.truckName?.capitalizedString
             cell.reviewsLabel?.text = "\(truck.reviewCount!) reviews on Yelp"
-            cell.ratingsImageView.image = string2Image(truck.ratingImageURL!)
+//            cell.ratingsImageView.image = string2Image(truck.ratingImageURL!)
             cell.distanceLabel.text = "\(distanceOfTruck!)"
             
             return cell
@@ -86,11 +86,11 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
             return cell
         } else if indexPath.row == 2 {
             let cell = tableView.dequeueReusableCellWithIdentifier("websiteSegue", forIndexPath: indexPath)
-            cell.detailTextLabel?.text = truck.website
+//            cell.detailTextLabel?.text = truck.website
             return cell
         } else {
             let cell = tableView.dequeueReusableCellWithIdentifier("addressSegue", forIndexPath: indexPath)
-            cell.detailTextLabel?.text = truck.address
+//            cell.detailTextLabel?.text = truck.address
             return cell
         }
         
@@ -120,7 +120,7 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
         if segue.identifier == "detailToWebSegue" {
             
             let detailVC = segue.destinationViewController as! WebViewController
-            detailVC.businessURL = truck.website
+//            detailVC.businessURL = truck.website
         }
     }
     
