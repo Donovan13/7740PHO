@@ -65,7 +65,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         self.navigationController!.navigationBar.titleTextAttributes = [ NSShadowAttributeName: myShadow, NSFontAttributeName: UIFont(name: "times", size: 25)! ]
         
         
-//        self.reloadTrucks()
+        self.reloadTrucks()
         
         if userDefaults.valueForKey("Truck") != nil {
             loggedInTruck = firebaseController.getLoggedInTruck()
@@ -139,8 +139,6 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     //    MARK: MapView Delegate
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
 
-        
-        
         if annotation.isEqual(mapView.userLocation) {
             return nil
         } else if annotation.isEqual(annotation as! CustomAnnotations){
@@ -158,16 +156,16 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
             pin.leftCalloutAccessoryView?.layer.cornerRadius = (pin.leftCalloutAccessoryView?.frame.size.width)! / 2
             pin.leftCalloutAccessoryView?.clipsToBounds = true
 
-            
-            
-            
-            
             return pin
+            
         } else {
+            
             return nil
             
         }
     }
+    
+    anno
     
     
     func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
@@ -302,6 +300,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     @IBAction func reloadButton(sender: AnyObject) {
         dispatch_async(dispatch_get_main_queue()) {
             self.mapView.removeAnnotations(self.mapView.annotations)
+            self.reloadTrucks()
         }
         
     }

@@ -72,7 +72,7 @@ class YelpAPIFusion {
                                     }
                                     
                                     completion(nil, Business.reviewBusinesses(reviewJson), error: nil)
-                                    
+
                                 } else if response.result.isFailure {
                                     print("failed")
                                 }

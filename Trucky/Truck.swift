@@ -19,7 +19,7 @@ struct Truck: Equatable {
     let categories: String?
     let cityAndState: String?
     let email: String?
-    let id: String?
+    let yelpID: String?
     let imageString: String?
     let latitude: Double?
     let longitude: Double?
@@ -49,7 +49,7 @@ struct Truck: Equatable {
         categories = truck.categories
         cityAndState = truck.cityAndState
         email = truck.email
-        id = truck.id
+        yelpID = truck.yelpID
         imageString = truck.imageString
         latitude = truck.latitude
         longitude = truck.longitude
@@ -67,7 +67,7 @@ struct Truck: Equatable {
         categories = snapshot.value!["categories"] as? String
         cityAndState = snapshot.value!["cityAndState"] as? String
         email = snapshot.value!["email"] as? String
-        id = snapshot.value!["id"] as? String
+        yelpID = snapshot.value!["yelpID"] as? String
         imageString = snapshot.value!["imageString"] as? String
         latitude = snapshot.value!["latitude"] as? Double
         longitude = snapshot.value!["longitude"] as? Double
@@ -86,21 +86,19 @@ struct Truck: Equatable {
     
     func toAnyObject() -> AnyObject {
         return [
-//            "email": email!,
-            "truckName": truckName!,
-//            "address": address!,
-//            "imageURL": imageURL!,
-//            "ratingImageURL": ratingImageURL!,
-            "reviewCount": reviewCount!,
-            "uid": uid!,
+            "categories": categories!,
+            "cityAndState": cityAndState!,
+            "email": email!,
+            "yelpID": yelpID!,
+            "imageString": imageString!,
+            "latitude": latitude!,
+            "longitude": longitude!,
             "phone": phone!,
-//            "profileImage" :profileImage!,
-//            "latitude": latitude!,
-//            "longitude": longitude!,
-//            "activeLocation": activeLocation!,
-//            "website": website!,
-//            "iconImage": iconImage!,
-            "categories": categories!
+            "rating": rating!,
+            "reviewCount": reviewCount!,
+            "truckName": truckName!,
+            "uid": uid!,
+            "yelpURL": yelpURL!
         ]
     }
     

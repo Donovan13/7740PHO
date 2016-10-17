@@ -43,7 +43,7 @@ class InitialViewController: UIViewController {
     }
     func loopVideo() {
         player?.seekToTime(kCMTimeZero)
-        player?.play()
+//        player?.play()
     }
     
     override func viewWillAppear(animated: Bool) {
