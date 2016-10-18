@@ -995,7 +995,7 @@
                                     <action selector="showListButton:" destination="Ruc-lo-W4k" eventType="touchUpInside" id="A9V-xE-LF8"/>
                                 </connections>
                             </button>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="BbI-6f-a7f">
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="BbI-6f-a7f">
                                 <frame key="frameInset" width="1000" height="1000"/>
                                 <connections>
                                     <outlet property="delegate" destination="Ruc-lo-W4k" id="MIw-ac-kqK"/>
@@ -1175,11 +1175,11 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="wtb-6Z-VRU">
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="titleSegue" rowHeight="121" id="YUI-zH-pvd" customClass="BusinessProfileTableViewCell" customModule="Trucky" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="375" height="121"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="titleSegue" rowHeight="157" id="YUI-zH-pvd" customClass="BusinessProfileTableViewCell" customModule="Trucky" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="157"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" tableViewCell="YUI-zH-pvd" id="yhS-FC-E50">
-                                            <frame key="frameInset" width="375" height="120"/>
+                                            <frame key="frameInset" width="375" height="156"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="sWS-nF-qXp" userLabel="Rating Image">
@@ -1232,8 +1232,8 @@
                                             <outlet property="yelpButton" destination="AfM-p9-r08" id="j5G-Fg-xfJ"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="phoneSegue" textLabel="fbR-CV-fIX" detailTextLabel="3Uh-Mf-mJZ" style="IBUITableViewCellStyleSubtitle" id="81y-3s-uin">
-                                        <rect key="frame" x="0.0" y="149" width="375" height="44"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="phoneSegue" textLabel="fbR-CV-fIX" detailTextLabel="3Uh-Mf-mJZ" style="IBUITableViewCellStyleSubtitle" id="81y-3s-uin">
+                                        <rect key="frame" x="0.0" y="185" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="81y-3s-uin" id="BWJ-Ut-iv6">
                                             <frame key="frameInset" width="375" height="43"/>
@@ -1256,8 +1256,8 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="websiteSegue" textLabel="aZr-7F-0hV" detailTextLabel="ppi-Dm-iLC" style="IBUITableViewCellStyleSubtitle" id="A9O-nS-vbh">
-                                        <rect key="frame" x="0.0" y="193" width="375" height="44"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="websiteSegue" textLabel="aZr-7F-0hV" detailTextLabel="ppi-Dm-iLC" style="IBUITableViewCellStyleSubtitle" id="A9O-nS-vbh">
+                                        <rect key="frame" x="0.0" y="229" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="A9O-nS-vbh" id="b3V-Pk-JVU">
                                             <frame key="frameInset" width="375" height="43"/>
@@ -1280,8 +1280,8 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="addressSegue" textLabel="PjU-Fy-5E1" detailTextLabel="joF-Ii-Jpx" style="IBUITableViewCellStyleSubtitle" id="GSe-rH-IqR">
-                                        <rect key="frame" x="0.0" y="237" width="375" height="44"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="addressSegue" textLabel="PjU-Fy-5E1" detailTextLabel="joF-Ii-Jpx" style="IBUITableViewCellStyleSubtitle" id="GSe-rH-IqR">
+                                        <rect key="frame" x="0.0" y="273" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="GSe-rH-IqR" id="7TK-QP-igz">
                                             <frame key="frameInset" width="375" height="43"/>
@@ -1327,7 +1327,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qBK-Wd-4ks" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1426.4000000000001" y="1538.6806596701651"/>
+            <point key="canvasLocation" x="1426.0869565217392" y="1538.3152173913045"/>
         </scene>
         <!--Web View Controller-->
         <scene sceneID="f1L-M6-y04">
@@ -1414,7 +1414,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="DuA-GV-jYN" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="e6f-Q7-ZRD">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="e6f-Q7-ZRD">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
