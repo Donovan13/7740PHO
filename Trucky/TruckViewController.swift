@@ -95,7 +95,6 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         let lon = currentLocation.coordinate.longitude
         
         firebaseController.updateTruckLocation(lat, lon: lon)
-        
     }
     
     func updateLocationFailed(error: NSError) {
@@ -113,7 +112,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
             let icon = scaleUIImageToSize(UIImage(named: "login")!, size: CGSizeMake(30,30))
             let iconFrame = UIImageView(image: icon)
             
-            pin.image = scaleUIImageToSize(UIImage(named: "truck")!, size: CGSizeMake(30,30))
+            pin.image = scaleUIImageToSize(UIImage(named: "truck")!, size: CGSizeMake(40,30))
             pin.canShowCallout = true
             pin.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)
             pin.leftCalloutAccessoryView = iconFrame
@@ -204,20 +203,44 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("BusinessTableViewCell") as! DetailTableViewCell
         let post = trucks[indexPath.row]
+
         
         cell.businessImage.image = string2Image(post.imageString!)
         cell.businessLabel?.text = post.truckName?.capitalizedString
-//        cell.reviewImage?.image = string2Image(post.ratingImageURL!)
-        cell.reviewLabel?.text = "\(post.reviewCount!)"
+        cell.reviewLabel?.text = "\(post.reviewCount!) reviews on"
         cell.addressLabel.text = post.cityAndState
         cell.categoryLabel?.text = post.categories
         
+        if post.rating == 0 {
+            cell.reviewImage?.image = UIImage(named: "star0")
+        } else if post.rating == 1 {
+            cell.reviewImage?.image = UIImage(named: "star1")
+        } else if post.rating == 1.5 {
+            cell.reviewImage?.image = UIImage(named: "star1h")
+        } else if post.rating == 2 {
+            cell.reviewImage?.image = UIImage(named: "star2")
+        } else if post.rating == 2.5 {
+            cell.reviewImage?.image = UIImage(named: "star2h")
+        } else if post.rating == 3 {
+            cell.reviewImage?.image = UIImage(named: "star3")
+        } else if post.rating == 3.5 {
+            cell.reviewImage?.image = UIImage(named: "star3h")
+        } else if post.rating == 4 {
+            cell.reviewImage?.image = UIImage(named: "star4")
+        } else if post.rating == 4.5 {
+            cell.reviewImage?.image = UIImage(named: "star4h")
+        } else if post.rating == 5 {
+            cell.reviewImage?.image = UIImage(named: "star5")
+        }
+    
         if userlocation != nil {
             let location = CLLocation(latitude: post.latitude!, longitude: post.longitude!)
             let distance = location.distanceFromLocation(userlocation!)
             let inMiles = distance * 0.000621371192
             cell.distanceLabel.text = (String(format: "%.2fm Away", inMiles))
         }
+        
+        
         return cell
     }
     
@@ -252,6 +275,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
             default: break
             }
         }
+
     }
     
     //    MARK: IBActions
@@ -288,8 +312,6 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         if loggedInTruck != nil {
             self.performSegueWithIdentifier("mapToMenuSegue", sender: self)
             
-        } else {
-            self.performSegueWithIdentifier("mapToLoginSegue", sender: self)
         }
     }
     
