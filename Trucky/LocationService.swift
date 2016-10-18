@@ -49,6 +49,9 @@ class LocationService: NSObject, CLLocationManagerDelegate {
         
     }
     
+
+    
+    
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let newLocation = locations.last else { return }
         
