@@ -73,7 +73,7 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         if indexPath.row == 0 {
-            let cell = tableView.dequeueReusableCellWithIdentifier("titleSegue") as! DetailTableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("titleSegue") as! BusinessProfileTableViewCell
             cell.truckNameLabel?.text = truck.truckName?.capitalizedString
             cell.reviewsLabel?.text = "\(truck.reviewCount!) reviews on Yelp"
 //            cell.ratingsImageView.image = string2Image(truck.ratingImageURL!)

@@ -226,7 +226,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("BusinessTableViewCell") as! BusinessTableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("BusinessTableViewCell") as! DetailTableViewCell
         let post = trucks[indexPath.row]
         
         cell.businessImage.image = string2Image(post.imageString!)
@@ -272,7 +272,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
             switch identifier {
             case "detailSegue":
                 let indexPath = self.tableView.indexPathForSelectedRow
-                let cell = tableView.cellForRowAtIndexPath(indexPath!) as! BusinessTableViewCell
+                let cell = tableView.cellForRowAtIndexPath(indexPath!) as! DetailTableViewCell
                 let detailVC = segue.destinationViewController as! BusinessProfileViewController
                 let truck = trucks[indexPath!.row]
                 detailVC.truck = truck
