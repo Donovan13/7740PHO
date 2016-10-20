@@ -65,16 +65,31 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         self.navigationController!.navigationBar.titleTextAttributes = [ NSShadowAttributeName: myShadow, NSFontAttributeName: UIFont(name: "times", size: 25)! ]
         
         
+        
+        
+        
+
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(true)
+        
         self.reloadTrucks()
         
         if userDefaults.valueForKey("Truck") != nil {
-            loggedInTruck = firebaseController.getLoggedInTruck()
+//            if firebaseController.getLoggedInTruck().uid != nil {
+            
+//            }
+            
+//            guard loggedInTruck != firebaseController.getLoggedInTruck() else { return }
+                loggedInTruck = firebaseController.getLoggedInTruck()
         } else if userDefaults.valueForKey("Customer") != nil {
             loggedInCustomer = firebaseController.getLoggedInCustomer()
         }
         
         
-
+//        print(loggedInTruck?.truckName)
+        
     }
     
     func loadAnnotations() {
@@ -210,6 +225,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         cell.reviewLabel?.text = "\(post.reviewCount!) reviews on"
         cell.addressLabel.text = post.cityAndState
         cell.categoryLabel?.text = post.categories
+        cell.detailsButton.tag = indexPath.row
         
         if post.rating == 0 {
             cell.reviewImage?.image = UIImage(named: "star0")
@@ -255,18 +271,28 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         self.mapView.setRegion(region, animated: true)
         
     }
-    
+    @IBAction func detailsButtonTapped(sender: AnyObject) {
+        
+        
+        
+        performSegueWithIdentifier("detailSegue", sender: sender)
+    }
+
     //    MARK:PrepareForSegue
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if let identifier = segue.identifier {
             switch identifier {
             case "detailSegue":
-                let indexPath = self.tableView.indexPathForSelectedRow
-                let cell = tableView.cellForRowAtIndexPath(indexPath!) as! DetailTableViewCell
+//                let indexPath = self.tableView.indexPathForSelectedRow
+//                let cell = tableView.cellForRowAtIndexPath(indexPath!) as! DetailTableViewCell
+                
+                let button = sender as! UIButton
+//                let indexPath = self.tableView.indexPathForView(button)
+                
                 let detailVC = segue.destinationViewController as! BusinessProfileViewController
-                let truck = trucks[indexPath!.row]
+                let truck = trucks[button.tag]
                 detailVC.truck = truck
-                detailVC.distanceOfTruck = cell.distanceLabel.text
+//                detailVC.distanceOfTruck = cell.distanceLabel.text
                 
             case "annotationDetailSegue":
                 let detailVC = segue.destinationViewController as! BusinessProfileViewController
@@ -275,7 +301,6 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
             default: break
             }
         }
-
     }
     
     //    MARK: IBActions
@@ -304,14 +329,12 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: latitude!, longitude: longitude!), span: span)
         mapView.setUserTrackingMode(MKUserTrackingMode.Follow, animated: true)
         mapView.setRegion(region, animated: true)
-        
     }
     
+    
     @IBAction func menuButtonTapped(sender: AnyObject) {
-        
         if loggedInTruck != nil {
             self.performSegueWithIdentifier("mapToMenuSegue", sender: self)
-            
         }
     }
     
@@ -350,4 +373,12 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     }
     
     
+}
+
+
+extension UITableView {
+    func indexPathForView (view: UIView) -> NSIndexPath {
+        let location = view.convertPoint(CGPointZero, toView: self)
+        return indexPathForRowAtPoint(location)!
+    }
 }

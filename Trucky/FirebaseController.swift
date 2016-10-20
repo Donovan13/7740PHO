@@ -109,7 +109,7 @@ class FirebaseController {
             self.customer = Customer(snapshot: snapshot)
             self.logInUserDelegate?.loginCustomerDelegate()
             self.userdefaults.setValue(uid, forKey: "Customer")
-        
+            
         })
     }
     
@@ -134,7 +134,11 @@ class FirebaseController {
                 let uid = currentUser?.uid
                 truckRef.child("Active").child(uid!).removeValue()
                 logOutUserDelegate?.logOutUserDelegate()
-
+                self.truck = nil
+                self.userdefaults.setValue(nil, forKey: "Truck")
+                self.userdefaults.setValue(nil, forKey: "Customer")
+                
+                
             } catch let error as NSError {
                 print(error.localizedDescription)
             }
@@ -190,9 +194,13 @@ class FirebaseController {
     func loginTruck(email: String?, password: String?) {
         FIRAuth.auth()?.signInWithEmail(email!, password: password!, completion: { (user, error) in
             if error == nil {
-                self.authenticationDelegate?.userAuthenticationSuccess()
                 let uid = user?.uid
+                
+                
+                
+                self.authenticationDelegate?.userAuthenticationSuccess()
                 self.loggedInTruck(uid!)
+
             } else {
                 self.authenticationDelegate?.userAuthenticationFail(error!)
             }
@@ -200,10 +208,13 @@ class FirebaseController {
     }
     
     func loggedInTruck(uid: String) {
-        self.truckRef.child("Members").child(uid).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
+        self.truckRef.child("Members").child(uid).observeSingleEventOfType(.Value, withBlock: { (snapshot: FIRDataSnapshot) in
+            
             self.truck = Truck(snapshot: snapshot)
-            self.logInUserDelegate?.logInTruckDelegate()
             self.userdefaults.setValue(uid, forKey: "Truck")
+
+            self.logInUserDelegate?.logInTruckDelegate()
+
         })
     }
     

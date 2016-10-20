@@ -77,7 +77,7 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
             cell.truckNameLabel?.text = truck.truckName?.capitalizedString
             cell.reviewsLabel?.text = "\(truck.reviewCount!) reviews on Yelp"
 //            cell.ratingsImageView.image = string2Image(truck.ratingImageURL!)
-            cell.distanceLabel.text = "\(distanceOfTruck!)"
+//            cell.distanceLabel.text = "\(distanceOfTruck!)"
             
             return cell
         } else if indexPath.row == 1 {
@@ -116,6 +116,9 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
             openMapForPlace()
         }
     }
+    
+    
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "detailToWebSegue" {
             

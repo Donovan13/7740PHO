@@ -110,12 +110,11 @@ class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     func logOutUserDelegate() {
-        userDefaults.setValue(nil, forKey: "Truck")
-        userDefaults.setValue(nil, forKey: "Customer")
         
+        
+        self.view.window!.rootViewController?.dismissViewControllerAnimated(false, completion: nil)
         let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
         let nav = storyboard.instantiateViewControllerWithIdentifier("initialVC")
-//        self.navigationController?.popToViewController(nav, animated: true)
         self.view.window?.rootViewController = nav
     }
     
