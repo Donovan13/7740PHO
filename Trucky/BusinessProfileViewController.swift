@@ -13,7 +13,7 @@ import MapKit
 
 class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-
+    var reviews = [Reviews]()
     var truckName:String?
     var truck: Truck!
     var userlocation: CLLocation?
@@ -67,7 +67,7 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
+        return 6
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -97,10 +97,7 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
                 cell.ratingsImageView?.image = UIImage(named: "star4h")
             } else if truck.rating == 5 {
                 cell.ratingsImageView?.image = UIImage(named: "star5")
-            }
-
-            
-//            cell.ratingsImageView.image = string2Image(truck.ratingImageURL!)
+            }            
 //            cell.distanceLabel.text = "\(distanceOfTruck!)"
             
             return cell
@@ -123,6 +120,12 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
 
         } else {
                 let cell = tableView.dequeueReusableCellWithIdentifier("reviewCell") as! BusinessReviewTableViewCell
+            for review in reviews {
+                cell.reviewName.text = review.username
+                cell.reviewTime.text = review.timeCreated
+                cell.reviewTextView.text = review.text
+                
+            }
             return cell
         }
         
@@ -131,8 +134,12 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
         if indexPath.row == 0 {
             
             return 120
-        } else {
+        } else if indexPath.row == 1 ||
+            indexPath.row == 2 ||
+            indexPath.row == 3 {
             return 50
+        } else {
+            return 180
         }
     }
     

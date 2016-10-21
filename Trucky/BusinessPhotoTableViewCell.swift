@@ -10,8 +10,15 @@ import UIKit
 
 class BusinessPhotoTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var yelpPhoto1: UIImageView!
-    @IBOutlet weak var yelpPhotp2: UIImageView!
-    @IBOutlet weak var yelpPhoto3: UIImageView!
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        // Initialization code
+    }
+
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+
+        // Configure the view for the selected state
+    }
 
 }

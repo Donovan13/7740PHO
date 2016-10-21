@@ -1055,27 +1055,30 @@
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FWe-Zx-hUU">
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="45" id="io4-Fp-2b5"/>
-                                                        <constraint firstAttribute="height" constant="27" id="ldp-3e-JPa"/>
+                                                        <constraint firstAttribute="height" constant="27" id="U0m-AJ-wbV"/>
+                                                        <constraint firstAttribute="width" constant="45" id="v0c-bY-ifc"/>
                                                     </constraints>
                                                     <state key="normal" title="Button" image="yelpLogo"/>
+                                                    <connections>
+                                                        <action selector="yelpButtonTapped:" destination="Ruc-lo-W4k" eventType="touchUpInside" id="MwT-mm-GMx"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                             <color key="backgroundColor" red="0.93720728158950806" green="0.95131486654281616" blue="0.81375807523727417" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
                                                 <constraint firstItem="qvU-YK-SHZ" firstAttribute="top" secondItem="4Sy-Ei-kDd" secondAttribute="bottom" constant="8" id="0MT-PY-QEh"/>
+                                                <constraint firstItem="FWe-Zx-hUU" firstAttribute="top" secondItem="pBN-1E-C80" secondAttribute="bottom" constant="4" id="2MT-Wl-4K2"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="9Or-vg-H7G" secondAttribute="bottom" constant="0.5" id="4iK-eo-P5V"/>
                                                 <constraint firstItem="Krd-zz-IHH" firstAttribute="top" secondItem="dJK-70-wZd" secondAttribute="topMargin" id="9O6-na-ixM"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="9Or-vg-H7G" secondAttribute="trailing" constant="5" id="A6d-ej-Scm"/>
-                                                <constraint firstItem="FWe-Zx-hUU" firstAttribute="leading" secondItem="xks-t9-BSU" secondAttribute="trailing" constant="2" id="APY-S6-5Z7"/>
                                                 <constraint firstItem="4Sy-Ei-kDd" firstAttribute="top" secondItem="dJK-70-wZd" secondAttribute="topMargin" id="Czk-hU-Ali"/>
                                                 <constraint firstItem="xks-t9-BSU" firstAttribute="top" secondItem="4Sy-Ei-kDd" secondAttribute="bottom" constant="6" id="HwC-ZI-G9R"/>
                                                 <constraint firstItem="pBN-1E-C80" firstAttribute="top" secondItem="dJK-70-wZd" secondAttribute="topMargin" id="ITM-PW-u4C"/>
                                                 <constraint firstItem="eLY-k6-lH8" firstAttribute="leading" secondItem="Krd-zz-IHH" secondAttribute="trailing" constant="8" id="Id8-xh-pCE"/>
                                                 <constraint firstItem="pBN-1E-C80" firstAttribute="trailing" secondItem="dJK-70-wZd" secondAttribute="trailingMargin" id="LWc-Tv-Trt"/>
                                                 <constraint firstItem="eLY-k6-lH8" firstAttribute="top" secondItem="xks-t9-BSU" secondAttribute="bottom" constant="6" id="LwI-za-ScI"/>
-                                                <constraint firstItem="FWe-Zx-hUU" firstAttribute="top" secondItem="pBN-1E-C80" secondAttribute="bottom" constant="4" id="OAi-cn-6cT"/>
                                                 <constraint firstItem="RAg-vK-1Vd" firstAttribute="top" secondItem="eLY-k6-lH8" secondAttribute="bottom" constant="4" id="TzJ-DZ-HlX"/>
+                                                <constraint firstItem="FWe-Zx-hUU" firstAttribute="leading" secondItem="xks-t9-BSU" secondAttribute="trailing" constant="2" id="Udu-3f-9DV"/>
                                                 <constraint firstItem="4Sy-Ei-kDd" firstAttribute="leading" secondItem="Krd-zz-IHH" secondAttribute="trailing" constant="8" id="Uo4-c2-zpD"/>
                                                 <constraint firstItem="Krd-zz-IHH" firstAttribute="leading" secondItem="dJK-70-wZd" secondAttribute="leadingMargin" id="YnS-3u-ZKG"/>
                                                 <constraint firstItem="xks-t9-BSU" firstAttribute="leading" secondItem="qvU-YK-SHZ" secondAttribute="trailing" constant="8" id="nWg-Ad-hbl"/>
@@ -1159,6 +1162,7 @@
                         <segue destination="iL6-c3-66T" kind="show" identifier="detailSegue" id="2XA-gi-oSt"/>
                         <segue destination="iL6-c3-66T" kind="show" identifier="annotationDetailSegue" id="Jok-xT-yNd"/>
                         <segue destination="EjW-8G-PN3" kind="presentation" identifier="mapToMenuSegue" id="QNP-bz-0OX"/>
+                        <segue destination="DIa-jM-T5E" kind="show" identifier="truckToWebSegue" id="JzK-Lf-MqU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YAp-zT-x4v" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1180,11 +1184,11 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="wtb-6Z-VRU">
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="titleCell" rowHeight="157" id="YUI-zH-pvd" customClass="BusinessProfileTableViewCell" customModule="Trucky" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="375" height="157"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="titleCell" rowHeight="125" id="YUI-zH-pvd" customClass="BusinessProfileTableViewCell" customModule="Trucky" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="125"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" tableViewCell="YUI-zH-pvd" id="yhS-FC-E50">
-                                            <frame key="frameInset" width="375" height="156"/>
+                                            <frame key="frameInset" width="375" height="124"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="sWS-nF-qXp" userLabel="Rating Image">
@@ -1242,7 +1246,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="phoneCell" textLabel="fbR-CV-fIX" detailTextLabel="3Uh-Mf-mJZ" style="IBUITableViewCellStyleSubtitle" id="81y-3s-uin">
-                                        <rect key="frame" x="0.0" y="185" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="153" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="81y-3s-uin" id="BWJ-Ut-iv6">
                                             <frame key="frameInset" width="375" height="43"/>
@@ -1266,7 +1270,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="websiteCell" textLabel="aZr-7F-0hV" detailTextLabel="ppi-Dm-iLC" style="IBUITableViewCellStyleSubtitle" id="A9O-nS-vbh">
-                                        <rect key="frame" x="0.0" y="229" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="197" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="A9O-nS-vbh" id="b3V-Pk-JVU">
                                             <frame key="frameInset" width="375" height="43"/>
@@ -1290,7 +1294,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="addressCell" textLabel="PjU-Fy-5E1" detailTextLabel="joF-Ii-Jpx" style="IBUITableViewCellStyleSubtitle" id="GSe-rH-IqR">
-                                        <rect key="frame" x="0.0" y="273" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="241" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="GSe-rH-IqR" id="7TK-QP-igz">
                                             <frame key="frameInset" width="375" height="43"/>
@@ -1314,24 +1318,12 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="photoCell" rowHeight="173" id="6JZ-Yt-veX" customClass="BusinessPhotoTableViewCell" customModule="Trucky" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="317" width="375" height="173"/>
+                                        <rect key="frame" x="0.0" y="285" width="375" height="173"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="6JZ-Yt-veX" id="LSp-QC-J1f">
                                             <frame key="frameInset" width="375" height="172"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="h30-Xj-66N">
-                                                    <frame key="frameInset" minX="12" minY="28" width="100" height="100"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                </imageView>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="n5e-pK-WTB">
-                                                    <frame key="frameInset" minX="137" minY="28" width="100" height="100"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                </imageView>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hJt-2e-6oq">
-                                                    <frame key="frameInset" minX="262" minY="28" width="100" height="100"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                </imageView>
                                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DX4-YJ-vgT">
                                                     <frame key="frameInset" minX="8" minY="136" width="80" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -1349,16 +1341,38 @@
                                                     <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="uw3-GZ-Xoy">
+                                                    <frame key="frameInset" minX="8" minY="22" width="359" height="120"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="hUH-QC-jLQ">
+                                                        <size key="itemSize" width="100" height="100"/>
+                                                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                    </collectionViewFlowLayout>
+                                                    <cells>
+                                                        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="JT2-71-g5q">
+                                                            <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                                                <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                                                                <autoresizingMask key="autoresizingMask"/>
+                                                                <subviews>
+                                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ibc-da-pVe">
+                                                                        <frame key="frameInset" width="100" height="100"/>
+                                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                    </imageView>
+                                                                </subviews>
+                                                            </view>
+                                                        </collectionViewCell>
+                                                    </cells>
+                                                </collectionView>
                                             </subviews>
                                         </tableViewCellContentView>
-                                        <connections>
-                                            <outlet property="yelpPhoto1" destination="h30-Xj-66N" id="8ef-ja-CNw"/>
-                                            <outlet property="yelpPhoto3" destination="hJt-2e-6oq" id="9m7-2n-1r7"/>
-                                            <outlet property="yelpPhotp2" destination="n5e-pK-WTB" id="Zoj-ga-7CP"/>
-                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="reviewCell" rowHeight="168" id="IPd-Wc-9DZ" customClass="BusinessReviewTableViewCell" customModule="Trucky" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="490" width="375" height="168"/>
+                                        <rect key="frame" x="0.0" y="458" width="375" height="168"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="IPd-Wc-9DZ" id="SwN-ti-Tlb">
                                             <frame key="frameInset" width="375" height="167"/>
@@ -1559,5 +1573,6 @@
     <inferredMetricsTieBreakers>
         <segue reference="hqe-eu-ydN"/>
         <segue reference="2XA-gi-oSt"/>
+        <segue reference="abG-Zv-BGJ"/>
     </inferredMetricsTieBreakers>
 </document>

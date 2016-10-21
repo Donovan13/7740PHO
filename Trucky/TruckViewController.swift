@@ -226,6 +226,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         cell.addressLabel.text = post.cityAndState
         cell.categoryLabel?.text = post.categories
         cell.detailsButton.tag = indexPath.row
+        cell.yelpButton.tag = indexPath.row
         
         if post.rating == 0 {
             cell.reviewImage?.image = UIImage(named: "star0")
@@ -271,12 +272,6 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         self.mapView.setRegion(region, animated: true)
         
     }
-    @IBAction func detailsButtonTapped(sender: AnyObject) {
-        
-        
-        
-        performSegueWithIdentifier("detailSegue", sender: sender)
-    }
 
     //    MARK:PrepareForSegue
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -298,6 +293,12 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
                 let detailVC = segue.destinationViewController as! BusinessProfileViewController
                 let annotation = sender as! CustomAnnotations
                 detailVC.truck = annotation.truckCA
+            
+            case "truckToWebSegue":
+                let button = sender as! UIButton
+                let webVC = segue.destinationViewController as! WebViewController
+                let truck = trucks[button.tag]
+                webVC.businessURL = truck.yelpURL
             default: break
             }
         }
@@ -336,6 +337,15 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         if loggedInTruck != nil {
             self.performSegueWithIdentifier("mapToMenuSegue", sender: self)
         }
+        
+    }
+    
+    @IBAction func detailsButtonTapped(sender: AnyObject) {
+        performSegueWithIdentifier("detailSegue", sender: sender)
+    }
+    
+    @IBAction func yelpButtonTapped(sender: AnyObject) {
+        performSegueWithIdentifier("truckToWebSegue", sender: sender)
     }
     
     

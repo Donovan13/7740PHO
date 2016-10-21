@@ -10,7 +10,7 @@
 		090AE2BF1D6F9CDE000BAFBD /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090AE2BE1D6F9CDE000BAFBD /* EditProfileViewController.swift */; };
 		091C4F181DBA7A550001D255 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 091C4F171DBA7A550001D255 /* Main.storyboard */; };
 		091C4F1A1DBA7AAF0001D255 /* BusinessReviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 091C4F191DBA7AAF0001D255 /* BusinessReviewTableViewCell.swift */; };
-		091C4F1C1DBA7ACE0001D255 /* BusinessPhotoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 091C4F1B1DBA7ACE0001D255 /* BusinessPhotoTableViewCell.swift */; };
+		091C4F221DBAB92B0001D255 /* BusinessPhotoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 091C4F211DBAB92B0001D255 /* BusinessPhotoTableViewCell.swift */; };
 		093DFCC91D9B41FE0052AC9E /* Customer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093DFCC81D9B41FE0052AC9E /* Customer.swift */; };
 		0957DB291D6621DA00B38BB2 /* BusinessProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0957DB281D6621DA00B38BB2 /* BusinessProfileViewController.swift */; };
 		0958342A1D83426700EBDF9A /* BusinessProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095834291D83426700EBDF9A /* BusinessProfileTableViewCell.swift */; };
@@ -65,7 +65,7 @@
 		090AE2BE1D6F9CDE000BAFBD /* EditProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		091C4F171DBA7A550001D255 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		091C4F191DBA7AAF0001D255 /* BusinessReviewTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BusinessReviewTableViewCell.swift; sourceTree = "<group>"; };
-		091C4F1B1DBA7ACE0001D255 /* BusinessPhotoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BusinessPhotoTableViewCell.swift; sourceTree = "<group>"; };
+		091C4F211DBAB92B0001D255 /* BusinessPhotoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BusinessPhotoTableViewCell.swift; sourceTree = "<group>"; };
 		093DFCC81D9B41FE0052AC9E /* Customer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Customer.swift; sourceTree = "<group>"; };
 		0957DB281D6621DA00B38BB2 /* BusinessProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BusinessProfileViewController.swift; sourceTree = "<group>"; };
 		095834291D83426700EBDF9A /* BusinessProfileTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BusinessProfileTableViewCell.swift; sourceTree = "<group>"; };
@@ -250,8 +250,8 @@
 			isa = PBXGroup;
 			children = (
 				09D4B2461D6A318B002676D1 /* DetailTableViewCell.swift */,
+				091C4F211DBAB92B0001D255 /* BusinessPhotoTableViewCell.swift */,
 				095834291D83426700EBDF9A /* BusinessProfileTableViewCell.swift */,
-				091C4F1B1DBA7ACE0001D255 /* BusinessPhotoTableViewCell.swift */,
 				091C4F191DBA7AAF0001D255 /* BusinessReviewTableViewCell.swift */,
 				09ADB7061D67C1E100890CDB /* CustomAnnotation.swift */,
 			);
@@ -503,7 +503,7 @@
 				09E73B4F1D9B2550006D5C27 /* CustomerLoginViewController.swift in Sources */,
 				09E73B511D9B256F006D5C27 /* CreateCustomerViewController.swift in Sources */,
 				0971AB861D8BCA41008B756D /* WebViewController.swift in Sources */,
-				091C4F1C1DBA7ACE0001D255 /* BusinessPhotoTableViewCell.swift in Sources */,
+				091C4F221DBAB92B0001D255 /* BusinessPhotoTableViewCell.swift in Sources */,
 				091C4F1A1DBA7AAF0001D255 /* BusinessReviewTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

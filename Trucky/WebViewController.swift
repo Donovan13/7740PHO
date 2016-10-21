@@ -14,6 +14,7 @@ class WebViewController: UIViewController, UIWebViewDelegate {
     @IBOutlet weak var webView: UIWebView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
+    
     var businessURL:String!
     
     override func viewDidLoad() {
@@ -29,7 +30,7 @@ class WebViewController: UIViewController, UIWebViewDelegate {
     }
     
     func loadRequestWithString() {
-        let url = NSURL(string: "http://\(businessURL)")
+        let url = NSURL(string: businessURL)
         let request = NSURLRequest(URL: url!)
         webView.loadRequest(request)
     }
