@@ -75,7 +75,7 @@ class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableVie
         imageView.contentMode = .ScaleAspectFill
         
         // Set the background color to match better
-        tableView.backgroundColor = .redColor()
+        tableView.backgroundColor = .blackColor()
         
         // blur it
         let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Light)

@@ -73,24 +73,56 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         if indexPath.row == 0 {
-            let cell = tableView.dequeueReusableCellWithIdentifier("titleSegue") as! BusinessProfileTableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("titleCell") as! BusinessProfileTableViewCell
             cell.truckNameLabel?.text = truck.truckName?.capitalizedString
-            cell.reviewsLabel?.text = "\(truck.reviewCount!) reviews on Yelp"
+            cell.reviewsLabel?.text = "\(truck.reviewCount!) reviews on"
+            
+            if truck.rating == 0 {
+                cell.ratingsImageView?.image = UIImage(named: "star0")
+            } else if truck.rating == 1 {
+                cell.ratingsImageView?.image = UIImage(named: "star1")
+            } else if truck.rating == 1.5 {
+                cell.ratingsImageView?.image = UIImage(named: "star1h")
+            } else if truck.rating == 2 {
+                cell.ratingsImageView?.image = UIImage(named: "star2")
+            } else if truck.rating == 2.5 {
+                cell.ratingsImageView?.image = UIImage(named: "star2h")
+            } else if truck.rating == 3 {
+                cell.ratingsImageView?.image = UIImage(named: "star3")
+            } else if truck.rating == 3.5 {
+                cell.ratingsImageView?.image = UIImage(named: "star3h")
+            } else if truck.rating == 4 {
+                cell.ratingsImageView?.image = UIImage(named: "star4")
+            } else if truck.rating == 4.5 {
+                cell.ratingsImageView?.image = UIImage(named: "star4h")
+            } else if truck.rating == 5 {
+                cell.ratingsImageView?.image = UIImage(named: "star5")
+            }
+
+            
 //            cell.ratingsImageView.image = string2Image(truck.ratingImageURL!)
 //            cell.distanceLabel.text = "\(distanceOfTruck!)"
             
             return cell
         } else if indexPath.row == 1 {
-            let cell = tableView.dequeueReusableCellWithIdentifier("phoneSegue", forIndexPath: indexPath)
+            let cell = tableView.dequeueReusableCellWithIdentifier("phoneCell", forIndexPath: indexPath)
             cell.detailTextLabel?.text = truck.phone
             return cell
         } else if indexPath.row == 2 {
-            let cell = tableView.dequeueReusableCellWithIdentifier("websiteSegue", forIndexPath: indexPath)
+            let cell = tableView.dequeueReusableCellWithIdentifier("websiteCell", forIndexPath: indexPath)
 //            cell.detailTextLabel?.text = truck.website
             return cell
-        } else {
-            let cell = tableView.dequeueReusableCellWithIdentifier("addressSegue", forIndexPath: indexPath)
+        } else if indexPath.row == 3 {
+            let cell = tableView.dequeueReusableCellWithIdentifier("addressCell", forIndexPath: indexPath)
 //            cell.detailTextLabel?.text = truck.address
+            return cell
+        } else if indexPath.row == 4 {
+                let cell = tableView.dequeueReusableCellWithIdentifier("photoCell") as! BusinessPhotoTableViewCell
+//            cell.yelpPhoto1.image = truck.photos
+            return cell
+
+        } else {
+                let cell = tableView.dequeueReusableCellWithIdentifier("reviewCell") as! BusinessReviewTableViewCell
             return cell
         }
         
