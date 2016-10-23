@@ -19,6 +19,7 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
     var userlocation: CLLocation?
     let userDefaults = NSUserDefaults.standardUserDefaults()
     var distanceOfTruck:String!
+    var storedOffsets = [Int: CGFloat]()
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -60,6 +61,11 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         // translucent cell backgrounds so we can see the image but still easily read the contents
         cell.backgroundColor = UIColor(white: 0.5, alpha: 0)
+        
+        guard let tableViewCell = cell as? BusinessPhotoTableViewCell else { return }
+        tableViewCell.setCollectionViewDataSourceDelegate(self, forRow: indexPath.row)
+        tableViewCell.collectionViewOffset = storedOffsets[indexPath.row] ?? 0
+        
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -158,12 +164,22 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
     
     
     
+    func tableView(tableView: UITableView, didEndDisplayingCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        
+        guard let tableViewCell = cell as? BusinessPhotoTableViewCell else { return }
+        
+        storedOffsets[indexPath.row] = tableViewCell.collectionViewOffset
+    }
+    
+    
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "detailToWebSegue" {
             
             let detailVC = segue.destinationViewController as! WebViewController
 //            detailVC.businessURL = truck.website
         }
+        
     }
     
     func openMapForPlace() {
@@ -217,3 +233,21 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
     }
     
 }
+
+extension BusinessProfileViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 3
+    }
+    
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("imageCell", forIndexPath: indexPath)
+        
+                
+        return cell
+    }
+    
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        print("Collection view at row \(collectionView.tag) selected index path \(indexPath)")
+    }
+}
+

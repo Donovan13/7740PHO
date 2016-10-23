@@ -1181,7 +1181,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="wtb-6Z-VRU">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="wtb-6Z-VRU">
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="titleCell" rowHeight="125" id="YUI-zH-pvd" customClass="BusinessProfileTableViewCell" customModule="Trucky" customModuleProvider="target">
@@ -1317,62 +1317,71 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="photoCell" rowHeight="173" id="6JZ-Yt-veX" customClass="BusinessPhotoTableViewCell" customModule="Trucky" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="285" width="375" height="173"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="photoCell" rowHeight="188" id="6JZ-Yt-veX" customClass="BusinessPhotoTableViewCell" customModule="Trucky" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="285" width="375" height="188"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="6JZ-Yt-veX" id="LSp-QC-J1f">
-                                            <frame key="frameInset" width="375" height="172"/>
+                                            <frame key="frameInset" width="375" height="187"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DX4-YJ-vgT">
-                                                    <frame key="frameInset" minX="8" minY="136" width="80" height="30"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DX4-YJ-vgT">
                                                     <state key="normal" title="Add Picture"/>
                                                 </button>
-                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BUQ-dH-fzd">
-                                                    <frame key="frameInset" minX="301" minY="136" width="66" height="30"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <state key="normal" title="See More"/>
-                                                </button>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" fixedFrame="YES" text="Photos" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1K4-9C-F8V">
-                                                    <frame key="frameInset" minX="15" minY="6" width="37" height="14"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Photos" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1K4-9C-F8V">
                                                     <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                     <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="uw3-GZ-Xoy">
-                                                    <frame key="frameInset" minX="8" minY="22" width="359" height="120"/>
+                                                    <frame key="frameInset" minX="8" minY="28" width="398" height="120"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="hUH-QC-jLQ">
-                                                        <size key="itemSize" width="100" height="100"/>
+                                                        <size key="itemSize" width="125" height="125"/>
                                                         <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                                         <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                                         <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                     </collectionViewFlowLayout>
                                                     <cells>
-                                                        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="JT2-71-g5q">
-                                                            <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                                                        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="imageCell" id="JT2-71-g5q">
+                                                            <rect key="frame" x="0.0" y="0.0" width="125" height="125"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                                                <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="125" height="125"/>
                                                                 <autoresizingMask key="autoresizingMask"/>
                                                                 <subviews>
-                                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ibc-da-pVe">
-                                                                        <frame key="frameInset" width="100" height="100"/>
+                                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="tacos" translatesAutoresizingMaskIntoConstraints="NO" id="ibc-da-pVe">
+                                                                        <frame key="frameInset" width="125" height="125"/>
                                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                     </imageView>
                                                                 </subviews>
                                                             </view>
                                                         </collectionViewCell>
                                                     </cells>
+                                                    <connections>
+                                                        <outlet property="dataSource" destination="iL6-c3-66T" id="rbb-9j-IRk"/>
+                                                        <outlet property="delegate" destination="iL6-c3-66T" id="K2j-sr-O19"/>
+                                                    </connections>
                                                 </collectionView>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BUQ-dH-fzd">
+                                                    <state key="normal" title="See More"/>
+                                                </button>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="BUQ-dH-fzd" secondAttribute="bottom" constant="0.66666666666665719" id="0cW-eh-fCF"/>
+                                                <constraint firstItem="1K4-9C-F8V" firstAttribute="leading" secondItem="LSp-QC-J1f" secondAttribute="leading" constant="15" id="2sA-3j-7SK"/>
+                                                <constraint firstItem="DX4-YJ-vgT" firstAttribute="leading" secondItem="LSp-QC-J1f" secondAttribute="leading" constant="8" id="80i-JH-HhG"/>
+                                                <constraint firstAttribute="bottom" secondItem="DX4-YJ-vgT" secondAttribute="bottom" constant="0.67000000000000004" id="HMf-G4-qeH"/>
+                                                <constraint firstAttribute="trailing" secondItem="BUQ-dH-fzd" secondAttribute="trailing" constant="8" id="nCE-7q-mZq"/>
+                                                <constraint firstItem="1K4-9C-F8V" firstAttribute="top" secondItem="LSp-QC-J1f" secondAttribute="top" constant="6" id="t8q-Tj-0wH"/>
+                                            </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="collectionView" destination="uw3-GZ-Xoy" id="uo8-WA-PqG"/>
+                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="reviewCell" rowHeight="168" id="IPd-Wc-9DZ" customClass="BusinessReviewTableViewCell" customModule="Trucky" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="458" width="375" height="168"/>
+                                        <rect key="frame" x="0.0" y="473" width="375" height="168"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="IPd-Wc-9DZ" id="SwN-ti-Tlb">
                                             <frame key="frameInset" width="375" height="167"/>
@@ -1386,7 +1395,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="SGb-d6-XS0">
-                                                    <frame key="frameInset" minX="16" minY="21" width="351" height="92"/>
+                                                    <frame key="frameInset" minX="8" minY="21" width="398" height="92"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
@@ -1419,12 +1428,14 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <state key="normal" title="Check In"/>
                                                 </button>
-                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JPN-nb-rUj">
-                                                    <frame key="frameInset" minX="301" minY="137" width="66" height="30"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JPN-nb-rUj">
                                                     <state key="normal" title="See More"/>
                                                 </button>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="JPN-nb-rUj" secondAttribute="trailing" constant="8" id="HGu-F7-2Mz"/>
+                                                <constraint firstAttribute="bottom" secondItem="JPN-nb-rUj" secondAttribute="bottom" constant="0.67000000000000004" id="dz8-pV-mur"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="reviewName" destination="DzW-Hw-2KW" id="rr4-dv-jAk"/>
@@ -1442,10 +1453,10 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="wtb-6Z-VRU" firstAttribute="top" secondItem="aNS-mF-6Az" secondAttribute="top" id="6wG-JR-CF4"/>
-                            <constraint firstItem="wtb-6Z-VRU" firstAttribute="leading" secondItem="aNS-mF-6Az" secondAttribute="leading" id="Bj9-Xm-vd2"/>
-                            <constraint firstAttribute="trailing" secondItem="wtb-6Z-VRU" secondAttribute="trailing" id="XMu-Un-3Yv"/>
-                            <constraint firstItem="pb8-49-8Cw" firstAttribute="top" secondItem="wtb-6Z-VRU" secondAttribute="bottom" id="z0I-0H-72n"/>
+                            <constraint firstItem="wtb-6Z-VRU" firstAttribute="leading" secondItem="aNS-mF-6Az" secondAttribute="leading" id="SEF-kq-A4B"/>
+                            <constraint firstItem="wtb-6Z-VRU" firstAttribute="top" secondItem="aNS-mF-6Az" secondAttribute="top" id="TTu-UF-phj"/>
+                            <constraint firstItem="pb8-49-8Cw" firstAttribute="top" secondItem="wtb-6Z-VRU" secondAttribute="bottom" id="bvN-Kx-O8t"/>
+                            <constraint firstAttribute="trailing" secondItem="wtb-6Z-VRU" secondAttribute="trailing" id="ugh-1h-5Ob"/>
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" top="YES"/>
@@ -1456,7 +1467,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qBK-Wd-4ks" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1424.8" y="1537.7811094452775"/>
+            <point key="canvasLocation" x="1424.6376811594205" y="1537.5000000000002"/>
         </scene>
         <!--Web View Controller-->
         <scene sceneID="f1L-M6-y04">
@@ -1566,6 +1577,7 @@
         <image name="reload" width="256" height="256"/>
         <image name="sideMenu" width="200" height="200"/>
         <image name="star0" width="500" height="95"/>
+        <image name="tacos" width="680" height="1020"/>
         <image name="truckTown" width="1220" height="604"/>
         <image name="woodenSign" width="400" height="266"/>
         <image name="yelpLogo" width="675" height="383"/>
