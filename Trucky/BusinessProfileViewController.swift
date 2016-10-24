@@ -250,7 +250,10 @@ extension BusinessProfileViewController: UICollectionViewDelegate, UICollectionV
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("imageCell", forIndexPath: indexPath) as! BusinessPhotoCollectionViewCell
-        cell.yelpPhotoImageView.image = UIImage(named: "tacos")
+        
+        let photos = truck.photos![indexPath.row]
+        
+        cell.yelpPhotoImageView.image = string2Image(photos as! String)
         
                 
         return cell
