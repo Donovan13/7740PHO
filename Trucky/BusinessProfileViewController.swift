@@ -115,7 +115,14 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
             return cell
         } else if indexPath.row == 1 {
             let cell = tableView.dequeueReusableCellWithIdentifier("phoneCell", forIndexPath: indexPath)
-            cell.detailTextLabel?.text = truck.phone
+            let s = truck.phone
+            
+            let s2 = String(format: "%@ (%@) %@-%@",
+                        s!.substringToIndex(s!.startIndex.advancedBy(2)),
+                        s!.substringWithRange(s!.startIndex.advancedBy(2) ... s!.startIndex.advancedBy(4)),
+                        s!.substringWithRange(s!.startIndex.advancedBy(5) ... s!.startIndex.advancedBy(7)),
+                        s!.substringWithRange(s!.startIndex.advancedBy(8) ... s!.startIndex.advancedBy(11)))
+            cell.detailTextLabel?.text = s2
             return cell
         } else if indexPath.row == 2 {
             let cell = tableView.dequeueReusableCellWithIdentifier("websiteCell", forIndexPath: indexPath)
@@ -169,7 +176,7 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
         if indexPath.row == 1 {
             
-            errorAlert("\(truck.phone!)", message: "")
+            callNumber(truck.phone!)
             
         } else if indexPath.row == 2 {
             performSegueWithIdentifier("detailToWebSegue", sender: self)
@@ -222,12 +229,8 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
     }
     
     private func callNumber(phoneNumber:String) {
-        if let phoneCallURL:NSURL = NSURL(string:"\(phoneNumber)") {
-            let application:UIApplication = UIApplication.sharedApplication()
-            if (application.canOpenURL(phoneCallURL)) {
-//                application.openURL(phoneCallURL)
-            }
-        }
+        UIApplication.sharedApplication().openURL(NSURL(string: "telprompt://\(phoneNumber)")!)
+        
     }
 
     
@@ -236,29 +239,18 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
         return UIImage(data: data!)!
     }
     
-    
-    func errorAlert(title: String, message: String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
-        let action1 = UIAlertAction(title: "Cancel", style: .Default, handler: { (action: UIAlertAction!) in
-        })
-        let action2 = UIAlertAction(title: "Call", style: .Default, handler: { (action: UIAlertAction!) in
-            self.callNumber(self.truck.phone!)
-        })
-        alert.addAction(action1)
-        alert.addAction(action2)
-        presentViewController(alert, animated: true, completion: nil)
-    }
-    
 }
 
 extension BusinessProfileViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return truck.photos!.count
         
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("imageCell", forIndexPath: indexPath)
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("imageCell", forIndexPath: indexPath) as! BusinessPhotoCollectionViewCell
+        cell.yelpPhotoImageView.image = UIImage(named: "tacos")
         
                 
         return cell
