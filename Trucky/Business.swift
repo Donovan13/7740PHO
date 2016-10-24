@@ -102,7 +102,7 @@ class Business: NSObject {
 class Reviews: NSObject {
     var text: String?
     var url: String?
-    var rating: Int?
+    var rating: Double?
     var timeCreated: String?
     var username: String?
     //    var userImage: String?
@@ -112,7 +112,7 @@ class Reviews: NSObject {
         
         text = reviewJSON["text"].string
         url = reviewJSON["url"].string
-        rating = reviewJSON["rating"].int
+        rating = reviewJSON["rating"].double
         timeCreated = reviewJSON["time_created"].string
         username = reviewJSON["user"]["name"].string
         

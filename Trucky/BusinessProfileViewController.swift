@@ -79,7 +79,7 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5 + reviews.count
+        return 7
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -109,8 +109,8 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
                 cell.ratingsImageView?.image = UIImage(named: "star4h")
             } else if truck.rating == 5 {
                 cell.ratingsImageView?.image = UIImage(named: "star5")
-            }            
-//            cell.distanceLabel.text = "\(distanceOfTruck!)"
+            }
+            //            cell.distanceLabel.text = "\(distanceOfTruck!)"
             
             return cell
         } else if indexPath.row == 1 {
@@ -118,45 +118,65 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
             let s = truck.phone
             
             let s2 = String(format: "%@ (%@) %@-%@",
-                        s!.substringToIndex(s!.startIndex.advancedBy(2)),
-                        s!.substringWithRange(s!.startIndex.advancedBy(2) ... s!.startIndex.advancedBy(4)),
-                        s!.substringWithRange(s!.startIndex.advancedBy(5) ... s!.startIndex.advancedBy(7)),
-                        s!.substringWithRange(s!.startIndex.advancedBy(8) ... s!.startIndex.advancedBy(11)))
+                            s!.substringToIndex(s!.startIndex.advancedBy(2)),
+                            s!.substringWithRange(s!.startIndex.advancedBy(2) ... s!.startIndex.advancedBy(4)),
+                            s!.substringWithRange(s!.startIndex.advancedBy(5) ... s!.startIndex.advancedBy(7)),
+                            s!.substringWithRange(s!.startIndex.advancedBy(8) ... s!.startIndex.advancedBy(11)))
             cell.detailTextLabel?.text = s2
             return cell
         } else if indexPath.row == 2 {
             let cell = tableView.dequeueReusableCellWithIdentifier("websiteCell", forIndexPath: indexPath)
-//            cell.detailTextLabel?.text = truck.website
+            //            cell.detailTextLabel?.text = truck.website
             return cell
         } else if indexPath.row == 3 {
             let cell = tableView.dequeueReusableCellWithIdentifier("addressCell", forIndexPath: indexPath)
-//            cell.detailTextLabel?.text = truck.address
+            //            cell.detailTextLabel?.text = truck.address
             return cell
         } else if indexPath.row == 4 {
-                let cell = tableView.dequeueReusableCellWithIdentifier("photoCell") as! BusinessPhotoTableViewCell
-//            cell.yelpPhoto1.image = truck.photos
+            let cell = tableView.dequeueReusableCellWithIdentifier("photoCell") as! BusinessPhotoTableViewCell
+            //            cell.yelpPhoto1.image = truck.photos
             return cell
-
+            
         } else {
-//            let cel = tableView.dequeueReusableCellWithIdentifier("reviewCell") as! BusinessReviewTableViewCell
+            //            let cel = tableView.dequeueReusableCellWithIdentifier("reviewCell") as! BusinessReviewTableViewCell
             let cel = tableView.dequeueReusableCellWithIdentifier("reviewCell") as! BusinessReviewTableViewCell
             
             for review in reviews {
-            
-            
-            
-            
-            cel.reviewName.text = review.valueForKey("username") as? String
-            cel.reviewTime.text = review.valueForKey("timeCreated") as? String
-            cel.reviewTextView.text = review.valueForKey("text") as! String
-
+                
+                
+                
+                
+                cel.reviewName.text = review.valueForKey("username") as? String
+                cel.reviewTime.text = review.valueForKey("timeCreated") as? String
+                cel.reviewTextView.text = review.valueForKey("text") as! String
+                let reviewRating = review.valueForKey("rating") as! Double
+                
+                if reviewRating == 0 {
+                    cel.reviewRatingImage?.image = UIImage(named: "star0")
+                } else if reviewRating == 1 {
+                    cel.reviewRatingImage?.image = UIImage(named: "star1")
+                } else if reviewRating == 1.5 {
+                    cel.reviewRatingImage?.image = UIImage(named: "star1h")
+                } else if reviewRating == 2 {
+                    cel.reviewRatingImage?.image = UIImage(named: "star2")
+                } else if reviewRating == 2.5 {
+                    cel.reviewRatingImage?.image = UIImage(named: "star2h")
+                } else if reviewRating == 3 {
+                    cel.reviewRatingImage?.image = UIImage(named: "star3")
+                } else if reviewRating == 3.5 {
+                    cel.reviewRatingImage?.image = UIImage(named: "star3h")
+                } else if reviewRating == 4 {
+                    cel.reviewRatingImage?.image = UIImage(named: "star4")
+                } else if reviewRating == 4.5 {
+                    cel.reviewRatingImage?.image = UIImage(named: "star4h")
+                } else if reviewRating == 5 {
+                    cel.reviewRatingImage?.image = UIImage(named: "star5")
+                }
+                
             }
             
-            
-            
-            
             return cel
-   
+            
         }
         
     }
@@ -169,7 +189,7 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
             indexPath.row == 3 {
             return 50
         } else {
-            return 180
+            return 130
         }
     }
     
@@ -201,7 +221,7 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
         if segue.identifier == "detailToWebSegue" {
             
             let detailVC = segue.destinationViewController as! WebViewController
-//            detailVC.businessURL = truck.website
+            //            detailVC.businessURL = truck.website
         }
         
     }
@@ -232,7 +252,7 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
         UIApplication.sharedApplication().openURL(NSURL(string: "telprompt://\(phoneNumber)")!)
         
     }
-
+    
     
     func string2Image(string: String) -> UIImage {
         let data = NSData(base64EncodedString: string, options: .IgnoreUnknownCharacters)
@@ -255,7 +275,7 @@ extension BusinessProfileViewController: UICollectionViewDelegate, UICollectionV
         
         cell.yelpPhotoImageView.image = string2Image(photos as! String)
         
-                
+        
         return cell
     }
     
