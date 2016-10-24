@@ -13,7 +13,7 @@ import MapKit
 
 class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    var reviews = [Reviews]()
+    var reviews = NSMutableArray()
     var truckName:String?
     var truck: Truck!
     var userlocation: CLLocation?
@@ -21,11 +21,17 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
     var distanceOfTruck:String!
     var storedOffsets = [Int: CGFloat]()
     
+    let sharedConnection = FirebaseController.sharedConnection
+    
+    
     @IBOutlet weak var tableView: UITableView!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        reviews = truck.reviews!
+        
         
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
@@ -73,7 +79,7 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 6
+        return 5 + reviews.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -125,14 +131,25 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
             return cell
 
         } else {
-                let cell = tableView.dequeueReusableCellWithIdentifier("reviewCell") as! BusinessReviewTableViewCell
+//            let cel = tableView.dequeueReusableCellWithIdentifier("reviewCell") as! BusinessReviewTableViewCell
+            let cel = tableView.dequeueReusableCellWithIdentifier("reviewCell") as! BusinessReviewTableViewCell
+            
             for review in reviews {
-                cell.reviewName.text = review.username
-                cell.reviewTime.text = review.timeCreated
-                cell.reviewTextView.text = review.text
-                
+            
+            
+            
+            
+            cel.reviewName.text = review.valueForKey("username") as? String
+            cel.reviewTime.text = review.valueForKey("timeCreated") as? String
+            cel.reviewTextView.text = review.valueForKey("text") as! String
+
             }
-            return cell
+            
+            
+            
+            
+            return cel
+   
         }
         
     }
@@ -236,7 +253,8 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
 
 extension BusinessProfileViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
+        return truck.photos!.count
+        
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {

@@ -24,10 +24,10 @@ struct Truck: Equatable {
     let latitude: Double?
     let longitude: Double?
     let phone: String?
-    let photos: Dictionary<String, AnyObject>?
+    let photos: NSMutableArray?
     let rating: Double?
     let reviewCount: Int?
-    let reviews: Dictionary<String, AnyObject>?
+    let reviews: NSMutableArray?
     let truckName: String?
     let uid: String?
     let yelpURL: String?
@@ -72,10 +72,10 @@ struct Truck: Equatable {
         latitude = snapshot.value!["latitude"] as? Double
         longitude = snapshot.value!["longitude"] as? Double
         phone = snapshot.value!["phone"] as? String
-        photos = snapshot.value!["photos"] as? Dictionary<String, AnyObject>
+        photos = snapshot.value!["photos"] as? NSMutableArray
         rating = snapshot.value!["rating"] as? Double
         reviewCount = snapshot.value!["reviewCount"] as? Int
-        reviews = snapshot.value!["reviews"] as? Dictionary<String, AnyObject>
+        reviews = snapshot.value!["reviews"] as? NSMutableArray
         truckName = snapshot.value!["truckName"] as? String
         uid = snapshot.value!["uid"] as? String
         yelpURL = snapshot.value!["yelpURL"] as? String
@@ -98,7 +98,9 @@ struct Truck: Equatable {
             "reviewCount": reviewCount!,
             "truckName": truckName!,
             "uid": uid!,
-            "yelpURL": yelpURL!
+            "yelpURL": yelpURL!,
+            "reviews": reviews!,
+            "photos": photos!
         ]
     }
     

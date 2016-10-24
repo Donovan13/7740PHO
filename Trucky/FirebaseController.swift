@@ -150,6 +150,7 @@ class FirebaseController {
         return self.trucks[index]
     }
     
+    
     private func activeTrucks() {
         truckRef.child("Active").observeSingleEventOfType(.Value) { (snapshot: FIRDataSnapshot!) in
             for trucks in snapshot.children {
