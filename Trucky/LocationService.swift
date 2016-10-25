@@ -135,8 +135,7 @@ class LocationService: NSObject, CLLocationManagerDelegate {
             return
         }
         
-        locationDelegate.updateLocation(currentLocation)
-        
+            locationDelegate.updateLocation(currentLocation)
     }
     
     private func searchingLocationDidFailWithError(error: NSError) {

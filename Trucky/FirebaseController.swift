@@ -161,13 +161,19 @@ class FirebaseController {
     }
 
     func updateTruckLocation(lat: Double, lon: Double) {
+        if userdefaults.boolForKey("locShare") == true {
+        
         let uid = truck?.uid
         truckRef.child("Active").child(uid!).updateChildValues(["latitude": lat, "longitude": lon])
+        }
     }
     
     func updateTruckAddress(address: String) {
+        if userdefaults.boolForKey("locShare") == true {
+
         let uid = truck?.uid
         truckRef.child("Active").child(uid!).updateChildValues(["address": address])
+        }
     }
     
     
