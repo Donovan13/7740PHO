@@ -77,6 +77,7 @@ class CreateTruckViewController: UIViewController, UserCreationDelegate, Authent
         let imageURL = imageURLtoString(searchedBusiness!.imageURL!)
 
         let dictionary: [String : AnyObject] = [
+            "address": "",
             "uid": "",
             "yelpID": searchedBusiness!.id,
             "truckName": self.searchedBusiness!.name!,

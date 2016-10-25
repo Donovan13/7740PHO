@@ -33,8 +33,14 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     let userDefaults = NSUserDefaults.standardUserDefaults()
     var userlocation: CLLocation?
     
+    var truckdistance = [Double]()
+        
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
         
         
         tableView.delegate = self
@@ -44,13 +50,11 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         firebaseController.reloadTrucksDelegate = self
         locationController.locationServiceDelegate = self
         
-        
+        userlocation = locationController.newLocation
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
-        
-        
         
         mapView.showsUserLocation = true
         mapView.setUserTrackingMode(MKUserTrackingMode.Follow, animated: true)
@@ -151,64 +155,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         
     }
 
-    func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
-        
-//        let cell = tableView.dequeueReusableCellWithIdentifier("BusinessTableViewCell")
-//        let indexpath = tableView.indexPathForCell(cell!)
-        
-//        let truck = trucks[indexpath!.row]
-        
-//        if view.annotation!.title! == truck.truckName {
-        
-//            tableView.scrollToRowAtIndexPath(indexpath!, atScrollPosition: UITableViewScrollPosition.Top, animated: true)
-//            print("\(view.annotation!.title!) == \(cell.businessLabel.text)" )
-//            tableView.scrollToRowAtIndexPath(<#T##indexPath: NSIndexPath##NSIndexPath#>, atScrollPosition: <#T##UITableViewScrollPosition#>, animated: <#T##Bool#>)
-//        }
-        
-    }
     
-//    func locationManager(manager: CLLocationManager, didUpdateToLocation newLocation: CLLocation, fromLocation oldLocation: CLLocation) {
-//
-//        CLGeocoder().reverseGeocodeLocation(newLocation, completionHandler: {(placemarks, error) -> Void in
-//            
-//            if error != nil {
-//                //print("Reverse geocoder failed with error" + error!.localizedDescription)
-//                return
-//            }
-//            
-//            if placemarks!.count > 0 {
-//                let pm = placemarks![0]
-//                
-//                
-//                let address = "\(pm.subThoroughfare!) \(pm.thoroughfare!), \(pm.locality!) \(pm.administrativeArea!) \(pm.postalCode!)"
-//                
-//                if self.userDefaults.stringForKey("uid") != nil {
-////                    self.truckRef.child(userUID!).updateChildValues(["address": address])
-//                }
-//            }
-//            else {
-//                print("Problem with the data received from geocoder")
-//            }
-//        })
-//        
-//        
-//        if userDefaults.stringForKey("uid") != nil {
-////            self.truckRef.child("Trucks").child(userUID!).updateChildValues(["latitude": userLat, "longitude": userLon])
-//        }
-//        
-//        
-//        if UIApplication.sharedApplication().applicationState == .Active {
-//            //print("active")
-//        } else {
-//            print("updated:\(newLocation)")
-//        }
-//        
-//        if UIApplication.sharedApplication().applicationState == .Inactive {
-//            print("inactive")
-//        }
-//        
-//        
-//    }
     
     //    MARK: TableView Delegate
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -223,7 +170,12 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         cell.businessImage.image = string2Image(post.imageString!)
         cell.businessLabel?.text = post.truckName?.capitalizedString
         cell.reviewLabel?.text = "\(post.reviewCount!) reviews on"
-        cell.addressLabel.text = post.cityAndState
+        
+        if post.address?.characters.count > 1 {
+            cell.addressLabel.text = post.address
+        } else {
+            cell.addressLabel.text = post.cityAndState
+        }
         cell.categoryLabel?.text = post.categories
         cell.detailsButton.tag = indexPath.row
         cell.yelpButton.tag = indexPath.row
@@ -254,6 +206,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
             let location = CLLocation(latitude: post.latitude!, longitude: post.longitude!)
             let distance = location.distanceFromLocation(userlocation!)
             let inMiles = distance * 0.000621371192
+            truckdistance.append(inMiles)
             cell.distanceLabel.text = (String(format: "%.2fm Away", inMiles))
         }
         
@@ -262,8 +215,6 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
-//        performSegueWithIdentifier("detailSegue", sender: self)
-//        var selectedCell: UITableViewCell = tableView.cellForRowAtIndexPath(indexPath)!
         let latitude = trucks[indexPath.row].latitude
         let longitude = trucks[indexPath.row].longitude
         let centerCoordinate = CLLocationCoordinate2DMake(latitude!, longitude!)
@@ -278,16 +229,11 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         if let identifier = segue.identifier {
             switch identifier {
             case "detailSegue":
-//                let indexPath = self.tableView.indexPathForSelectedRow
-//                let cell = tableView.cellForRowAtIndexPath(indexPath!) as! DetailTableViewCell
-                
                 let button = sender as! UIButton
-//                let indexPath = self.tableView.indexPathForView(button)
-                
-                let detailVC = segue.destinationViewController as! BusinessProfileViewController
                 let truck = trucks[button.tag]
+                let detailVC = segue.destinationViewController as! BusinessProfileViewController
                 detailVC.truck = truck
-//                detailVC.distanceOfTruck = cell.distanceLabel.text
+                detailVC.distanceOfTruck = truckdistance[button.tag]
                 
             case "annotationDetailSegue":
                 let detailVC = segue.destinationViewController as! BusinessProfileViewController
@@ -299,6 +245,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
                 let webVC = segue.destinationViewController as! WebViewController
                 let truck = trucks[button.tag]
                 webVC.businessURL = truck.yelpURL
+                
             default: break
             }
         }
@@ -324,12 +271,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     }
     
     @IBAction func centerLocationButton(sender: AnyObject) {
-        let latitude = userlocation?.coordinate.latitude
-        let longitude = userlocation?.coordinate.longitude
-        let span = MKCoordinateSpanMake(0.075, 0.075)
-        let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: latitude!, longitude: longitude!), span: span)
         mapView.setUserTrackingMode(MKUserTrackingMode.Follow, animated: true)
-        mapView.setRegion(region, animated: true)
     }
     
     

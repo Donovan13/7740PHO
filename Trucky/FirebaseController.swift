@@ -165,6 +165,12 @@ class FirebaseController {
         truckRef.child("Active").child(uid!).updateChildValues(["latitude": lat, "longitude": lon])
     }
     
+    func updateTruckAddress(address: String) {
+        let uid = truck?.uid
+        truckRef.child("Active").child(uid!).updateChildValues(["address": address])
+    }
+    
+    
     func shareTruckLocation(onOff: Bool) {
         let uid = truck?.uid
         if onOff == true {

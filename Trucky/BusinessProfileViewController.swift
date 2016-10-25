@@ -13,12 +13,11 @@ import MapKit
 
 class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    var reviews = NSMutableArray()
     var truckName:String?
     var truck: Truck!
     var userlocation: CLLocation?
     let userDefaults = NSUserDefaults.standardUserDefaults()
-    var distanceOfTruck:String!
+    var distanceOfTruck:Double!
     var storedOffsets = [Int: CGFloat]()
     
     let sharedConnection = FirebaseController.sharedConnection
@@ -30,7 +29,6 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        reviews = truck.reviews!
         
         
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
@@ -98,7 +96,8 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
                 let cell = tableView.dequeueReusableCellWithIdentifier("titleCell") as! BusinessProfileTableViewCell
                 cell.truckNameLabel?.text = truck.truckName?.capitalizedString
                 cell.reviewsLabel?.text = "\(truck.reviewCount!) reviews on"
-                
+                cell.distanceLabel.text = (String(format: "%.2fm Away", distanceOfTruck))
+
                 
                 
                 if truck.rating == 0 {
@@ -122,7 +121,6 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
                 } else if truck.rating == 5 {
                     cell.ratingsImageView?.image = UIImage(named: "star5")
                 }
-                //            cell.distanceLabel.text = "\(distanceOfTruck!)"
                 
                 return cell
             } else if indexPath.row == 1 {
@@ -138,33 +136,28 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
                 return cell
             } else if indexPath.row == 2 {
                 let cell = tableView.dequeueReusableCellWithIdentifier("websiteCell", forIndexPath: indexPath)
-                //            cell.detailTextLabel?.text = truck.website
+                            cell.detailTextLabel?.text = truck.yelpURL
                 return cell
             } else if indexPath.row == 3 {
                 let cell = tableView.dequeueReusableCellWithIdentifier("addressCell", forIndexPath: indexPath)
-                //            cell.detailTextLabel?.text = truck.address
+                            cell.detailTextLabel?.text = truck.address
                 return cell
             } else {
                 let cell = tableView.dequeueReusableCellWithIdentifier("photoCell") as! BusinessPhotoTableViewCell
-                //            cell.yelpPhoto1.image = truck.photos
+
                 return cell
             }
+            
         } else {
             
-            
-            
-            
-            //            let cel = tableView.dequeueReusableCellWithIdentifier("reviewCell") as! BusinessReviewTableViewCell
             let cel = tableView.dequeueReusableCellWithIdentifier("reviewCell") as! BusinessReviewTableViewCell
-            
             let review = truck.reviews![indexPath.row]
-            
-            
-            
             
             cel.reviewName.text = review.valueForKey("username") as? String
             cel.reviewTime.text = review.valueForKey("timeCreated") as? String
             cel.reviewTextView.text = review.valueForKey("text") as! String
+            
+            
             let reviewRating = review.valueForKey("rating") as! Double
             
             if reviewRating == 0 {
@@ -252,7 +245,7 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
         if segue.identifier == "detailToWebSegue" {
             
             let detailVC = segue.destinationViewController as! WebViewController
-            //            detailVC.businessURL = truck.website
+            detailVC.businessURL = truck.yelpURL!
         }
         
     }

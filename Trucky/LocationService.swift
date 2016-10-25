@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreLocation
+import UIKit
 
 
 protocol LocationServiceDelegate {
@@ -31,8 +32,10 @@ class LocationService: NSObject, CLLocationManagerDelegate {
     var newLocation: CLLocation?
     
     var locationServiceDelegate: LocationServiceDelegate?
+    let firebasecontroller = FirebaseController.sharedConnection
+    let userDefaults = NSUserDefaults.standardUserDefaults()
     
-    override init() {  
+    override init() {
         super.init()
         
         self.locationManager = CLLocationManager()
@@ -46,19 +49,64 @@ class LocationService: NSObject, CLLocationManagerDelegate {
         locationManager.distanceFilter = 200
         
         locationManager.delegate = self
-        
+        startUpdatingLocation()
     }
     
-
+    
     
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let newLocation = locations.last else { return }
         
         self.newLocation = newLocation
-        
+        print(self.newLocation)
         searchingLocation(newLocation)
+        
+        if self.userDefaults.stringForKey("Truck") != nil {
+            
+            CLGeocoder().reverseGeocodeLocation(newLocation, completionHandler: {(placemarks, error) -> Void in
+                
+                if error != nil {
+                    print("Reverse geocoder failed with error" + error!.localizedDescription)
+                    return
+                }
+                
+                if placemarks!.count > 0 {
+                    let pm = placemarks![0]
+                    let address = "\(pm.thoroughfare!), \(pm.locality!) \(pm.administrativeArea!) \(pm.postalCode!)"
+                    
+                    self.firebasecontroller.updateTruckAddress(address)
+                    
+                } else {
+                    print("Problem with the data received from geocoder")
+                }
+            })
+        }
+        
     }
+    
+    func locationManager(manager: CLLocationManager, didUpdateToLocation newLocation: CLLocation, fromLocation oldLocation: CLLocation) {
+        
+        
+        
+        //            if userDefaults.stringForKey("uid") != nil {
+        //    //            self.truckRef.child("Trucks").child(userUID!).updateChildValues(["latitude": userLat, "longitude": userLon])
+        //            }
+        //
+        //
+        //            if UIApplication.sharedApplication().applicationState == .Active {
+        //                //print("active")
+        //            } else {
+        //                print("updated:\(newLocation)")
+        //            }
+        //
+        //            if UIApplication.sharedApplication().applicationState == .Inactive {
+        //                print("inactive")
+        //            }
+        //
+        
+    }
+    
     
     
     func startUpdatingLocation() {
@@ -98,7 +146,7 @@ class LocationService: NSObject, CLLocationManagerDelegate {
         }
         locationDelegate.updateLocationFailed(error)
     }
-
+    
     
     
     
