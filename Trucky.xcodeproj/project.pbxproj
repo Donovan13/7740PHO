@@ -673,6 +673,7 @@
 				<string>09FF688B1D3EC18800EF4551</string>
 				<string>29D61D483463FB1D3C2B3F1D</string>
 				<string>3E1FABD68B59B0F56FDF3151</string>
+				<string>2CDBC9ADBCAAF1EC7AD66E78</string>
 			</array>
 			<key>buildRules</key>
 			<array/>
@@ -1565,6 +1566,30 @@
 			<string>PBXShellScriptBuildPhase</string>
 			<key>name</key>
 			<string>&#128230; Embed Pods Frameworks</string>
+			<key>outputPaths</key>
+			<array/>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+			<key>shellPath</key>
+			<string>/bin/sh</string>
+			<key>shellScript</key>
+			<string>"${SRCROOT}/Pods/Target Support Files/Pods-Trucky/Pods-Trucky-frameworks.sh"
+</string>
+			<key>showEnvVarsInLog</key>
+			<string>0</string>
+		</dict>
+		<key>2CDBC9ADBCAAF1EC7AD66E78</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>inputPaths</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXShellScriptBuildPhase</string>
+			<key>name</key>
+			<string>Embed Pods Frameworks</string>
 			<key>outputPaths</key>
 			<array/>
 			<key>runOnlyForDeploymentPostprocessing</key>

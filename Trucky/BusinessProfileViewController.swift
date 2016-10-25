@@ -36,8 +36,17 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.translucent = true
-        
         self.navigationController!.navigationBar.titleTextAttributes = [ NSFontAttributeName: UIFont(name: "times", size: 20)!]
+        self.navigationController?.hidesBarsOnSwipe = true
+
+    }
+    
+    override func prefersStatusBarHidden() -> Bool {
+        if self.navigationController?.navigationBarHidden == true {
+            return true
+        } else {
+            return false
+        }
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -55,7 +64,7 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
         imageView.contentMode = .ScaleAspectFill
         
         // Set the background color to match better
-        tableView.backgroundColor = .redColor()
+//        tableView.backgroundColor = .redColor()
         
         // blur it
         let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Light)
