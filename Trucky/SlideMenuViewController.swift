@@ -98,12 +98,10 @@ class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     func activateTruckDelegate() {
-        locationController.startUpdatingLocation()
         errorAlert("Confirmation", message: "Sharing Your Location From Now!")
     }
     
     func deactivateTruckDelegate() {
-        locationController.stopUpdatingLocation()
         errorAlert("Time has expired", message: "Your location is no longer being shared")
 
 //        errorAlert("Confirmation", message: "Going out of business =(")

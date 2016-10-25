@@ -16,6 +16,7 @@ func ==(lhs:Truck, rhs:Truck) -> Bool {
 
 
 struct Truck: Equatable {
+    let address: String?
     let categories: String?
     let cityAndState: String?
     let email: String?
@@ -46,6 +47,7 @@ struct Truck: Equatable {
     }
     
     init(truck: Truck) {
+        address = truck.address
         categories = truck.categories
         cityAndState = truck.cityAndState
         email = truck.email
@@ -64,6 +66,7 @@ struct Truck: Equatable {
     }
     
     init(snapshot: FIRDataSnapshot) {
+        address = snapshot.value!["address"] as? String
         categories = snapshot.value!["categories"] as? String
         cityAndState = snapshot.value!["cityAndState"] as? String
         email = snapshot.value!["email"] as? String
@@ -86,6 +89,7 @@ struct Truck: Equatable {
     
     func toAnyObject() -> AnyObject {
         return [
+            "address": address!,
             "categories": categories!,
             "cityAndState": cityAndState!,
             "email": email!,
