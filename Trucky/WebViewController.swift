@@ -29,6 +29,11 @@ class WebViewController: UIViewController, UIWebViewDelegate {
         
     }
     
+    override func viewWillAppear(animated: Bool) {
+        self.navigationController?.navigationBar.translucent = false
+
+    }
+    
     func loadRequestWithString() {
         let url = NSURL(string: businessURL)
         let request = NSURLRequest(URL: url!)
