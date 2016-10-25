@@ -42,7 +42,6 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         
         
         
-        
         tableView.delegate = self
         tableView.dataSource = self
         mapView.delegate = self
@@ -55,6 +54,8 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
+        
+        
         
         mapView.showsUserLocation = true
         mapView.setUserTrackingMode(MKUserTrackingMode.Follow, animated: true)
@@ -97,6 +98,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     }
     
     func loadAnnotations() {
+        if trucks.count >= 0 {
         for truck in trucks {
             let title = truck.truckName
             let subtitle = truck.categories
@@ -105,6 +107,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
             let coordinates = CLLocationCoordinate2DMake(latitude!, longitude!)
             let annotation = CustomAnnotations(title: title!, subtitle: subtitle!, coordinate: coordinates, truckCA: truck)
             mapView.addAnnotation(annotation)
+        }
         }
     }
     

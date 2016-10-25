@@ -89,7 +89,6 @@ struct Truck: Equatable {
     
     func toAnyObject() -> AnyObject {
         return [
-            "address": address!,
             "categories": categories!,
             "cityAndState": cityAndState!,
             "email": email!,
