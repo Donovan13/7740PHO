@@ -23,7 +23,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     @IBOutlet weak var menuButton: UIButton!
     
     //    MARK: Var & Let
-
+    
     var trucks = [Truck]()
     var loggedInTruck: Truck?
     var loggedInCustomer: Customer?
@@ -34,14 +34,13 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     var userlocation: CLLocation?
     
     var truckdistance = [Double]()
-        
+    var idNumber = 0
+
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
-        
+
         tableView.delegate = self
         tableView.dataSource = self
         mapView.delegate = self
@@ -55,8 +54,6 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
         
-        
-        
         mapView.showsUserLocation = true
         mapView.setUserTrackingMode(MKUserTrackingMode.Follow, animated: true)
         
@@ -69,11 +66,6 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         myShadow.shadowColor = UIColor.lightGrayColor()
         self.navigationController!.navigationBar.titleTextAttributes = [ NSShadowAttributeName: myShadow, NSFontAttributeName: UIFont(name: "times", size: 25)! ]
         
-        
-        
-        
-        
-
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -82,32 +74,26 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         self.reloadTrucks()
         
         if userDefaults.valueForKey("Truck") != nil {
-//            if firebaseController.getLoggedInTruck().uid != nil {
-            
-//            }
-            
-//            guard loggedInTruck != firebaseController.getLoggedInTruck() else { return }
-                loggedInTruck = firebaseController.getLoggedInTruck()
+            loggedInTruck = firebaseController.getLoggedInTruck()
         } else if userDefaults.valueForKey("Customer") != nil {
             loggedInCustomer = firebaseController.getLoggedInCustomer()
         }
-        
-        
-//        print(loggedInTruck?.truckName)
         
     }
     
     func loadAnnotations() {
         if trucks.count >= 0 {
-        for truck in trucks {
-            let title = truck.truckName
-            let subtitle = truck.categories
-            let latitude = truck.latitude
-            let longitude = truck.longitude
-            let coordinates = CLLocationCoordinate2DMake(latitude!, longitude!)
-            let annotation = CustomAnnotations(title: title!, subtitle: subtitle!, coordinate: coordinates, truckCA: truck)
-            mapView.addAnnotation(annotation)
-        }
+            for truck in trucks {
+                let title = truck.truckName
+                let subtitle = truck.categories
+                let latitude = truck.latitude
+                let longitude = truck.longitude
+                let coordinates = CLLocationCoordinate2DMake(latitude!, longitude!)
+                
+                let annotation = CustomAnnotations(title: title!, subtitle: subtitle!, coordinate: coordinates, truckCA: truck, idNumber: idNumber)
+                mapView.addAnnotation(annotation)
+                idNumber = idNumber + 1
+            }
         }
     }
     
@@ -122,10 +108,10 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     func updateLocationFailed(error: NSError) {
         errorAlert("Location Failed", message: error.localizedDescription)
     }
-
+    
     //    MARK: MapView Delegate
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
-
+        
         if annotation.isEqual(mapView.userLocation) {
             return nil
         } else if annotation.isEqual(annotation as! CustomAnnotations){
@@ -140,7 +126,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
             pin.leftCalloutAccessoryView = iconFrame
             pin.leftCalloutAccessoryView?.layer.cornerRadius = (pin.leftCalloutAccessoryView?.frame.size.width)! / 2
             pin.leftCalloutAccessoryView?.clipsToBounds = true
-
+            
             return pin
             
         } else {
@@ -157,7 +143,8 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         self.performSegueWithIdentifier("annotationDetailSegue", sender: annotation)
         
     }
-
+    
+    
     
     
     //    MARK: TableView Delegate
@@ -168,7 +155,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("BusinessTableViewCell") as! DetailTableViewCell
         let post = trucks[indexPath.row]
-
+        
         
         cell.businessImage.image = string2Image(post.imageString!)
         cell.businessLabel?.text = post.truckName?.capitalizedString
@@ -204,7 +191,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         } else if post.rating == 5 {
             cell.reviewImage?.image = UIImage(named: "star5")
         }
-    
+        
         if userlocation != nil {
             let location = CLLocation(latitude: post.latitude!, longitude: post.longitude!)
             let distance = location.distanceFromLocation(userlocation!)
@@ -226,7 +213,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         self.mapView.setRegion(region, animated: true)
         
     }
-
+    
     //    MARK:PrepareForSegue
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if let identifier = segue.identifier {
@@ -242,7 +229,8 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
                 let detailVC = segue.destinationViewController as! BusinessProfileViewController
                 let annotation = sender as! CustomAnnotations
                 detailVC.truck = annotation.truckCA
-            
+                detailVC.distanceOfTruck = truckdistance[annotation.idNumber!]
+                
             case "truckToWebSegue":
                 let button = sender as! UIButton
                 let webVC = segue.destinationViewController as! WebViewController
@@ -313,7 +301,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         return scaledImage!
     }
     
-
+    
     func string2Image(string: String) -> UIImage {
         let data = NSData(base64EncodedString: string, options: .IgnoreUnknownCharacters)
         return UIImage(data: data!)!
