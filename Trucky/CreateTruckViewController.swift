@@ -38,16 +38,16 @@ class CreateTruckViewController: UIViewController, UserCreationDelegate, Authent
     @IBAction func searchTruck(sender: AnyObject) {
         let phoneNumber = businessNameTextField.text
         
-        Business.searchWithNumber(phoneNumber!, completion: { (businesses: [Business]!, reviews: [Reviews]!, error: NSError!) -> Void in
+        Business.searchWithNumber(phoneNumber!, completion: { (businesses: [Business]?, reviews: [Reviews]?, error: NSError!) -> Void in
             if error == nil {
                 
                 if businesses != nil {
-                    self.searchedBusiness = businesses.first
+                    self.searchedBusiness = businesses!.first
                     print("found business")
                 }
                 
                 if reviews != nil {
-                    self.searchedReviews = reviews
+                    self.searchedReviews = reviews!
                     print("found reviews")
                 }
                 

@@ -89,7 +89,6 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
                 let latitude = truck.latitude
                 let longitude = truck.longitude
                 let coordinates = CLLocationCoordinate2DMake(latitude!, longitude!)
-                
                 let annotation = CustomAnnotations(title: title!, subtitle: subtitle!, coordinate: coordinates, truckCA: truck, idNumber: idNumber)
                 mapView.addAnnotation(annotation)
                 idNumber = idNumber + 1
@@ -155,7 +154,6 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("BusinessTableViewCell") as! DetailTableViewCell
         let post = trucks[indexPath.row]
-        
         
         cell.businessImage.image = string2Image(post.imageString!)
         cell.businessLabel?.text = post.truckName?.capitalizedString

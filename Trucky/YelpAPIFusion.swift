@@ -13,6 +13,7 @@ import SwiftyJSON
 
 class YelpAPIFusion {
     var accessToken: [String: String]?
+    var phoneParamters: [String: String]?
     
     class var sharedInstance : YelpAPIFusion {
         struct Static {
@@ -28,7 +29,6 @@ class YelpAPIFusion {
     
     
     func searchWithPhone(phoneNumber: String, completion: ([Business]!, [Reviews]!, error: NSError!) -> Void) {
-        let parameters = ["phone": phoneNumber]
         let accessTokenUrl = "https://api.yelp.com/oauth2/token"
         let yelpParameters = [
             "grant_type" : "client_credentials",
@@ -42,16 +42,17 @@ class YelpAPIFusion {
                     let token = json["access_token"].string!
                     let type = json["token_type"].string!
                     self.accessToken = ["Authorization":"\(type) \(token)"]
-                    
-                    Alamofire.request(.GET, "https://api.yelp.com/v3/businesses/search/phone", parameters: parameters, encoding: .URL, headers: self.accessToken).responseJSON { (response) in
+                    self.phoneParamters = ["phone": phoneNumber]
+
+                    Alamofire.request(.GET, "https://api.yelp.com/v3/businesses/search/phone", parameters: self.phoneParamters, encoding: .URL, headers: self.accessToken).responseJSON { (response) in
                         if response.result.isSuccess {
-//                            print(json["])
+                            //                            print(json["])
                             let value = response.result.value
                             let json = JSON(value!)
                             let id = json["businesses"][0]["id"].rawString()
                             let url = "https://api.yelp.com/v3/businesses/\(id!)"
                             let reviewUrl = "https://api.yelp.com/v3/businesses/\(id!)/reviews"
-
+                            
                             Alamofire.request(.GET, url, parameters: nil, encoding: .URL, headers: self.accessToken).responseJSON { (response) in
                                 if response.result.isSuccess {
                                     let value = response.result.value
@@ -73,7 +74,7 @@ class YelpAPIFusion {
                                     }
                                     
                                     completion(nil, Business.reviewBusinesses(reviewJson), error: nil)
-
+                                    
                                 } else if response.result.isFailure {
                                     print("failed")
                                 }
