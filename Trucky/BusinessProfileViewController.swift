@@ -38,7 +38,7 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
         self.navigationController?.navigationBar.translucent = true
         self.navigationController!.navigationBar.titleTextAttributes = [ NSFontAttributeName: UIFont(name: "times", size: 20)!]
         self.navigationController?.hidesBarsOnSwipe = true
-
+        
     }
     
     override func prefersStatusBarHidden() -> Bool {
@@ -64,7 +64,7 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
         imageView.contentMode = .ScaleAspectFill
         
         // Set the background color to match better
-//        tableView.backgroundColor = .redColor()
+        //        tableView.backgroundColor = .redColor()
         
         // blur it
         let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Light)
@@ -107,8 +107,6 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
                 let cell = tableView.dequeueReusableCellWithIdentifier("titleCell") as! BusinessProfileTableViewCell
                 cell.truckNameLabel?.text = truck.truckName?.capitalizedString
                 cell.reviewsLabel?.text = "\(truck.reviewCount!) reviews on"
-                
-                
                 
                 if truck.rating == 0 {
                     cell.ratingsImageView?.image = UIImage(named: "star0")
@@ -163,43 +161,42 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
             
             
             
-            //            let cel = tableView.dequeueReusableCellWithIdentifier("reviewCell") as! BusinessReviewTableViewCell
-            let cel = tableView.dequeueReusableCellWithIdentifier("reviewCell") as! BusinessReviewTableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("reviewCell") as! BusinessReviewTableViewCell
             
             let review = truck.reviews![indexPath.row]
             
             
             
             
-            cel.reviewName.text = review.valueForKey("username") as? String
-            cel.reviewTime.text = review.valueForKey("timeCreated") as? String
-            cel.reviewTextView.text = review.valueForKey("text") as! String
+            cell.reviewName.text = review.valueForKey("username") as? String
+            cell.reviewTime.text = review.valueForKey("timeCreated") as? String
+            cell.reviewTextView.text = review.valueForKey("text") as! String
             let reviewRating = review.valueForKey("rating") as! Double
             
             if reviewRating == 0 {
-                cel.reviewRatingImage?.image = UIImage(named: "star0")
+                cell.reviewRatingImage?.image = UIImage(named: "star0")
             } else if reviewRating == 1 {
-                cel.reviewRatingImage?.image = UIImage(named: "star1")
+                cell.reviewRatingImage?.image = UIImage(named: "star1")
             } else if reviewRating == 1.5 {
-                cel.reviewRatingImage?.image = UIImage(named: "star1h")
+                cell.reviewRatingImage?.image = UIImage(named: "star1h")
             } else if reviewRating == 2 {
-                cel.reviewRatingImage?.image = UIImage(named: "star2")
+                cell.reviewRatingImage?.image = UIImage(named: "star2")
             } else if reviewRating == 2.5 {
-                cel.reviewRatingImage?.image = UIImage(named: "star2h")
+                cell.reviewRatingImage?.image = UIImage(named: "star2h")
             } else if reviewRating == 3 {
-                cel.reviewRatingImage?.image = UIImage(named: "star3")
+                cell.reviewRatingImage?.image = UIImage(named: "star3")
             } else if reviewRating == 3.5 {
-                cel.reviewRatingImage?.image = UIImage(named: "star3h")
+                cell.reviewRatingImage?.image = UIImage(named: "star3h")
             } else if reviewRating == 4 {
-                cel.reviewRatingImage?.image = UIImage(named: "star4")
+                cell.reviewRatingImage?.image = UIImage(named: "star4")
             } else if reviewRating == 4.5 {
-                cel.reviewRatingImage?.image = UIImage(named: "star4h")
+                cell.reviewRatingImage?.image = UIImage(named: "star4h")
             } else if reviewRating == 5 {
-                cel.reviewRatingImage?.image = UIImage(named: "star5")
+                cell.reviewRatingImage?.image = UIImage(named: "star5")
             }
             
             
-            return cel
+            return cell
             
         }
         

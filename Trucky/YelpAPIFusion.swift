@@ -138,12 +138,12 @@ class YelpAPIFusion {
     //        }
     //    }
     
-    private func removeOldHeaders(key: String) {
-        let manager = Alamofire.Manager.sharedInstance
-        if var authHeaders = manager.session.configuration.HTTPAdditionalHeaders {
-            authHeaders.removeValueForKey(key)
-            manager.session.configuration.HTTPAdditionalHeaders = authHeaders
-        }
-    }
+//    private func removeOldHeaders(key: String) {
+//        let manager = Alamofire.Manager.sharedInstance
+//        if var authHeaders = manager.session.configuration.HTTPAdditionalHeaders {
+//            authHeaders.removeValueForKey(key)
+//            manager.session.configuration.HTTPAdditionalHeaders = authHeaders
+//        }
+//    }
     
 }

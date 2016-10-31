@@ -10,19 +10,6 @@
 	<string>46</string>
 	<key>objects</key>
 	<dict>
-		<key>01D69077FBF064AABA9E9817</key>
-		<dict>
-			<key>explicitFileType</key>
-			<string>wrapper.framework</string>
-			<key>includeInIndex</key>
-			<string>0</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>path</key>
-			<string>Pods_Trucky.framework</string>
-			<key>sourceTree</key>
-			<string>BUILT_PRODUCTS_DIR</string>
-		</dict>
 		<key>090AE2BE1D6F9CDE000BAFBD</key>
 		<dict>
 			<key>fileEncoding</key>
@@ -484,7 +471,7 @@
 				<string>09FF68B21D3EC18800EF4551</string>
 				<string>09FF688E1D3EC18800EF4551</string>
 				<string>86A6BBF02A39C4C17595840A</string>
-				<string>BA3B0C467F3C12FB8A8FA4E5</string>
+				<string>97B7263DA6215A0AF878448E</string>
 			</array>
 			<key>isa</key>
 			<string>PBXGroup</string>
@@ -637,7 +624,7 @@
 			<array>
 				<string>095F09BA1D400CEA007E8F5B</string>
 				<string>095F09B01D400658007E8F5B</string>
-				<string>B3E84E0EB81BFF904F47F81E</string>
+				<string>703AE024516AF7901F272703</string>
 			</array>
 			<key>isa</key>
 			<string>PBXFrameworksBuildPhase</string>
@@ -667,13 +654,12 @@
 			<string>09FF68B81D3EC18800EF4551</string>
 			<key>buildPhases</key>
 			<array>
-				<string>FDE863AC8E5A0EF58F054EC4</string>
+				<string>525312DFC38CADB9314F0223</string>
 				<string>09FF68891D3EC18800EF4551</string>
 				<string>09FF688A1D3EC18800EF4551</string>
 				<string>09FF688B1D3EC18800EF4551</string>
-				<string>29D61D483463FB1D3C2B3F1D</string>
-				<string>3E1FABD68B59B0F56FDF3151</string>
-				<string>2CDBC9ADBCAAF1EC7AD66E78</string>
+				<string>CDFF3B7771A57716FC7D4A9C</string>
+				<string>FF6083EDE18D08121E61219F</string>
 			</array>
 			<key>buildRules</key>
 			<array/>
@@ -1337,7 +1323,7 @@
 		<key>09FF68B91D3EC18800EF4551</key>
 		<dict>
 			<key>baseConfigurationReference</key>
-			<string>836C1F9FCBC87B8FC42EB96C</string>
+			<string>297A1036F3F27A72771BF9D0</string>
 			<key>buildSettings</key>
 			<dict>
 				<key>ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES</key>
@@ -1377,7 +1363,7 @@
 		<key>09FF68BA1D3EC18800EF4551</key>
 		<dict>
 			<key>baseConfigurationReference</key>
-			<string>857BE0F2D659795AAC8A5ACF</string>
+			<string>34607F413477C0579AE20647</string>
 			<key>buildSettings</key>
 			<dict>
 				<key>ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES</key>
@@ -1554,7 +1540,37 @@
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
-		<key>29D61D483463FB1D3C2B3F1D</key>
+		<key>297A1036F3F27A72771BF9D0</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>name</key>
+			<string>Pods-Trucky.debug.xcconfig</string>
+			<key>path</key>
+			<string>Pods/Target Support Files/Pods-Trucky/Pods-Trucky.debug.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>34607F413477C0579AE20647</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>name</key>
+			<string>Pods-Trucky.release.xcconfig</string>
+			<key>path</key>
+			<string>Pods/Target Support Files/Pods-Trucky/Pods-Trucky.release.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>525312DFC38CADB9314F0223</key>
 		<dict>
 			<key>buildActionMask</key>
 			<string>2147483647</string>
@@ -1565,7 +1581,7 @@
 			<key>isa</key>
 			<string>PBXShellScriptBuildPhase</string>
 			<key>name</key>
-			<string>&#128230; Embed Pods Frameworks</string>
+			<string>&#128230; Check Pods Manifest.lock</string>
 			<key>outputPaths</key>
 			<array/>
 			<key>runOnlyForDeploymentPostprocessing</key>
@@ -1573,58 +1589,23 @@
 			<key>shellPath</key>
 			<string>/bin/sh</string>
 			<key>shellScript</key>
-			<string>"${SRCROOT}/Pods/Target Support Files/Pods-Trucky/Pods-Trucky-frameworks.sh"
+			<string>diff "${PODS_ROOT}/../Podfile.lock" "${PODS_ROOT}/Manifest.lock" &gt; /dev/null
+if [[ $? != 0 ]] ; then
+    cat &lt;&lt; EOM
+error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.
+EOM
+    exit 1
+fi
 </string>
 			<key>showEnvVarsInLog</key>
 			<string>0</string>
 		</dict>
-		<key>2CDBC9ADBCAAF1EC7AD66E78</key>
+		<key>703AE024516AF7901F272703</key>
 		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array/>
-			<key>inputPaths</key>
-			<array/>
+			<key>fileRef</key>
+			<string>F00634B5FD479E5377552FE1</string>
 			<key>isa</key>
-			<string>PBXShellScriptBuildPhase</string>
-			<key>name</key>
-			<string>Embed Pods Frameworks</string>
-			<key>outputPaths</key>
-			<array/>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-			<key>shellPath</key>
-			<string>/bin/sh</string>
-			<key>shellScript</key>
-			<string>"${SRCROOT}/Pods/Target Support Files/Pods-Trucky/Pods-Trucky-frameworks.sh"
-</string>
-			<key>showEnvVarsInLog</key>
-			<string>0</string>
-		</dict>
-		<key>3E1FABD68B59B0F56FDF3151</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array/>
-			<key>inputPaths</key>
-			<array/>
-			<key>isa</key>
-			<string>PBXShellScriptBuildPhase</string>
-			<key>name</key>
-			<string>&#128230; Copy Pods Resources</string>
-			<key>outputPaths</key>
-			<array/>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-			<key>shellPath</key>
-			<string>/bin/sh</string>
-			<key>shellScript</key>
-			<string>"${SRCROOT}/Pods/Target Support Files/Pods-Trucky/Pods-Trucky-resources.sh"
-</string>
-			<key>showEnvVarsInLog</key>
-			<string>0</string>
+			<string>PBXBuildFile</string>
 		</dict>
 		<key>7B12DBBE1DBEAD0000F743A3</key>
 		<dict>
@@ -1804,43 +1785,13 @@
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
-		<key>836C1F9FCBC87B8FC42EB96C</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.xcconfig</string>
-			<key>name</key>
-			<string>Pods-Trucky.debug.xcconfig</string>
-			<key>path</key>
-			<string>Pods/Target Support Files/Pods-Trucky/Pods-Trucky.debug.xcconfig</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>857BE0F2D659795AAC8A5ACF</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.xcconfig</string>
-			<key>name</key>
-			<string>Pods-Trucky.release.xcconfig</string>
-			<key>path</key>
-			<string>Pods/Target Support Files/Pods-Trucky/Pods-Trucky.release.xcconfig</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
 		<key>86A6BBF02A39C4C17595840A</key>
 		<dict>
 			<key>children</key>
 			<array>
 				<string>095F09B91D400CEA007E8F5B</string>
 				<string>095F09AF1D400658007E8F5B</string>
-				<string>01D69077FBF064AABA9E9817</string>
+				<string>F00634B5FD479E5377552FE1</string>
 			</array>
 			<key>isa</key>
 			<string>PBXGroup</string>
@@ -1849,19 +1800,12 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
-		<key>B3E84E0EB81BFF904F47F81E</key>
-		<dict>
-			<key>fileRef</key>
-			<string>01D69077FBF064AABA9E9817</string>
-			<key>isa</key>
-			<string>PBXBuildFile</string>
-		</dict>
-		<key>BA3B0C467F3C12FB8A8FA4E5</key>
+		<key>97B7263DA6215A0AF878448E</key>
 		<dict>
 			<key>children</key>
 			<array>
-				<string>836C1F9FCBC87B8FC42EB96C</string>
-				<string>857BE0F2D659795AAC8A5ACF</string>
+				<string>297A1036F3F27A72771BF9D0</string>
+				<string>34607F413477C0579AE20647</string>
 			</array>
 			<key>isa</key>
 			<string>PBXGroup</string>
@@ -1870,7 +1814,7 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
-		<key>FDE863AC8E5A0EF58F054EC4</key>
+		<key>CDFF3B7771A57716FC7D4A9C</key>
 		<dict>
 			<key>buildActionMask</key>
 			<string>2147483647</string>
@@ -1881,7 +1825,7 @@
 			<key>isa</key>
 			<string>PBXShellScriptBuildPhase</string>
 			<key>name</key>
-			<string>&#128230; Check Pods Manifest.lock</string>
+			<string>&#128230; Embed Pods Frameworks</string>
 			<key>outputPaths</key>
 			<array/>
 			<key>runOnlyForDeploymentPostprocessing</key>
@@ -1889,13 +1833,44 @@
 			<key>shellPath</key>
 			<string>/bin/sh</string>
 			<key>shellScript</key>
-			<string>diff "${PODS_ROOT}/../Podfile.lock" "${PODS_ROOT}/Manifest.lock" &gt; /dev/null
-if [[ $? != 0 ]] ; then
-    cat &lt;&lt; EOM
-error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.
-EOM
-    exit 1
-fi
+			<string>"${SRCROOT}/Pods/Target Support Files/Pods-Trucky/Pods-Trucky-frameworks.sh"
+</string>
+			<key>showEnvVarsInLog</key>
+			<string>0</string>
+		</dict>
+		<key>F00634B5FD479E5377552FE1</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>wrapper.framework</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>Pods_Trucky.framework</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>FF6083EDE18D08121E61219F</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>inputPaths</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXShellScriptBuildPhase</string>
+			<key>name</key>
+			<string>&#128230; Copy Pods Resources</string>
+			<key>outputPaths</key>
+			<array/>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+			<key>shellPath</key>
+			<string>/bin/sh</string>
+			<key>shellScript</key>
+			<string>"${SRCROOT}/Pods/Target Support Files/Pods-Trucky/Pods-Trucky-resources.sh"
 </string>
 			<key>showEnvVarsInLog</key>
 			<string>0</string>
