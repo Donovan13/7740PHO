@@ -72,11 +72,13 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         
         self.reloadTrucks()
         
-        if userDefaults.valueForKey("Truck") != nil {
-            loggedInTruck = firebaseController.getLoggedInTruck()
-        } else if userDefaults.valueForKey("Customer") != nil {
-            loggedInCustomer = firebaseController.getLoggedInCustomer()
-        }
+//        if userDefaults.valueForKey("Truck") != nil {
+//            if firebaseController.getLoggedInTruck().truckName?.characters.count > 1 {
+//            loggedInTruck = firebaseController.getLoggedInTruck()
+//            }
+//        } else if userDefaults.valueForKey("Customer") != nil {
+//            loggedInCustomer = firebaseController.getLoggedInCustomer()
+//        }
         
     }
     
@@ -272,7 +274,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     
     
     @IBAction func menuButtonTapped(sender: AnyObject) {
-        if loggedInTruck != nil {
+        if userDefaults.valueForKey("Truck") != nil {
             self.performSegueWithIdentifier("mapToMenuSegue", sender: self)
         }
         

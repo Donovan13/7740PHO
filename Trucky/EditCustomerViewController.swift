@@ -17,10 +17,8 @@ class EditCustomerViewController: UIViewController, UIImagePickerControllerDeleg
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var profilePictureButton: UIButton!
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
     }
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
@@ -28,7 +26,6 @@ class EditCustomerViewController: UIViewController, UIImagePickerControllerDeleg
         if self.profilePictureButton.selected == true {
             self.profileImageView.image = info[UIImagePickerControllerOriginalImage] as? UIImage
             dismissViewControllerAnimated(true, completion: nil)
-            
         }
     }
     
@@ -40,6 +37,4 @@ class EditCustomerViewController: UIViewController, UIImagePickerControllerDeleg
         imagePicker.allowsEditing = false
         self.presentViewController(imagePicker, animated: true, completion: nil)
     }
-    
-    
 }

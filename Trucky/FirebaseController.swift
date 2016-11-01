@@ -159,7 +159,12 @@ class FirebaseController {
             }
         }
     }
-
+    
+    func updateCustomImages(profileImage: String, logoImage: String, menuImage: String) {
+        let uid = truck?.uid
+        truckRef.child("Members").child(uid!).updateChildValues(["profileImage": profileImage, "logoImage": logoImage, "menuImage": menuImage])
+    }
+    
     func updateTruckLocation(lat: Double, lon: Double) {
         if userdefaults.boolForKey("locShare") == true {
         

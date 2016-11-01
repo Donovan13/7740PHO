@@ -588,46 +588,51 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jgf-2T-ScK">
                                 <state key="normal" title="Save Changes"/>
                                 <connections>
-                                    <action selector="saveButton:" destination="q5q-jW-QJE" eventType="touchUpInside" id="7Pr-gZ-BF4"/>
-                                    <action selector="saveButtonWithSender:" destination="q5q-jW-QJE" eventType="touchUpInside" id="u5e-St-e3r"/>
+                                    <action selector="saveImageButton:" destination="q5q-jW-QJE" eventType="touchUpInside" id="n26-ju-zyA"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DefaultLogo" translatesAutoresizingMaskIntoConstraints="NO" id="8WT-aY-zgI">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8WT-aY-zgI">
                                 <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="100" id="3AB-Ch-tUV"/>
                                     <constraint firstAttribute="height" constant="100" id="ysy-CC-wVU"/>
                                 </constraints>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DefaultProfile" translatesAutoresizingMaskIntoConstraints="NO" id="Ojn-Q7-91S">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ojn-Q7-91S">
                                 <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="100" id="Hx2-iY-Ljd"/>
                                     <constraint firstAttribute="height" constant="100" id="LXs-IJ-93J"/>
                                 </constraints>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="menu" translatesAutoresizingMaskIntoConstraints="NO" id="oVh-IY-FV2">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="oVh-IY-FV2">
                                 <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="100" id="awM-RE-8JX"/>
                                     <constraint firstAttribute="height" constant="100" id="i5Q-9N-3Uf"/>
                                 </constraints>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rJf-Lz-KPc">
+                            <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rJf-Lz-KPc">
                                 <constraints>
                                     <constraint firstAttribute="height" constant="18" id="COp-qR-g1i"/>
                                     <constraint firstAttribute="width" constant="121" id="h2c-uL-lBW"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                 <state key="normal" title="Update Profile Picture"/>
+                                <connections>
+                                    <action selector="updateProfileButton:" destination="q5q-jW-QJE" eventType="touchUpInside" id="iRW-b5-bng"/>
+                                </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ir6-BQ-K6w">
+                            <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ir6-BQ-K6w">
                                 <constraints>
                                     <constraint firstAttribute="height" constant="23" id="J0R-AT-JLz"/>
                                     <constraint firstAttribute="width" constant="80" id="cmk-gR-z6x"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                 <state key="normal" title="Update Logo"/>
+                                <connections>
+                                    <action selector="updateLogoButton:" destination="q5q-jW-QJE" eventType="touchUpInside" id="XG0-Da-c3N"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Truck Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Qc-oS-1xV">
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -648,13 +653,16 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zio-bw-kWj">
+                            <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zio-bw-kWj">
                                 <constraints>
                                     <constraint firstAttribute="width" constant="76" id="pJ7-Le-ekh"/>
                                     <constraint firstAttribute="height" constant="23" id="tdL-HP-adF"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                 <state key="normal" title="Update Menu"/>
+                                <connections>
+                                    <action selector="updateMenuButton:" destination="q5q-jW-QJE" eventType="touchUpInside" id="34D-lE-obg"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1561,11 +1569,9 @@
         </scene>
     </scenes>
     <resources>
-        <image name="DefaultLogo" width="626" height="626"/>
         <image name="DefaultProfile" width="960" height="960"/>
         <image name="location" width="310" height="310"/>
         <image name="logo" width="600" height="600"/>
-        <image name="menu" width="1530" height="1534"/>
         <image name="reload" width="256" height="256"/>
         <image name="sideMenu" width="200" height="200"/>
         <image name="star0" width="500" height="95"/>
@@ -1574,7 +1580,7 @@
         <image name="yelpLogo" width="675" height="383"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="2Kq-3N-BIS"/>
+        <segue reference="DeJ-LS-tm4"/>
         <segue reference="JzK-Lf-MqU"/>
         <segue reference="2XA-gi-oSt"/>
     </inferredMetricsTieBreakers>

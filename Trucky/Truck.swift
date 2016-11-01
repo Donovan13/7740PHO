@@ -33,7 +33,9 @@ class Truck: Equatable {
     let truckName: String?
     let uid: String?
     let yelpURL: String?
-    
+    let profileImage: String?
+    let logoImage: String?
+    let menuImage: String?
     var distance: Double?
     
     static func image2String(image: UIImage) -> String {
@@ -70,6 +72,9 @@ class Truck: Equatable {
         truckName = truck.truckName
         uid = truck.uid
         yelpURL = truck.yelpURL
+        profileImage = truck.profileImage
+        logoImage = truck.logoImage
+        menuImage = truck.menuImage
     }
     
     
@@ -92,6 +97,11 @@ class Truck: Equatable {
         truckName = snapshot.value!["truckName"] as? String
         uid = snapshot.value!["uid"] as? String
         yelpURL = snapshot.value!["yelpURL"] as? String
+        profileImage = snapshot.value!["profileImage"] as? String
+        logoImage = snapshot.value!["logoImage"] as? String
+        menuImage = snapshot.value!["menuImage"] as? String
+        
+        
         
         
         
@@ -113,7 +123,11 @@ class Truck: Equatable {
             "uid": uid!,
             "yelpURL": yelpURL!,
             "reviews": reviews!,
-            "photos": photos!
+            "photos": photos!,
+            "profileImage": profileImage!,
+            "logoImage": logoImage!,
+            "menuImage": menuImage!
+            
         ]
     }
     

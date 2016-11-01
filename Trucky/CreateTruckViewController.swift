@@ -91,8 +91,11 @@ class CreateTruckViewController: UIViewController, UserCreationDelegate, Authent
             "email": email!,
             "latitude": 0,
             "longitude": 0,
-            "photos" : getPhotos(),
-            "reviews": getReview()
+            "photos": getPhotos(),
+            "reviews": getReview(),
+            "profileImage": "",
+            "logoImage": "",
+            "menuImage": ""
         ]
         
         firebaseController.createTruck(email,
