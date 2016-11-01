@@ -30,6 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FIRAuth.auth()?.addAuthStateDidChangeListener({ (auth, user) in
             if let user = user {
         
+                
                 firebaseController.loggedInTruck(user.uid)
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                 let initialVC = storyboard.instantiateViewControllerWithIdentifier("truckVC")
