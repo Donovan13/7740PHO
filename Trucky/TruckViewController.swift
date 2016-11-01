@@ -47,8 +47,8 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         
         firebaseController.reloadTrucksDelegate = self
         locationController.locationServiceDelegate = self
-        
         userlocation = locationController.newLocation
+
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -89,7 +89,6 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
                 let latitude = truck.latitude
                 let longitude = truck.longitude
                 let coordinates = CLLocationCoordinate2DMake(latitude!, longitude!)
-                
                 let annotation = CustomAnnotations(title: title!, subtitle: subtitle!, coordinate: coordinates, truckCA: truck, idNumber: idNumber)
                 mapView.addAnnotation(annotation)
                 idNumber = idNumber + 1
@@ -101,6 +100,15 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         self.userlocation = currentLocation
         let lat = currentLocation.coordinate.latitude
         let lon = currentLocation.coordinate.longitude
+        
+        for truck in trucks {
+            truck.calculateDistance(currentLocation)
+        }
+        
+        trucks.sortInPlace({ $0.distance < $1.distance })
+        
+        
+        
         
         firebaseController.updateTruckLocation(lat, lon: lon)
     }
@@ -114,9 +122,10 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         
         if annotation.isEqual(mapView.userLocation) {
             return nil
-        } else if annotation.isEqual(annotation as! CustomAnnotations){
-            let pin = MKAnnotationView (annotation: annotation, reuseIdentifier: nil)
             
+        } else if annotation.isEqual(annotation as! CustomAnnotations) {
+            
+            let pin = MKAnnotationView (annotation: annotation, reuseIdentifier: nil)
             let icon = scaleUIImageToSize(UIImage(named: "login")!, size: CGSizeMake(30,30))
             let iconFrame = UIImageView(image: icon)
             
@@ -145,17 +154,15 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     }
     
     
-    
-    
     //    MARK: TableView Delegate
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return trucks.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("BusinessTableViewCell") as! DetailTableViewCell
-        let post = trucks[indexPath.row]
         
+        let cell = tableView.dequeueReusableCellWithIdentifier("BusinessTableViewCell") as! DetailTableViewCell
+        let post = trucks.reverse()[indexPath.row]
         
         cell.businessImage.image = string2Image(post.imageString!)
         cell.businessLabel?.text = post.truckName?.capitalizedString
@@ -169,6 +176,12 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         cell.categoryLabel?.text = post.categories
         cell.detailsButton.tag = indexPath.row
         cell.yelpButton.tag = indexPath.row
+        
+        if post.distance != nil {
+            let inMiles = post.distance! * 0.000621371192
+            cell.distanceLabel.text = (String(format: "%.2fm Away", inMiles))
+            truckdistance.append(inMiles)
+        }
         
         if post.rating == 0 {
             cell.reviewImage?.image = UIImage(named: "star0")
@@ -192,15 +205,6 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
             cell.reviewImage?.image = UIImage(named: "star5")
         }
         
-        if userlocation != nil {
-            let location = CLLocation(latitude: post.latitude!, longitude: post.longitude!)
-            let distance = location.distanceFromLocation(userlocation!)
-            let inMiles = distance * 0.000621371192
-            truckdistance.append(inMiles)
-            cell.distanceLabel.text = (String(format: "%.2fm Away", inMiles))
-        }
-        
-        
         return cell
     }
     
@@ -220,16 +224,18 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
             switch identifier {
             case "detailSegue":
                 let button = sender as! UIButton
-                let truck = trucks[button.tag]
+                let truck = trucks.reverse()[button.tag]
                 let detailVC = segue.destinationViewController as! BusinessProfileViewController
                 detailVC.truck = truck
-                detailVC.distanceOfTruck = truckdistance[button.tag]
+//                detailVC.distanceOfTruck = truck.distance
+
                 
             case "annotationDetailSegue":
                 let detailVC = segue.destinationViewController as! BusinessProfileViewController
                 let annotation = sender as! CustomAnnotations
                 detailVC.truck = annotation.truckCA
-                detailVC.distanceOfTruck = truckdistance[annotation.idNumber!]
+//                detailVC.distanceOfTruck = truckdistance[annotation.idNumber!]
+
                 
             case "truckToWebSegue":
                 let button = sender as! UIButton
