@@ -62,7 +62,7 @@ class LocationService: NSObject, CLLocationManagerDelegate {
         print(self.newLocation)
         searchingLocation(newLocation)
         
-        if self.userDefaults.stringForKey("Truck") != nil {
+        if self.userDefaults.boolForKey("locShare") == true {
             
             CLGeocoder().reverseGeocodeLocation(newLocation, completionHandler: {(placemarks, error) -> Void in
                 
@@ -78,6 +78,7 @@ class LocationService: NSObject, CLLocationManagerDelegate {
                     self.firebasecontroller.updateTruckAddress(address)
                     
                 } else {
+                    false
                     print("Problem with the data received from geocoder")
                 }
             })
@@ -134,8 +135,10 @@ class LocationService: NSObject, CLLocationManagerDelegate {
         guard let locationDelegate = self.locationServiceDelegate else {
             return
         }
-        
+        if self.userDefaults.boolForKey("locShare") == true {
+
             locationDelegate.updateLocation(currentLocation)
+        }
     }
     
     private func searchingLocationDidFailWithError(error: NSError) {

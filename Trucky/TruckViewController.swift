@@ -33,14 +33,13 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     let userDefaults = NSUserDefaults.standardUserDefaults()
     var userlocation: CLLocation?
     
-    var truckdistance = [Double]()
-    var idNumber = 0
 
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        
         tableView.delegate = self
         tableView.dataSource = self
         mapView.delegate = self
@@ -82,17 +81,18 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     }
     
     func loadAnnotations() {
-        if trucks.count >= 0 {
+        if trucks.count > 1 {
+            if trucks.first?.truckName != nil {
             for truck in trucks {
                 let title = truck.truckName
                 let subtitle = truck.categories
                 let latitude = truck.latitude
                 let longitude = truck.longitude
                 let coordinates = CLLocationCoordinate2DMake(latitude!, longitude!)
-                let annotation = CustomAnnotations(title: title!, subtitle: subtitle!, coordinate: coordinates, truckCA: truck, idNumber: idNumber)
+                let annotation = CustomAnnotations(title: title!, subtitle: subtitle!, coordinate: coordinates, truckCA: truck)
                 mapView.addAnnotation(annotation)
-                idNumber = idNumber + 1
             }
+        }
         }
     }
     
@@ -180,7 +180,6 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         if post.distance != nil {
             let inMiles = post.distance! * 0.000621371192
             cell.distanceLabel.text = (String(format: "%.2fm Away", inMiles))
-            truckdistance.append(inMiles)
         }
         
         if post.rating == 0 {

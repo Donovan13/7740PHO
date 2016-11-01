@@ -16,14 +16,12 @@ class CustomAnnotations: NSObject, MKAnnotation {
     var title: String?
     var subtitle: String?
     var coordinate: CLLocationCoordinate2D
-    var idNumber: Int?
     
-    init(title: String, subtitle: String, coordinate: CLLocationCoordinate2D, truckCA: Truck, idNumber: Int) {
+    init(title: String, subtitle: String, coordinate: CLLocationCoordinate2D, truckCA: Truck) {
         self.title = title
         self.subtitle = subtitle
         self.coordinate = coordinate
         self.truckCA = truckCA
-        self.idNumber = idNumber
     }
     
 }
