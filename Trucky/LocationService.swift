@@ -34,6 +34,7 @@ class LocationService: NSObject, CLLocationManagerDelegate {
     var locationServiceDelegate: LocationServiceDelegate?
     let firebasecontroller = FirebaseController.sharedConnection
     let userDefaults = NSUserDefaults.standardUserDefaults()
+    let locvalue = NSUserDefaults.standardUserDefaults().boolForKey("locShare")
     
     override init() {
         super.init()
@@ -62,8 +63,8 @@ class LocationService: NSObject, CLLocationManagerDelegate {
         print(self.newLocation)
         searchingLocation(newLocation)
         
-        if self.userDefaults.boolForKey("locShare") == true {
-            
+//        if self.userDefaults.boolForKey("locShare") == true {
+        
             CLGeocoder().reverseGeocodeLocation(newLocation, completionHandler: {(placemarks, error) -> Void in
                 
                 if error != nil {
@@ -82,7 +83,7 @@ class LocationService: NSObject, CLLocationManagerDelegate {
                     print("Problem with the data received from geocoder")
                 }
             })
-        }
+//        }
         
     }
     
@@ -135,10 +136,11 @@ class LocationService: NSObject, CLLocationManagerDelegate {
         guard let locationDelegate = self.locationServiceDelegate else {
             return
         }
-        if self.userDefaults.boolForKey("locShare") == true {
+        
+//        if locvalue == true {
 
             locationDelegate.updateLocation(currentLocation)
-        }
+//        }
     }
     
     private func searchingLocationDidFailWithError(error: NSError) {

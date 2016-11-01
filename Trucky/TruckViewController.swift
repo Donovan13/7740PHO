@@ -39,7 +39,6 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
         tableView.delegate = self
         tableView.dataSource = self
         mapView.delegate = self
@@ -80,6 +79,9 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
 //            loggedInCustomer = firebaseController.getLoggedInCustomer()
 //        }
         
+        
+        
+        
     }
     
     func loadAnnotations() {
@@ -99,19 +101,12 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     }
     
     func updateLocation(currentLocation: CLLocation) {
-        self.userlocation = currentLocation
+//        self.userlocation = currentLocation
         let lat = currentLocation.coordinate.latitude
         let lon = currentLocation.coordinate.longitude
         
-        for truck in trucks {
-            truck.calculateDistance(currentLocation)
-        }
         
-        trucks.sortInPlace({ $0.distance < $1.distance })
-        
-        
-        
-        
+    
         firebaseController.updateTruckLocation(lat, lon: lon)
     }
     
@@ -162,6 +157,9 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+        
+        
         
         let cell = tableView.dequeueReusableCellWithIdentifier("BusinessTableViewCell") as! DetailTableViewCell
         let post = trucks.reverse()[indexPath.row]
@@ -265,6 +263,12 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         dispatch_async(dispatch_get_main_queue()) {
             self.mapView.removeAnnotations(self.mapView.annotations)
             self.reloadTrucks()
+            
+            for truck in self.trucks {
+                truck.calculateDistance(self.userlocation)
+            }
+            
+            self.trucks.sortInPlace({ $0.distance < $1.distance })
         }
     }
     

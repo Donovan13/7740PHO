@@ -226,9 +226,11 @@ class FirebaseController {
     }
     
     func loggedInTruck(uid: String) {
+        
         self.truckRef.child("Members").child(uid).observeSingleEventOfType(.Value, withBlock: { (snapshot: FIRDataSnapshot) in
             
             self.truck = Truck(snapshot: snapshot)
+            
             self.userdefaults.setValue(uid, forKey: "Truck")
 
             self.logInUserDelegate?.logInTruckDelegate()
