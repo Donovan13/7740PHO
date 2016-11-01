@@ -8,14 +8,15 @@
 
 import UIKit
 import Firebase
-
+import CoreLocation
 
 func ==(lhs:Truck, rhs:Truck) -> Bool {
     return lhs.uid == rhs.uid
 }
 
 
-struct Truck: Equatable {
+class Truck: Equatable {
+    
     let address: String?
     let categories: String?
     let cityAndState: String?
@@ -32,8 +33,8 @@ struct Truck: Equatable {
     let truckName: String?
     let uid: String?
     let yelpURL: String?
-
     
+    var distance: Double?
     
     static func image2String(image: UIImage) -> String {
         let imageData = UIImageJPEGRepresentation(image, 1);
@@ -45,6 +46,12 @@ struct Truck: Equatable {
         let data = NSData(base64EncodedString: string, options: .IgnoreUnknownCharacters)
         return UIImage(data: data!)!
     }
+    
+    func calculateDistance(fromLocation:CLLocation!) {
+        let location = CLLocation(latitude: self.latitude!, longitude: self.longitude!)
+        distance = location.distanceFromLocation(fromLocation)
+    }
+    
     
     init(truck: Truck) {
         address = truck.address
@@ -65,6 +72,9 @@ struct Truck: Equatable {
         yelpURL = truck.yelpURL
     }
     
+    
+    
+    
     init(snapshot: FIRDataSnapshot) {
         address = snapshot.value!["address"] as? String
         categories = snapshot.value!["categories"] as? String
@@ -83,7 +93,7 @@ struct Truck: Equatable {
         uid = snapshot.value!["uid"] as? String
         yelpURL = snapshot.value!["yelpURL"] as? String
         
-    
+        
         
     }
     
