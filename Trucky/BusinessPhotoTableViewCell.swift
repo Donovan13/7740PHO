@@ -10,13 +10,16 @@ import UIKit
 
 class BusinessPhotoTableViewCell: UITableViewCell {
     
-    @IBOutlet private weak var collectionView: UICollectionView!
+    @IBOutlet fileprivate weak var collectionView: UICollectionView!
         
     }
     
     extension BusinessPhotoTableViewCell {
         
-        func setCollectionViewDataSourceDelegate<D: protocol<UICollectionViewDataSource, UICollectionViewDelegate>>(dataSourceDelegate: D, forRow row: Int) {
+        
+        
+        
+        func setCollectionViewDataSourceDelegate<D: UICollectionViewDataSource & UICollectionViewDelegate(_ dataSourceDelegate: D, forRow row: Int) {
             
             collectionView.delegate = dataSourceDelegate
             collectionView.dataSource = dataSourceDelegate

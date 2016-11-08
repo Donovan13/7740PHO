@@ -14,12 +14,12 @@ import SwiftyJSON
 
 
 protocol UserCreationDelegate {
-    func createUserFail(error: NSError)
+    func createUserFail(_ error: NSError)
 }
 
 protocol AuthenticationDelegate {
     func userAuthenticationSuccess()
-    func userAuthenticationFail(error: NSError)
+    func userAuthenticationFail(_ error: NSError)
 }
 
 
@@ -51,10 +51,10 @@ protocol ReloadTrucksDelegate {
 class FirebaseController {
     
     let rootRef = FIRDatabase.database().reference()
-    let truckRef = FIRDatabase.database().referenceWithPath("Trucks")
-    let customerRef = FIRDatabase.database().referenceWithPath("Customers")
+    let truckRef = FIRDatabase.database().reference(withPath: "Trucks")
+    let customerRef = FIRDatabase.database().reference(withPath: "Customers")
     
-    let userdefaults = NSUserDefaults.standardUserDefaults()
+    let userdefaults = UserDefaults.standard
     
     var userCreationDelegate: UserCreationDelegate?
     var authenticationDelegate: AuthenticationDelegate?
@@ -65,10 +65,10 @@ class FirebaseController {
     var logOutUserDelegate: LogOutUserDelegate?
     
 
-    private var trucks = [Truck]()
-    private var truck: Truck?
+    fileprivate var trucks = [Truck]()
+    fileprivate var truck: Truck?
     
-    private var customer: Customer?
+    fileprivate var customer: Customer?
     
     static let sharedConnection = FirebaseController()
  
@@ -78,34 +78,34 @@ class FirebaseController {
     }
     
     
-    func createCustomer(email: String?, password: String?, dictionary: Dictionary<String, AnyObject>) {
-        FIRAuth.auth()?.createUserWithEmail(email!, password: password!, completion: { (user, error) in
+    func createCustomer(_ email: String?, password: String?, dictionary: Dictionary<String, AnyObject>) {
+        FIRAuth.auth()?.createUser(withEmail: email!, password: password!, completion: { (user, error) in
             if error == nil {
                 self.loginCustomer(email, password: password)
                 let uid = user!.uid
                 self.customerRef.child(uid).setValue(dictionary)
             } else {
-                self.userCreationDelegate?.createUserFail(error!)
+                self.userCreationDelegate?.createUserFail(error! as NSError)
             }
         })
     }
     
     
     
-    func loginCustomer(email:String?, password: String?) {
-        FIRAuth.auth()?.signInWithEmail(email!, password: password!, completion: { (user, error) in
+    func loginCustomer(_ email:String?, password: String?) {
+        FIRAuth.auth()?.signIn(withEmail: email!, password: password!, completion: { (user, error) in
             if error == nil {
                 self.authenticationDelegate?.userAuthenticationSuccess()
                 let uid = user?.uid
                 self.loggedInTruck(uid!)
             } else {
-                self.authenticationDelegate?.userAuthenticationFail(error!)
+                self.authenticationDelegate?.userAuthenticationFail(error! as NSError)
             }
         })
     }
     
-    func loggedInCustomer(uid: String) {
-        self.customerRef.child(uid).observeSingleEventOfType(.Value, withBlock: { (snapshot) in
+    func loggedInCustomer(_ uid: String) {
+        self.customerRef.child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
             self.customer = Customer(snapshot: snapshot)
             self.logInUserDelegate?.loginCustomerDelegate()
             self.userdefaults.setValue(uid, forKey: "Customer")
@@ -145,14 +145,14 @@ class FirebaseController {
         }
     }
     
-    func getTruckForUID(uid: String) -> Truck? {
-        guard let index = self.trucks.indexOf({$0.uid == uid}) else { return nil }
+    func getTruckForUID(_ uid: String) -> Truck? {
+        guard let index = self.trucks.index(where: {$0.uid == uid}) else { return nil }
         return self.trucks[index]
     }
     
     
-    private func activeTrucks() {
-        truckRef.child("Active").observeSingleEventOfType(.Value) { (snapshot: FIRDataSnapshot!) in
+    fileprivate func activeTrucks() {
+        truckRef.child("Active").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot!) in
             for trucks in snapshot.children {
                 let foodTruck = Truck(snapshot: trucks as! FIRDataSnapshot)
                 self.trucks.append(foodTruck)
@@ -160,21 +160,21 @@ class FirebaseController {
         }
     }
     
-    func updateCustomImages(profileImage: String, logoImage: String, menuImage: String) {
+    func updateCustomImages(_ profileImage: String, logoImage: String, menuImage: String) {
         let uid = truck?.uid
         truckRef.child("Members").child(uid!).updateChildValues(["profileImage": profileImage, "logoImage": logoImage, "menuImage": menuImage])
     }
     
-    func updateTruckLocation(lat: Double, lon: Double) {
-        if userdefaults.boolForKey("locShare") == true {
+    func updateTruckLocation(_ lat: Double, lon: Double) {
+        if userdefaults.bool(forKey: "locShare") == true {
         
         let uid = truck?.uid
         truckRef.child("Active").child(uid!).updateChildValues(["latitude": lat, "longitude": lon])
         }
     }
     
-    func updateTruckAddress(address: String) {
-        if userdefaults.boolForKey("locShare") == true {
+    func updateTruckAddress(_ address: String) {
+        if userdefaults.bool(forKey: "locShare") == true {
 
         let uid = truck?.uid
         truckRef.child("Active").child(uid!).updateChildValues(["address": address])
@@ -182,7 +182,7 @@ class FirebaseController {
     }
     
     
-    func shareTruckLocation(onOff: Bool) {
+    func shareTruckLocation(_ onOff: Bool) {
         let uid = truck?.uid
         if onOff == true {
             truck = Truck(truck: truck!)
@@ -195,8 +195,8 @@ class FirebaseController {
         }
     }
     
-    func createTruck(email: String?, password: String?, dictionary: Dictionary<String, AnyObject>) {
-        FIRAuth.auth()?.createUserWithEmail(email!, password: password!, completion: { (user, error) in
+    func createTruck(_ email: String?, password: String?, dictionary: Dictionary<String, AnyObject>) {
+        FIRAuth.auth()?.createUser(withEmail: email!, password: password!, completion: { (user, error) in
             if error == nil {
                 
                 self.loginTruck(email, password: password)
@@ -204,13 +204,13 @@ class FirebaseController {
                 self.truckRef.child("Members").child(uid).setValue(dictionary)
                 self.truckRef.child("Members").child("\(user!.uid)/uid").setValue(uid)
             } else {
-                self.userCreationDelegate?.createUserFail(error!)
+                self.userCreationDelegate?.createUserFail(error! as NSError)
             }
         })
     }
     
-    func loginTruck(email: String?, password: String?) {
-        FIRAuth.auth()?.signInWithEmail(email!, password: password!, completion: { (user, error) in
+    func loginTruck(_ email: String?, password: String?) {
+        FIRAuth.auth()?.signIn(withEmail: email!, password: password!, completion: { (user, error) in
             if error == nil {
                 let uid = user?.uid
                 
@@ -220,14 +220,14 @@ class FirebaseController {
                 self.loggedInTruck(uid!)
 
             } else {
-                self.authenticationDelegate?.userAuthenticationFail(error!)
+                self.authenticationDelegate?.userAuthenticationFail(error! as NSError)
             }
         })
     }
     
-    func loggedInTruck(uid: String) {
+    func loggedInTruck(_ uid: String) {
         
-        self.truckRef.child("Members").child(uid).observeSingleEventOfType(.Value, withBlock: { (snapshot: FIRDataSnapshot) in
+        self.truckRef.child("Members").child(uid).observeSingleEvent(of: .value, with: { (snapshot: FIRDataSnapshot) in
             
             self.truck = Truck(snapshot: snapshot)
             
@@ -238,24 +238,24 @@ class FirebaseController {
         })
     }
     
-    private func setupListeners() {
-        self.truckRef.child("Active").observeEventType(.ChildAdded) { (snapshot: FIRDataSnapshot!) in
+    fileprivate func setupListeners() {
+        self.truckRef.child("Members").observe(.childAdded) { (snapshot: FIRDataSnapshot!) in
             let truck = Truck(snapshot: snapshot)
             if !self.trucks.contains(truck)  {
                 self.trucks.append(truck)
             }
             self.reloadTrucksDelegate?.reloadTrucks()
         }
-        self.truckRef.child("Active").observeEventType(.ChildChanged) { (snapshot: FIRDataSnapshot!) in
+        self.truckRef.child("Members").observe(.childChanged) { (snapshot: FIRDataSnapshot!) in
             let truck = Truck(snapshot: snapshot)
-            let index = self.trucks.indexOf(truck)
+            let index = self.trucks.index(of: truck)
             self.trucks[index!] = truck
             self.reloadTrucksDelegate?.reloadTrucks()
         }
-        self.truckRef.child("Active").observeEventType(.ChildRemoved) { (snapshot: FIRDataSnapshot!) in
+        self.truckRef.child("Members").observe(.childRemoved) { (snapshot: FIRDataSnapshot!) in
             let truck = Truck(snapshot: snapshot)
-            let index = self.trucks.indexOf(truck)!
-            self.trucks.removeAtIndex(index)
+            let index = self.trucks.index(of: truck)!
+            self.trucks.remove(at: index)
             self.reloadTrucksDelegate?.reloadTrucks()
         }
     }

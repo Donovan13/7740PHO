@@ -12,11 +12,9 @@ source 'https://github.com/CocoaPods/Specs.git'
 pod 'Firebase'
 pod 'Firebase/Auth'
 pod 'Firebase/Database'
-pod 'AFNetworking', '~> 2.6.3'
-pod 'BDBOAuth1Manager'
-pod 'SideMenu', '~> 1.2.1'
-pod 'Alamofire', '~>3.0'
-pod 'SwiftyJSON', '~>2.4.0'
+pod 'SideMenu'
+pod 'Alamofire'
+pod 'SwiftyJSON'
 
 
 

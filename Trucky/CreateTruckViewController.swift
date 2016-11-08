@@ -24,7 +24,7 @@ class CreateTruckViewController: UIViewController, UserCreationDelegate, Authent
     
     var searchedBusiness:Business?
     var searchedReviews:[Reviews]?
-    let userDefaults = NSUserDefaults.standardUserDefaults()
+    let userDefaults = UserDefaults.standard
     let firebaseController = FirebaseController.sharedConnection
     
     override func viewDidLoad() {
@@ -35,7 +35,7 @@ class CreateTruckViewController: UIViewController, UserCreationDelegate, Authent
         
     }
     
-    @IBAction func searchTruck(sender: AnyObject) {
+    @IBAction func searchTruck(_ sender: AnyObject) {
         let phoneNumber = businessNameTextField.text
         
         Business.searchWithNumber(phoneNumber!, completion: { (businesses: [Business]?, reviews: [Reviews]?, error: NSError!) -> Void in
@@ -63,20 +63,20 @@ class CreateTruckViewController: UIViewController, UserCreationDelegate, Authent
                 
             }
             
-        })
+        } as! ([Business]?, [Reviews]?, NSError?) -> Void)
         
         
     }
     
     
-    @IBAction func createTruck(sender: AnyObject) {
+    @IBAction func createTruck(_ sender: AnyObject) {
 //        let longitude = self.userDefaults.valueForKey("longitude")
 //        let latitude = self.userDefaults.valueForKey("latitude")
         let email = emailTextField.text
         let password = passwordTextField.text
         let imageURL = imageURLtoString(searchedBusiness!.imageURL!)
 
-        let dictionary: [String : AnyObject] = [
+        let dictionary = [
             "address": "",
             "uid": "",
             "yelpID": searchedBusiness!.id,
@@ -96,16 +96,16 @@ class CreateTruckViewController: UIViewController, UserCreationDelegate, Authent
             "profileImage": "",
             "logoImage": "",
             "menuImage": ""
-        ]
+        ] as [String : Any]
         
         firebaseController.createTruck(email,
                                        password: password,
-                                       dictionary: dictionary)
+                                       dictionary: dictionary as Dictionary<String, AnyObject>)
     }
     
-    private func getReview() -> [String: AnyObject] {
-        var reviewDic = [String: AnyObject]()
-        for (index, review) in searchedReviews!.enumerate() {
+    fileprivate func getReview() -> [String: Any] {
+        var reviewDic = [String: Any]()
+        for (index, review) in searchedReviews!.enumerated() {
             reviewDic["\(index)"] = ["text": review.text!,
                                      "url": review.url!,
                                      "rating": review.rating!,
@@ -115,7 +115,7 @@ class CreateTruckViewController: UIViewController, UserCreationDelegate, Authent
         return reviewDic
     }
     
-    private func getPhotos() -> [String] {
+    fileprivate func getPhotos() -> [String] {
         var photos = [String]()
         for photo in searchedBusiness!.photos! {
             let photoString = imageURLtoString(photo)
@@ -124,12 +124,12 @@ class CreateTruckViewController: UIViewController, UserCreationDelegate, Authent
         return photos
     }
     
-    private func imageURLtoString(imageURL: String) -> String {
-        let url = NSURL(string: imageURL)
-        let data = NSData(contentsOfURL: url!)
+    fileprivate func imageURLtoString(_ imageURL: String) -> String {
+        let url = URL(string: imageURL)
+        let data = try? Data(contentsOf: url!)
         let image = UIImage(data: data!)
         let imageData = UIImageJPEGRepresentation(image!, 0.15)
-        let imageString = imageData!.base64EncodedStringWithOptions(.Encoding64CharacterLineLength)
+        let imageString = imageData!.base64EncodedString(options: .lineLength64Characters)
         return imageString
     }
     
@@ -137,17 +137,17 @@ class CreateTruckViewController: UIViewController, UserCreationDelegate, Authent
     
     // MARK: AuthenticationDelegate
     func userAuthenticationSuccess() {
-        dispatch_async(dispatch_get_main_queue()) {
-            self.performSegueWithIdentifier("LogInSegue", sender: nil)
+        DispatchQueue.main.async {
+            self.performSegue(withIdentifier: "LogInSegue", sender: nil)
         }
     }
     
-    func userAuthenticationFail(error:NSError) {
+    func userAuthenticationFail(_ error:NSError) {
         errorAlert("Authentication Fail", message: error.localizedDescription)
         print(error.localizedDescription + "\(error.code)")
     }
     
-    func createUserFail(error: NSError) {
+    func createUserFail(_ error: NSError) {
         var message: String
         switch error.code {
         case -5:
@@ -161,11 +161,11 @@ class CreateTruckViewController: UIViewController, UserCreationDelegate, Authent
         errorAlert("Login Error", message: message)
     }
     
-    func errorAlert(title: String, message: String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
-        let action = UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default, handler: nil)
+    func errorAlert(_ title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+        let action = UIAlertAction(title: "Okay", style: UIAlertActionStyle.default, handler: nil)
         alert.addAction(action)
-        presentViewController(alert, animated: true, completion: nil)
+        present(alert, animated: true, completion: nil)
     }
     
     

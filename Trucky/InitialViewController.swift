@@ -23,11 +23,11 @@ class InitialViewController: UIViewController {
         super.viewDidLoad()
         
         // Load the video from the app bundle.
-        let videoURL: NSURL = NSBundle.mainBundle().URLForResource("background", withExtension: "mp4")!
+        let videoURL: URL = Bundle.main.url(forResource: "background", withExtension: "mp4")!
         
-        player = AVPlayer(URL: videoURL)
-        player?.actionAtItemEnd = .None
-        player?.muted = true
+        player = AVPlayer(url: videoURL)
+        player?.actionAtItemEnd = .none
+        player?.isMuted = true
         let playerLayer = AVPlayerLayer(player: player)
         playerLayer.videoGravity = AVLayerVideoGravityResizeAspectFill
         playerLayer.zPosition = -1
@@ -36,22 +36,22 @@ class InitialViewController: UIViewController {
         player?.play()
         
         //loop video
-        NSNotificationCenter.defaultCenter().addObserver(self,
+        NotificationCenter.default.addObserver(self,
                                                          selector: #selector(InitialViewController.loopVideo),
-                                                         name: AVPlayerItemDidPlayToEndTimeNotification,
+                                                         name: NSNotification.Name.AVPlayerItemDidPlayToEndTime,
                                                          object: nil)
     }
     func loopVideo() {
-        player?.seekToTime(kCMTimeZero)
+        player?.seek(to: kCMTimeZero)
 //        player?.play()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
 
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
-        self.navigationController?.navigationBar.translucent = true
+        self.navigationController?.navigationBar.isTranslucent = true
     }
     
 }

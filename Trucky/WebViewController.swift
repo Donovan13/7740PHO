@@ -29,39 +29,39 @@ class WebViewController: UIViewController, UIWebViewDelegate {
         
     }
     
-    override func viewWillAppear(animated: Bool) {
-        self.navigationController?.navigationBar.translucent = false
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.navigationBar.isTranslucent = false
 
     }
     
     func loadRequestWithString() {
-        let url = NSURL(string: businessURL)
-        let request = NSURLRequest(URL: url!)
+        let url = URL(string: businessURL)
+        let request = URLRequest(url: url!)
         webView.loadRequest(request)
     }
     
-    func webViewDidFinishLoad(webView: UIWebView) {
+    func webViewDidFinishLoad(_ webView: UIWebView) {
         activityIndicator.stopAnimating()
     }
     
     
-    @IBAction func backAction(sender: AnyObject) {
+    @IBAction func backAction(_ sender: AnyObject) {
         if webView.canGoBack {
             webView.goBack()
         }
     }
     
-    @IBAction func forwardAction(sender: AnyObject) {
+    @IBAction func forwardAction(_ sender: AnyObject) {
         if webView.canGoForward {
             webView.goForward()
         }
     }
     
-    @IBAction func refreshAction(sender: AnyObject) {
+    @IBAction func refreshAction(_ sender: AnyObject) {
         webView.reload()
     }
     
-    @IBAction func stopAction(sender: AnyObject) {
+    @IBAction func stopAction(_ sender: AnyObject) {
         webView.stopLoading()
     }
     

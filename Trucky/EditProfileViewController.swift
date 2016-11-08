@@ -23,7 +23,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     @IBOutlet weak var websiteTextField: UITextField!
     
     
-    let userDefaults = NSUserDefaults.standardUserDefaults()
+    let userDefaults = UserDefaults.standard
     var loggedInTruck : Truck!
     let firebaseController = FirebaseController.sharedConnection
     var imagePicker = UIImagePickerController()
@@ -37,7 +37,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         loggedInTruck = firebaseController.getLoggedInTruck()
 
         imagePicker.delegate = self
-        imagePicker.sourceType = .SavedPhotosAlbum
+        imagePicker.sourceType = .savedPhotosAlbum
         imagePicker.allowsEditing = true
 
         let menImage = string2Image(loggedInTruck.menuImage!)
@@ -50,7 +50,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         
         loggedInTruck = firebaseController.getLoggedInTruck()
@@ -58,18 +58,18 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         self.truckNameLabel.text = loggedInTruck.truckName
         
     }
-    @IBAction func saveImageButton(sender: AnyObject) {
+    @IBAction func saveImageButton(_ sender: AnyObject) {
         let profImage = image2String(profileImageView.image!)
         let logImage = image2String(logoImageView.image!)
         let menImage = image2String(menuImageView.image!)
         
         firebaseController.updateCustomImages(profImage, logoImage: logImage, menuImage: menImage)
         
-        self.performSegueWithIdentifier("editToMapSegue", sender: self)
+        self.performSegue(withIdentifier: "editToMapSegue", sender: self)
 
     }
     
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage
         
         if imagePicked == 1 {
@@ -79,38 +79,38 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         } else if imagePicked == 3 {
             menuImageView.image = pickedImage
         }
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func updateLogoButton(sender: AnyObject) {
-        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.SavedPhotosAlbum){
+    @IBAction func updateLogoButton(_ sender: AnyObject) {
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.savedPhotosAlbum){
             imagePicked = sender.tag
-            self.presentViewController(imagePicker, animated: true, completion: nil)
+            self.present(imagePicker, animated: true, completion: nil)
         }
     }
     
-    @IBAction func updateProfileButton(sender: AnyObject) {
-        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.SavedPhotosAlbum){
+    @IBAction func updateProfileButton(_ sender: AnyObject) {
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.savedPhotosAlbum){
             imagePicked = sender.tag
-            self.presentViewController(imagePicker, animated: true, completion: nil)
+            self.present(imagePicker, animated: true, completion: nil)
         }
     }
     
-    @IBAction func updateMenuButton(sender: AnyObject) {
-        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.SavedPhotosAlbum){
+    @IBAction func updateMenuButton(_ sender: AnyObject) {
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.savedPhotosAlbum){
             imagePicked = sender.tag
-            self.presentViewController(imagePicker, animated: true, completion: nil)
+            self.present(imagePicker, animated: true, completion: nil)
         }
     }
     
-    func image2String(image: UIImage) -> String {
+    func image2String(_ image: UIImage) -> String {
         let imageData = UIImageJPEGRepresentation(image, 1);
-        let imageString = imageData!.base64EncodedStringWithOptions(.Encoding64CharacterLineLength)
+        let imageString = imageData!.base64EncodedString(options: .lineLength64Characters)
         return imageString
     }
     
-    func string2Image(string: String) -> UIImage {
-        let data = NSData(base64EncodedString: string, options: .IgnoreUnknownCharacters)
+    func string2Image(_ string: String) -> UIImage {
+        let data = Data(base64Encoded: string, options: .ignoreUnknownCharacters)
         return UIImage(data: data!)!
     }
 }

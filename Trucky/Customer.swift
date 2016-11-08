@@ -18,11 +18,11 @@ class Customer: NSObject {
     
     
     init(snapshot: FIRDataSnapshot) {
-        email = snapshot.value!["email"] as? String
-        customerName = snapshot.value!["customerName"] as? String
-        city = snapshot.value!["city"] as? String
-        profileImage = snapshot.value!["profileImage"] as? String
-        uid = snapshot.value!["uid"] as? String
+        email = snapshot.value(forKey: "email") as? String
+        customerName = snapshot.value(forKey: "customerName") as? String
+        city = snapshot.value(forKey: "city") as? String
+        profileImage = snapshot.value(forKey: "profileImage") as? String
+        uid = snapshot.value(forKey: "uid") as? String
     }
     
     

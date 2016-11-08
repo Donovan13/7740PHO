@@ -19,7 +19,7 @@ class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableVie
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var timeLabel: UILabel!
     
-    let userDefaults = NSUserDefaults.standardUserDefaults()
+    let userDefaults = UserDefaults.standard
     let locationManager = CLLocationManager()
     
     let firebaseController = FirebaseController.sharedConnection
@@ -30,27 +30,27 @@ class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableVie
     
     var datePicker: UIDatePicker!
     
-    let formatter = NSDateFormatter()
-    let userCalendar = NSCalendar.currentCalendar()
+    let formatter = DateFormatter()
+    let userCalendar = Calendar.current
     
-    var timer = NSTimer()
+    var timer = Timer()
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
-        self.navigationController?.navigationBar.translucent = true
+        self.navigationController?.navigationBar.isTranslucent = true
 
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        let switchvalue = userDefaults.boolForKey("locShare")
+        let switchvalue = userDefaults.bool(forKey: "locShare")
         
-        locationSwitcher.on = switchvalue
+        locationSwitcher.isOn = switchvalue
         
         if switchvalue == true {
             printTime()
@@ -69,22 +69,22 @@ class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableVie
         self.tableView.backgroundView = imageView
         
         // no lines where there aren't cells
-        tableView.tableFooterView = UIView(frame: CGRectZero)
+        tableView.tableFooterView = UIView(frame: CGRect.zero)
         
         // center and scale background image
-        imageView.contentMode = .ScaleAspectFill
+        imageView.contentMode = .scaleAspectFill
         
         // Set the background color to match better
-        tableView.backgroundColor = .blackColor()
+        tableView.backgroundColor = .black
         
         // blur it
-        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Light)
+        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.light)
         let blurView = UIVisualEffectView(effect: blurEffect)
         blurView.frame = imageView.bounds
         imageView.addSubview(blurView)
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(true)
         
     }
@@ -110,52 +110,52 @@ class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableVie
     func logOutUserDelegate() {
         
         
-        self.view.window!.rootViewController?.dismissViewControllerAnimated(false, completion: nil)
+        self.view.window!.rootViewController?.dismiss(animated: false, completion: nil)
         let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
-        let nav = storyboard.instantiateViewControllerWithIdentifier("initialVC")
+        let nav = storyboard.instantiateViewController(withIdentifier: "initialVC")
         self.view.window?.rootViewController = nav
     }
     
-    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         // translucent cell backgrounds so we can see the image but still easily read the contents
         cell.backgroundColor = UIColor(white: 0.5, alpha: 0)
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 2
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        if indexPath.row == 0 {
-            let cell = tableView.dequeueReusableCellWithIdentifier("loginCell", forIndexPath: indexPath)
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if (indexPath as NSIndexPath).row == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "loginCell", for: indexPath)
             cell.textLabel?.text = "Edit Profile"
             return cell
         } else {
-            let cell = tableView.dequeueReusableCellWithIdentifier("logoutCell", forIndexPath: indexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: "logoutCell", for: indexPath)
             cell.textLabel?.text = "Log Out"
             return cell
         }
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
         
-        if indexPath.row == 0 {
-            performSegueWithIdentifier("menuToEditSegue", sender: self)
-        } else if indexPath.row == 1 {
+        if (indexPath as NSIndexPath).row == 0 {
+            performSegue(withIdentifier: "menuToEditSegue", sender: self)
+        } else if (indexPath as NSIndexPath).row == 1 {
             firebaseController.logOutUser()
         }
     }
     
-    @IBAction func locationSwitcherTapped(sender: AnyObject) {
-        if locationSwitcher.on == true {
+    @IBAction func locationSwitcherTapped(_ sender: AnyObject) {
+        if locationSwitcher.isOn == true {
             self.errorAlert(self.locationSwitcher)
             firebaseController.shareTruckLocation(true)
-            userDefaults.setBool(true, forKey: "locShare")
+            userDefaults.set(true, forKey: "locShare")
         } else {
             timeLabel.text = ""
             timer.invalidate()
             self.deactivateTruckDelegate()
-            userDefaults.setBool(false, forKey: "locShare")
+            userDefaults.set(false, forKey: "locShare")
             firebaseController.shareTruckLocation(true)
 
 
@@ -164,48 +164,48 @@ class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableVie
     
     func printTime() {
         
-        let requestedComponent: NSCalendarUnit = [
-            NSCalendarUnit.Year,
-            NSCalendarUnit.Month,
-            NSCalendarUnit.Day,
-            NSCalendarUnit.Hour,
-            NSCalendarUnit.Minute,
-            NSCalendarUnit.Second
+        let requestedComponent: NSCalendar.Unit = [
+            NSCalendar.Unit.year,
+            NSCalendar.Unit.month,
+            NSCalendar.Unit.day,
+            NSCalendar.Unit.hour,
+            NSCalendar.Unit.minute,
+            NSCalendar.Unit.second
         ]
         
         formatter.dateFormat = "MM/dd/yy hh:mm:ss a"
-        let startTime = NSDate()
-        let pickedTime = userDefaults.stringForKey("pickedTime")
-        let endTime = formatter.dateFromString(pickedTime!)
-        let timeDifference = userCalendar.components(requestedComponent, fromDate: startTime, toDate: endTime!, options: [])
+        let startTime = Date()
+        let pickedTime = userDefaults.string(forKey: "pickedTime")
+        let endTime = formatter.date(from: pickedTime!)
+        let timeDifference = (userCalendar as NSCalendar).components(requestedComponent, from: startTime, to: endTime!, options: [])
         
         timeLabel.text = "\(timeDifference.hour) Hours \(timeDifference.minute) Minutes"
         
-        if timeDifference.second <= 0 {
+        if timeDifference.second! <= 0 {
             print ("time expired")
             timeLabel.text = ""
-            locationSwitcher.on = false
+            locationSwitcher.isOn = false
             timer.invalidate()
             self.deactivateTruckDelegate()
-            userDefaults.setBool(false, forKey: "locShare")
+            userDefaults.set(false, forKey: "locShare")
 
         }
     }
     
     func doneClick() {
-        datePicker.minimumDate = NSDate()
+        datePicker.minimumDate = Date()
         formatter.dateFormat = "MM/dd/yy hh:mm:ss a"
-        let pickedTime = formatter.stringFromDate(datePicker.date)
+        let pickedTime = formatter.string(from: datePicker.date)
         userDefaults.setValue(pickedTime, forKey: "pickedTime")
 
-        timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: #selector (printTime), userInfo: nil, repeats: true)
-        if locationSwitcher.on == true {
+        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector (printTime), userInfo: nil, repeats: true)
+        if locationSwitcher.isOn == true {
             timer.fire()
-            userDefaults.setBool(true, forKey: "locShare")
-        } else if locationSwitcher.on == false {
+            userDefaults.set(true, forKey: "locShare")
+        } else if locationSwitcher.isOn == false {
             timer.invalidate()
             self.deactivateTruckDelegate()
-            userDefaults.setBool(false, forKey: "locShare")
+            userDefaults.set(false, forKey: "locShare")
         }
         
     }
@@ -213,32 +213,32 @@ class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableVie
         locationSwitcher.resignFirstResponder()
     }
     
-    func errorAlert(popalertonswitch: UISwitch) {
+    func errorAlert(_ popalertonswitch: UISwitch) {
         
         let title = "How long will you be open today?"
         let message = "\n\n\n\n\n"
-        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.ActionSheet)
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.actionSheet)
         
         // DatePicker
-        self.datePicker = UIDatePicker(frame:CGRectMake(0, 40, self.view.frame.size.width + 82, 120))
-        self.datePicker.backgroundColor = UIColor.whiteColor()
-        self.datePicker.datePickerMode = UIDatePickerMode.Time
-        datePicker.minimumDate = NSDate()
+        self.datePicker = UIDatePicker(frame:CGRect(x: 0, y: 40, width: self.view.frame.size.width + 82, height: 120))
+        self.datePicker.backgroundColor = UIColor.white
+        self.datePicker.datePickerMode = UIDatePickerMode.time
+        datePicker.minimumDate = Date()
         
-        let action1 = UIAlertAction(title: "Cancel", style: .Default, handler: { (action: UIAlertAction!) in
+        let action1 = UIAlertAction(title: "Cancel", style: .default, handler: { (action: UIAlertAction!) in
             self.cancelClick()
-            self.locationSwitcher.on = false
+            self.locationSwitcher.isOn = false
         })
-        let action2 = UIAlertAction(title: "Done", style: .Default, handler: { (action: UIAlertAction!) in
+        let action2 = UIAlertAction(title: "Done", style: .default, handler: { (action: UIAlertAction!) in
             self.doneClick()
             self.activateTruckDelegate()
-            self.userDefaults.setBool(true, forKey: "locShare")
+            self.userDefaults.set(true, forKey: "locShare")
 
         })
         alert.addAction(action1)
         alert.addAction(action2)
         alert.view.addSubview(datePicker)
-        presentViewController(alert, animated: true, completion: nil)
+        present(alert, animated: true, completion: nil)
     }
     
 //    func expireErrorAlert() {
@@ -254,11 +254,11 @@ class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableVie
 //        presentViewController(alert, animated: true, completion: nil)
 //    }
     
-    func errorAlert(title: String, message: String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
-        let action = UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default, handler: nil)
+    func errorAlert(_ title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+        let action = UIAlertAction(title: "Okay", style: UIAlertActionStyle.default, handler: nil)
         alert.addAction(action)
-        presentViewController(alert, animated: true, completion: nil)
+        present(alert, animated: true, completion: nil)
     }
     
 }

@@ -18,7 +18,7 @@ class LoginViewController: UIViewController,CLLocationManagerDelegate, Authentic
     
     
     let firebaseController = FirebaseController.sharedConnection
-    let userDefaults = NSUserDefaults.standardUserDefaults()
+    let userDefaults = UserDefaults.standard
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,7 +29,7 @@ class LoginViewController: UIViewController,CLLocationManagerDelegate, Authentic
     
     
     
-    @IBAction func loginButtonTapped(sender: AnyObject) {
+    @IBAction func loginButtonTapped(_ sender: AnyObject) {
         let email = emailTextField.text
         let password = passwordTextfield.text
         firebaseController.loginTruck(email, password: password)
@@ -40,12 +40,12 @@ class LoginViewController: UIViewController,CLLocationManagerDelegate, Authentic
     
     
     func userAuthenticationSuccess() {
-        dispatch_async(dispatch_get_main_queue()) {
-            self.performSegueWithIdentifier("LogInSegue", sender: nil)
+        DispatchQueue.main.async {
+            self.performSegue(withIdentifier: "LogInSegue", sender: nil)
         }
     }
     
-    func userAuthenticationFail(error:NSError) {
+    func userAuthenticationFail(_ error:NSError) {
         print(error.localizedDescription + "\(error.code)")
         var message: String
         switch error.code {
@@ -62,11 +62,11 @@ class LoginViewController: UIViewController,CLLocationManagerDelegate, Authentic
         errorAlert("Login Error", message: message)
     }
     
-    func errorAlert(title: String, message: String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
-        let action = UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default, handler: nil)
+    func errorAlert(_ title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+        let action = UIAlertAction(title: "Okay", style: UIAlertActionStyle.default, handler: nil)
         alert.addAction(action)
-        presentViewController(alert, animated: true, completion: nil)
+        present(alert, animated: true, completion: nil)
     }
 }
 

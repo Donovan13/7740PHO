@@ -1,38 +1,14 @@
 PODS:
-  - AFNetworking (2.6.3):
-    - AFNetworking/NSURLConnection (= 2.6.3)
-    - AFNetworking/NSURLSession (= 2.6.3)
-    - AFNetworking/Reachability (= 2.6.3)
-    - AFNetworking/Security (= 2.6.3)
-    - AFNetworking/Serialization (= 2.6.3)
-    - AFNetworking/UIKit (= 2.6.3)
-  - AFNetworking/NSURLConnection (2.6.3):
-    - AFNetworking/Reachability
-    - AFNetworking/Security
-    - AFNetworking/Serialization
-  - AFNetworking/NSURLSession (2.6.3):
-    - AFNetworking/Reachability
-    - AFNetworking/Security
-    - AFNetworking/Serialization
-  - AFNetworking/Reachability (2.6.3)
-  - AFNetworking/Security (2.6.3)
-  - AFNetworking/Serialization (2.6.3)
-  - AFNetworking/UIKit (2.6.3):
-    - AFNetworking/NSURLConnection
-    - AFNetworking/NSURLSession
-  - Alamofire (3.5.1)
-  - BDBOAuth1Manager (1.6.0):
-    - AFNetworking/NSURLConnection (~> 2.6.0)
-    - AFNetworking/NSURLSession (~> 2.6.0)
-  - Firebase (3.8.0):
-    - Firebase/Core (= 3.8.0)
-  - Firebase/Auth (3.8.0):
+  - Alamofire (4.0.1)
+  - Firebase (3.9.0):
+    - Firebase/Core (= 3.9.0)
+  - Firebase/Auth (3.9.0):
     - Firebase/Core
     - FirebaseAuth (= 3.0.6)
-  - Firebase/Core (3.8.0):
+  - Firebase/Core (3.9.0):
     - FirebaseAnalytics (= 3.5.1)
     - FirebaseCore (= 3.4.4)
-  - Firebase/Database (3.8.0):
+  - Firebase/Database (3.9.0):
     - Firebase/Core
     - FirebaseDatabase (= 3.1.0)
   - FirebaseAnalytics (3.5.1):
@@ -65,24 +41,20 @@ PODS:
     - GoogleToolboxForMac/NSString+URLArguments (= 2.1.0)
   - GoogleToolboxForMac/NSString+URLArguments (2.1.0)
   - GTMSessionFetcher/Core (1.1.7)
-  - SideMenu (1.2.1)
-  - SwiftyJSON (2.4.0)
+  - SideMenu (2.0.5)
+  - SwiftyJSON (3.1.1)
 
 DEPENDENCIES:
-  - AFNetworking (~> 2.6.3)
-  - Alamofire (~> 3.0)
-  - BDBOAuth1Manager
+  - Alamofire
   - Firebase
   - Firebase/Auth
   - Firebase/Database
-  - SideMenu (~> 1.2.1)
-  - SwiftyJSON (~> 2.4.0)
+  - SideMenu
+  - SwiftyJSON
 
 SPEC CHECKSUMS:
-  AFNetworking: cb8d14a848e831097108418f5d49217339d4eb60
-  Alamofire: 0dfba1184a543e2aa160f4e39cac4e8aba48d223
-  BDBOAuth1Manager: cd5a5872f355ca38180d52ca2dd844f0b0c84797
-  Firebase: fdbecadb7b5cbef2774852d4fa659b9daf11f2af
+  Alamofire: 7682d43245de14874acd142ec137b144aa1dd335
+  Firebase: ff77ffb77b317c3720fef57a60e9335cebf962e6
   FirebaseAnalytics: 6e58fc9b397664369ac7617fb0ba93fab6ba7b5b
   FirebaseAuth: 96e9674ff31d6e1f826d53e26aa003a57cab0295
   FirebaseCore: d0ed25f27b6f9158eccc439f1be6f92e81207e28
@@ -92,9 +64,9 @@ SPEC CHECKSUMS:
   GoogleSymbolUtilities: 631ee17048aa5e9ab133470d768ea997a5ef9b96
   GoogleToolboxForMac: 2b2596cbb7186865e98cadf2b1e262d851c2b168
   GTMSessionFetcher: a1f8ed39e4fe21c68957daed472c7afbcdf29166
-  SideMenu: d38e42ab18a5c0875a77cfec7e7cecea72a69518
-  SwiftyJSON: 96918c1bf505efa50c4f72957018dd3452090c9c
+  SideMenu: 0ecfd407b24e7d36c57fc50ca7f5d7cedb7c8841
+  SwiftyJSON: f0be2e604f83e8405a624e9f891898bf6ed4e019
 
-PODFILE CHECKSUM: 50c29d85e61be680b3fd7749fd2e8905f78e2b5d
+PODFILE CHECKSUM: bf6a7f8b27e6308682db90e2a32135cb81845cb0
 
 COCOAPODS: 1.0.0

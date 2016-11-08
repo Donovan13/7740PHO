@@ -10,6 +10,26 @@ import UIKit
 import MapKit
 import CoreLocation
 import Firebase
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 
 
@@ -30,7 +50,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     
     let firebaseController = FirebaseController.sharedConnection
     let locationController = LocationService.sharedInstance
-    let userDefaults = NSUserDefaults.standardUserDefaults()
+    let userDefaults = UserDefaults.standard
     var userlocation: CLLocation?
     
 
@@ -49,24 +69,24 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
 
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         
         mapView.showsUserLocation = true
-        mapView.setUserTrackingMode(MKUserTrackingMode.Follow, animated: true)
+        mapView.setUserTrackingMode(MKUserTrackingMode.follow, animated: true)
         
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
-        self.navigationController?.navigationBar.translucent = true
+        self.navigationController?.navigationBar.isTranslucent = true
         let myShadow = NSShadow()
         myShadow.shadowBlurRadius = 3
         myShadow.shadowOffset = CGSize(width: 2, height: 1)
-        myShadow.shadowColor = UIColor.lightGrayColor()
+        myShadow.shadowColor = UIColor.lightGray
         self.navigationController!.navigationBar.titleTextAttributes = [ NSShadowAttributeName: myShadow, NSFontAttributeName: UIFont(name: "times", size: 25)! ]
         
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         
         self.reloadTrucks()
@@ -100,7 +120,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         }
     }
     
-    func updateLocation(currentLocation: CLLocation) {
+    func updateLocation(_ currentLocation: CLLocation) {
 //        self.userlocation = currentLocation
         let lat = currentLocation.coordinate.latitude
         let lon = currentLocation.coordinate.longitude
@@ -110,12 +130,12 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         firebaseController.updateTruckLocation(lat, lon: lon)
     }
     
-    func updateLocationFailed(error: NSError) {
+    func updateLocationFailed(_ error: NSError) {
         errorAlert("Location Failed", message: error.localizedDescription)
     }
     
     //    MARK: MapView Delegate
-    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         
         if annotation.isEqual(mapView.userLocation) {
             return nil
@@ -123,12 +143,12 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         } else if annotation.isEqual(annotation as! CustomAnnotations) {
             
             let pin = MKAnnotationView (annotation: annotation, reuseIdentifier: nil)
-            let icon = scaleUIImageToSize(UIImage(named: "login")!, size: CGSizeMake(30,30))
+            let icon = scaleUIImageToSize(UIImage(named: "login")!, size: CGSize(width: 30,height: 30))
             let iconFrame = UIImageView(image: icon)
             
-            pin.image = scaleUIImageToSize(UIImage(named: "truck")!, size: CGSizeMake(40,30))
+            pin.image = scaleUIImageToSize(UIImage(named: "truck")!, size: CGSize(width: 40,height: 30))
             pin.canShowCallout = true
-            pin.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)
+            pin.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
             pin.leftCalloutAccessoryView = iconFrame
             pin.leftCalloutAccessoryView?.layer.cornerRadius = (pin.leftCalloutAccessoryView?.frame.size.width)! / 2
             pin.leftCalloutAccessoryView?.clipsToBounds = true
@@ -144,28 +164,28 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     
     
     
-    func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         let annotation = view.annotation as! CustomAnnotations
-        self.performSegueWithIdentifier("annotationDetailSegue", sender: annotation)
+        self.performSegue(withIdentifier: "annotationDetailSegue", sender: annotation)
         
     }
     
     
     //    MARK: TableView Delegate
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return trucks.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         
         
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("BusinessTableViewCell") as! DetailTableViewCell
-        let post = trucks.reverse()[indexPath.row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: "BusinessTableViewCell") as! DetailTableViewCell
+        let post = trucks.reversed()[(indexPath as NSIndexPath).row]
         
         cell.businessImage.image = string2Image(post.imageString!)
-        cell.businessLabel?.text = post.truckName?.capitalizedString
+        cell.businessLabel?.text = post.truckName?.capitalized
         cell.reviewLabel?.text = "\(post.reviewCount!) reviews on"
         
         if post.address?.characters.count > 1 {
@@ -174,8 +194,8 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
             cell.addressLabel.text = post.cityAndState
         }
         cell.categoryLabel?.text = post.categories
-        cell.detailsButton.tag = indexPath.row
-        cell.yelpButton.tag = indexPath.row
+        cell.detailsButton.tag = (indexPath as NSIndexPath).row
+        cell.yelpButton.tag = (indexPath as NSIndexPath).row
         
         if post.distance != nil {
             let inMiles = post.distance! * 0.000621371192
@@ -207,9 +227,9 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         return cell
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
-        let latitude = trucks[indexPath.row].latitude
-        let longitude = trucks[indexPath.row].longitude
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
+        let latitude = trucks[(indexPath as NSIndexPath).row].latitude
+        let longitude = trucks[(indexPath as NSIndexPath).row].longitude
         let centerCoordinate = CLLocationCoordinate2DMake(latitude!, longitude!)
         let span = MKCoordinateSpanMake(0.01, 0.01)
         let region = MKCoordinateRegion(center: centerCoordinate, span: span)
@@ -218,19 +238,19 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     }
     
     //    MARK:PrepareForSegue
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let identifier = segue.identifier {
             switch identifier {
             case "detailSegue":
                 let button = sender as! UIButton
-                let truck = trucks.reverse()[button.tag]
-                let detailVC = segue.destinationViewController as! BusinessProfileViewController
+                let truck = trucks.reversed()[button.tag]
+                let detailVC = segue.destination as! BusinessProfileViewController
                 detailVC.truck = truck
 //                detailVC.distanceOfTruck = truck.distance
 
                 
             case "annotationDetailSegue":
-                let detailVC = segue.destinationViewController as! BusinessProfileViewController
+                let detailVC = segue.destination as! BusinessProfileViewController
                 let annotation = sender as! CustomAnnotations
                 detailVC.truck = annotation.truckCA
 //                detailVC.distanceOfTruck = truckdistance[annotation.idNumber!]
@@ -238,7 +258,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
                 
             case "truckToWebSegue":
                 let button = sender as! UIButton
-                let webVC = segue.destinationViewController as! WebViewController
+                let webVC = segue.destination as! WebViewController
                 let truck = trucks[button.tag]
                 webVC.businessURL = truck.yelpURL
                 
@@ -248,19 +268,19 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     }
     
     //    MARK: IBActions
-    @IBAction func showListButton(sender: AnyObject) {
+    @IBAction func showListButton(_ sender: AnyObject) {
         
         if (sender.titleLabel!?.text == "Hide List") {
-            sender.setTitle("Show List", forState:  UIControlState.Normal)
-            tableView.hidden = true
+            sender.setTitle("Show List", for:  UIControlState())
+            tableView.isHidden = true
         } else {
-            sender.setTitle("Hide List", forState:  UIControlState.Normal)
-            tableView.hidden = false
+            sender.setTitle("Hide List", for:  UIControlState())
+            tableView.isHidden = false
         }
     }
     
-    @IBAction func reloadButton(sender: AnyObject) {
-        dispatch_async(dispatch_get_main_queue()) {
+    @IBAction func reloadButton(_ sender: AnyObject) {
+        DispatchQueue.main.async {
             self.mapView.removeAnnotations(self.mapView.annotations)
             self.reloadTrucks()
             
@@ -268,58 +288,58 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
                 truck.calculateDistance(self.userlocation)
             }
             
-            self.trucks.sortInPlace({ $0.distance < $1.distance })
+            self.trucks.sort(by: { $0.distance < $1.distance })
         }
     }
     
-    @IBAction func centerLocationButton(sender: AnyObject) {
-        mapView.setUserTrackingMode(MKUserTrackingMode.Follow, animated: true)
+    @IBAction func centerLocationButton(_ sender: AnyObject) {
+        mapView.setUserTrackingMode(MKUserTrackingMode.follow, animated: true)
     }
     
     
-    @IBAction func menuButtonTapped(sender: AnyObject) {
-        if userDefaults.valueForKey("Truck") != nil {
-            self.performSegueWithIdentifier("mapToMenuSegue", sender: self)
+    @IBAction func menuButtonTapped(_ sender: AnyObject) {
+        if userDefaults.value(forKey: "Truck") != nil {
+            self.performSegue(withIdentifier: "mapToMenuSegue", sender: self)
         }
         
     }
     
-    @IBAction func detailsButtonTapped(sender: AnyObject) {
-        performSegueWithIdentifier("detailSegue", sender: sender)
+    @IBAction func detailsButtonTapped(_ sender: AnyObject) {
+        performSegue(withIdentifier: "detailSegue", sender: sender)
     }
     
-    @IBAction func yelpButtonTapped(sender: AnyObject) {
-        performSegueWithIdentifier("truckToWebSegue", sender: sender)
+    @IBAction func yelpButtonTapped(_ sender: AnyObject) {
+        performSegue(withIdentifier: "truckToWebSegue", sender: sender)
     }
     
     
     //    MARK: Custom Functions
     
-    func errorAlert(title: String, message: String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
-        let action = UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default, handler: nil)
+    func errorAlert(_ title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+        let action = UIAlertAction(title: "Okay", style: UIAlertActionStyle.default, handler: nil)
         alert.addAction(action)
-        presentViewController(alert, animated: true, completion: nil)
+        present(alert, animated: true, completion: nil)
     }
     
-    func scaleUIImageToSize( image: UIImage, size: CGSize) -> UIImage {
+    func scaleUIImageToSize( _ image: UIImage, size: CGSize) -> UIImage {
         let hasAlpha = true
         let scale: CGFloat = 0.0 // Automatically use scale factor of main screen
         UIGraphicsBeginImageContextWithOptions(size, !hasAlpha, scale)
-        image.drawInRect(CGRect(origin: CGPointZero, size: size))
+        image.draw(in: CGRect(origin: CGPoint.zero, size: size))
         let scaledImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return scaledImage!
     }
     
     
-    func string2Image(string: String) -> UIImage {
-        let data = NSData(base64EncodedString: string, options: .IgnoreUnknownCharacters)
+    func string2Image(_ string: String) -> UIImage {
+        let data = Data(base64Encoded: string, options: .ignoreUnknownCharacters)
         return UIImage(data: data!)!
     }
     
     func reloadTrucks() {
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
             self.trucks = self.firebaseController.getActiveTrucks()
             self.tableView.reloadData()
             self.loadAnnotations()
@@ -331,8 +351,8 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
 
 
 extension UITableView {
-    func indexPathForView (view: UIView) -> NSIndexPath {
-        let location = view.convertPoint(CGPointZero, toView: self)
-        return indexPathForRowAtPoint(location)!
+    func indexPathForView (_ view: UIView) -> IndexPath {
+        let location = view.convert(CGPoint.zero, to: self)
+        return indexPathForRow(at: location)!
     }
 }

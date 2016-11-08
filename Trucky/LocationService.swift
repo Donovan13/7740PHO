@@ -12,29 +12,30 @@ import UIKit
 
 
 protocol LocationServiceDelegate {
-    func updateLocation(currentLocation: CLLocation)
-    func updateLocationFailed(error: NSError)
+    func updateLocation(_ currentLocation: CLLocation)
+    func updateLocationFailed(_ error: NSError)
 }
 
 class LocationService: NSObject, CLLocationManagerDelegate {
-    class var sharedInstance: LocationService {
-        struct Static {
-            static var onceToken: dispatch_once_t = 0
-            static var instance: LocationService? = nil
-        }
-        dispatch_once(&Static.onceToken) {
-            Static.instance = LocationService()
-        }
-        return Static.instance!
-    }
-    
+//    private static var __once: () = {
+//            Static.instance = LocationService()
+//        }()
+//    class var sharedInstance: LocationService {
+//        struct Static {
+//            static var onceToken: Int = 0
+//            static var instance: LocationService? = nil
+//        }
+//        _ = LocationService.__once
+//        return Static.instance!
+//    }
+//    
     var locationManager: CLLocationManager?
     var newLocation: CLLocation?
     
     var locationServiceDelegate: LocationServiceDelegate?
     let firebasecontroller = FirebaseController.sharedConnection
-    let userDefaults = NSUserDefaults.standardUserDefaults()
-    let locvalue = NSUserDefaults.standardUserDefaults().boolForKey("locShare")
+    let userDefaults = UserDefaults.standard
+    let locvalue = UserDefaults.standard.bool(forKey: "locShare")
     
     override init() {
         super.init()
@@ -42,7 +43,7 @@ class LocationService: NSObject, CLLocationManagerDelegate {
         self.locationManager = CLLocationManager()
         guard let locationManager = self.locationManager else { return }
         
-        if CLLocationManager.authorizationStatus() == .NotDetermined {
+        if CLLocationManager.authorizationStatus() == .notDetermined {
             locationManager.requestAlwaysAuthorization()
         }
         
@@ -56,7 +57,7 @@ class LocationService: NSObject, CLLocationManagerDelegate {
     
     
     
-    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let newLocation = locations.last else { return }
         
         self.newLocation = newLocation
@@ -85,30 +86,7 @@ class LocationService: NSObject, CLLocationManagerDelegate {
             })
 //        }
         
-    }
-    
-    func locationManager(manager: CLLocationManager, didUpdateToLocation newLocation: CLLocation, fromLocation oldLocation: CLLocation) {
-        
-        
-        
-        //            if userDefaults.stringForKey("uid") != nil {
-        //    //            self.truckRef.child("Trucks").child(userUID!).updateChildValues(["latitude": userLat, "longitude": userLon])
-        //            }
-        //
-        //
-        //            if UIApplication.sharedApplication().applicationState == .Active {
-        //                //print("active")
-        //            } else {
-        //                print("updated:\(newLocation)")
-        //            }
-        //
-        //            if UIApplication.sharedApplication().applicationState == .Inactive {
-        //                print("inactive")
-        //            }
-        //
-        
-    }
-    
+    }    
     
     
     func startUpdatingLocation() {
@@ -124,14 +102,14 @@ class LocationService: NSObject, CLLocationManagerDelegate {
     
     
     
-    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         
         // do on error
-        searchingLocationDidFailWithError(error)
+        searchingLocationDidFailWithError(error as NSError)
     }
     
     // Private function
-    private func searchingLocation(currentLocation: CLLocation){
+    fileprivate func searchingLocation(_ currentLocation: CLLocation){
         
         guard let locationDelegate = self.locationServiceDelegate else {
             return
@@ -143,7 +121,7 @@ class LocationService: NSObject, CLLocationManagerDelegate {
 //        }
     }
     
-    private func searchingLocationDidFailWithError(error: NSError) {
+    fileprivate func searchingLocationDidFailWithError(_ error: NSError) {
         
         guard let locationDelegate = self.locationServiceDelegate else {
             return

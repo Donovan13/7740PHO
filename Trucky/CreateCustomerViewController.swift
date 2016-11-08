@@ -23,7 +23,7 @@ class CreateCustomerViewController: UIViewController, UIImagePickerControllerDel
     @IBOutlet weak var confirmPasswordTextField: UITextField!
     @IBOutlet weak var profilePictureButton: UIButton!
     
-    let userDefaults = NSUserDefaults.standardUserDefaults()
+    let userDefaults = UserDefaults.standard
     let firebaseController = FirebaseController.sharedConnection
     
     
@@ -33,49 +33,52 @@ class CreateCustomerViewController: UIViewController, UIImagePickerControllerDel
         self.firebaseController.authenticationDelegate = self
     }
     
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         
-        if self.profilePictureButton.selected == true {
+        if self.profilePictureButton.isSelected == true {
             self.profileImageView.image = info[UIImagePickerControllerOriginalImage] as? UIImage
-            dismissViewControllerAnimated(true, completion: nil)
+            dismiss(animated: true, completion: nil)
             
         }
     }
     
-    @IBAction func createCustomer(sender: AnyObject) {
+    @IBAction func createCustomer(_ sender: AnyObject) {
         
         let imageString = image2String(profileImageView.image!)
         let email = emailTextField.text
         let password = passwordTextField.text
+        let customerName = nameTextField.text
+        let city = cityTextField.text
+        let blank = ""
         
         let dictionary = [
-            "uid": "",
+            "uid": blank,
             "email": email,
-            "customerName": nameTextField.text,
-            "city": cityTextField.text,
-            "profileImage": imageString]
+            "customerName": customerName,
+            "city": city,
+            "profileImage": imageString] as [String : Any]
         
         firebaseController.createCustomer(email,
                                           password: password,
-                                          dictionary: dictionary as! Dictionary<String, String>)
+                                          dictionary: dictionary as Dictionary<String, AnyObject>)
         
         
         
                 
     }
     
-    private func imageURLtoString(imageURL: NSURL) -> String {
-        let url = NSURL(string: "\(imageURL)")
-        let data = NSData(contentsOfURL: url!)
+    fileprivate func imageURLtoString(_ imageURL: URL) -> String {
+        let url = URL(string: "\(imageURL)")
+        let data = try? Data(contentsOf: url!)
         let image = UIImage(data: data!)
         let imageData = UIImageJPEGRepresentation(image!, 0.15)
-        let imageString = imageData!.base64EncodedStringWithOptions(.Encoding64CharacterLineLength)
+        let imageString = imageData!.base64EncodedString(options: .lineLength64Characters)
         return imageString
     }
     
-    private func image2String(image: UIImage) -> String {
+    fileprivate func image2String(_ image: UIImage) -> String {
         let imageData = UIImageJPEGRepresentation(image, 0.15);
-        let imageString = imageData!.base64EncodedStringWithOptions(.Encoding64CharacterLineLength)
+        let imageString = imageData!.base64EncodedString(options: .lineLength64Characters)
         return imageString
     }
     
@@ -83,17 +86,17 @@ class CreateCustomerViewController: UIViewController, UIImagePickerControllerDel
     
     // MARK: AuthenticationDelegate
     func userAuthenticationSuccess() {
-        dispatch_async(dispatch_get_main_queue()) {
-            self.performSegueWithIdentifier("customerLoginSegue", sender: nil)
+        DispatchQueue.main.async {
+            self.performSegue(withIdentifier: "customerLoginSegue", sender: nil)
         }
     }
     
-    func userAuthenticationFail(error:NSError) {
+    func userAuthenticationFail(_ error:NSError) {
         errorAlert("Authentication Fail", message: error.localizedDescription)
         print(error.localizedDescription + "\(error.code)")
     }
     
-    func createUserFail(error: NSError) {
+    func createUserFail(_ error: NSError) {
         var message: String
         switch error.code {
         case -5:
@@ -107,11 +110,11 @@ class CreateCustomerViewController: UIViewController, UIImagePickerControllerDel
         errorAlert("Login Error", message: message)
     }
     
-    func errorAlert(title: String, message: String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
-        let action = UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default, handler: nil)
+    func errorAlert(_ title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+        let action = UIAlertAction(title: "Okay", style: UIAlertActionStyle.default, handler: nil)
         alert.addAction(action)
-        presentViewController(alert, animated: true, completion: nil)
+        present(alert, animated: true, completion: nil)
     }
     
     
@@ -120,9 +123,9 @@ class CreateCustomerViewController: UIViewController, UIImagePickerControllerDel
         
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
-        imagePicker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
+        imagePicker.sourceType = UIImagePickerControllerSourceType.photoLibrary
         imagePicker.allowsEditing = false
-        self.presentViewController(imagePicker, animated: true, completion: nil)
+        self.present(imagePicker, animated: true, completion: nil)
     }
     
     

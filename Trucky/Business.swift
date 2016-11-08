@@ -56,7 +56,7 @@ class Business: NSObject {
                 categoryNames.append(categoryName!)
                 i = i + 1
             }
-            categories = categoryNames.joinWithSeparator(", ")
+            categories = categoryNames.joined(separator: ", ")
             print(categories!)
         } else {
             categories = ""
@@ -67,7 +67,7 @@ class Business: NSObject {
         cityAndState = "\(city!), \(state!)"
     }
     
-    class func idBusinesses(array: JSON) -> [Business] {
+    class func idBusinesses(_ array: JSON) -> [Business] {
         var businesses = [Business]()
         let business = Business(jsonData: array)
         businesses.append(business)
@@ -75,7 +75,7 @@ class Business: NSObject {
         return businesses
     }
     
-    class func reviewBusinesses(array: JSON) -> [Reviews] {
+    class func reviewBusinesses(_ array: JSON) -> [Reviews] {
         var reviews = [Reviews]()
         var i = 0
         while i <= array.count {
@@ -92,8 +92,8 @@ class Business: NSObject {
     }
     
     
-    class func searchWithNumber(phoneNumber: String, completion: ([Business]!, [Reviews]!, NSError!) -> Void) {
-        YelpAPIFusion.sharedInstance.searchWithPhone(phoneNumber, completion: completion)
+    class func searchWithNumber(_ phoneNumber: String, completion: @escaping ([Business]?, [Reviews]?, NSError?) -> Void) {
+//        YelpAPIFusion.sharedInstance.searchWithPhone(phoneNumber, completion: completion)
     }
     
 }

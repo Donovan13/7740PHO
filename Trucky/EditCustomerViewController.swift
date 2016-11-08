@@ -21,11 +21,11 @@ class EditCustomerViewController: UIViewController, UIImagePickerControllerDeleg
         super.viewDidLoad()
     }
     
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         
-        if self.profilePictureButton.selected == true {
+        if self.profilePictureButton.isSelected == true {
             self.profileImageView.image = info[UIImagePickerControllerOriginalImage] as? UIImage
-            dismissViewControllerAnimated(true, completion: nil)
+            dismiss(animated: true, completion: nil)
         }
     }
     
@@ -33,8 +33,8 @@ class EditCustomerViewController: UIViewController, UIImagePickerControllerDeleg
         
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
-        imagePicker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
+        imagePicker.sourceType = UIImagePickerControllerSourceType.photoLibrary
         imagePicker.allowsEditing = false
-        self.presentViewController(imagePicker, animated: true, completion: nil)
+        self.present(imagePicker, animated: true, completion: nil)
     }
 }

@@ -16,7 +16,7 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
     var truckName:String?
     var truck: Truck!
     var userlocation: CLLocation?
-    let userDefaults = NSUserDefaults.standardUserDefaults()
+    let userDefaults = UserDefaults.standard
     var storedOffsets = [Int: CGFloat]()
     
     let sharedConnection = FirebaseController.sharedConnection
@@ -29,23 +29,23 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
         super.viewDidLoad()
         
         
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: .Default)
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
-        self.navigationController?.navigationBar.translucent = true
+        self.navigationController?.navigationBar.isTranslucent = true
         self.navigationController!.navigationBar.titleTextAttributes = [ NSFontAttributeName: UIFont(name: "times", size: 20)!]
         self.navigationController?.hidesBarsOnSwipe = true
         
     }
     
-    override func prefersStatusBarHidden() -> Bool {
-        if self.navigationController?.navigationBarHidden == true {
+    override var prefersStatusBarHidden : Bool {
+        if self.navigationController?.isNavigationBarHidden == true {
             return true
         } else {
             return false
         }
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         // Add a background view to the table view
@@ -54,36 +54,36 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
         self.tableView.backgroundView = imageView
         
         // no lines where there aren't cells
-        tableView.tableFooterView = UIView(frame: CGRectZero)
+        tableView.tableFooterView = UIView(frame: CGRect.zero)
         
         // center and scale background image
-        imageView.contentMode = .ScaleAspectFill
+        imageView.contentMode = .scaleAspectFill
         
         // Set the background color to match better
         //        tableView.backgroundColor = .redColor()
         
         // blur it
-        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Light)
+        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.light)
         let blurView = UIVisualEffectView(effect: blurEffect)
         blurView.frame = imageView.bounds
         imageView.addSubview(blurView)
     }
     
-    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         // translucent cell backgrounds so we can see the image but still easily read the contents
         cell.backgroundColor = UIColor(white: 0.5, alpha: 0)
         
         guard let tableViewCell = cell as? BusinessPhotoTableViewCell else { return }
-        tableViewCell.setCollectionViewDataSourceDelegate(self, forRow: indexPath.row)
-        tableViewCell.collectionViewOffset = storedOffsets[indexPath.row] ?? 0
+        tableViewCell.setCollectionViewDataSourceDelegate(self, forRow: (indexPath as NSIndexPath).row)
+        tableViewCell.collectionViewOffset = storedOffsets[(indexPath as NSIndexPath).row] ?? 0
         
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         var rowCount = 0
         
@@ -96,11 +96,11 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
         return rowCount
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        if indexPath.section == 0 {
-            if indexPath.row == 0 {
-                let cell = tableView.dequeueReusableCellWithIdentifier("titleCell") as! BusinessProfileTableViewCell
-                cell.truckNameLabel?.text = truck.truckName?.capitalizedString
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if (indexPath as NSIndexPath).section == 0 {
+            if (indexPath as NSIndexPath).row == 0 {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "titleCell") as! BusinessProfileTableViewCell
+                cell.truckNameLabel?.text = truck.truckName?.capitalized
                 cell.reviewsLabel?.text = "\(truck.reviewCount!) reviews on"
                 
                 let inMiles = truck.distance! * 0.000621371192
@@ -129,42 +129,42 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
                 }
                 
                 return cell
-            } else if indexPath.row == 1 {
-                let cell = tableView.dequeueReusableCellWithIdentifier("phoneCell", forIndexPath: indexPath)
+            } else if (indexPath as NSIndexPath).row == 1 {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "phoneCell", for: indexPath)
                 let s = truck.phone
                 
                 let s2 = String(format: "%@ (%@) %@-%@",
-                                s!.substringToIndex(s!.startIndex.advancedBy(2)),
-                                s!.substringWithRange(s!.startIndex.advancedBy(2) ... s!.startIndex.advancedBy(4)),
-                                s!.substringWithRange(s!.startIndex.advancedBy(5) ... s!.startIndex.advancedBy(7)),
-                                s!.substringWithRange(s!.startIndex.advancedBy(8) ... s!.startIndex.advancedBy(11)))
+                                s!.substring(to: s!.characters.index(s!.startIndex, offsetBy: 2)),
+                                s!.substring(with: s!.characters.index(s!.startIndex, offsetBy: 2) ... s!.characters.index(s!.startIndex, offsetBy: 4)),
+                                s!.substring(with: s!.characters.index(s!.startIndex, offsetBy: 5) ... s!.characters.index(s!.startIndex, offsetBy: 7)),
+                                s!.substring(with: s!.characters.index(s!.startIndex, offsetBy: 8) ... s!.characters.index(s!.startIndex, offsetBy: 11)))
                 cell.detailTextLabel?.text = s2
                 return cell
-            } else if indexPath.row == 2 {
-                let cell = tableView.dequeueReusableCellWithIdentifier("websiteCell", forIndexPath: indexPath)
+            } else if (indexPath as NSIndexPath).row == 2 {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "websiteCell", for: indexPath)
                             cell.detailTextLabel?.text = truck.yelpURL
                 return cell
-            } else if indexPath.row == 3 {
-                let cell = tableView.dequeueReusableCellWithIdentifier("addressCell", forIndexPath: indexPath)
+            } else if (indexPath as NSIndexPath).row == 3 {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "addressCell", for: indexPath)
                             cell.detailTextLabel?.text = truck.address
                 return cell
             } else {
-                let cell = tableView.dequeueReusableCellWithIdentifier("photoCell") as! BusinessPhotoTableViewCell
+                let cell = tableView.dequeueReusableCell(withIdentifier: "photoCell") as! BusinessPhotoTableViewCell
 
                 return cell
             }
             
         } else {
             
-            let cell = tableView.dequeueReusableCellWithIdentifier("reviewCell") as! BusinessReviewTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "reviewCell") as! BusinessReviewTableViewCell
             
-            let review = truck.reviews![indexPath.row]
+            let review = truck.reviews![(indexPath as NSIndexPath).row]
             
-            cell.reviewName.text = review.valueForKey("username") as? String
-            cell.reviewTime.text = review.valueForKey("timeCreated") as? String
-            cell.reviewTextView.text = review.valueForKey("text") as! String
+            cell.reviewName.text = (review as AnyObject).value(forKey: "username") as? String
+            cell.reviewTime.text = (review as AnyObject).value(forKey: "timeCreated") as? String
+            cell.reviewTextView.text = (review as AnyObject).value(forKey: "text") as! String
             
-            let reviewRating = review.valueForKey("rating") as! Double
+            let reviewRating = (review as AnyObject).value(forKey: "rating") as! Double
             
             if reviewRating == 0 {
                 cell.reviewRatingImage?.image = UIImage(named: "star0")
@@ -194,13 +194,13 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
         }
         
     }
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
-        if indexPath.section == 0 {
-            if indexPath.row == 0 {
+        if (indexPath as NSIndexPath).section == 0 {
+            if (indexPath as NSIndexPath).row == 0 {
                 
                 return 120
-            } else if indexPath.row == 4 {
+            } else if (indexPath as NSIndexPath).row == 4 {
                 return 150
                 
             } else {
@@ -212,7 +212,7 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
         }
     }
     
-    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if section == 1 {
             return "Reviews"
         } else {
@@ -223,34 +223,34 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
     
     
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
-        if indexPath.row == 1 {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
+        if (indexPath as NSIndexPath).row == 1 {
             
             callNumber(truck.phone!)
             
-        } else if indexPath.row == 2 {
-            performSegueWithIdentifier("detailToWebSegue", sender: self)
+        } else if (indexPath as NSIndexPath).row == 2 {
+            performSegue(withIdentifier: "detailToWebSegue", sender: self)
             
-        } else if indexPath.row == 3 {
+        } else if (indexPath as NSIndexPath).row == 3 {
             openMapForPlace()
         }
     }
     
     
     
-    func tableView(tableView: UITableView, didEndDisplayingCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         
         guard let tableViewCell = cell as? BusinessPhotoTableViewCell else { return }
         
-        storedOffsets[indexPath.row] = tableViewCell.collectionViewOffset
+        storedOffsets[(indexPath as NSIndexPath).row] = tableViewCell.collectionViewOffset
     }
     
     
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "detailToWebSegue" {
             
-            let detailVC = segue.destinationViewController as! WebViewController
+            let detailVC = segue.destination as! WebViewController
             detailVC.businessURL = truck.yelpURL!
         }
         
@@ -258,8 +258,8 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
     
     func openMapForPlace() {
         
-        let lat : NSString = "\(self.truck.latitude!)"
-        let lng : NSString = "\(self.truck.longitude!)"
+        let lat : NSString = "\(self.truck.latitude!)" as NSString
+        let lng : NSString = "\(self.truck.longitude!)" as NSString
         
         let latitude:CLLocationDegrees =  lat.doubleValue
         let longitude:CLLocationDegrees =  lng.doubleValue
@@ -268,24 +268,24 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
         let coordinates = CLLocationCoordinate2DMake(latitude, longitude)
         let regionSpan = MKCoordinateRegionMakeWithDistance(coordinates, regionDistance, regionDistance)
         let options = [
-            MKLaunchOptionsMapCenterKey: NSValue(MKCoordinate: regionSpan.center),
-            MKLaunchOptionsMapSpanKey: NSValue(MKCoordinateSpan: regionSpan.span)
+            MKLaunchOptionsMapCenterKey: NSValue(mkCoordinate: regionSpan.center),
+            MKLaunchOptionsMapSpanKey: NSValue(mkCoordinateSpan: regionSpan.span)
         ]
         let placemark = MKPlacemark(coordinate: coordinates, addressDictionary: nil)
         let mapItem = MKMapItem(placemark: placemark)
-        mapItem.name = "\(self.truck.truckName!)".capitalizedString
-        mapItem.openInMapsWithLaunchOptions(options)
+        mapItem.name = "\(self.truck.truckName!)".capitalized
+        mapItem.openInMaps(launchOptions: options)
         
     }
     
-    private func callNumber(phoneNumber:String) {
-        UIApplication.sharedApplication().openURL(NSURL(string: "telprompt://\(phoneNumber)")!)
+    fileprivate func callNumber(_ phoneNumber:String) {
+        UIApplication.shared.openURL(URL(string: "telprompt://\(phoneNumber)")!)
         
     }
     
     
-    func string2Image(string: String) -> UIImage {
-        let data = NSData(base64EncodedString: string, options: .IgnoreUnknownCharacters)
+    func string2Image(_ string: String) -> UIImage {
+        let data = Data(base64Encoded: string, options: .ignoreUnknownCharacters)
         return UIImage(data: data!)!
     }
     
@@ -293,15 +293,15 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
 
 extension BusinessProfileViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return truck.photos!.count
         
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("imageCell", forIndexPath: indexPath) as! BusinessPhotoCollectionViewCell
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "imageCell", for: indexPath) as! BusinessPhotoCollectionViewCell
         
-        let photos = truck.photos![indexPath.row]
+        let photos = truck.photos![(indexPath as NSIndexPath).row]
         
         cell.yelpPhotoImageView.image = string2Image(photos as! String)
         
@@ -309,7 +309,7 @@ extension BusinessProfileViewController: UICollectionViewDelegate, UICollectionV
         return cell
     }
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("Collection view at row \(collectionView.tag) selected index path \(indexPath)")
     }
 }

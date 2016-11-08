@@ -12,83 +12,84 @@ import SwiftyJSON
 
 
 class YelpAPIFusion {
-    var accessToken: [String: String]?
-    var phoneParamters: [String: String]?
-    
-    class var sharedInstance : YelpAPIFusion {
-        struct Static {
-            static var instance: YelpAPIFusion!
-            static var token : dispatch_once_t = 0
-            
-        }
-        dispatch_once(&Static.token) {
-            Static.instance = YelpAPIFusion()
-        }
-        return Static.instance!
-    }
-    
-    init() {
-        let accessTokenUrl = "https://api.yelp.com/oauth2/token"
-        let yelpParameters = [
-            "grant_type" : "client_credentials",
-            "client_id": "bDmceefKP77HVqMmDkreWA",
-            "client_secret": "fHyROuLUncM4GvpoIEI2Z4mKEVEtErvBF83wpivqA1zCAgJxcVWWQfpGpU78kGHy"]
-        Alamofire.request(.POST, accessTokenUrl, parameters: yelpParameters, encoding: .URL, headers: nil)
-            .responseJSON { (response) in
-                switch response.result {
-                case .Success(let value):
-                    let json = JSON(value)
-                    let token = json["access_token"].string!
-                    let type = json["token_type"].string!
-                    self.accessToken = ["Authorization":"\(type) \(token)"]
-                    print(self.accessToken)
-                case .Failure(let error):
-                    print(error.localizedDescription)
-                }
-        }
-    }
-    
-    func searchWithPhone(phoneNumber: String, completion: ([Business]!, [Reviews]!, error: NSError!) -> Void) {
-        print(accessToken)
-        
-        self.phoneParamters = ["phone": phoneNumber]
-        
-        Alamofire.request(.GET, "https://api.yelp.com/v3/businesses/search/phone", parameters: self.phoneParamters, encoding: .URL, headers: self.accessToken).responseJSON { (response) in
-            if response.result.isSuccess {
-                let value = response.result.value
-                let json = JSON(value!)
-                let id = json["businesses"][0]["id"].rawString()
-                let url = "https://api.yelp.com/v3/businesses/\(id!)"
-                let reviewUrl = "https://api.yelp.com/v3/businesses/\(id!)/reviews"
-                
-                Alamofire.request(.GET, url, parameters: nil, encoding: .URL, headers: self.accessToken).responseJSON { (response) in
-                    if response.result.isSuccess {
-                        let value = response.result.value
-                        let json = JSON(value!)
-                        completion(Business.idBusinesses(json), nil, error: nil)
-                    }
-                }
-                
-                Alamofire.request(.GET, reviewUrl, parameters: nil, encoding: .URL, headers: self.accessToken).responseJSON(completionHandler: { (response) in
-                    if response.result.isSuccess {
-                        let value = response.result.value
-                        var reviewJson = JSON(value!)
-                        let reviews = reviewJson["reviews"]
-                        
-                        for (index, review) in reviews.enumerate() {
-                            print("\(index): \(review)")
-                            let data = review.1
-                            reviewJson[index] = data
-                        }
-                        
-                        completion(nil, Business.reviewBusinesses(reviewJson), error: nil)
-                    } else if response.result.isFailure {
-                        print("failed")
-                    }
-                })
-            }
-        }
-    }
+//    private static var __once: () = {
+//            Static.instance = YelpAPIFusion()
+//        }()
+//    var accessToken: [String: String]?
+//    var phoneParamters: [String: String]?
+//    
+//    class var sharedInstance : YelpAPIFusion {
+//        struct Static {
+//            static var instance: YelpAPIFusion!
+//            static var token : Int = 0
+//            
+//        }
+//        _ = YelpAPIFusion.__once
+//        return Static.instance!
+//    }
+//    
+//    init() {
+//        let accessTokenUrl = "https://api.yelp.com/oauth2/token"
+//        let yelpParameters = [
+//            "grant_type" : "client_credentials",
+//            "client_id": "bDmceefKP77HVqMmDkreWA",
+//            "client_secret": "fHyROuLUncM4GvpoIEI2Z4mKEVEtErvBF83wpivqA1zCAgJxcVWWQfpGpU78kGHy"]
+//        Alamofire.request(.POST, accessTokenUrl, parameters: yelpParameters, encoding: .URL, headers: nil)
+//            .responseJSON { (response) in
+//                switch response.result {
+//                case .Success(let value):
+//                    let json = JSON(value)
+//                    let token = json["access_token"].string!
+//                    let type = json["token_type"].string!
+//                    self.accessToken = ["Authorization":"\(type) \(token)"]
+//                    print(self.accessToken)
+//                case .Failure(let error):
+//                    print(error.localizedDescription)
+//                }
+//        }
+//    }
+//    
+//    func searchWithPhone(_ phoneNumber: String, completion: @escaping ([Business]?, [Reviews]?, _ error: NSError?) -> Void) {
+//        print(accessToken)
+//        
+//        self.phoneParamters = ["phone": phoneNumber]
+//        
+//        Alamofire.request(.GET, "https://api.yelp.com/v3/businesses/search/phone", parameters: self.phoneParamters, encoding: .URL, headers: self.accessToken).responseJSON { (response) in
+//            if response.result.isSuccess {
+//                let value = response.result.value
+//                let json = JSON(value!)
+//                let id = json["businesses"][0]["id"].rawString()
+//                let url = "https://api.yelp.com/v3/businesses/\(id!)"
+//                let reviewUrl = "https://api.yelp.com/v3/businesses/\(id!)/reviews"
+//                
+//                Alamofire.request(.GET, url, parameters: nil, encoding: .URL, headers: self.accessToken).responseJSON { (response) in
+//                    if response.result.isSuccess {
+//                        let value = response.result.value
+//                        let json = JSON(value!)
+//                        completion(Business.idBusinesses(json), nil, error: nil)
+//                    }
+//                }
+//                
+//                Alamofire.request(.GET, reviewUrl, parameters: nil, encoding: .URL, headers: self.accessToken).responseJSON(completionHandler: { (response) in
+//                    if response.result.isSuccess {
+//                        let value = response.result.value
+//                        var reviewJson = JSON(value!)
+//                        let reviews = reviewJson["reviews"]
+//                        
+//                        for (index, review) in reviews.enumerate() {
+//                            print("\(index): \(review)")
+//                            let data = review.1
+//                            reviewJson[index] = data
+//                        }
+//                        
+//                        completion(nil, Business.reviewBusinesses(reviewJson), error: nil)
+//                    } else if response.result.isFailure {
+//                        print("failed")
+//                    }
+//                })
+//            }
+//        }
+//    }
 }
 
 
