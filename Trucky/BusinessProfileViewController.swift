@@ -74,7 +74,7 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
         cell.backgroundColor = UIColor(white: 0.5, alpha: 0)
         
         guard let tableViewCell = cell as? BusinessPhotoTableViewCell else { return }
-        tableViewCell.setCollectionViewDataSourceDelegate(self, forRow: (indexPath as NSIndexPath).row)
+        tableViewCell.setCollectionViewDataSourceDelegate(dataSourceDelegate: self, forRow: (indexPath as NSIndexPath).row)
         tableViewCell.collectionViewOffset = storedOffsets[(indexPath as NSIndexPath).row] ?? 0
         
     }
@@ -133,12 +133,12 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
                 let cell = tableView.dequeueReusableCell(withIdentifier: "phoneCell", for: indexPath)
                 let s = truck.phone
                 
-                let s2 = String(format: "%@ (%@) %@-%@",
-                                s!.substring(to: s!.characters.index(s!.startIndex, offsetBy: 2)),
-                                s!.substring(with: s!.characters.index(s!.startIndex, offsetBy: 2) ... s!.characters.index(s!.startIndex, offsetBy: 4)),
-                                s!.substring(with: s!.characters.index(s!.startIndex, offsetBy: 5) ... s!.characters.index(s!.startIndex, offsetBy: 7)),
-                                s!.substring(with: s!.characters.index(s!.startIndex, offsetBy: 8) ... s!.characters.index(s!.startIndex, offsetBy: 11)))
-                cell.detailTextLabel?.text = s2
+//                let s2 = String(format: "%@ (%@) %@-%@",
+//                                s!.substring(to: s!.characters.index(s!.startIndex, offsetBy: 2)),
+//                                s!.substring(with: s!.characters.index(s!.startIndex, offsetBy: 2) ... s!.characters.index(s!.startIndex, offsetBy: 4)),
+//                                s!.substring(with: s!.characters.index(s!.startIndex, offsetBy: 5) ... s!.characters.index(s!.startIndex, offsetBy: 7)),
+//                                s!.substring(with: s!.characters.index(s!.startIndex, offsetBy: 8) ... s!.characters.index(s!.startIndex, offsetBy: 11)))
+//                cell.detailTextLabel?.text = s2
                 return cell
             } else if (indexPath as NSIndexPath).row == 2 {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "websiteCell", for: indexPath)

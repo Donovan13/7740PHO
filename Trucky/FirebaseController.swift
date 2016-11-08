@@ -73,7 +73,7 @@ class FirebaseController {
     static let sharedConnection = FirebaseController()
  
     init() {
-        activeTrucks()
+//        activeTrucks()
         setupListeners()
     }
     
@@ -109,7 +109,6 @@ class FirebaseController {
             self.customer = Customer(snapshot: snapshot)
             self.logInUserDelegate?.loginCustomerDelegate()
             self.userdefaults.setValue(uid, forKey: "Customer")
-            
         })
     }
     
@@ -151,7 +150,7 @@ class FirebaseController {
     }
     
     
-    fileprivate func activeTrucks() {
+    func activeTrucks() {
         truckRef.child("Active").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot!) in
             for trucks in snapshot.children {
                 let foodTruck = Truck(snapshot: trucks as! FIRDataSnapshot)
@@ -239,20 +238,20 @@ class FirebaseController {
     }
     
     fileprivate func setupListeners() {
-        self.truckRef.child("Members").observe(.childAdded) { (snapshot: FIRDataSnapshot!) in
+        self.truckRef.child("Active").observe(.childAdded) { (snapshot: FIRDataSnapshot!) in
             let truck = Truck(snapshot: snapshot)
             if !self.trucks.contains(truck)  {
                 self.trucks.append(truck)
             }
             self.reloadTrucksDelegate?.reloadTrucks()
         }
-        self.truckRef.child("Members").observe(.childChanged) { (snapshot: FIRDataSnapshot!) in
+        self.truckRef.child("Active").observe(.childChanged) { (snapshot: FIRDataSnapshot!) in
             let truck = Truck(snapshot: snapshot)
             let index = self.trucks.index(of: truck)
             self.trucks[index!] = truck
             self.reloadTrucksDelegate?.reloadTrucks()
         }
-        self.truckRef.child("Members").observe(.childRemoved) { (snapshot: FIRDataSnapshot!) in
+        self.truckRef.child("Active").observe(.childRemoved) { (snapshot: FIRDataSnapshot!) in
             let truck = Truck(snapshot: snapshot)
             let index = self.trucks.index(of: truck)!
             self.trucks.remove(at: index)

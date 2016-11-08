@@ -29,6 +29,11 @@ class LocationService: NSObject, CLLocationManagerDelegate {
 //        return Static.instance!
 //    }
 //    
+    
+    static let sharedInstance = LocationService()
+        
+    
+    
     var locationManager: CLLocationManager?
     var newLocation: CLLocation?
     
@@ -80,7 +85,7 @@ class LocationService: NSObject, CLLocationManagerDelegate {
                     self.firebasecontroller.updateTruckAddress(address)
                     
                 } else {
-                    false
+                    
                     print("Problem with the data received from geocoder")
                 }
             })

@@ -29,8 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         FIRAuth.auth()?.addStateDidChangeListener({ (auth, user) in
             if let user = user {
-        
-                
+
                 firebaseController.loggedInTruck(user.uid)
                 
                 

@@ -81,25 +81,29 @@ class Truck: Equatable {
     
     
     init(snapshot: FIRDataSnapshot) {
-        address = snapshot.value(forKey: "address") as? String
-        categories = snapshot.value(forKey: "categories") as? String
-        cityAndState = snapshot.value(forKey: "citiyAndState") as? String
-        email = snapshot.value(forKey: "email") as? String
-        yelpID = snapshot.value(forKey: "yelpID") as? String
-        imageString = snapshot.value(forKey: "imageString") as? String
-        latitude = snapshot.value(forKey: "latitude") as? Double
-        longitude = snapshot.value(forKey: "longitude") as? Double
-        phone = snapshot.value(forKey: "phone") as? String
-        photos = snapshot.value(forKey: "photos") as? NSMutableArray
-        rating = snapshot.value(forKey: "rating") as? Double
-        reviewCount = snapshot.value(forKey: "reviewCount") as? Int
-        reviews = snapshot.value(forKey: "reviews") as? NSMutableArray
-        truckName = snapshot.value(forKey: "truckName") as? String
-        uid = snapshot.value(forKey: "uid") as? String
-        yelpURL = snapshot.value(forKey: "yelpURL") as? String
-        profileImage = snapshot.value(forKey: "profileImage") as? String
-        logoImage = snapshot.value(forKey: "logoImage") as? String
-        menuImage = snapshot.value(forKey: "menuImage") as? String
+        
+        let value = snapshot.value as? NSDictionary
+        
+        
+        address = value?.value(forKey: "address") as? String
+        categories = value?.value(forKey: "categories") as? String
+        cityAndState = value?.value(forKey: "citiyAndState") as? String
+        email = value?.value(forKey: "email") as? String
+        yelpID = value?.value(forKey: "yelpID") as? String
+        imageString = value?.value(forKey: "imageString") as? String
+        latitude = value?.value(forKey: "latitude") as? Double
+        longitude = value?.value(forKey: "longitude") as? Double
+        phone = value?.value(forKey: "phone") as? String
+        photos = value?.value(forKey: "photos") as? NSMutableArray
+        rating = value?.value(forKey: "rating") as? Double
+        reviewCount = value?.value(forKey: "reviewCount") as? Int
+        reviews = value?.value(forKey: "reviews") as? NSMutableArray
+        truckName = value?.value(forKey: "truckName") as? String
+        uid = value?.value(forKey: "uid") as? String
+        yelpURL = value?.value(forKey: "yelpURL") as? String
+        profileImage = value?.value(forKey: "profileImage") as? String
+        logoImage = value?.value(forKey: "logoImage") as? String
+        menuImage = value?.value(forKey: "menuImage") as? String
     }
     
     func toAnyObject() -> Any {
