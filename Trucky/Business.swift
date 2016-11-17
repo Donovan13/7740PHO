@@ -10,6 +10,8 @@ import UIKit
 import SwiftyJSON
 
 class Business: NSObject {
+    
+    
     var id: String!
     var name: String?
     var imageURL: String?
@@ -38,7 +40,7 @@ class Business: NSObject {
             var photoURLs = [String]()
             while i < photosArray.count {
                 let photoURL = photosArray[i].rawString()
-                print(photoURL)
+                print(photoURL!)
                 photoURLs.append(photoURL!)
                 i = i + 1
             }
@@ -67,12 +69,12 @@ class Business: NSObject {
         cityAndState = "\(city!), \(state!)"
     }
     
-    class func idBusinesses(_ array: JSON) -> [Business] {
-        var businesses = [Business]()
-        let business = Business(jsonData: array)
-        businesses.append(business)
+    class func idBusinesses(_ json: JSON) -> Business {
+//        var businesses = [Business]()
+        let business = Business(jsonData: json)
+//        businesses.append(business)
         
-        return businesses
+        return business
     }
     
     class func reviewBusinesses(_ array: JSON) -> [Reviews] {
@@ -92,7 +94,10 @@ class Business: NSObject {
     }
     
     
-    class func searchWithNumber(_ phoneNumber: String, completion: @escaping ([Business]?, [Reviews]?, NSError?) -> Void) {
+    class func searchWithNumber(_ phoneNumber: String, completion: @escaping (Business?, [Reviews]?, NSError?) -> Void) {
+        YelpAPIFusion.init().searchWithPhone(phoneNumber: phoneNumber, completion: completion)
+        
+//        yelpAPI.searchWithPhone(phoneNumber: phoneNumber, completion: completion)
 //        YelpAPIFusion.sharedInstance.searchWithPhone(phoneNumber, completion: completion)
     }
     

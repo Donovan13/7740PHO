@@ -38,32 +38,37 @@ class CreateTruckViewController: UIViewController, UserCreationDelegate, Authent
     @IBAction func searchTruck(_ sender: AnyObject) {
         let phoneNumber = businessNameTextField.text
         
-        Business.searchWithNumber(phoneNumber!, completion: { (businesses: [Business]?, reviews: [Reviews]?, error: NSError!) -> Void in
-            if error == nil {
-                
-                if businesses != nil {
-                    self.searchedBusiness = businesses!.first
-                    print("found business")
-                }
-                
-                if reviews != nil {
-                    self.searchedReviews = reviews!
-                    print("found reviews")
-                }
-                
-                
-                
-                
-                
-                
-                
-            } else {
-                
-                self.errorAlert("error", message: error.localizedDescription)
-                
-            }
+        YelpAPIFusion.init().searchWithPhone(phoneNumber: phoneNumber!) { (business, reviews, error) in
             
-        } as! ([Business]?, [Reviews]?, NSError?) -> Void)
+            
+        }
+        
+//        Business.searchWithNumber(phoneNumber!, completion: { (businesses: [Business]?, reviews: [Reviews]?, error: NSError!) -> Void in
+//            if error == nil {
+//                
+//                if businesses != nil {
+//                    self.searchedBusiness = businesses!.first
+//                    print("found business")
+//                }
+//                
+//                if reviews != nil {
+//                    self.searchedReviews = reviews!
+//                    print("found reviews")
+//                }
+//                
+//                
+//                
+//                
+//                
+//                
+//                
+//            } else {
+//                
+//                self.errorAlert("error", message: error.localizedDescription)
+//                
+//            }
+//            
+//        } as! ([Business]?, [Reviews]?, NSError?) -> Void)
         
         
     }

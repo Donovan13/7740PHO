@@ -53,9 +53,9 @@ class CreateCustomerViewController: UIViewController, UIImagePickerControllerDel
         
         let dictionary = [
             "uid": blank,
-            "email": email,
-            "customerName": customerName,
-            "city": city,
+            "email": email!,
+            "customerName": customerName!,
+            "city": city!,
             "profileImage": imageString] as [String : Any]
         
         firebaseController.createCustomer(email,

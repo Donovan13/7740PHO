@@ -66,7 +66,7 @@ class LocationService: NSObject, CLLocationManagerDelegate {
         guard let newLocation = locations.last else { return }
         
         self.newLocation = newLocation
-        print(self.newLocation)
+        print(self.newLocation!)
         searchingLocation(newLocation)
         
 //        if self.userDefaults.boolForKey("locShare") == true {

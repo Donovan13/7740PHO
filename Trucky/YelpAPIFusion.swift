@@ -11,65 +11,191 @@ import Alamofire
 import SwiftyJSON
 
 
+
 class YelpAPIFusion {
-//    private static var __once: () = {
-//            Static.instance = YelpAPIFusion()
-//        }()
-//    var accessToken: [String: String]?
-//    var phoneParamters: [String: String]?
-//    
-//    class var sharedInstance : YelpAPIFusion {
-//        struct Static {
-//            static var instance: YelpAPIFusion!
-//            static var token : Int = 0
-//            
+    
+    private let appID = "bDmceefKP77HVqMmDkreWA"
+    private let appSecret = "fHyROuLUncM4GvpoIEI2Z4mKEVEtErvBF83wpivqA1zCAgJxcVWWQfpGpU78kGHy"
+    
+    fileprivate var accessToken: String?
+    fileprivate var tokenType: String?
+    fileprivate var expiresIn: Double?
+    fileprivate var expiresAt: Double?
+    fileprivate let accessTokenKey = "accessToken"
+    fileprivate let tokenTypeKey = "tokenType"
+    fileprivate let expiresInKey = "expiresInKey"
+    fileprivate let expiresAtKey = "expiresAtKey"
+    
+    init() {
+        guard !iniWithUserDefaults() else { return }
+        
+//        if iniWithUserDefaults() {
+//            print("true")
+//            // Better handling please
+//        } else {
+            let accessTokenUrl = "https://api.yelp.com/oauth2/token"
+            let parameters: Parameters = ["grant_type": "client_credentials",
+                                          "client_id": appID,
+                                          "client_secret": appSecret]
+
+            Alamofire.request(accessTokenUrl, method: .post, parameters: parameters)
+                .responseJSON(completionHandler: { (response) in
+                    switch response.result {
+                    case .success(let value):
+
+                        let date = NSDate()
+                        let standardDefaults = UserDefaults.standard
+                        let json = JSON(value)
+                        
+                        self.accessToken = json["access_token"].string
+                        self.tokenType = json["token_type"].string
+                        self.expiresIn = json["expires_in"].double
+                        self.expiresAt = self.expiresIn! + date.timeIntervalSince1970
+                        
+                        standardDefaults.set(self.accessToken, forKey: self.accessTokenKey)
+                        standardDefaults.set(self.tokenType, forKey: self.tokenTypeKey)
+                        standardDefaults.set(self.expiresIn!, forKey: self.expiresInKey)
+                        standardDefaults.set(self.expiresAt!, forKey: self.expiresAtKey)
+                        
+                    case .failure(let errorOccured):
+                        var statusCode = response.response?.statusCode
+                        if let error = errorOccured as? AFError {
+                            statusCode = error._code // statusCode private
+                            switch error {
+                            case .invalidURL(let url):
+                                print("Invalid URL: \(url) - \(error.localizedDescription)")
+                            case .parameterEncodingFailed(let reason):
+                                print("Parameter encoding failed: \(error.localizedDescription)")
+                                print("Failure Reason: \(reason)")
+                            case .multipartEncodingFailed(let reason):
+                                print("Multipart encoding failed: \(error.localizedDescription)")
+                                print("Failure Reason: \(reason)")
+                            case .responseValidationFailed(let reason):
+                                print("Response validation failed: \(error.localizedDescription)")
+                                print("Failure Reason: \(reason)")
+                                
+                                switch reason {
+                                case .dataFileNil, .dataFileReadFailed:
+                                    print("Downloaded file could not be read")
+                                case .missingContentType(let acceptableContentTypes):
+                                    print("Content Type Missing: \(acceptableContentTypes)")
+                                case .unacceptableContentType(let acceptableContentTypes, let responseContentType):
+                                    print("Response content type: \(responseContentType) was unacceptable: \(acceptableContentTypes)")
+                                case .unacceptableStatusCode(let code):
+                                    print("Response status code was unacceptable: \(code)")
+                                    statusCode = code
+                                }
+                            case .responseSerializationFailed(let reason):
+                                print("Response serialization failed: \(error.localizedDescription)")
+                                print("Failure Reason: \(reason)")
+                                // statusCode = 3840 ???? maybe..
+                            }
+                            
+                            print("Underlying error: \(error.underlyingError)")
+                        }
+                        else if let error = response.result.error as? URLError {
+                            print("URLError occurred: \(error)")
+                        }
+                        else {
+                            print("Unknown error: \(response.result.error)")
+                        }
+                        print(statusCode!) // the status code
+                    }
+                })
 //        }
-//        _ = YelpAPIFusion.__once
-//        return Static.instance!
-//    }
-//    
-//    init() {
-//        let accessTokenUrl = "https://api.yelp.com/oauth2/token"
-//        let yelpParameters = [
-//            "grant_type" : "client_credentials",
-//            "client_id": "bDmceefKP77HVqMmDkreWA",
-//            "client_secret": "fHyROuLUncM4GvpoIEI2Z4mKEVEtErvBF83wpivqA1zCAgJxcVWWQfpGpU78kGHy"]
-//        Alamofire.request(.POST, accessTokenUrl, parameters: yelpParameters, encoding: .URL, headers: nil)
-//            .responseJSON { (response) in
-//                switch response.result {
-//                case .Success(let value):
-//                    let json = JSON(value)
-//                    let token = json["access_token"].string!
-//                    let type = json["token_type"].string!
-//                    self.accessToken = ["Authorization":"\(type) \(token)"]
-//                    print(self.accessToken)
-//                case .Failure(let error):
-//                    print(error.localizedDescription)
-//                }
-//        }
-//    }
-//    
-//    func searchWithPhone(_ phoneNumber: String, completion: @escaping ([Business]?, [Reviews]?, _ error: NSError?) -> Void) {
-//        print(accessToken)
-//        
-//        self.phoneParamters = ["phone": phoneNumber]
-//        
-//        Alamofire.request(.GET, "https://api.yelp.com/v3/businesses/search/phone", parameters: self.phoneParamters, encoding: .URL, headers: self.accessToken).responseJSON { (response) in
-//            if response.result.isSuccess {
-//                let value = response.result.value
-//                let json = JSON(value!)
-//                let id = json["businesses"][0]["id"].rawString()
-//                let url = "https://api.yelp.com/v3/businesses/\(id!)"
-//                let reviewUrl = "https://api.yelp.com/v3/businesses/\(id!)/reviews"
-//                
-//                Alamofire.request(.GET, url, parameters: nil, encoding: .URL, headers: self.accessToken).responseJSON { (response) in
-//                    if response.result.isSuccess {
-//                        let value = response.result.value
-//                        let json = JSON(value!)
-//                        completion(Business.idBusinesses(json), nil, error: nil)
-//                    }
-//                }
-//                
+    }
+    
+    fileprivate func iniWithUserDefaults() -> Bool {
+        let date = NSDate()
+        let standardDefaults = UserDefaults.standard
+
+        if let accessToken = standardDefaults.string(forKey: accessTokenKey) {
+            print("Loaded key \(accessToken)")
+            self.accessToken = accessToken
+            self.tokenType = standardDefaults.string(forKey: tokenTypeKey)
+            self.expiresIn = standardDefaults.double(forKey: expiresInKey)
+            self.expiresAt = standardDefaults.double(forKey: expiresAtKey)
+            
+            if (self.expiresAt! < date.timeIntervalSince1970) {
+                return false
+            }
+            return true
+        }
+        return false
+    }
+    
+    
+    
+    func searchWithPhone(phoneNumber: String, completion: @escaping (Business?, [Reviews]?, NSError?) -> Void) {
+        let headers : HTTPHeaders = ["Authorization": "\(self.tokenType!) \(self.accessToken!)"]
+        let searchURL = "https://api.yelp.com/v3/businesses/"
+        
+        searchBusinessId(phoneNumber: phoneNumber) { (idString, error) in
+            Alamofire.request(searchURL.appending(idString!), method: .get, headers: headers)
+                .responseJSON { (response) in
+                    if response.result.isSuccess {
+                        let value = response.result.value
+                        let json = JSON(value!)
+                        let business = Business.idBusinesses(json)
+                        completion(business, nil, nil)
+                        print("2\(json)")
+                    } else {
+                        let error = response.result.error
+                        completion(nil, nil, error as? NSError)
+                    }
+            }
+            Alamofire.request(searchURL.appending(idString! + "/reviews"), method: .get, headers: headers)
+                .responseJSON { (response) in
+                    if response.result.isSuccess {
+                        let value = response.result.value
+                        var reviewJSON = JSON(value!)
+                        let reviews = reviewJSON["reviews"]
+                        for (index, review) in reviews.enumerated() {
+                            let data = review.1
+                            reviewJSON[index] = data
+                        }
+                        let review = Business.reviewBusinesses(reviewJSON)
+                        completion(nil, review, nil)
+                        print("3\(reviewJSON)")
+                    } else {
+                        let error = response.result.error
+                        completion(nil, nil, error as? NSError)
+                    }
+                }
+        }
+        
+        
+
+    }
+    
+    func searchBusinessId(phoneNumber: String, completion: @escaping (String?, NSError?) -> Void) {
+        let numbers = "0123456789"
+        let filteredCharacters = phoneNumber.characters.filter {
+            return numbers.contains(String($0))
+        }
+        let filteredString = String(filteredCharacters)
+        let phoneSearchURL = "https://api.yelp.com/v3/businesses/search/phone"
+        let editedPhone = "+1\(filteredString)"
+        let parameters : Parameters = ["phone": "\(editedPhone)"]
+        let headers : HTTPHeaders = ["Authorization": "\(self.tokenType!) \(self.accessToken!)"]
+        
+        Alamofire.request(phoneSearchURL, method: .get, parameters: parameters, encoding: URLEncoding.queryString, headers: headers)
+            .responseJSON { (response) in
+                if response.result.isSuccess {
+                    let value = response.result.value
+                    let json = JSON(value!)
+                    let businessId = json["businesses"][0]["id"].rawString()
+                    completion(businessId, nil)
+                } else {
+                    let error = response.result.error
+                    completion(nil, error as? NSError)
+                }
+        }
+    }
+    
+    
+}
+
 //                Alamofire.request(.GET, reviewUrl, parameters: nil, encoding: .URL, headers: self.accessToken).responseJSON(completionHandler: { (response) in
 //                    if response.result.isSuccess {
 //                        let value = response.result.value
@@ -88,67 +214,6 @@ class YelpAPIFusion {
 //                    }
 //                })
 //            }
-//        }
-//    }
-}
-
-
-
-
-
-
-
-
-//        return completion(Business.idBusinessesarray,: (array: jsonData), error: nil)
-
-//        func searchWithNumber(phoneNumber: String, completion: ([Business]!, error: NSError!) -> Void) -> AFHTTPRequestOperation {
-//
-//        let parameters: [String: AnyObject] = ["phone": phoneNumber]
-//
-//        return self.GET("phone_search", parameters: parameters, success: { (operation: AFHTTPRequestOperation!, response: AnyObject!) -> Void in
-//            let dictionaries = response["businesses"] as? [NSDictionary]
-//            if dictionaries != nil {
-//                completion(Business.idBusinesses(array: dictionaries!), error: nil)
-//
-//            }
-//            }, failure: { (operation: AFHTTPRequestOperation?, error: NSError!) -> Void in
-//                completion(nil, error: error)
-//        })!
-//
-//    }
-//
-//
-
-
-
-
-//    func alamofireManager() -> Manager
-//    {
-//        let manager = Alamofire.Manager.sharedInstance
-//        addSessionHeader("Accept", value: "application/vnd.github.v3+json")
-//        return manager
-//    }
-
-//
-//    func addSessionHeader(key: String, value: String) {
-//        let manager = Alamofire.Manager.sharedInstance
-//        if var authHeader = manager.session.configuration.HTTPAdditionalHeaders as? Dictionary<String, String> {
-////            authHeader.updateValue(value, forKey: key)
-//            authHeader[key] = value
-//
-//            let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
-//            configuration.HTTPAdditionalHeaders = authHeader
-//            manager.session.configuration.HTTPAdditionalHeaders = configuration.HTTPAdditionalHeaders
-//        } else {
-//            manager.session.configuration.HTTPAdditionalHeaders = [key: value]
-//        }
-//    }
-
-//    private func removeOldHeaders(key: String) {
-//        let manager = Alamofire.Manager.sharedInstance
-//        if var authHeaders = manager.session.configuration.HTTPAdditionalHeaders {
-//            authHeaders.removeValueForKey(key)
-//            manager.session.configuration.HTTPAdditionalHeaders = authHeaders
 //        }
 //    }
 

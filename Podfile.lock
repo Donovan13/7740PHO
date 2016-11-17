@@ -41,7 +41,7 @@ PODS:
     - GoogleToolboxForMac/NSString+URLArguments (= 2.1.0)
   - GoogleToolboxForMac/NSString+URLArguments (2.1.0)
   - GTMSessionFetcher/Core (1.1.7)
-  - SideMenu (2.0.5)
+  - SideMenu (2.0.6)
   - SwiftyJSON (3.1.1)
 
 DEPENDENCIES:
@@ -64,7 +64,7 @@ SPEC CHECKSUMS:
   GoogleSymbolUtilities: 631ee17048aa5e9ab133470d768ea997a5ef9b96
   GoogleToolboxForMac: 2b2596cbb7186865e98cadf2b1e262d851c2b168
   GTMSessionFetcher: a1f8ed39e4fe21c68957daed472c7afbcdf29166
-  SideMenu: 0ecfd407b24e7d36c57fc50ca7f5d7cedb7c8841
+  SideMenu: 90be7a14e9f54eb528f96f2033aa54f2992c5667
   SwiftyJSON: f0be2e604f83e8405a624e9f891898bf6ed4e019
 
 PODFILE CHECKSUM: bf6a7f8b27e6308682db90e2a32135cb81845cb0
