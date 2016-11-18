@@ -39,36 +39,33 @@ class CreateTruckViewController: UIViewController, UserCreationDelegate, Authent
         let phoneNumber = businessNameTextField.text
         
         YelpAPIFusion.init().searchWithPhone(phoneNumber: phoneNumber!) { (business, reviews, error) in
+        
+            guard error == nil else {
+                return self.errorAlert("Something Went Wrong!", message: error!.localizedDescription)
+            }
+            guard business != nil else {
+                return self.errorAlert("Something Went Wrong!", message: error!.localizedDescription)
+            }
+            guard reviews != nil else {
+                return self.errorAlert("Something Went Wrong!", message: error!.localizedDescription)
+            }
             
-            
+            self.searchedBusiness = business
+            self.searchedReviews = reviews
+            self.errorAlert("Business Found!", message: "")
         }
         
-//        Business.searchWithNumber(phoneNumber!, completion: { (businesses: [Business]?, reviews: [Reviews]?, error: NSError!) -> Void in
-//            if error == nil {
-//                
-//                if businesses != nil {
-//                    self.searchedBusiness = businesses!.first
-//                    print("found business")
-//                }
-//                
-//                if reviews != nil {
-//                    self.searchedReviews = reviews!
-//                    print("found reviews")
-//                }
-//                
-//                
-//                
-//                
-//                
-//                
-//                
-//            } else {
-//                
-//                self.errorAlert("error", message: error.localizedDescription)
-//                
+//        Business.searchWithNumber(phoneNumber!) { (foundBusiness, foundReviews, foundError) in
+//            guard foundError == nil else {
+//                return self.errorAlert("Something Went Wrong!", message: foundError!.localizedDescription)
 //            }
-//            
-//        } as! ([Business]?, [Reviews]?, NSError?) -> Void)
+//            guard foundBusiness != nil && foundReviews != nil else {
+//                return self.errorAlert("Something Went Wrong!", message: foundError!.localizedDescription)
+//            }
+//            self.searchedBusiness = foundBusiness
+//            self.searchedReviews = foundReviews
+//            self.errorAlert("Business Found!", message: "")
+//        }
         
         
     }

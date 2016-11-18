@@ -26,21 +26,17 @@ class YelpAPIFusion {
     fileprivate let expiresInKey = "expiresInKey"
     fileprivate let expiresAtKey = "expiresAtKey"
     
-    init() {
+    required init() {
         guard !iniWithUserDefaults() else { return }
-        
-//        if iniWithUserDefaults() {
-//            print("true")
-//            // Better handling please
-//        } else {
             let accessTokenUrl = "https://api.yelp.com/oauth2/token"
             let parameters: Parameters = ["grant_type": "client_credentials",
                                           "client_id": appID,
                                           "client_secret": appSecret]
-
+            
             Alamofire.request(accessTokenUrl, method: .post, parameters: parameters)
                 .responseJSON(completionHandler: { (response) in
                     switch response.result {
+                        
                     case .success(let value):
 
                         let date = NSDate()
@@ -90,7 +86,6 @@ class YelpAPIFusion {
                                 print("Failure Reason: \(reason)")
                                 // statusCode = 3840 ???? maybe..
                             }
-                            
                             print("Underlying error: \(error.underlyingError)")
                         }
                         else if let error = response.result.error as? URLError {
@@ -102,8 +97,10 @@ class YelpAPIFusion {
                         print(statusCode!) // the status code
                     }
                 })
-//        }
     }
+    
+    
+    
     
     fileprivate func iniWithUserDefaults() -> Bool {
         let date = NSDate()
@@ -127,10 +124,12 @@ class YelpAPIFusion {
     
     
     func searchWithPhone(phoneNumber: String, completion: @escaping (Business?, [Reviews]?, NSError?) -> Void) {
-        let headers : HTTPHeaders = ["Authorization": "\(self.tokenType!) \(self.accessToken!)"]
-        let searchURL = "https://api.yelp.com/v3/businesses/"
         
+        let searchURL = "https://api.yelp.com/v3/businesses/"
+        let headers : HTTPHeaders = ["Authorization": "\(self.tokenType) \(self.accessToken)"]
+
         searchBusinessId(phoneNumber: phoneNumber) { (idString, error) in
+            if idString != nil {
             Alamofire.request(searchURL.appending(idString!), method: .get, headers: headers)
                 .responseJSON { (response) in
                     if response.result.isSuccess {
@@ -144,6 +143,7 @@ class YelpAPIFusion {
                         completion(nil, nil, error as? NSError)
                     }
             }
+            
             Alamofire.request(searchURL.appending(idString! + "/reviews"), method: .get, headers: headers)
                 .responseJSON { (response) in
                     if response.result.isSuccess {
@@ -162,6 +162,9 @@ class YelpAPIFusion {
                         completion(nil, nil, error as? NSError)
                     }
                 }
+            } else {
+                completion(nil, nil, error)
+            }
         }
         
         
@@ -177,7 +180,7 @@ class YelpAPIFusion {
         let phoneSearchURL = "https://api.yelp.com/v3/businesses/search/phone"
         let editedPhone = "+1\(filteredString)"
         let parameters : Parameters = ["phone": "\(editedPhone)"]
-        let headers : HTTPHeaders = ["Authorization": "\(self.tokenType!) \(self.accessToken!)"]
+        let headers : HTTPHeaders = ["Authorization": "\(self.tokenType) \(self.accessToken)"]
         
         Alamofire.request(phoneSearchURL, method: .get, parameters: parameters, encoding: URLEncoding.queryString, headers: headers)
             .responseJSON { (response) in
@@ -185,7 +188,19 @@ class YelpAPIFusion {
                     let value = response.result.value
                     let json = JSON(value!)
                     let businessId = json["businesses"][0]["id"].rawString()
-                    completion(businessId, nil)
+                    
+                    if businessId != "null" {
+                        completion(businessId, nil)
+                    } else {
+                        let userInfo: [NSObject: Any] = [
+                            NSLocalizedDescriptionKey as NSObject: NSLocalizedString("Invalid Number", comment: "Please Check Your Phone Number")
+                        ]
+                        let error = NSError(domain: "Bad Request", code: 0, userInfo: userInfo)
+                        
+                        completion(nil, error)
+                    }
+                    
+                    
                 } else {
                     let error = response.result.error
                     completion(nil, error as? NSError)
