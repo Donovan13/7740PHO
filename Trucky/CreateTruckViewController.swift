@@ -43,12 +43,12 @@ class CreateTruckViewController: UIViewController, UserCreationDelegate, Authent
             guard error == nil else {
                 return self.errorAlert("Something Went Wrong!", message: error!.localizedDescription)
             }
-            guard business != nil else {
-                return self.errorAlert("Something Went Wrong!", message: error!.localizedDescription)
-            }
-            guard reviews != nil else {
-                return self.errorAlert("Something Went Wrong!", message: error!.localizedDescription)
-            }
+//            guard business != nil else {
+//                return self.errorAlert("Something Went Wrong!", message: error!.localizedDescription)
+//            }
+//            guard reviews != nil else {
+//                return self.errorAlert("Something Went Wrong!", message: error!.localizedDescription)
+//            }
             
             self.searchedBusiness = business
             self.searchedReviews = reviews
