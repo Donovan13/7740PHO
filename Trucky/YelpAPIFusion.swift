@@ -28,33 +28,55 @@ class YelpAPIFusion {
     
     init() {
         guard !iniWithUserDefaults() else { return }
+        
+        requestNewToken(appID: self.appID, appSecret: self.appSecret) { (aceesTok, tokenTyp, expiresIn, expiresAt, error) in
+         
+        
+        
+            
+            self.accessToken = aceesTok
+            self.tokenType = tokenTyp
+            self.expiresIn = expiresIn
+            self.expiresAt = expiresAt
+            let standardDefaults = UserDefaults.standard
+
+            standardDefaults.set(self.accessToken, forKey: self.accessTokenKey)
+            standardDefaults.set(self.tokenType, forKey: self.tokenTypeKey)
+            standardDefaults.set(self.expiresIn, forKey: self.expiresInKey)
+            standardDefaults.set(self.expiresAt, forKey: self.expiresAtKey)
+        }
+        
+    }
+    
+    
+    func requestNewToken(appID: String, appSecret: String, completionHandler: (String?, String?, Double?, Double?, NSError?) -> Void) {
         let accessTokenUrl = "https://api.yelp.com/oauth2/token"
         let parameters: Parameters = ["grant_type": "client_credentials",
                                       "client_id": appID,
                                       "client_secret": appSecret]
+        var accessTok = String()
+        var tokenType = String()
+        var expiresIn = Double()
+        var expiresAt = Double()
+        var error = NSError()
         
-        let dispatch = DispatchQueue.global(qos: .userInitiated)
         
         Alamofire.request(accessTokenUrl, method: .post, parameters: parameters)
-            .responseJSON(queue: dispatch, completionHandler: { (response) in
-                //                .responseJSON(completionHandler: { (response) in
+            .responseJSON(completionHandler: { (response) in
+                
                 switch response.result {
                     
                 case .success(let value):
                     
                     let date = NSDate()
-                    let standardDefaults = UserDefaults.standard
                     let json = JSON(value)
                     
-                    self.accessToken = json["access_token"].string
-                    self.tokenType = json["token_type"].string
-                    self.expiresIn = json["expires_in"].double
-                    self.expiresAt = self.expiresIn! + date.timeIntervalSince1970
+                    accessTok = json["access_token"].string!
+                    tokenType = json["token_type"].string!
+                    expiresIn = json["expires_in"].double!
+                    expiresAt = expiresIn + date.timeIntervalSince1970
+//                    completionHandler(accessTok, tokenType, expiresIn, expiresAt, error)
                     
-                    standardDefaults.set(self.accessToken, forKey: self.accessTokenKey)
-                    standardDefaults.set(self.tokenType, forKey: self.tokenTypeKey)
-                    standardDefaults.set(self.expiresIn, forKey: self.expiresInKey)
-                    standardDefaults.set(self.expiresAt, forKey: self.expiresAtKey)
                     
                 case .failure(let errorOccured):
                     var statusCode = response.response?.statusCode
@@ -100,10 +122,14 @@ class YelpAPIFusion {
                     print(statusCode!) // the status code
                 }
             })
+        while accessTok == "" {
+            RunLoop.current.run(mode: RunLoopMode.defaultRunLoopMode, before: NSDate.distantFuture)
+            
+        }
+        completionHandler(accessTok, tokenType, expiresIn, expiresAt, error)
+
+        
     }
-    
-    
-    
     
     fileprivate func iniWithUserDefaults() -> Bool {
         let date = NSDate()
@@ -129,15 +155,7 @@ class YelpAPIFusion {
     func searchWithPhone(phoneNumber: String, completion: @escaping (Business?, [Reviews]?, NSError?) -> Void) {
         
         let searchURL = "https://api.yelp.com/v3/businesses/"
-        
-        guard self.tokenType != nil else {
-            return
-        }
-        
         let headers : HTTPHeaders = ["Authorization": "\(self.tokenType!) \(self.accessToken!)"]
-        
-        
-        
         
         searchBusinessId(phoneNumber: phoneNumber) { (idString, error) in
             if idString != nil {
@@ -177,8 +195,6 @@ class YelpAPIFusion {
                 completion(nil, nil, error)
             }
         }
-        
-        
         
     }
     
