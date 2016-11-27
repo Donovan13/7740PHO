@@ -31,8 +31,6 @@ class CreateTruckViewController: UIViewController, UserCreationDelegate, Authent
         super.viewDidLoad()
         self.firebaseController.userCreationDelegate = self
         self.firebaseController.authenticationDelegate = self
-        
-        
     }
     
     @IBAction func searchTruck(_ sender: AnyObject) {
@@ -43,31 +41,18 @@ class CreateTruckViewController: UIViewController, UserCreationDelegate, Authent
             guard error == nil else {
                 return self.errorAlert("Something Went Wrong!", message: error!.localizedDescription)
             }
-//            guard business != nil else {
-//                return self.errorAlert("Something Went Wrong!", message: error!.localizedDescription)
-//            }
-//            guard reviews != nil else {
-//                return self.errorAlert("Something Went Wrong!", message: error!.localizedDescription)
-//            }
             
-            self.searchedBusiness = business
-            self.searchedReviews = reviews
-            self.errorAlert("Business Found!", message: "")
+            if business != nil {
+                self.searchedBusiness = business
+                self.errorAlert("Business Found!", message: "")
+            }
+            
+            if reviews != nil {
+                self.searchedReviews = reviews
+                self.errorAlert("Reviews Found!", message: "")
+            }
+            
         }
-        
-//        Business.searchWithNumber(phoneNumber!) { (foundBusiness, foundReviews, foundError) in
-//            guard foundError == nil else {
-//                return self.errorAlert("Something Went Wrong!", message: foundError!.localizedDescription)
-//            }
-//            guard foundBusiness != nil && foundReviews != nil else {
-//                return self.errorAlert("Something Went Wrong!", message: foundError!.localizedDescription)
-//            }
-//            self.searchedBusiness = foundBusiness
-//            self.searchedReviews = foundReviews
-//            self.errorAlert("Business Found!", message: "")
-//        }
-        
-        
     }
     
     
@@ -97,7 +82,8 @@ class CreateTruckViewController: UIViewController, UserCreationDelegate, Authent
             "reviews": getReview(),
             "profileImage": "",
             "logoImage": "",
-            "menuImage": ""
+            "menuImage": "",
+            "active": false
         ] as [String : Any]
         
         firebaseController.createTruck(email,

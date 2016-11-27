@@ -64,17 +64,17 @@ class FirebaseController {
     var sharetruckDelegate: ShareTruckDelegate?
     var logOutUserDelegate: LogOutUserDelegate?
     
-
+    
     fileprivate var trucks = [Truck]()
     fileprivate var truck: Truck?
     
     fileprivate var customer: Customer?
     
     static let sharedConnection = FirebaseController()
- 
+    
     init() {
-//        activeTrucks()
-        setupListeners()
+        //        activeTrucks()
+        observers()
     }
     
     
@@ -115,7 +115,7 @@ class FirebaseController {
     func getLoggedInCustomer() -> Customer {
         return self.customer!
     }
-
+    
     func getActiveTrucks() -> [Truck] {
         return self.trucks
     }
@@ -137,7 +137,6 @@ class FirebaseController {
                 self.userdefaults.setValue(nil, forKey: "Truck")
                 self.userdefaults.setValue(nil, forKey: "Customer")
                 
-                
             } catch let error as NSError {
                 print(error.localizedDescription)
             }
@@ -151,32 +150,36 @@ class FirebaseController {
     
     
     func activeTrucks() {
-        truckRef.child("Active").observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot!) in
-            for trucks in snapshot.children {
-                let foodTruck = Truck(snapshot: trucks as! FIRDataSnapshot)
-                self.trucks.append(foodTruck)
+        truckRef.observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot!) in
+            for truck in snapshot.children {
+                
+                let foodTruck = Truck(snapshot: truck as! FIRDataSnapshot)
+                if foodTruck.active == true {
+                    self.trucks.append(foodTruck)
+                }
+                
             }
         }
     }
     
     func updateCustomImages(_ profileImage: String, logoImage: String, menuImage: String) {
         let uid = truck?.uid
-        truckRef.child("Members").child(uid!).updateChildValues(["profileImage": profileImage, "logoImage": logoImage, "menuImage": menuImage])
+        truckRef.child(uid!).updateChildValues(["profileImage": profileImage, "logoImage": logoImage, "menuImage": menuImage])
     }
     
     func updateTruckLocation(_ lat: Double, lon: Double) {
         if userdefaults.bool(forKey: "locShare") == true {
-        
-        let uid = truck?.uid
-        truckRef.child("Active").child(uid!).updateChildValues(["latitude": lat, "longitude": lon])
+            
+            let uid = truck?.uid
+            truckRef.child(uid!).updateChildValues(["latitude": lat, "longitude": lon])
         }
     }
     
     func updateTruckAddress(_ address: String) {
         if userdefaults.bool(forKey: "locShare") == true {
-
-        let uid = truck?.uid
-        truckRef.child("Active").child(uid!).updateChildValues(["address": address])
+            
+            let uid = truck?.uid
+            truckRef.child(uid!).updateChildValues(["address": address])
         }
     }
     
@@ -185,10 +188,10 @@ class FirebaseController {
         let uid = truck?.uid
         if onOff == true {
             truck = Truck(truck: truck!)
-            truckRef.child("Active").child(uid!).setValue(self.truck!.toAnyObject())
+            truckRef.child(uid!).updateChildValues(["active": true])
             sharetruckDelegate?.activateTruckDelegate()
         } else {
-            truckRef.child("Active").child(uid!).removeValue()
+            truckRef.child(uid!).updateChildValues(["active": false])
             sharetruckDelegate?.deactivateTruckDelegate()
             
         }
@@ -200,8 +203,8 @@ class FirebaseController {
                 
                 self.loginTruck(email, password: password)
                 let uid = user!.uid
-                self.truckRef.child("Members").child(uid).setValue(dictionary)
-                self.truckRef.child("Members").child("\(user!.uid)/uid").setValue(uid)
+                self.truckRef.child(uid).setValue(dictionary)
+                self.truckRef.child("\(user!.uid)/uid").setValue(uid)
             } else {
                 self.userCreationDelegate?.createUserFail(error! as NSError)
             }
@@ -213,11 +216,9 @@ class FirebaseController {
             if error == nil {
                 let uid = user?.uid
                 
-                
-                
                 self.authenticationDelegate?.userAuthenticationSuccess()
                 self.loggedInTruck(uid!)
-
+                
             } else {
                 self.authenticationDelegate?.userAuthenticationFail(error! as NSError)
             }
@@ -226,32 +227,29 @@ class FirebaseController {
     
     func loggedInTruck(_ uid: String) {
         
-        self.truckRef.child("Members").child(uid).observeSingleEvent(of: .value, with: { (snapshot: FIRDataSnapshot) in
-            
+        self.truckRef.child(uid).observeSingleEvent(of: .value, with: { (snapshot: FIRDataSnapshot) in
             self.truck = Truck(snapshot: snapshot)
-            
             self.userdefaults.setValue(uid, forKey: "Truck")
-
             self.logInUserDelegate?.logInTruckDelegate()
-
+            
         })
     }
     
-    fileprivate func setupListeners() {
-        self.truckRef.child("Active").observe(.childAdded) { (snapshot: FIRDataSnapshot!) in
+    fileprivate func observers() {
+        self.truckRef.observe(.childAdded) { (snapshot: FIRDataSnapshot!) in
             let truck = Truck(snapshot: snapshot)
             if !self.trucks.contains(truck)  {
                 self.trucks.append(truck)
             }
             self.reloadTrucksDelegate?.reloadTrucks()
         }
-        self.truckRef.child("Active").observe(.childChanged) { (snapshot: FIRDataSnapshot!) in
+        self.truckRef.observe(.childChanged) { (snapshot: FIRDataSnapshot!) in
             let truck = Truck(snapshot: snapshot)
             let index = self.trucks.index(of: truck)
             self.trucks[index!] = truck
             self.reloadTrucksDelegate?.reloadTrucks()
         }
-        self.truckRef.child("Active").observe(.childRemoved) { (snapshot: FIRDataSnapshot!) in
+        self.truckRef.observe(.childRemoved) { (snapshot: FIRDataSnapshot!) in
             let truck = Truck(snapshot: snapshot)
             let index = self.trucks.index(of: truck)!
             self.trucks.remove(at: index)

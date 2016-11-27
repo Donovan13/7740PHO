@@ -31,9 +31,6 @@ class YelpAPIFusion {
         
         requestNewToken(appID: self.appID, appSecret: self.appSecret) { (aceesTok, tokenTyp, expiresIn, expiresAt, error) in
          
-        
-        
-            
             self.accessToken = aceesTok
             self.tokenType = tokenTyp
             self.expiresIn = expiresIn
@@ -48,7 +45,6 @@ class YelpAPIFusion {
         
     }
     
-    
     func requestNewToken(appID: String, appSecret: String, completionHandler: (String?, String?, Double?, Double?, NSError?) -> Void) {
         let accessTokenUrl = "https://api.yelp.com/oauth2/token"
         let parameters: Parameters = ["grant_type": "client_credentials",
@@ -59,7 +55,6 @@ class YelpAPIFusion {
         var expiresIn = Double()
         var expiresAt = Double()
         var error = NSError()
-        
         
         Alamofire.request(accessTokenUrl, method: .post, parameters: parameters)
             .responseJSON(completionHandler: { (response) in
@@ -128,7 +123,6 @@ class YelpAPIFusion {
         }
         completionHandler(accessTok, tokenType, expiresIn, expiresAt, error)
 
-        
     }
     
     fileprivate func iniWithUserDefaults() -> Bool {
@@ -149,8 +143,6 @@ class YelpAPIFusion {
         }
         return false
     }
-    
-    
     
     func searchWithPhone(phoneNumber: String, completion: @escaping (Business?, [Reviews]?, NSError?) -> Void) {
         
@@ -207,7 +199,6 @@ class YelpAPIFusion {
         let phoneSearchURL = "https://api.yelp.com/v3/businesses/search/phone"
         let editedPhone = "+1\(filteredString)"
         let parameters : Parameters = ["phone": "\(editedPhone)"]
-        
         let headers : HTTPHeaders = ["Authorization": "\(self.tokenType!) \(self.accessToken!)"]
         
         Alamofire.request(phoneSearchURL, method: .get, parameters: parameters, encoding: URLEncoding.queryString, headers: headers)
@@ -227,8 +218,6 @@ class YelpAPIFusion {
                         
                         completion(nil, error)
                     }
-                    
-                    
                 } else {
                     let error = response.result.error
                     completion(nil, error as? NSError)

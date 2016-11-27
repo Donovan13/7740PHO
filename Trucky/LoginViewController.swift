@@ -15,19 +15,14 @@ class LoginViewController: UIViewController,CLLocationManagerDelegate, Authentic
     
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextfield: UITextField!
-    
-    
+
     let firebaseController = FirebaseController.sharedConnection
     let userDefaults = UserDefaults.standard
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.firebaseController.authenticationDelegate = self
-
-        
     }
-    
-    
     
     @IBAction func loginButtonTapped(_ sender: AnyObject) {
         let email = emailTextField.text
@@ -35,9 +30,6 @@ class LoginViewController: UIViewController,CLLocationManagerDelegate, Authentic
         firebaseController.loginTruck(email, password: password)
         
     }
-    
-    
-    
     
     func userAuthenticationSuccess() {
         DispatchQueue.main.async {

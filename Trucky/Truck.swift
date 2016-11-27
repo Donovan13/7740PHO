@@ -37,6 +37,7 @@ class Truck: Equatable {
     let logoImage: String?
     let menuImage: String?
     var distance: Double?
+    let active: Bool?
     
     static func image2String(_ image: UIImage) -> String {
         let imageData = UIImageJPEGRepresentation(image, 1);
@@ -75,6 +76,7 @@ class Truck: Equatable {
         profileImage = truck.profileImage
         logoImage = truck.logoImage
         menuImage = truck.menuImage
+        active = truck.active
     }
     
     
@@ -104,6 +106,7 @@ class Truck: Equatable {
         profileImage = value?.value(forKey: "profileImage") as? String
         logoImage = value?.value(forKey: "logoImage") as? String
         menuImage = value?.value(forKey: "menuImage") as? String
+        active = value?.value(forKey: "active") as? Bool
     }
     
     func toAnyObject() -> Any {
@@ -125,7 +128,8 @@ class Truck: Equatable {
             "photos": photos!,
             "profileImage": profileImage!,
             "logoImage": logoImage!,
-            "menuImage": menuImage!
+            "menuImage": menuImage!,
+            "active": active!
             
         ]
     }
