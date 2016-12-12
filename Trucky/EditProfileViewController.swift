@@ -58,6 +58,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         self.truckNameLabel.text = loggedInTruck.truckName
         
     }
+    
     @IBAction func saveImageButton(_ sender: AnyObject) {
         let profImage = image2String(profileImageView.image!)
         let logImage = image2String(logoImageView.image!)

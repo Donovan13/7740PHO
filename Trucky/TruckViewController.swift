@@ -10,6 +10,8 @@ import UIKit
 import MapKit
 import CoreLocation
 import Firebase
+
+
 fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
   case let (l?, r?):
@@ -32,8 +34,6 @@ fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 
 
 
-
-
 class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, UITableViewDataSource, ReloadTrucksDelegate, LocationServiceDelegate {
     
     
@@ -43,18 +43,14 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     @IBOutlet weak var menuButton: UIButton!
     
     //    MARK: Var & Let
-    
     var trucks = [Truck]()
     var loggedInTruck: Truck?
     var loggedInCustomer: Customer?
-    
+    var userlocation: CLLocation?
+
     let firebaseController = FirebaseController.sharedConnection
     let locationController = LocationService.sharedInstance
     let userDefaults = UserDefaults.standard
-    var userlocation: CLLocation?
-    
-
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -248,13 +244,11 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
                 detailVC.truck = truck
 //                detailVC.distanceOfTruck = truck.distance
 
-                
             case "annotationDetailSegue":
                 let detailVC = segue.destination as! BusinessProfileViewController
                 let annotation = sender as! CustomAnnotations
                 detailVC.truck = annotation.truckCA
 //                detailVC.distanceOfTruck = truckdistance[annotation.idNumber!]
-
                 
             case "truckToWebSegue":
                 let button = sender as! UIButton
