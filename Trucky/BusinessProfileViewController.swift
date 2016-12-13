@@ -103,8 +103,10 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
                 cell.truckNameLabel?.text = truck.truckName?.capitalized
                 cell.reviewsLabel?.text = "\(truck.reviewCount!) reviews on"
                 
-                let inMiles = truck.distance! * 0.000621371192
-                cell.distanceLabel.text = (String(format: "%.2fm Away", inMiles))
+                if let inMiles = truck.distance {
+                    let distance = inMiles * 0.000621371192
+                    cell.distanceLabel.text = (String(format: "%.2fm Away", distance))
+                }
                 
                 if truck.rating == 0 {
                     cell.ratingsImageView?.image = UIImage(named: "star0")

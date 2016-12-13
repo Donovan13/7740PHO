@@ -245,9 +245,11 @@ class FirebaseController {
         }
         self.truckRef.observe(.childChanged) { (snapshot: FIRDataSnapshot!) in
             let truck = Truck(snapshot: snapshot)
-            let index = self.trucks.index(of: truck)
-            self.trucks[index!] = truck
+            if let index = self.trucks.index(of: truck) {
+            self.trucks[index] = truck
             self.reloadTrucksDelegate?.reloadTrucks()
+
+            }
         }
         self.truckRef.observe(.childRemoved) { (snapshot: FIRDataSnapshot!) in
             let truck = Truck(snapshot: snapshot)

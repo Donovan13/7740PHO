@@ -51,8 +51,12 @@ class Truck: Equatable {
     }
     
     func calculateDistance(_ fromLocation:CLLocation!) {
-        let location = CLLocation(latitude: self.latitude!, longitude: self.longitude!)
+        
+        if let lat = self.latitude {
+        
+        let location = CLLocation(latitude: lat, longitude: self.longitude!)
         distance = location.distance(from: fromLocation)
+        }
     }
     
     

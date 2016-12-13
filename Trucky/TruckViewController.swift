@@ -13,23 +13,23 @@ import Firebase
 
 
 fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l < r
-  case (nil, _?):
-    return true
-  default:
-    return false
-  }
+    switch (lhs, rhs) {
+    case let (l?, r?):
+        return l < r
+    case (nil, _?):
+        return true
+    default:
+        return false
+    }
 }
 
 fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l > r
-  default:
-    return rhs < lhs
-  }
+    switch (lhs, rhs) {
+    case let (l?, r?):
+        return l > r
+    default:
+        return rhs < lhs
+    }
 }
 
 
@@ -47,7 +47,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     var loggedInTruck: Truck?
     var loggedInCustomer: Customer?
     var userlocation: CLLocation?
-
+    
     let firebaseController = FirebaseController.sharedConnection
     let locationController = LocationService.sharedInstance
     let userDefaults = UserDefaults.standard
@@ -62,7 +62,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         firebaseController.reloadTrucksDelegate = self
         locationController.locationServiceDelegate = self
         userlocation = locationController.newLocation
-
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -87,13 +87,13 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         
         self.reloadTrucks()
         
-//        if userDefaults.valueForKey("Truck") != nil {
-//            if firebaseController.getLoggedInTruck().truckName?.characters.count > 1 {
-//            loggedInTruck = firebaseController.getLoggedInTruck()
-//            }
-//        } else if userDefaults.valueForKey("Customer") != nil {
-//            loggedInCustomer = firebaseController.getLoggedInCustomer()
-//        }
+        //        if userDefaults.valueForKey("Truck") != nil {
+        //            if firebaseController.getLoggedInTruck().truckName?.characters.count > 1 {
+        //            loggedInTruck = firebaseController.getLoggedInTruck()
+        //            }
+        //        } else if userDefaults.valueForKey("Customer") != nil {
+        //            loggedInCustomer = firebaseController.getLoggedInCustomer()
+        //        }
         
         
         
@@ -103,26 +103,27 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     func loadAnnotations() {
         if trucks.count > 1 {
             if trucks.first?.truckName != nil {
-            for truck in trucks {
-                let title = truck.truckName
-                let subtitle = truck.categories
-                let latitude = truck.latitude
-                let longitude = truck.longitude
-                let coordinates = CLLocationCoordinate2DMake(latitude!, longitude!)
-                let annotation = CustomAnnotations(title: title!, subtitle: subtitle!, coordinate: coordinates, truckCA: truck)
-                mapView.addAnnotation(annotation)
+                for truck in trucks {
+                    let title = truck.truckName
+                    let subtitle = truck.categories
+                    if let latitude = truck.latitude {
+                        let longitude = truck.longitude
+                        let coordinates = CLLocationCoordinate2DMake(latitude, longitude!)
+                        let annotation = CustomAnnotations(title: title!, subtitle: subtitle!, coordinate: coordinates, truckCA: truck)
+                        mapView.addAnnotation(annotation)
+                    }
+                }
             }
-        }
         }
     }
     
     func updateLocation(_ currentLocation: CLLocation) {
-//        self.userlocation = currentLocation
+        //        self.userlocation = currentLocation
         let lat = currentLocation.coordinate.latitude
         let lon = currentLocation.coordinate.longitude
         
         
-    
+        
         firebaseController.updateTruckLocation(lat, lon: lon)
     }
     
@@ -242,13 +243,13 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
                 let truck = trucks.reversed()[button.tag]
                 let detailVC = segue.destination as! BusinessProfileViewController
                 detailVC.truck = truck
-//                detailVC.distanceOfTruck = truck.distance
-
+                //                detailVC.distanceOfTruck = truck.distance
+                
             case "annotationDetailSegue":
                 let detailVC = segue.destination as! BusinessProfileViewController
                 let annotation = sender as! CustomAnnotations
                 detailVC.truck = annotation.truckCA
-//                detailVC.distanceOfTruck = truckdistance[annotation.idNumber!]
+                //                detailVC.distanceOfTruck = truckdistance[annotation.idNumber!]
                 
             case "truckToWebSegue":
                 let button = sender as! UIButton
