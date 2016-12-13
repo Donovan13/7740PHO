@@ -10,8 +10,9 @@ import UIKit
 import CoreLocation
 import Firebase
 import FirebaseAuth
+import  UserNotifications
 
-class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, LogInUserDelegate, ShareTruckDelegate, LogOutUserDelegate {
+class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UNUserNotificationCenterDelegate, LogInUserDelegate, ShareTruckDelegate, LogOutUserDelegate {
     
     @IBOutlet weak var logoImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
@@ -35,6 +36,8 @@ class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableVie
     
     var timer = Timer()
     
+    var isGrantedNotificationAccess: Bool = false
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,7 +45,14 @@ class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableVie
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.isTranslucent = true
+        
+        UNUserNotificationCenter.current().requestAuthorization(
+            options: [.alert, .sound,.badge],
+            completionHandler: { (granted, error) in
+                self.isGrantedNotificationAccess = granted
 
+        }
+        )
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -188,6 +198,29 @@ class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableVie
             timer.invalidate()
             self.deactivateTruckDelegate()
             userDefaults.set(false, forKey: "locShare")
+            
+            if isGrantedNotificationAccess {
+                
+                let content = UNMutableNotificationContent()
+                content.title = "Time Expired"
+                content.subtitle = "Location is no longer being shared"
+                content.body = "To continue sharing location, return to menu and add more time"
+                
+                let trigger = UNTimeIntervalNotificationTrigger(
+                    timeInterval: 1.0,
+                    repeats: false)
+                
+                let request = UNNotificationRequest(
+                    identifier: "location.notification.message",
+                    content: content,
+                    trigger: trigger
+                )
+                
+                UNUserNotificationCenter.current().add(
+                    request, withCompletionHandler: nil)
+                
+            }
+            
 
         }
     }

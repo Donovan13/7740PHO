@@ -52,6 +52,10 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     let locationController = LocationService.sharedInstance
     let userDefaults = UserDefaults.standard
     
+    var reloadT: Timer?
+
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -86,6 +90,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         super.viewDidAppear(true)
         
         self.reloadTrucks()
+        self.reloadTimer()
         
         //        if userDefaults.valueForKey("Truck") != nil {
         //            if firebaseController.getLoggedInTruck().truckName?.characters.count > 1 {
@@ -98,6 +103,13 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         
         
         
+    }
+    
+    func reloadTimer() {
+        
+        reloadT = Timer.scheduledTimer(withTimeInterval: 60.0, repeats: true) { [weak self] _ in
+            self?.reloadTrucks()
+        }
     }
     
     func loadAnnotations() {
@@ -273,17 +285,8 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     }
     
     @IBAction func reloadButton(_ sender: AnyObject) {
-        DispatchQueue.main.async {
-            self.mapView.removeAnnotations(self.mapView.annotations)
-            
-            for truck in self.trucks {
-                truck.calculateDistance(self.userlocation)
-            }
-            
-            self.trucks.sort(by: { $0.distance < $1.distance })
-            
-            self.reloadTrucks()
-        }
+        self.reloadTrucks()
+        print("Trucks Reloaded - Manual")
     }
     
     @IBAction func centerLocationButton(_ sender: AnyObject) {
@@ -334,15 +337,19 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     
     func reloadTrucks() {
         DispatchQueue.main.async {
+            self.mapView.removeAnnotations(self.mapView.annotations)
             self.trucks = self.firebaseController.getActiveTrucks()
+            self.trucks.removeFirst()
             self.tableView.reloadData()
             self.loadAnnotations()
+            for truck in self.trucks {
+                truck.calculateDistance(self.userlocation)
+            }
+            self.trucks.sort(by: { $0.distance < $1.distance })
         }
+        
     }
-    
-    
 }
-
 
 extension UITableView {
     func indexPathForView (_ view: UIView) -> IndexPath {
