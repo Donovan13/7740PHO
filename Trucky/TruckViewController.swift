@@ -176,10 +176,8 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         
-        
-        
         let cell = tableView.dequeueReusableCell(withIdentifier: "BusinessTableViewCell") as! DetailTableViewCell
-        let post = trucks.reversed()[(indexPath as NSIndexPath).row]
+        let post = trucks[(indexPath as NSIndexPath).row]
         
         cell.businessImage.image = string2Image(post.imageString!)
         cell.businessLabel?.text = post.truckName?.capitalized
@@ -277,13 +275,14 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     @IBAction func reloadButton(_ sender: AnyObject) {
         DispatchQueue.main.async {
             self.mapView.removeAnnotations(self.mapView.annotations)
-            self.reloadTrucks()
             
             for truck in self.trucks {
                 truck.calculateDistance(self.userlocation)
             }
             
             self.trucks.sort(by: { $0.distance < $1.distance })
+            
+            self.reloadTrucks()
         }
     }
     

@@ -73,7 +73,7 @@ class FirebaseController {
     static let sharedConnection = FirebaseController()
     
     init() {
-        //        activeTrucks()
+        
         observers()
     }
     
@@ -117,6 +117,7 @@ class FirebaseController {
     }
     
     func getActiveTrucks() -> [Truck] {
+        
         return self.trucks
     }
     
@@ -238,15 +239,19 @@ class FirebaseController {
     fileprivate func observers() {
         self.truckRef.observe(.childAdded) { (snapshot: FIRDataSnapshot!) in
             let truck = Truck(snapshot: snapshot)
+            if truck.active! {
             if !self.trucks.contains(truck)  {
                 self.trucks.append(truck)
+            }
             }
             self.reloadTrucksDelegate?.reloadTrucks()
         }
         self.truckRef.observe(.childChanged) { (snapshot: FIRDataSnapshot!) in
             let truck = Truck(snapshot: snapshot)
+            if truck.active! {
             if let index = self.trucks.index(of: truck) {
             self.trucks[index] = truck
+                }
             self.reloadTrucksDelegate?.reloadTrucks()
 
             }
