@@ -19,6 +19,10 @@ class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableVie
     @IBOutlet weak var locationSwitcher: UISwitch!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var timeLabel: UILabel!
+    @IBOutlet weak var ratingImaveView: UIImageView!
+    @IBOutlet weak var reviewsLabel: UILabel!
+    @IBOutlet weak var truckAddressLabel: UILabel!
+    @IBOutlet weak var categoriesLabel: UILabel!
     
     let userDefaults = UserDefaults.standard
     let locationManager = CLLocationManager()
@@ -50,9 +54,13 @@ class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableVie
             options: [.alert, .sound,.badge],
             completionHandler: { (granted, error) in
                 self.isGrantedNotificationAccess = granted
-
-        }
+            }
         )
+        firebaseController.logInUserDelegate = self
+        firebaseController.sharetruckDelegate = self
+        firebaseController.logOutUserDelegate = self
+        logInTruckDelegate()
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -66,12 +74,37 @@ class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableVie
             printTime()
         }
         
+        nameLabel.text = loggedInTruck.truckName
+        reviewsLabel.text = String(describing: loggedInTruck.reviewCount)
+        truckAddressLabel.text = loggedInTruck.address
+        categoriesLabel.text = loggedInTruck.categories
+        logoImageView.image = string2Image(loggedInTruck.imageString!)
         
-        firebaseController.logInUserDelegate = self
-        firebaseController.sharetruckDelegate = self
-        firebaseController.logOutUserDelegate = self
         
-        logInTruckDelegate()
+        if loggedInTruck.rating == 0 {
+            ratingImaveView?.image = UIImage(named: "star0")
+        } else if loggedInTruck.rating == 1 {
+            ratingImaveView?.image = UIImage(named: "star1")
+        } else if loggedInTruck.rating == 1.5 {
+            ratingImaveView?.image = UIImage(named: "star1h")
+        } else if loggedInTruck.rating == 2 {
+            ratingImaveView?.image = UIImage(named: "star2")
+        } else if loggedInTruck.rating == 2.5 {
+            ratingImaveView?.image = UIImage(named: "star2h")
+        } else if loggedInTruck.rating == 3 {
+            ratingImaveView?.image = UIImage(named: "star3")
+        } else if loggedInTruck.rating == 3.5 {
+            ratingImaveView?.image = UIImage(named: "star3h")
+        } else if loggedInTruck.rating == 4 {
+            ratingImaveView?.image = UIImage(named: "star4")
+        } else if loggedInTruck.rating == 4.5 {
+            ratingImaveView?.image = UIImage(named: "star4h")
+        } else if loggedInTruck.rating == 5 {
+            ratingImaveView?.image = UIImage(named: "star5")
+        }
+
+        
+        
         
         // Add a background view to the table view
         let backgroundImage = UIImage(named: "backSlide")
@@ -113,8 +146,8 @@ class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableVie
     
     func deactivateTruckDelegate() {
         errorAlert("Time has expired", message: "Your location is no longer being shared")
-
-//        errorAlert("Confirmation", message: "Going out of business =(")
+        
+        //        errorAlert("Confirmation", message: "Going out of business =(")
     }
     
     func logOutUserDelegate() {
@@ -159,16 +192,18 @@ class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableVie
     @IBAction func locationSwitcherTapped(_ sender: AnyObject) {
         if locationSwitcher.isOn == true {
             self.errorAlert(self.locationSwitcher)
-            firebaseController.shareTruckLocation(true)
             userDefaults.set(true, forKey: "locShare")
+            
+            firebaseController.shareTruckLocation(true)
+            
         } else {
             timeLabel.text = ""
             timer.invalidate()
             self.deactivateTruckDelegate()
             userDefaults.set(false, forKey: "locShare")
-            firebaseController.shareTruckLocation(true)
-
-
+            firebaseController.shareTruckLocation(false)
+            
+            
         }
     }
     
@@ -189,7 +224,7 @@ class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableVie
         let endTime = formatter.date(from: pickedTime!)
         let timeDifference = (userCalendar as NSCalendar).components(requestedComponent, from: startTime, to: endTime!, options: [])
         
-        timeLabel.text = "\(timeDifference.hour) Hours \(timeDifference.minute) Minutes"
+        timeLabel.text = "\(timeDifference.hour!) Hours \(timeDifference.minute!) Minutes"
         
         if timeDifference.second! <= 0 {
             print ("time expired")
@@ -206,22 +241,22 @@ class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableVie
                 content.subtitle = "Location is no longer being shared"
                 content.body = "To continue sharing location, return to menu and add more time"
                 
-                let trigger = UNTimeIntervalNotificationTrigger(
-                    timeInterval: 1.0,
-                    repeats: false)
-                
+                //
                 let request = UNNotificationRequest(
                     identifier: "location.notification.message",
                     content: content,
-                    trigger: trigger
+                    trigger: nil
                 )
+                
+                userDefaults.set(false, forKey: "locShare")
+                firebaseController.shareTruckLocation(false)
                 
                 UNUserNotificationCenter.current().add(
                     request, withCompletionHandler: nil)
                 
             }
             
-
+            
         }
     }
     
@@ -230,7 +265,7 @@ class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableVie
         formatter.dateFormat = "MM/dd/yy hh:mm:ss a"
         let pickedTime = formatter.string(from: datePicker.date)
         userDefaults.setValue(pickedTime, forKey: "pickedTime")
-
+        
         timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector (printTime), userInfo: nil, repeats: true)
         if locationSwitcher.isOn == true {
             timer.fire()
@@ -266,7 +301,7 @@ class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableVie
             self.doneClick()
             self.activateTruckDelegate()
             self.userDefaults.set(true, forKey: "locShare")
-
+            
         })
         alert.addAction(action1)
         alert.addAction(action2)
@@ -274,18 +309,18 @@ class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableVie
         present(alert, animated: true, completion: nil)
     }
     
-//    func expireErrorAlert() {
-//        
-//        let title = "Time has expired"
-//        let message = "Your location is no longer being shared"
-//        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.ActionSheet)
-//        
-//        let action1 = UIAlertAction(title: "OK", style: .Default, handler: { (action: UIAlertAction!) in
-//            self.cancelClick()
-//        })
-//        alert.addAction(action1)
-//        presentViewController(alert, animated: true, completion: nil)
-//    }
+    //    func expireErrorAlert() {
+    //
+    //        let title = "Time has expired"
+    //        let message = "Your location is no longer being shared"
+    //        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.ActionSheet)
+    //
+    //        let action1 = UIAlertAction(title: "OK", style: .Default, handler: { (action: UIAlertAction!) in
+    //            self.cancelClick()
+    //        })
+    //        alert.addAction(action1)
+    //        presentViewController(alert, animated: true, completion: nil)
+    //    }
     
     func errorAlert(_ title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
@@ -293,6 +328,12 @@ class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableVie
         alert.addAction(action)
         present(alert, animated: true, completion: nil)
     }
+    
+    func string2Image(_ string: String) -> UIImage {
+        let data = Data(base64Encoded: string, options: .ignoreUnknownCharacters)
+        return UIImage(data: data!)!
+    }
+
     
 }
 
@@ -310,5 +351,5 @@ class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableVie
 
 
 
-    
+
 

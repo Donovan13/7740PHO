@@ -73,7 +73,7 @@ class FirebaseController {
     static let sharedConnection = FirebaseController()
     
     init() {
-        
+        activeTrucks()
         observers()
     }
     
@@ -117,7 +117,6 @@ class FirebaseController {
     }
     
     func getActiveTrucks() -> [Truck] {
-        
         return self.trucks
     }
     
@@ -187,15 +186,16 @@ class FirebaseController {
     
     func shareTruckLocation(_ onOff: Bool) {
         let uid = truck?.uid
-        if onOff == true {
+        if userdefaults.bool(forKey: "locShare") {
             truck = Truck(truck: truck!)
             truckRef.child(uid!).updateChildValues(["active": true])
             sharetruckDelegate?.activateTruckDelegate()
-        } else {
+        }
+        if !userdefaults.bool(forKey: "locShare") {
             truckRef.child(uid!).updateChildValues(["active": false])
             sharetruckDelegate?.deactivateTruckDelegate()
-            
         }
+        
     }
     
     func createTruck(_ email: String?, password: String?, dictionary: Dictionary<String, AnyObject>) {
@@ -240,21 +240,32 @@ class FirebaseController {
         self.truckRef.observe(.childAdded) { (snapshot: FIRDataSnapshot!) in
             let truck = Truck(snapshot: snapshot)
             if truck.active! {
-            if !self.trucks.contains(truck)  {
-                self.trucks.append(truck)
-            }
+                if !self.trucks.contains(truck)  {
+                    self.trucks.append(truck)
+                }
             }
             self.reloadTrucksDelegate?.reloadTrucks()
         }
         self.truckRef.observe(.childChanged) { (snapshot: FIRDataSnapshot!) in
             let truck = Truck(snapshot: snapshot)
+//            if truck.active! {
+//                if let index = self.trucks.index(of: truck) {
+//                    self.trucks[index] = truck
+//                }
+//            }
             if truck.active! {
-            if let index = self.trucks.index(of: truck) {
-            self.trucks[index] = truck
+                if !self.trucks.contains(truck) {
+                    self.trucks.append(truck)
                 }
+            }
+            
+            if !truck.active! {
+                if let index = self.trucks.index(of: truck) {
+                    self.trucks.remove(at: index)
+                }
+            }
             self.reloadTrucksDelegate?.reloadTrucks()
 
-            }
         }
         self.truckRef.observe(.childRemoved) { (snapshot: FIRDataSnapshot!) in
             let truck = Truck(snapshot: snapshot)

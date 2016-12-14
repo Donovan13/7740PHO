@@ -52,7 +52,6 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     let locationController = LocationService.sharedInstance
     let userDefaults = UserDefaults.standard
     
-    var reloadT: Timer?
 
     
     
@@ -67,6 +66,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         locationController.locationServiceDelegate = self
         userlocation = locationController.newLocation
         
+        reloadTimer()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -90,7 +90,6 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         super.viewDidAppear(true)
         
         self.reloadTrucks()
-        self.reloadTimer()
         
         //        if userDefaults.valueForKey("Truck") != nil {
         //            if firebaseController.getLoggedInTruck().truckName?.characters.count > 1 {
@@ -107,9 +106,11 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     
     func reloadTimer() {
         
-        reloadT = Timer.scheduledTimer(withTimeInterval: 60.0, repeats: true) { [weak self] _ in
-            self?.reloadTrucks()
-        }
+        Timer.scheduledTimer(withTimeInterval: 60.0, repeats: true, block: { (Timer) in
+            self.reloadTrucks()
+        })
+        
+        
     }
     
     func loadAnnotations() {
@@ -182,7 +183,9 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     
     //    MARK: TableView Delegate
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print("Truck Count on Delegate \(trucks.count)")
         return trucks.count
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -336,16 +339,18 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     }
     
     func reloadTrucks() {
+        self.trucks = self.firebaseController.getActiveTrucks()
+        
+        for truck in self.trucks {
+            truck.calculateDistance(self.userlocation)
+        }
+        self.trucks.sort(by: { $0.distance < $1.distance })
+
         DispatchQueue.main.async {
             self.mapView.removeAnnotations(self.mapView.annotations)
-            self.trucks = self.firebaseController.getActiveTrucks()
-            self.trucks.removeFirst()
-            self.tableView.reloadData()
+            
             self.loadAnnotations()
-            for truck in self.trucks {
-                truck.calculateDistance(self.userlocation)
-            }
-            self.trucks.sort(by: { $0.distance < $1.distance })
+            self.tableView.reloadData()
         }
         
     }
