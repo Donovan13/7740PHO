@@ -48,25 +48,25 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        // Add a background view to the table view
-        let backgroundImage = UIImage(named: "tacos")
-        let imageView = UIImageView(image: backgroundImage)
-        self.tableView.backgroundView = imageView
+//        // Add a background view to the table view
+//        let backgroundImage = UIImage(named: "tacos")
+//        let imageView = UIImageView(image: backgroundImage)
+//        self.tableView.backgroundView = imageView
         
         // no lines where there aren't cells
         tableView.tableFooterView = UIView(frame: CGRect.zero)
         
-        // center and scale background image
-        imageView.contentMode = .scaleAspectFill
+//        // center and scale background image
+//        imageView.contentMode = .scaleAspectFill
         
         // Set the background color to match better
         //        tableView.backgroundColor = .redColor()
         
-        // blur it
-        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.light)
-        let blurView = UIVisualEffectView(effect: blurEffect)
-        blurView.frame = imageView.bounds
-        imageView.addSubview(blurView)
+//        // blur it
+//        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.light)
+//        let blurView = UIVisualEffectView(effect: blurEffect)
+//        blurView.frame = imageView.bounds
+//        imageView.addSubview(blurView)
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -133,14 +133,17 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
                 return cell
             } else if (indexPath as NSIndexPath).row == 1 {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "phoneCell", for: indexPath)
-                let s = truck.phone
+                cell.detailTextLabel?.text = truck.phone
                 
+//                let s = truck.phone
+//                
 //                let s2 = String(format: "%@ (%@) %@-%@",
 //                                s!.substring(to: s!.characters.index(s!.startIndex, offsetBy: 2)),
 //                                s!.substring(with: s!.characters.index(s!.startIndex, offsetBy: 2) ... s!.characters.index(s!.startIndex, offsetBy: 4)),
 //                                s!.substring(with: s!.characters.index(s!.startIndex, offsetBy: 5) ... s!.characters.index(s!.startIndex, offsetBy: 7)),
 //                                s!.substring(with: s!.characters.index(s!.startIndex, offsetBy: 8) ... s!.characters.index(s!.startIndex, offsetBy: 11)))
 //                cell.detailTextLabel?.text = s2
+                
                 return cell
             } else if (indexPath as NSIndexPath).row == 2 {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "websiteCell", for: indexPath)

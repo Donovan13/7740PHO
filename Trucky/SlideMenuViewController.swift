@@ -12,7 +12,7 @@ import Firebase
 import FirebaseAuth
 import  UserNotifications
 
-class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UNUserNotificationCenterDelegate, LogInUserDelegate, ShareTruckDelegate, LogOutUserDelegate {
+class SlideMenuViewController: UIViewController, UNUserNotificationCenterDelegate, LogInUserDelegate, ShareTruckDelegate, LogOutUserDelegate {
     
     @IBOutlet weak var logoImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
@@ -75,7 +75,7 @@ class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableVie
         }
         
         nameLabel.text = loggedInTruck.truckName
-        reviewsLabel.text = String(describing: loggedInTruck.reviewCount)
+        reviewsLabel.text = "\(String(describing: loggedInTruck.reviewCount!)) reviews on"
         truckAddressLabel.text = loggedInTruck.address
         categoriesLabel.text = loggedInTruck.categories
         logoImageView.image = string2Image(loggedInTruck.imageString!)
@@ -106,25 +106,25 @@ class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableVie
         
         
         
-        // Add a background view to the table view
-        let backgroundImage = UIImage(named: "backSlide")
-        let imageView = UIImageView(image: backgroundImage)
-        self.tableView.backgroundView = imageView
-        
-        // no lines where there aren't cells
-        tableView.tableFooterView = UIView(frame: CGRect.zero)
-        
-        // center and scale background image
-        imageView.contentMode = .scaleAspectFill
-        
-        // Set the background color to match better
-        tableView.backgroundColor = .black
-        
-        // blur it
-        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.light)
-        let blurView = UIVisualEffectView(effect: blurEffect)
-        blurView.frame = imageView.bounds
-        imageView.addSubview(blurView)
+//        // Add a background view to the table view
+//        let backgroundImage = UIImage(named: "backSlide")
+//        let imageView = UIImageView(image: backgroundImage)
+//        self.tableView.backgroundView = imageView
+//        
+//        // no lines where there aren't cells
+//        tableView.tableFooterView = UIView(frame: CGRect.zero)
+//        
+//        // center and scale background image
+//        imageView.contentMode = .scaleAspectFill
+//        
+//        // Set the background color to match better
+//        tableView.backgroundColor = .black
+//        
+//        // blur it
+//        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.light)
+//        let blurView = UIVisualEffectView(effect: blurEffect)
+//        blurView.frame = imageView.bounds
+//        imageView.addSubview(blurView)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -159,34 +159,41 @@ class SlideMenuViewController: UIViewController, UITableViewDelegate, UITableVie
         self.view.window?.rootViewController = nav
     }
     
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        // translucent cell backgrounds so we can see the image but still easily read the contents
-        cell.backgroundColor = UIColor(white: 0.5, alpha: 0)
+//    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+//        // translucent cell backgrounds so we can see the image but still easily read the contents
+//        cell.backgroundColor = UIColor(white: 0.5, alpha: 0)
+//    }
+//    
+//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        return 2
+//    }
+//    
+//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        if (indexPath as NSIndexPath).row == 0 {
+//            let cell = tableView.dequeueReusableCell(withIdentifier: "loginCell", for: indexPath)
+//            cell.textLabel?.text = "Edit Profile"
+//            return cell
+//        } else {
+//            let cell = tableView.dequeueReusableCell(withIdentifier: "logoutCell", for: indexPath)
+//            cell.textLabel?.text = "Log Out"
+//            return cell
+//        }
+//    }
+//
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
+//        
+//        if (indexPath as NSIndexPath).row == 0 {
+//            performSegue(withIdentifier: "menuToEditSegue", sender: self)
+//        } else if (indexPath as NSIndexPath).row == 1 {
+//            firebaseController.logOutUser()
+//        }
+//    }
+    @IBAction func logOutButtonTapped(_ sender: Any) {
+        firebaseController.logOutUser()
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if (indexPath as NSIndexPath).row == 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "loginCell", for: indexPath)
-            cell.textLabel?.text = "Edit Profile"
-            return cell
-        } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "logoutCell", for: indexPath)
-            cell.textLabel?.text = "Log Out"
-            return cell
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
-        
-        if (indexPath as NSIndexPath).row == 0 {
-            performSegue(withIdentifier: "menuToEditSegue", sender: self)
-        } else if (indexPath as NSIndexPath).row == 1 {
-            firebaseController.logOutUser()
-        }
+    @IBAction func detailsButtonTapped(_ sender: Any) {
+        performSegue(withIdentifier: "menuToEditSegue", sender: self)
     }
     
     @IBAction func locationSwitcherTapped(_ sender: AnyObject) {
