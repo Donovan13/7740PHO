@@ -204,14 +204,19 @@ class SlideMenuViewController: UIViewController, UNUserNotificationCenterDelegat
             firebaseController.shareTruckLocation(true)
             
         } else {
-            timeLabel.text = ""
-            timer.invalidate()
-            self.deactivateTruckDelegate()
-            userDefaults.set(false, forKey: "locShare")
-            firebaseController.shareTruckLocation(false)
-            
-            
+            cancelTimer()
         }
+    }
+    
+    
+    func cancelTimer() {
+        timeLabel.text = ""
+        timer.invalidate()
+        self.deactivateTruckDelegate()
+        userDefaults.set(false, forKey: "locShare")
+        firebaseController.shareTruckLocation(false)
+        
+        
     }
     
     func printTime() {
@@ -303,6 +308,7 @@ class SlideMenuViewController: UIViewController, UNUserNotificationCenterDelegat
         let action1 = UIAlertAction(title: "Cancel", style: .default, handler: { (action: UIAlertAction!) in
             self.cancelClick()
             self.locationSwitcher.isOn = false
+            self.cancelTimer()
         })
         let action2 = UIAlertAction(title: "Done", style: .default, handler: { (action: UIAlertAction!) in
             self.doneClick()

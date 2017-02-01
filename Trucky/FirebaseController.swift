@@ -248,11 +248,11 @@ class FirebaseController {
         }
         self.truckRef.observe(.childChanged) { (snapshot: FIRDataSnapshot!) in
             let truck = Truck(snapshot: snapshot)
-//            if truck.active! {
-//                if let index = self.trucks.index(of: truck) {
-//                    self.trucks[index] = truck
-//                }
-//            }
+            if truck.active! {
+                if let index = self.trucks.index(of: truck) {
+                    self.trucks[index] = truck
+                }
+            }
             if truck.active! {
                 if !self.trucks.contains(truck) {
                     self.trucks.append(truck)

@@ -203,6 +203,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         } else {
             cell.addressLabel.text = post.cityAndState
         }
+        
         cell.categoryLabel?.text = post.categories
         cell.detailsButton.tag = (indexPath as NSIndexPath).row
         cell.yelpButton.tag = (indexPath as NSIndexPath).row
@@ -348,7 +349,6 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
 
         DispatchQueue.main.async {
             self.mapView.removeAnnotations(self.mapView.annotations)
-            
             self.loadAnnotations()
             self.tableView.reloadData()
         }

@@ -15,12 +15,15 @@ class InitialViewController: UIViewController {
     
     @IBOutlet weak var backgroundView: UIView!
     let firebaseController = FirebaseController.sharedConnection
+    let locationController = LocationService.sharedInstance
     
     var player: AVPlayer?
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
         
         // Load the video from the app bundle.
         let videoURL: URL = Bundle.main.url(forResource: "background", withExtension: "mp4")!
