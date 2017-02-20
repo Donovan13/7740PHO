@@ -118,6 +118,9 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <state key="normal" title="Update Image"/>
+                                <connections>
+                                    <action selector="uploadImageButtonTapped:" destination="Rwh-IE-Y7h" eventType="touchUpInside" id="fGH-JJ-7qd"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -152,8 +155,8 @@
                     <connections>
                         <outlet property="categoriesLabel" destination="tNb-AV-twc" id="6LD-9g-vXm"/>
                         <outlet property="locationSwitcher" destination="JrQ-4Z-DuR" id="0me-uR-oqe"/>
-                        <outlet property="logoImageView" destination="JZd-dA-LEi" id="ybr-Ck-wsC"/>
                         <outlet property="nameLabel" destination="EgH-rV-qjd" id="Q7B-2G-tbG"/>
+                        <outlet property="profileImageView" destination="JZd-dA-LEi" id="2pG-O0-KF1"/>
                         <outlet property="ratingImaveView" destination="6im-rx-Y0r" id="1Mq-0s-Tl1"/>
                         <outlet property="reviewsLabel" destination="eEW-Gm-QmF" id="I6e-KY-2lU"/>
                         <outlet property="timeLabel" destination="D8C-K1-huM" id="MAy-NM-1xe"/>

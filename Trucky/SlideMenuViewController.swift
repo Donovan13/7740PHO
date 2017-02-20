@@ -12,9 +12,9 @@ import Firebase
 import FirebaseAuth
 import  UserNotifications
 
-class SlideMenuViewController: UIViewController, UNUserNotificationCenterDelegate, LogInUserDelegate, ShareTruckDelegate, LogOutUserDelegate {
+class SlideMenuViewController: UIViewController, UNUserNotificationCenterDelegate, UIImagePickerControllerDelegate, LogInUserDelegate, ShareTruckDelegate, LogOutUserDelegate {
     
-    @IBOutlet weak var logoImageView: UIImageView!
+    @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var locationSwitcher: UISwitch!
     @IBOutlet weak var timeLabel: UILabel!
@@ -40,6 +40,7 @@ class SlideMenuViewController: UIViewController, UNUserNotificationCenterDelegat
     var timer = Timer()
     
     var isGrantedNotificationAccess: Bool = false
+    var imagePicker = UIImagePickerController()
     
     
     override func viewDidLoad() {
@@ -77,7 +78,7 @@ class SlideMenuViewController: UIViewController, UNUserNotificationCenterDelegat
         reviewsLabel.text = "\(String(describing: loggedInTruck.reviewCount!)) reviews on"
         truckAddressLabel.text = loggedInTruck.address
         categoriesLabel.text = loggedInTruck.categories
-        logoImageView.image = string2Image(loggedInTruck.imageString!)
+        profileImageView.image = string2Image(loggedInTruck.imageString!)
         
         
         if loggedInTruck.rating == 0 {
@@ -190,9 +191,6 @@ class SlideMenuViewController: UIViewController, UNUserNotificationCenterDelegat
         firebaseController.logOutUser()
     }
     
-    @IBAction func uploadMenuButtonTapped(_ sender: Any) {
-        
-    }
     @IBAction func uploadMenuButtonPressed(_ sender: Any) {
         
         self.performSegue(withIdentifier: "menuToUpdateMenuSegue", sender: self)
@@ -202,7 +200,6 @@ class SlideMenuViewController: UIViewController, UNUserNotificationCenterDelegat
         if locationSwitcher.isOn == true {
             self.errorAlert(self.locationSwitcher)
             userDefaults.set(true, forKey: "locShare")
-            
             firebaseController.shareTruckLocation(true)
             
         } else {
@@ -210,6 +207,19 @@ class SlideMenuViewController: UIViewController, UNUserNotificationCenterDelegat
         }
     }
     
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage
+        
+        profileImageView.image = pickedImage
+        dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func uploadImageButtonTapped(_ sender: Any) {
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.savedPhotosAlbum){
+            self.present(imagePicker, animated: true, completion: nil)
+        }
+        
+    }
     
     func cancelTimer() {
         timeLabel.text = ""
@@ -337,6 +347,7 @@ class SlideMenuViewController: UIViewController, UNUserNotificationCenterDelegat
     //        presentViewController(alert, animated: true, completion: nil)
     //    }
     
+    
     func errorAlert(_ title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
         let action = UIAlertAction(title: "Okay", style: UIAlertActionStyle.default, handler: nil)
@@ -348,23 +359,10 @@ class SlideMenuViewController: UIViewController, UNUserNotificationCenterDelegat
         let data = Data(base64Encoded: string, options: .ignoreUnknownCharacters)
         return UIImage(data: data!)!
     }
+    func image2String(_ image: UIImage) -> String {
+        let imageData = UIImageJPEGRepresentation(image, 1);
+        let imageString = imageData!.base64EncodedString(options: .lineLength64Characters)
+        return imageString
+    }
 
-    
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

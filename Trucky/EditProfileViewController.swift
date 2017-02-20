@@ -22,7 +22,6 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     var loggedInTruck : Truck!
     let firebaseController = FirebaseController.sharedConnection
     var imagePicker = UIImagePickerController()
-    var imagePicked = 0
     
     
     
@@ -35,8 +34,6 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         imagePicker.sourceType = .savedPhotosAlbum
         imagePicker.allowsEditing = true
 
-
-        
         
         if (loggedInTruck.menuImage?.characters.count)! > 1 {
             let menuImage = string2Image(loggedInTruck.menuImage!)
@@ -44,9 +41,6 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
                 
         }
 
-        
-        
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -61,24 +55,19 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     
     @IBAction func saveImageButton(_ sender: AnyObject) {
         let menImage = image2String(menuImageView.image!)
-        
         firebaseController.updateMenuImage(menuImage: menImage)
-        
         self.performSegue(withIdentifier: "editToMapSegue", sender: self)
 
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage
-        
             menuImageView.image = pickedImage
         dismiss(animated: true, completion: nil)
     }
     
-    
     @IBAction func updateMenuButton(_ sender: AnyObject) {
         if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.savedPhotosAlbum){
-            imagePicked = sender.tag
             self.present(imagePicker, animated: true, completion: nil)
         }
     }

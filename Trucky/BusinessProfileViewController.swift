@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 import CoreLocation
+import CoreImage
 import MapKit
 
 class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
