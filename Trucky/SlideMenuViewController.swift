@@ -10,7 +10,7 @@ import UIKit
 import CoreLocation
 import Firebase
 import FirebaseAuth
-import  UserNotifications
+import UserNotifications
 
 class SlideMenuViewController: UIViewController, UNUserNotificationCenterDelegate, UIImagePickerControllerDelegate, LogInUserDelegate, ShareTruckDelegate, LogOutUserDelegate {
     

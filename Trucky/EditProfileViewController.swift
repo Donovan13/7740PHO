@@ -38,7 +38,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         if (loggedInTruck.menuImage?.characters.count)! > 1 {
             let menuImage = string2Image(loggedInTruck.menuImage!)
             self.menuImageView.image = menuImage
-                
+            
         }
 
     }
@@ -49,15 +49,15 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         loggedInTruck = firebaseController.getLoggedInTruck()
 
         self.truckNameLabel.text = loggedInTruck.truckName
-        self.menuImageView.image = string2Image(loggedInTruck.menuImage!)
         
     }
     
     @IBAction func saveImageButton(_ sender: AnyObject) {
         let menImage = image2String(menuImageView.image!)
         firebaseController.updateMenuImage(menuImage: menImage)
-        self.performSegue(withIdentifier: "editToMapSegue", sender: self)
+        self.navigationController?.popViewController(animated: false)
 
+        
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
