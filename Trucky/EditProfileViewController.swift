@@ -14,13 +14,8 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     
     
     @IBOutlet weak var truckNameLabel: UILabel!
-    @IBOutlet weak var logoImageView: UIImageView!
-    @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var menuImageView: UIImageView!
-    @IBOutlet weak var logoPictureButton: UIButton!
-    @IBOutlet weak var profilePictureButton: UIButton!
     @IBOutlet weak var menuPictureButton: UIButton!
-    @IBOutlet weak var websiteTextField: UITextField!
     
     
     let userDefaults = UserDefaults.standard
@@ -40,13 +35,17 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         imagePicker.sourceType = .savedPhotosAlbum
         imagePicker.allowsEditing = true
 
-        let menImage = string2Image(loggedInTruck.menuImage!)
-        let profImage = string2Image(loggedInTruck.profileImage!)
-        let logImage = string2Image(loggedInTruck.logoImage!)
+
         
-        self.menuImageView.image = menImage
-        self.profileImageView.image = profImage
-        self.logoImageView.image = logImage
+        
+        if (loggedInTruck.menuImage?.characters.count)! > 1 {
+            let menuImage = string2Image(loggedInTruck.menuImage!)
+            self.menuImageView.image = menuImage
+                
+        }
+
+        
+        
         
     }
     
@@ -56,15 +55,14 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         loggedInTruck = firebaseController.getLoggedInTruck()
 
         self.truckNameLabel.text = loggedInTruck.truckName
+        self.menuImageView.image = string2Image(loggedInTruck.menuImage!)
         
     }
     
     @IBAction func saveImageButton(_ sender: AnyObject) {
-        let profImage = image2String(profileImageView.image!)
-        let logImage = image2String(logoImageView.image!)
         let menImage = image2String(menuImageView.image!)
         
-        firebaseController.updateCustomImages(profImage, logoImage: logImage, menuImage: menImage)
+        firebaseController.updateMenuImage(menuImage: menImage)
         
         self.performSegue(withIdentifier: "editToMapSegue", sender: self)
 
@@ -73,29 +71,10 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage
         
-        if imagePicked == 1 {
-            logoImageView.image = pickedImage
-        } else if imagePicked == 2 {
-            profileImageView.image = pickedImage
-        } else if imagePicked == 3 {
             menuImageView.image = pickedImage
-        }
         dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func updateLogoButton(_ sender: AnyObject) {
-        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.savedPhotosAlbum){
-            imagePicked = sender.tag
-            self.present(imagePicker, animated: true, completion: nil)
-        }
-    }
-    
-    @IBAction func updateProfileButton(_ sender: AnyObject) {
-        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.savedPhotosAlbum){
-            imagePicked = sender.tag
-            self.present(imagePicker, animated: true, completion: nil)
-        }
-    }
     
     @IBAction func updateMenuButton(_ sender: AnyObject) {
         if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.savedPhotosAlbum){
