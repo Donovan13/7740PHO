@@ -21,11 +21,13 @@ class CreateTruckViewController: UIViewController, UserCreationDelegate, Authent
     @IBOutlet weak var ratingsImageView: UIImageView!
     @IBOutlet weak var categoryLabel: UILabel!
     
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     var searchedBusiness:Business?
     var searchedReviews:[Reviews]?
     let userDefaults = UserDefaults.standard
     let firebaseController = FirebaseController.sharedConnection
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,7 +37,7 @@ class CreateTruckViewController: UIViewController, UserCreationDelegate, Authent
     
     @IBAction func searchTruck(_ sender: AnyObject) {
         let phoneNumber = businessNameTextField.text
-        
+        activityIndicator.startAnimating()
         YelpAPIFusion.init().searchWithPhone(phoneNumber: phoneNumber!) { (business, reviews, error) in
         
             guard error == nil else {
@@ -44,17 +46,56 @@ class CreateTruckViewController: UIViewController, UserCreationDelegate, Authent
             
             if business != nil {
                 self.searchedBusiness = business
+                
+                self.setYelpLook()
                 self.errorAlert("Business Found!", message: "")
+                
             }
             
             if reviews != nil {
                 self.searchedReviews = reviews
                 self.errorAlert("Reviews Found!", message: "")
             }
-            
+   
         }
     }
     
+    func setYelpLook() {
+        self.yelpImage.image = string2Image(imageURLtoString(searchedBusiness!.imageURL!))
+        
+        self.businessTextField.text = searchedBusiness?.name!
+        self.reviewsTextField.text = "\(searchedBusiness!.reviewCount!)"
+        self.categoryLabel.text = searchedBusiness?.categories!
+        
+        if searchedBusiness?.reviewCount == 0 {
+            ratingsImageView.image = UIImage(named: "star0")
+        } else if searchedBusiness?.rating == 1 {
+            ratingsImageView.image = UIImage(named: "star1")
+        } else if searchedBusiness?.rating == 1.5 {
+            ratingsImageView.image = UIImage(named: "star1h")
+        } else if searchedBusiness?.rating == 2 {
+            ratingsImageView.image = UIImage(named: "star2")
+        } else if searchedBusiness?.rating == 2.5 {
+            ratingsImageView.image = UIImage(named: "star2h")
+        } else if searchedBusiness?.rating == 3 {
+            ratingsImageView.image = UIImage(named: "star3")
+        } else if searchedBusiness?.rating == 3.5 {
+            ratingsImageView.image = UIImage(named: "star3h")
+        } else if searchedBusiness?.rating == 4 {
+            ratingsImageView.image = UIImage(named: "star4")
+        } else if searchedBusiness?.rating == 4.5 {
+            ratingsImageView.image = UIImage(named: "star4h")
+        } else if searchedBusiness?.rating == 5 {
+            ratingsImageView.image = UIImage(named: "star5")
+        }
+
+    }
+    
+    func string2Image(_ string: String) -> UIImage {
+        let data = Data(base64Encoded: string, options: .ignoreUnknownCharacters)
+        return UIImage(data: data!)!
+    }
+
     
     @IBAction func createTruck(_ sender: AnyObject) {
 //        let longitude = self.userDefaults.valueForKey("longitude")
@@ -153,6 +194,8 @@ class CreateTruckViewController: UIViewController, UserCreationDelegate, Authent
         let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
         let action = UIAlertAction(title: "Okay", style: UIAlertActionStyle.default, handler: nil)
         alert.addAction(action)
+        self.activityIndicator.stopAnimating()
+
         present(alert, animated: true, completion: nil)
     }
     
