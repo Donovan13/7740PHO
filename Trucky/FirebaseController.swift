@@ -162,9 +162,14 @@ class FirebaseController {
         }
     }
     
-    func updateCustomImages(_ profileImage: String, logoImage: String, menuImage: String) {
+    func updateMenuImage(menuImage: String) {
         let uid = truck?.uid
-        truckRef.child(uid!).updateChildValues(["profileImage": profileImage, "logoImage": logoImage, "menuImage": menuImage])
+        truckRef.child(uid!).updateChildValues(["menuImage": menuImage])
+    }
+    
+    func updateProfileImage(profileImage: String) {
+        let uid = truck?.uid
+        truckRef.child(uid!).updateChildValues(["ProfileImage": profileImage])
     }
     
     func updateTruckLocation(_ lat: Double, lon: Double) {

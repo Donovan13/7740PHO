@@ -302,7 +302,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         if userDefaults.value(forKey: "Truck") != nil {
             self.performSegue(withIdentifier: "mapToMenuSegue", sender: self)
         } else {
-            self.navigationController?.popViewController(animated: true)
+            self.navigationController?.popViewController(animated: false)
         }
         
         

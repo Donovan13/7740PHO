@@ -25,9 +25,6 @@
 		09C926D11D75402100605B67 /* SlideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C926D01D75402100605B67 /* SlideMenuViewController.swift */; };
 		09D4B2471D6A318B002676D1 /* DetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D4B2461D6A318B002676D1 /* DetailTableViewCell.swift */; };
 		09DFDE5F1D9DB0FE00DF7D39 /* background.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 09DFDE5E1D9DB0FE00DF7D39 /* background.mp4 */; };
-		09E73B4F1D9B2550006D5C27 /* CustomerLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E73B4E1D9B2550006D5C27 /* CustomerLoginViewController.swift */; };
-		09E73B511D9B256F006D5C27 /* CreateCustomerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E73B501D9B256F006D5C27 /* CreateCustomerViewController.swift */; };
-		09E73B531D9B2584006D5C27 /* EditCustomerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E73B521D9B2584006D5C27 /* EditCustomerViewController.swift */; };
 		09E73B551D9B25AB006D5C27 /* InitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E73B541D9B25AB006D5C27 /* InitialViewController.swift */; };
 		09FF68911D3EC18800EF4551 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FF68901D3EC18800EF4551 /* AppDelegate.swift */; };
 		09FF68931D3EC18800EF4551 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FF68921D3EC18800EF4551 /* LoginViewController.swift */; };
@@ -83,9 +80,6 @@
 		09C926D01D75402100605B67 /* SlideMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideMenuViewController.swift; sourceTree = "<group>"; };
 		09D4B2461D6A318B002676D1 /* DetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailTableViewCell.swift; sourceTree = "<group>"; };
 		09DFDE5E1D9DB0FE00DF7D39 /* background.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = background.mp4; sourceTree = "<group>"; };
-		09E73B4E1D9B2550006D5C27 /* CustomerLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomerLoginViewController.swift; sourceTree = "<group>"; };
-		09E73B501D9B256F006D5C27 /* CreateCustomerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateCustomerViewController.swift; sourceTree = "<group>"; };
-		09E73B521D9B2584006D5C27 /* EditCustomerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditCustomerViewController.swift; sourceTree = "<group>"; };
 		09E73B541D9B25AB006D5C27 /* InitialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialViewController.swift; sourceTree = "<group>"; };
 		09FF688D1D3EC18800EF4551 /* Trucky.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Trucky.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		09FF68901D3EC18800EF4551 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -201,12 +195,9 @@
 			children = (
 				09E73B541D9B25AB006D5C27 /* InitialViewController.swift */,
 				09FF68921D3EC18800EF4551 /* LoginViewController.swift */,
-				09E73B4E1D9B2550006D5C27 /* CustomerLoginViewController.swift */,
 				096F219B1D4BB81200B42813 /* CreateTruckViewController.swift */,
-				09E73B501D9B256F006D5C27 /* CreateCustomerViewController.swift */,
 				095F09B51D400768007E8F5B /* TruckViewController.swift */,
 				090AE2BE1D6F9CDE000BAFBD /* EditProfileViewController.swift */,
-				09E73B521D9B2584006D5C27 /* EditCustomerViewController.swift */,
 				0957DB281D6621DA00B38BB2 /* BusinessProfileViewController.swift */,
 				09C926D01D75402100605B67 /* SlideMenuViewController.swift */,
 				0971AB851D8BCA41008B756D /* WebViewController.swift */,
@@ -278,12 +269,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 09FF68B81D3EC18800EF4551 /* Build configuration list for PBXNativeTarget "Trucky" */;
 			buildPhases = (
-				798DF59778B2389E0D56312D /* 📦 Check Pods Manifest.lock */,
+				798DF59778B2389E0D56312D /* [CP] Check Pods Manifest.lock */,
 				09FF68891D3EC18800EF4551 /* Sources */,
 				09FF688A1D3EC18800EF4551 /* Frameworks */,
 				09FF688B1D3EC18800EF4551 /* Resources */,
-				52596EAD2EFC231C8860D59F /* 📦 Embed Pods Frameworks */,
-				2063DAD7CA7BC29A455C40CE /* 📦 Copy Pods Resources */,
+				52596EAD2EFC231C8860D59F /* [CP] Embed Pods Frameworks */,
+				2063DAD7CA7BC29A455C40CE /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -415,14 +406,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		2063DAD7CA7BC29A455C40CE /* 📦 Copy Pods Resources */ = {
+		2063DAD7CA7BC29A455C40CE /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -430,14 +421,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Trucky/Pods-Trucky-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		52596EAD2EFC231C8860D59F /* 📦 Embed Pods Frameworks */ = {
+		52596EAD2EFC231C8860D59F /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -445,19 +436,19 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Trucky/Pods-Trucky-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		798DF59778B2389E0D56312D /* 📦 Check Pods Manifest.lock */ = {
+		798DF59778B2389E0D56312D /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -469,7 +460,6 @@
 			files = (
 				095F09B61D400768007E8F5B /* TruckViewController.swift in Sources */,
 				09C926D11D75402100605B67 /* SlideMenuViewController.swift in Sources */,
-				09E73B531D9B2584006D5C27 /* EditCustomerViewController.swift in Sources */,
 				0958342A1D83426700EBDF9A /* BusinessProfileTableViewCell.swift in Sources */,
 				7BE966191D9B2BAD0038ABBE /* YelpAPIFusion.swift in Sources */,
 				093DFCC91D9B41FE0052AC9E /* Customer.swift in Sources */,
@@ -487,8 +477,6 @@
 				09ADB7051D67BE3900890CDB /* Truck.swift in Sources */,
 				09D4B2471D6A318B002676D1 /* DetailTableViewCell.swift in Sources */,
 				7B735DE71D95BCE60029D13E /* LocationService.swift in Sources */,
-				09E73B4F1D9B2550006D5C27 /* CustomerLoginViewController.swift in Sources */,
-				09E73B511D9B256F006D5C27 /* CreateCustomerViewController.swift in Sources */,
 				0971AB861D8BCA41008B756D /* WebViewController.swift in Sources */,
 				7B12DBBF1DBEAD0000F743A3 /* BusinessPhotoCollectionViewCell.swift in Sources */,
 				091C4F221DBAB92B0001D255 /* BusinessPhotoTableViewCell.swift in Sources */,

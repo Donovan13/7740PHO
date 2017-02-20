@@ -10,14 +10,13 @@ import UIKit
 import CoreLocation
 import Firebase
 import FirebaseAuth
-import  UserNotifications
+import UserNotifications
 
 class SlideMenuViewController: UIViewController, UNUserNotificationCenterDelegate, LogInUserDelegate, ShareTruckDelegate, LogOutUserDelegate {
     
     @IBOutlet weak var logoImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var locationSwitcher: UISwitch!
-    @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var ratingImaveView: UIImageView!
     @IBOutlet weak var reviewsLabel: UILabel!
@@ -191,8 +190,12 @@ class SlideMenuViewController: UIViewController, UNUserNotificationCenterDelegat
         firebaseController.logOutUser()
     }
     
-    @IBAction func detailsButtonTapped(_ sender: Any) {
-        performSegue(withIdentifier: "menuToEditSegue", sender: self)
+    @IBAction func uploadMenuButtonTapped(_ sender: Any) {
+        
+    }
+    @IBAction func uploadMenuButtonPressed(_ sender: Any) {
+        
+        self.performSegue(withIdentifier: "menuToUpdateMenuSegue", sender: self)
     }
     
     @IBAction func locationSwitcherTapped(_ sender: AnyObject) {
