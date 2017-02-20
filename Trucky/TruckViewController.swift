@@ -301,7 +301,10 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     @IBAction func menuButtonTapped(_ sender: AnyObject) {
         if userDefaults.value(forKey: "Truck") != nil {
             self.performSegue(withIdentifier: "mapToMenuSegue", sender: self)
+        } else {
+            self.navigationController?.popViewController(animated: true)
         }
+        
         
     }
     
@@ -330,6 +333,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         image.draw(in: CGRect(origin: CGPoint.zero, size: size))
         let scaledImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
+        
         return scaledImage!
     }
     

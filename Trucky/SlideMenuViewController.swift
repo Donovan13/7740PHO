@@ -152,7 +152,6 @@ class SlideMenuViewController: UIViewController, UNUserNotificationCenterDelegat
     
     func logOutUserDelegate() {
         
-        
         self.view.window!.rootViewController?.dismiss(animated: false, completion: nil)
         let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
         let nav = storyboard.instantiateViewController(withIdentifier: "initialVC")

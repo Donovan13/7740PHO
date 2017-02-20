@@ -1671,8 +1671,8 @@
         <image name="yelpLogo" width="675" height="383"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="abG-Zv-BGJ"/>
-        <segue reference="2XA-gi-oSt"/>
         <segue reference="pZX-N5-UF3"/>
+        <segue reference="2XA-gi-oSt"/>
+        <segue reference="JzK-Lf-MqU"/>
     </inferredMetricsTieBreakers>
 </document>
