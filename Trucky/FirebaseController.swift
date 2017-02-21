@@ -169,7 +169,7 @@ class FirebaseController {
     
     func updateProfileImage(profileImage: String) {
         let uid = truck?.uid
-        truckRef.child(uid!).updateChildValues(["ProfileImage": profileImage])
+        truckRef.child(uid!).updateChildValues(["profileImage": profileImage])
     }
     
     func updateTruckLocation(_ lat: Double, lon: Double) {
@@ -258,17 +258,17 @@ class FirebaseController {
                     self.trucks[index] = truck
                 }
             }
-            if truck.active! {
-                if !self.trucks.contains(truck) {
-                    self.trucks.append(truck)
-                }
-            }
-            
-            if !truck.active! {
-                if let index = self.trucks.index(of: truck) {
-                    self.trucks.remove(at: index)
-                }
-            }
+//            if truck.active! {
+//                if !self.trucks.contains(truck) {
+//                    self.trucks.append(truck)
+//                }
+//            }
+//            
+//            if !truck.active! {
+//                if let index = self.trucks.index(of: truck) {
+//                    self.trucks.remove(at: index)
+//                }
+//            }
             self.reloadTrucksDelegate?.reloadTrucks()
 
         }

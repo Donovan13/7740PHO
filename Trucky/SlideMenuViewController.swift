@@ -12,7 +12,7 @@ import Firebase
 import FirebaseAuth
 import UserNotifications
 
-class SlideMenuViewController: UIViewController, UNUserNotificationCenterDelegate, UIImagePickerControllerDelegate, LogInUserDelegate, ShareTruckDelegate, LogOutUserDelegate {
+class SlideMenuViewController: UIViewController, UNUserNotificationCenterDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, LogInUserDelegate, ShareTruckDelegate, LogOutUserDelegate {
     
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
@@ -60,6 +60,13 @@ class SlideMenuViewController: UIViewController, UNUserNotificationCenterDelegat
         firebaseController.sharetruckDelegate = self
         firebaseController.logOutUserDelegate = self
         logInTruckDelegate()
+        
+        
+        
+        imagePicker.delegate = self
+        
+        imagePicker.sourceType = .savedPhotosAlbum
+        imagePicker.allowsEditing = true
 
     }
     
@@ -210,13 +217,21 @@ class SlideMenuViewController: UIViewController, UNUserNotificationCenterDelegat
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage
         
-        profileImageView.image = pickedImage
+        
+        let proImage = image2String(pickedImage!)
+        
+        
+        firebaseController.updateProfileImage(profileImage: proImage)
+
+        
         dismiss(animated: true, completion: nil)
+        
+        
     }
     
     @IBAction func uploadImageButtonTapped(_ sender: Any) {
         if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.savedPhotosAlbum){
-            self.present(imagePicker, animated: true, completion: nil)
+            self.present(imagePicker, animated: false, completion: nil)
         }
         
     }
@@ -227,8 +242,7 @@ class SlideMenuViewController: UIViewController, UNUserNotificationCenterDelegat
         self.deactivateTruckDelegate()
         userDefaults.set(false, forKey: "locShare")
         firebaseController.shareTruckLocation(false)
-        
-        
+    
     }
     
     func printTime() {
@@ -301,6 +315,7 @@ class SlideMenuViewController: UIViewController, UNUserNotificationCenterDelegat
         }
         
     }
+    
     func cancelClick() {
         locationSwitcher.resignFirstResponder()
     }
@@ -359,10 +374,12 @@ class SlideMenuViewController: UIViewController, UNUserNotificationCenterDelegat
         let data = Data(base64Encoded: string, options: .ignoreUnknownCharacters)
         return UIImage(data: data!)!
     }
+    
     func image2String(_ image: UIImage) -> String {
         let imageData = UIImageJPEGRepresentation(image, 1);
         let imageString = imageData!.base64EncodedString(options: .lineLength64Characters)
         return imageString
     }
 
+    
 }
