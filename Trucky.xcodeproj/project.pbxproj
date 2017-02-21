@@ -11,6 +11,7 @@
 		091C4F181DBA7A550001D255 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 091C4F171DBA7A550001D255 /* Main.storyboard */; };
 		091C4F1A1DBA7AAF0001D255 /* BusinessReviewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 091C4F191DBA7AAF0001D255 /* BusinessReviewTableViewCell.swift */; };
 		091C4F221DBAB92B0001D255 /* BusinessPhotoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 091C4F211DBAB92B0001D255 /* BusinessPhotoTableViewCell.swift */; };
+		0938154C1E5CABE30038CE95 /* background.mov in Resources */ = {isa = PBXBuildFile; fileRef = 0938154B1E5CABE30038CE95 /* background.mov */; };
 		093DFCC91D9B41FE0052AC9E /* Customer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093DFCC81D9B41FE0052AC9E /* Customer.swift */; };
 		0957DB291D6621DA00B38BB2 /* BusinessProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0957DB281D6621DA00B38BB2 /* BusinessProfileViewController.swift */; };
 		0958342A1D83426700EBDF9A /* BusinessProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095834291D83426700EBDF9A /* BusinessProfileTableViewCell.swift */; };
@@ -24,7 +25,6 @@
 		09ADB7071D67C1E100890CDB /* CustomAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09ADB7061D67C1E100890CDB /* CustomAnnotation.swift */; };
 		09C926D11D75402100605B67 /* SlideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C926D01D75402100605B67 /* SlideMenuViewController.swift */; };
 		09D4B2471D6A318B002676D1 /* DetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D4B2461D6A318B002676D1 /* DetailTableViewCell.swift */; };
-		09DFDE5F1D9DB0FE00DF7D39 /* background.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 09DFDE5E1D9DB0FE00DF7D39 /* background.mp4 */; };
 		09E73B551D9B25AB006D5C27 /* InitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E73B541D9B25AB006D5C27 /* InitialViewController.swift */; };
 		09FF68911D3EC18800EF4551 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FF68901D3EC18800EF4551 /* AppDelegate.swift */; };
 		09FF68931D3EC18800EF4551 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FF68921D3EC18800EF4551 /* LoginViewController.swift */; };
@@ -65,6 +65,7 @@
 		091C4F171DBA7A550001D255 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		091C4F191DBA7AAF0001D255 /* BusinessReviewTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BusinessReviewTableViewCell.swift; sourceTree = "<group>"; };
 		091C4F211DBAB92B0001D255 /* BusinessPhotoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BusinessPhotoTableViewCell.swift; sourceTree = "<group>"; };
+		0938154B1E5CABE30038CE95 /* background.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = background.mov; sourceTree = "<group>"; };
 		093DFCC81D9B41FE0052AC9E /* Customer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Customer.swift; sourceTree = "<group>"; };
 		0957DB281D6621DA00B38BB2 /* BusinessProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BusinessProfileViewController.swift; sourceTree = "<group>"; };
 		095834291D83426700EBDF9A /* BusinessProfileTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BusinessProfileTableViewCell.swift; sourceTree = "<group>"; };
@@ -79,7 +80,6 @@
 		09ADB7061D67C1E100890CDB /* CustomAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomAnnotation.swift; sourceTree = "<group>"; };
 		09C926D01D75402100605B67 /* SlideMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideMenuViewController.swift; sourceTree = "<group>"; };
 		09D4B2461D6A318B002676D1 /* DetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailTableViewCell.swift; sourceTree = "<group>"; };
-		09DFDE5E1D9DB0FE00DF7D39 /* background.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = background.mp4; sourceTree = "<group>"; };
 		09E73B541D9B25AB006D5C27 /* InitialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialViewController.swift; sourceTree = "<group>"; };
 		09FF688D1D3EC18800EF4551 /* Trucky.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Trucky.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		09FF68901D3EC18800EF4551 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -135,7 +135,7 @@
 		09FF68841D3EC18800EF4551 = {
 			isa = PBXGroup;
 			children = (
-				09DFDE5E1D9DB0FE00DF7D39 /* background.mp4 */,
+				0938154B1E5CABE30038CE95 /* background.mov */,
 				7B390EAC1D73C685003EAD59 /* ViewControllers */,
 				7B390EAD1D73C6A4003EAD59 /* Customs */,
 				09FF688F1D3EC18800EF4551 /* Trucky */,
@@ -382,10 +382,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				09FF689E1D3EC18800EF4551 /* LaunchScreen.storyboard in Resources */,
+				0938154C1E5CABE30038CE95 /* background.mov in Resources */,
 				091C4F181DBA7A550001D255 /* Main.storyboard in Resources */,
 				09FF68C21D3EC1C000EF4551 /* GoogleService-Info.plist in Resources */,
 				09FF689B1D3EC18800EF4551 /* Assets.xcassets in Resources */,
-				09DFDE5F1D9DB0FE00DF7D39 /* background.mp4 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
