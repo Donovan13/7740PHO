@@ -26,7 +26,7 @@ class InitialViewController: UIViewController {
         
         
         // Load the video from the app bundle.
-        let videoURL: URL = Bundle.main.url(forResource: "background", withExtension: "mp4")!
+        let videoURL: URL = Bundle.main.url(forResource: "background", withExtension: "mov")!
         
         player = AVPlayer(url: videoURL)
         player?.actionAtItemEnd = .none
