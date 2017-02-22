@@ -26,6 +26,9 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     
     
     
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         loggedInTruck = firebaseController.getLoggedInTruck()

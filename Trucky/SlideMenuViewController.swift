@@ -205,7 +205,7 @@ class SlideMenuViewController: UIViewController, UNUserNotificationCenterDelegat
     
     @IBAction func locationSwitcherTapped(_ sender: AnyObject) {
         if locationSwitcher.isOn == true {
-            self.errorAlert(self.locationSwitcher)
+           self.errorAlert(self.locationSwitcher)
             userDefaults.set(true, forKey: "locShare")
             firebaseController.shareTruckLocation(true)
             
@@ -221,8 +221,8 @@ class SlideMenuViewController: UIViewController, UNUserNotificationCenterDelegat
         let proImage = image2String(pickedImage!)
         
         
-        firebaseController.updateProfileImage(profileImage: proImage)
-
+        firebaseController.updateProfileImage(imageString: proImage)
+        firebaseController.reloadTrucksDelegate?.reloadTrucks()
         
         dismiss(animated: true, completion: nil)
         

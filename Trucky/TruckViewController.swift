@@ -52,7 +52,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     let locationController = LocationService.sharedInstance
     let userDefaults = UserDefaults.standard
     
-
+    
     
     
     override func viewDidLoad() {
@@ -302,10 +302,8 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         if userDefaults.value(forKey: "Truck") != nil {
             self.performSegue(withIdentifier: "mapToMenuSegue", sender: self)
         } else {
-            self.navigationController?.popViewController(animated: false)
+            self.navigationController?.popViewController(animated: true)
         }
-        
-        
     }
     
     @IBAction func detailsButtonTapped(_ sender: AnyObject) {
@@ -345,12 +343,14 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     
     func reloadTrucks() {
         self.trucks = self.firebaseController.getActiveTrucks()
+        self.loggedInTruck = self.firebaseController.getLoggedInTruck()
         
         for truck in self.trucks {
             truck.calculateDistance(self.userlocation)
         }
+        
         self.trucks.sort(by: { $0.distance < $1.distance })
-
+        
         DispatchQueue.main.async {
             self.mapView.removeAnnotations(self.mapView.annotations)
             self.loadAnnotations()

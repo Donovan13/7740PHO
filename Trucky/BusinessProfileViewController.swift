@@ -70,6 +70,17 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
 //        imageView.addSubview(blurView)
     }
     
+    
+    
+    @IBAction func viewMenuTapped(_ sender: Any) {
+        
+        
+        
+        self.performSegue(withIdentifier: "showMenuSegue", sender: self)
+        
+        
+    }
+    
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         // translucent cell backgrounds so we can see the image but still easily read the contents
         cell.backgroundColor = UIColor(white: 0.5, alpha: 0)
@@ -256,8 +267,12 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "detailToWebSegue" {
             
-            let detailVC = segue.destination as! WebViewController
-            detailVC.businessURL = truck.yelpURL!
+            let webVC = segue.destination as! WebViewController
+            webVC.businessURL = truck.yelpURL!
+        } else if segue.identifier == "showMenuSegue" {
+            let detailVC = segue.destination as! EditProfileViewController
+            detailVC.truckNameLabel.text = truck.truckName
+            detailVC.menuImageView.image = string2Image(truck.menuImage!)
         }
         
     }

@@ -66,7 +66,7 @@ class FirebaseController {
     
     
     fileprivate var trucks = [Truck]()
-    fileprivate var truck: Truck?
+    fileprivate var loggedInTruck: Truck?
     
     fileprivate var customer: Customer?
     
@@ -121,7 +121,7 @@ class FirebaseController {
     }
     
     func getLoggedInTruck() -> Truck {
-        return self.truck!
+        return self.loggedInTruck!
     }
     
     func logOutUser() {
@@ -133,7 +133,7 @@ class FirebaseController {
                 let uid = currentUser?.uid
                 truckRef.child("Active").child(uid!).removeValue()
                 logOutUserDelegate?.logOutUserDelegate()
-                self.truck = nil
+                self.loggedInTruck = nil
                 self.userdefaults.setValue(nil, forKey: "Truck")
                 self.userdefaults.setValue(nil, forKey: "Customer")
                 
@@ -163,19 +163,19 @@ class FirebaseController {
     }
     
     func updateMenuImage(menuImage: String) {
-        let uid = truck?.uid
+        let uid = loggedInTruck?.uid
         truckRef.child(uid!).updateChildValues(["menuImage": menuImage])
     }
     
-    func updateProfileImage(profileImage: String) {
-        let uid = truck?.uid
-        truckRef.child(uid!).updateChildValues(["profileImage": profileImage])
+    func updateProfileImage(imageString: String) {
+        let uid = loggedInTruck?.uid
+        truckRef.child(uid!).updateChildValues(["imageString": imageString])
     }
     
     func updateTruckLocation(_ lat: Double, lon: Double) {
         if userdefaults.bool(forKey: "locShare") == true {
             
-            let uid = truck?.uid
+            let uid = loggedInTruck?.uid
             truckRef.child(uid!).updateChildValues(["latitude": lat, "longitude": lon])
         }
     }
@@ -183,16 +183,16 @@ class FirebaseController {
     func updateTruckAddress(_ address: String) {
         if userdefaults.bool(forKey: "locShare") == true {
             
-            let uid = truck?.uid
+            let uid = loggedInTruck?.uid
             truckRef.child(uid!).updateChildValues(["address": address])
         }
     }
     
     
     func shareTruckLocation(_ onOff: Bool) {
-        let uid = truck?.uid
+        let uid = loggedInTruck?.uid
         if userdefaults.bool(forKey: "locShare") {
-            truck = Truck(truck: truck!)
+            loggedInTruck = Truck(truck: loggedInTruck!)
             truckRef.child(uid!).updateChildValues(["active": true])
             sharetruckDelegate?.activateTruckDelegate()
         }
@@ -234,7 +234,7 @@ class FirebaseController {
     func loggedInTruck(_ uid: String) {
         
         self.truckRef.child(uid).observeSingleEvent(of: .value, with: { (snapshot: FIRDataSnapshot) in
-            self.truck = Truck(snapshot: snapshot)
+            self.loggedInTruck = Truck(snapshot: snapshot)
             self.userdefaults.setValue(uid, forKey: "Truck")
             self.logInUserDelegate?.logInTruckDelegate()
             
@@ -253,22 +253,31 @@ class FirebaseController {
         }
         self.truckRef.observe(.childChanged) { (snapshot: FIRDataSnapshot!) in
             let truck = Truck(snapshot: snapshot)
+            
+            
             if truck.active! {
                 if let index = self.trucks.index(of: truck) {
                     self.trucks[index] = truck
                 }
             }
-//            if truck.active! {
-//                if !self.trucks.contains(truck) {
-//                    self.trucks.append(truck)
-//                }
-//            }
-//            
-//            if !truck.active! {
-//                if let index = self.trucks.index(of: truck) {
-//                    self.trucks.remove(at: index)
-//                }
-//            }
+            
+            
+            if truck == self.getLoggedInTruck() {
+                
+                self.loggedInTruck = truck
+                print("loggedintruck changed")
+            }
+            if truck.active! {
+                if !self.trucks.contains(truck) {
+                    self.trucks.append(truck)
+                }
+            }
+            
+            if !truck.active! {
+                if let index = self.trucks.index(of: truck) {
+                    self.trucks.remove(at: index)
+                }
+            }
             self.reloadTrucksDelegate?.reloadTrucks()
 
         }
