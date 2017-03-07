@@ -183,9 +183,12 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     
     //    MARK: TableView Delegate
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("Truck Count on Delegate \(trucks.count)")
+        if trucks.count > 0 {
         return trucks.count
-        
+        } else {
+            TableviewHelper.EmptyMessage(message: "There's no active trucks =(", tableView: tableView )
+            return 0
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -193,6 +196,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "BusinessTableViewCell") as! DetailTableViewCell
         let post = trucks[(indexPath as NSIndexPath).row]
+        
         
         cell.businessImage.image = string2Image(post.imageString!)
         cell.businessLabel?.text = post.truckName?.capitalized
@@ -365,4 +369,37 @@ extension UITableView {
         let location = view.convert(CGPoint.zero, to: self)
         return indexPathForRow(at: location)!
     }
+    
 }
+
+class TableviewHelper {
+    class func EmptyMessage(message:String, tableView: UITableView) {
+        let messageLabel = UILabel(frame:
+            CGRect(x: 0, y: 0, width: (tableView.bounds.size.width), height: (tableView.bounds.size.height)))
+        
+        
+        messageLabel.text = message
+        messageLabel.textColor = UIColor.black
+        messageLabel.textAlignment = .center
+        messageLabel.font = UIFont(name: "TrebuchetMS", size: 15)
+        messageLabel.sizeToFit()
+        
+        tableView.backgroundView = messageLabel
+        tableView.separatorStyle = .none
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
