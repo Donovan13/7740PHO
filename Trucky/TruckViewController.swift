@@ -183,12 +183,15 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     
     //    MARK: TableView Delegate
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if trucks.count > 0 {
-        return trucks.count
-        } else {
-            TableviewHelper.EmptyMessage(message: "There's no active trucks =(", tableView: tableView )
+
+        if trucks.count == 0 {
+            TableviewHelper.EmptyMessage(message: "There's No Active Trucks", tableView: tableView)
             return 0
+        } else {
+            TableviewHelper.EmptyMessage(message: "", tableView: tableView)
+            return trucks.count
         }
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -347,7 +350,11 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     
     func reloadTrucks() {
         self.trucks = self.firebaseController.getActiveTrucks()
-        self.loggedInTruck = self.firebaseController.getLoggedInTruck()
+        
+        if userDefaults.value(forKey: "Truck") != nil {
+            self.loggedInTruck = self.firebaseController.getLoggedInTruck()
+        }
+        
         
         for truck in self.trucks {
             truck.calculateDistance(self.userlocation)
