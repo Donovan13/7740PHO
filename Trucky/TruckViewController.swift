@@ -114,7 +114,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     }
     
     func loadAnnotations() {
-        if trucks.count > 1 {
+        if trucks.count >= 1 {
             if trucks.first?.truckName != nil {
                 for truck in trucks {
                     let title = truck.truckName
