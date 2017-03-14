@@ -159,7 +159,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
             pin.image = scaleUIImageToSize(UIImage(named: "truck")!, size: CGSize(width: 40,height: 30))
             pin.canShowCallout = true
             pin.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
-            pin.leftCalloutAccessoryView = iconFrame
+//            pin.leftCalloutAccessoryView = iconFrame
             pin.leftCalloutAccessoryView?.layer.cornerRadius = (pin.leftCalloutAccessoryView?.frame.size.width)! / 2
             pin.leftCalloutAccessoryView?.clipsToBounds = true
             

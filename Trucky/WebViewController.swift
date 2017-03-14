@@ -20,6 +20,9 @@ class WebViewController: UIViewController, UIWebViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.navigationController?.hidesBarsOnSwipe = false
+        self.navigationController?.navigationBar.isTranslucent = false
+        
         webView.delegate = self
         
         activityIndicator.hidesWhenStopped = true
@@ -29,9 +32,9 @@ class WebViewController: UIViewController, UIWebViewDelegate {
         
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        self.navigationController?.navigationBar.isTranslucent = false
-
+    override var prefersStatusBarHidden: Bool {
+        self.navigationController?.isNavigationBarHidden = false
+        return true
     }
     
     func loadRequestWithString() {

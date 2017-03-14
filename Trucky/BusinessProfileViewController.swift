@@ -35,7 +35,6 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
         self.navigationController?.navigationBar.isTranslucent = true
         self.navigationController!.navigationBar.titleTextAttributes = [ NSFontAttributeName: UIFont(name: "times", size: 20)!]
         self.navigationController?.hidesBarsOnSwipe = true
-        
     }
     
     override var prefersStatusBarHidden : Bool {
@@ -68,6 +67,10 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
 //        let blurView = UIVisualEffectView(effect: blurEffect)
 //        blurView.frame = imageView.bounds
 //        imageView.addSubview(blurView)
+        
+        self.navigationController?.hidesBarsOnSwipe = true
+        self.navigationController?.navigationBar.isTranslucent = true
+        
     }
     
     
@@ -145,17 +148,9 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
                 return cell
             } else if (indexPath as NSIndexPath).row == 1 {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "phoneCell", for: indexPath)
-                cell.detailTextLabel?.text = truck.phone
-                
-//                let s = truck.phone
-//                
-//                let s2 = String(format: "%@ (%@) %@-%@",
-//                                s!.substring(to: s!.characters.index(s!.startIndex, offsetBy: 2)),
-//                                s!.substring(with: s!.characters.index(s!.startIndex, offsetBy: 2) ... s!.characters.index(s!.startIndex, offsetBy: 4)),
-//                                s!.substring(with: s!.characters.index(s!.startIndex, offsetBy: 5) ... s!.characters.index(s!.startIndex, offsetBy: 7)),
-//                                s!.substring(with: s!.characters.index(s!.startIndex, offsetBy: 8) ... s!.characters.index(s!.startIndex, offsetBy: 11)))
-//                cell.detailTextLabel?.text = s2
-                
+                let s = truck.phone
+                let s2 = ("1(\(s!.substring(with: 2..<5)))\(s!.substring(with: 5..<8))-\(s!.substring(with: 8..<12))")
+                cell.detailTextLabel?.text = s2
                 return cell
             } else if (indexPath as NSIndexPath).row == 2 {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "websiteCell", for: indexPath)
@@ -167,9 +162,9 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
                 return cell
             } else {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "photoCell") as! BusinessPhotoTableViewCell
-
                 return cell
             }
+            
             
         } else {
             
@@ -230,14 +225,17 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        let label : UILabel = UILabel()
         if section == 1 {
-            return "Reviews"
+            
+            label.textColor = UIColor.blue
+            label.text = "Reviews"
+            
+        return label.text
         } else {
             return ""
         }
     }
-    
-    
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
@@ -310,6 +308,28 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
         return UIImage(data: data!)!
     }
     
+}
+
+extension String {
+    func index(from: Int) -> Index {
+        return self.index(startIndex, offsetBy: from)
+    }
+    
+    func substring(from: Int) -> String {
+        let fromIndex = index(from: from)
+        return substring(from: fromIndex)
+    }
+    
+    func substring(to: Int) -> String {
+        let toIndex = index(from: to)
+        return substring(to: toIndex)
+    }
+    
+    func substring(with r: Range<Int>) -> String {
+        let startIndex = index(from: r.lowerBound)
+        let endIndex = index(from: r.upperBound)
+        return substring(with: startIndex..<endIndex)
+    }
 }
 
 extension BusinessProfileViewController: UICollectionViewDelegate, UICollectionViewDataSource {

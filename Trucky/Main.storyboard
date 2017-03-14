@@ -388,7 +388,7 @@
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="oVh-IY-FV2">
-                                <rect key="frame" x="32" y="73" width="350" height="548"/>
+                                <rect key="frame" x="32" y="73" width="350" height="548.33333333333337"/>
                                 <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="oVh-IY-FV2" secondAttribute="height" multiplier="175:274" id="8uo-iA-Pi9"/>
@@ -401,7 +401,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zio-bw-kWj">
-                                <rect key="frame" x="169" y="629" width="76" height="23"/>
+                                <rect key="frame" x="169" y="629.33333333333337" width="76" height="23"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="23" id="QRZ-bH-Z6S"/>
                                     <constraint firstAttribute="width" constant="76" id="l1v-su-xx6"/>
@@ -847,7 +847,7 @@
                         <segue destination="iL6-c3-66T" kind="show" identifier="detailSegue" id="2XA-gi-oSt"/>
                         <segue destination="iL6-c3-66T" kind="show" identifier="annotationDetailSegue" id="Jok-xT-yNd"/>
                         <segue destination="EjW-8G-PN3" kind="presentation" identifier="mapToMenuSegue" id="QNP-bz-0OX"/>
-                        <segue destination="DIa-jM-T5E" kind="show" identifier="truckToWebSegue" id="JzK-Lf-MqU"/>
+                        <segue destination="DIa-jM-T5E" kind="showDetail" identifier="truckToWebSegue" id="JzK-Lf-MqU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YAp-zT-x4v" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1035,13 +1035,13 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="uw3-GZ-Xoy">
-                                                    <rect key="frame" x="8" y="28" width="398" height="153"/>
+                                                    <rect key="frame" x="8" y="28" width="398" height="132"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" secondItem="uw3-GZ-Xoy" secondAttribute="height" multiplier="199:60" constant="-108.65000000000003" id="anN-Hr-A2Y"/>
+                                                        <constraint firstAttribute="width" secondItem="uw3-GZ-Xoy" secondAttribute="height" multiplier="199:60" constant="-39.800000000000011" id="anN-Hr-A2Y"/>
                                                     </constraints>
-                                                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="hUH-QC-jLQ">
-                                                        <size key="itemSize" width="120" height="120"/>
+                                                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="1" minimumInteritemSpacing="1" id="hUH-QC-jLQ">
+                                                        <size key="itemSize" width="115" height="115"/>
                                                         <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                                         <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                                         <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -1185,7 +1185,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8vi-v3-nVQ">
-                                <rect key="frame" x="26" y="147" width="362" height="477"/>
+                                <rect key="frame" x="26" y="146" width="362" height="478"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="8vi-v3-nVQ" secondAttribute="height" multiplier="362:477" id="kcg-Ja-i2C"/>
                                 </constraints>
@@ -1225,7 +1225,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OEY-UV-YGZ">
-                                <rect key="frame" x="0.0" y="64" width="414" height="672"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                                 <color key="backgroundColor" red="0.36078431372549019" green="0.38823529411764707" blue="0.40392156862745099" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
                                     <outlet property="delegate" destination="DIa-jM-T5E" id="6v8-wo-3O2"/>
@@ -1239,12 +1239,28 @@
                                 <items>
                                     <navigationItem id="z8H-IJ-M4l">
                                         <leftBarButtonItems>
-                                            <barButtonItem systemItem="rewind" id="D2o-ov-fSM"/>
-                                            <barButtonItem systemItem="fastForward" id="A5M-Kq-eBL"/>
+                                            <barButtonItem systemItem="rewind" id="D2o-ov-fSM">
+                                                <connections>
+                                                    <action selector="backAction:" destination="DIa-jM-T5E" id="b0n-9Y-eSO"/>
+                                                </connections>
+                                            </barButtonItem>
+                                            <barButtonItem systemItem="fastForward" id="A5M-Kq-eBL">
+                                                <connections>
+                                                    <action selector="forwardAction:" destination="DIa-jM-T5E" id="fOL-tC-Oay"/>
+                                                </connections>
+                                            </barButtonItem>
                                         </leftBarButtonItems>
                                         <rightBarButtonItems>
-                                            <barButtonItem systemItem="stop" id="q1x-lk-qQH"/>
-                                            <barButtonItem systemItem="refresh" id="cxA-Bz-AjE"/>
+                                            <barButtonItem systemItem="stop" id="q1x-lk-qQH">
+                                                <connections>
+                                                    <action selector="stopAction:" destination="DIa-jM-T5E" id="VJg-77-SST"/>
+                                                </connections>
+                                            </barButtonItem>
+                                            <barButtonItem systemItem="refresh" id="cxA-Bz-AjE">
+                                                <connections>
+                                                    <action selector="refreshAction:" destination="DIa-jM-T5E" id="DZ9-Vh-KoS"/>
+                                                </connections>
+                                            </barButtonItem>
                                         </rightBarButtonItems>
                                     </navigationItem>
                                 </items>
@@ -1255,15 +1271,15 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="Wc6-1b-Nsn" firstAttribute="top" secondItem="OEY-UV-YGZ" secondAttribute="bottom" id="OeB-3c-BDT"/>
-                            <constraint firstItem="OEY-UV-YGZ" firstAttribute="top" secondItem="Btq-pA-36O" secondAttribute="bottom" id="Sly-Dm-sQW"/>
+                            <constraint firstItem="Wc6-1b-Nsn" firstAttribute="top" secondItem="OEY-UV-YGZ" secondAttribute="bottom" id="Cck-l0-sP1"/>
+                            <constraint firstItem="OEY-UV-YGZ" firstAttribute="leading" secondItem="16N-U7-dSc" secondAttribute="leading" id="SJO-Va-p0g"/>
+                            <constraint firstAttribute="trailing" secondItem="OEY-UV-YGZ" secondAttribute="trailing" id="awd-6f-iRM"/>
+                            <constraint firstItem="OEY-UV-YGZ" firstAttribute="top" secondItem="16N-U7-dSc" secondAttribute="top" id="hAw-Wt-EOQ"/>
                             <constraint firstItem="Bz0-Zn-0Nd" firstAttribute="centerY" secondItem="16N-U7-dSc" secondAttribute="centerY" id="itA-UU-EKs"/>
                             <constraint firstAttribute="trailing" secondItem="NQg-9s-Z1w" secondAttribute="trailing" id="kIb-tD-aRh"/>
                             <constraint firstItem="Wc6-1b-Nsn" firstAttribute="top" secondItem="NQg-9s-Z1w" secondAttribute="bottom" id="lCO-iQ-Sjr"/>
-                            <constraint firstAttribute="trailing" secondItem="OEY-UV-YGZ" secondAttribute="trailing" id="oKN-0Q-fac"/>
                             <constraint firstItem="NQg-9s-Z1w" firstAttribute="leading" secondItem="16N-U7-dSc" secondAttribute="leading" id="q6D-HQ-28k"/>
                             <constraint firstItem="Bz0-Zn-0Nd" firstAttribute="centerX" secondItem="16N-U7-dSc" secondAttribute="centerX" id="qaW-hF-Nyr"/>
-                            <constraint firstItem="OEY-UV-YGZ" firstAttribute="leading" secondItem="16N-U7-dSc" secondAttribute="leading" id="sy2-lr-y0e"/>
                         </constraints>
                     </view>
                     <connections>
@@ -1273,7 +1289,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="35O-ec-LYI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="910" y="1598"/>
+            <point key="canvasLocation" x="908.69565217391312" y="1597.0108695652175"/>
         </scene>
         <!--Side Menu Navigation Controller-->
         <scene sceneID="M6i-W6-Kgv">
@@ -1326,9 +1342,9 @@
         <image name="yelpLogo" width="675" height="383"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="pZX-N5-UF3"/>
+        <segue reference="2Kq-3N-BIS"/>
         <segue reference="2XA-gi-oSt"/>
-        <segue reference="6ej-Sp-jie"/>
         <segue reference="abG-Zv-BGJ"/>
+        <segue reference="6ej-Sp-jie"/>
     </inferredMetricsTieBreakers>
 </document>
