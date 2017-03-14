@@ -91,17 +91,6 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         
         self.reloadTrucks()
         
-        //        if userDefaults.valueForKey("Truck") != nil {
-        //            if firebaseController.getLoggedInTruck().truckName?.characters.count > 1 {
-        //            loggedInTruck = firebaseController.getLoggedInTruck()
-        //            }
-        //        } else if userDefaults.valueForKey("Customer") != nil {
-        //            loggedInCustomer = firebaseController.getLoggedInCustomer()
-        //        }
-        
-        
-        
-        
     }
     
     func reloadTimer() {
@@ -261,16 +250,14 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
             switch identifier {
             case "detailSegue":
                 let button = sender as! UIButton
-                let truck = trucks.reversed()[button.tag]
+                let truck = trucks[button.tag]
                 let detailVC = segue.destination as! BusinessProfileViewController
                 detailVC.truck = truck
-                //                detailVC.distanceOfTruck = truck.distance
                 
             case "annotationDetailSegue":
                 let detailVC = segue.destination as! BusinessProfileViewController
                 let annotation = sender as! CustomAnnotations
                 detailVC.truck = annotation.truckCA
-                //                detailVC.distanceOfTruck = truckdistance[annotation.idNumber!]
                 
             case "truckToWebSegue":
                 let button = sender as! UIButton
