@@ -194,6 +194,18 @@ class SlideMenuViewController: UIViewController, UNUserNotificationCenterDelegat
 //            firebaseController.logOutUser()
 //        }
 //    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "menuToUpdateMenuSegue" {
+            
+            let uploadMenuVC = segue.destination as! EditProfileViewController
+            uploadMenuVC.truck = self.loggedInTruck
+            uploadMenuVC.source = "Slide"
+            
+        }
+    }
+    
+    
     @IBAction func logOutButtonTapped(_ sender: Any) {
         firebaseController.logOutUser()
     }

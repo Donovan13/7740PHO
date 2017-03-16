@@ -27,6 +27,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let firebaseController = FirebaseController.sharedConnection
         
+//        firebaseController.logOutUser()
+        
         FIRAuth.auth()?.addStateDidChangeListener({ (auth, user) in
             if let user = user {
 

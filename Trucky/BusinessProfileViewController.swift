@@ -35,6 +35,7 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
         self.navigationController?.navigationBar.isTranslucent = true
         self.navigationController!.navigationBar.titleTextAttributes = [ NSFontAttributeName: UIFont(name: "times", size: 20)!]
         self.navigationController?.hidesBarsOnSwipe = true
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "View Menu", style: .plain, target: self, action: #selector(BusinessProfileViewController.viewMenuTapped))
     }
     
     override var prefersStatusBarHidden : Bool {
@@ -44,6 +45,9 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
             return false
         }
     }
+    
+    
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -74,15 +78,11 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
     }
     
     
-    
-    @IBAction func viewMenuTapped(_ sender: Any) {
-        
-        
-        
+    func viewMenuTapped() {
         self.performSegue(withIdentifier: "showMenuSegue", sender: self)
-        
-        
     }
+    
+    
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         // translucent cell backgrounds so we can see the image but still easily read the contents
@@ -269,8 +269,9 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
             webVC.businessURL = truck.yelpURL!
         } else if segue.identifier == "showMenuSegue" {
             let detailVC = segue.destination as! EditProfileViewController
-            detailVC.truckNameLabel.text = truck.truckName
-            detailVC.menuImageView.image = string2Image(truck.menuImage!)
+            detailVC.truck = truck
+            detailVC.source = "Profile"
+//            detailVC.menuImageView.image = string2Image(truck.menuImage!)
         }
         
     }
