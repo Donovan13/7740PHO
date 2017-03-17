@@ -27,7 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let firebaseController = FirebaseController.sharedConnection
         
-//        firebaseController.logOutUser()
+        firebaseController.setUserDefault()
         
         FIRAuth.auth()?.addStateDidChangeListener({ (auth, user) in
             if let user = user {
@@ -37,7 +37,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                 let initialVC = storyboard.instantiateViewController(withIdentifier: "truckVC")
-                
                 let navigationController = UINavigationController(rootViewController: initialVC)
                 
                 self.window = UIWindow(frame: UIScreen.main.bounds)
@@ -78,6 +77,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         // Saves changes in the application's managed object context before the application terminates.
+        
+        
         self.saveContext()
     }
 

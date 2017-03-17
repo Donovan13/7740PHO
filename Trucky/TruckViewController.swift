@@ -66,7 +66,6 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         locationController.locationServiceDelegate = self
         userlocation = locationController.newLocation
         
-        reloadTimer()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -120,11 +119,8 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     }
     
     func updateLocation(_ currentLocation: CLLocation) {
-        //        self.userlocation = currentLocation
         let lat = currentLocation.coordinate.latitude
         let lon = currentLocation.coordinate.longitude
-        
-        
         
         firebaseController.updateTruckLocation(lat, lon: lon)
     }
@@ -166,7 +162,6 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         let annotation = view.annotation as! CustomAnnotations
         self.performSegue(withIdentifier: "annotationDetailSegue", sender: annotation)
-        
     }
     
     
@@ -338,7 +333,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     func reloadTrucks() {
         self.trucks = self.firebaseController.getActiveTrucks()
         
-        if userDefaults.value(forKey: "Truck") != nil {
+        if userDefaults.string(forKey: "Truck") != nil {
             self.loggedInTruck = self.firebaseController.getLoggedInTruck()
         }
         

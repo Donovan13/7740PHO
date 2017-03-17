@@ -134,13 +134,17 @@ class FirebaseController {
                 truckRef.child("Active").child(uid!).removeValue()
                 logOutUserDelegate?.logOutUserDelegate()
                 self.loggedInTruck = nil
-                self.userdefaults.setValue(nil, forKey: "Truck")
-                self.userdefaults.setValue(nil, forKey: "Customer")
+                setUserDefault()
                 
             } catch let error as NSError {
                 print(error.localizedDescription)
             }
         }
+    }
+    
+    func setUserDefault() {
+        self.userdefaults.setValue(nil, forKey: "Truck")
+        self.userdefaults.setValue(nil, forKey: "Customer")
     }
     
     func getTruckForUID(_ uid: String) -> Truck? {
@@ -175,16 +179,18 @@ class FirebaseController {
     func updateTruckLocation(_ lat: Double, lon: Double) {
         if userdefaults.bool(forKey: "locShare") == true {
             
-            let uid = loggedInTruck?.uid
-            truckRef.child(uid!).updateChildValues(["latitude": lat, "longitude": lon])
+            if let uid = loggedInTruck?.uid {
+            truckRef.child(uid).updateChildValues(["latitude": lat, "longitude": lon])
+            }
         }
     }
     
     func updateTruckAddress(_ address: String) {
         if userdefaults.bool(forKey: "locShare") == true {
             
-            let uid = loggedInTruck?.uid
-            truckRef.child(uid!).updateChildValues(["address": address])
+            if let uid = loggedInTruck?.uid {
+            truckRef.child(uid).updateChildValues(["address": address])
+            }
         }
     }
     
@@ -221,9 +227,13 @@ class FirebaseController {
         FIRAuth.auth()?.signIn(withEmail: email!, password: password!, completion: { (user, error) in
             if error == nil {
                 let uid = user?.uid
+                self.loggedInTruck(uid!)
+                
+
                 
                 self.authenticationDelegate?.userAuthenticationSuccess()
-                self.loggedInTruck(uid!)
+
+                
                 
             } else {
                 self.authenticationDelegate?.userAuthenticationFail(error! as NSError)
@@ -235,7 +245,7 @@ class FirebaseController {
         
         self.truckRef.child(uid).observeSingleEvent(of: .value, with: { (snapshot: FIRDataSnapshot) in
             self.loggedInTruck = Truck(snapshot: snapshot)
-            self.userdefaults.setValue(uid, forKey: "Truck")
+            self.userdefaults.setValue(self.loggedInTruck?.uid, forKey: "Truck")
             self.logInUserDelegate?.logInTruckDelegate()
             
         })
