@@ -154,7 +154,9 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
                 return cell
             } else if (indexPath as NSIndexPath).row == 2 {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "websiteCell", for: indexPath)
-                            cell.detailTextLabel?.text = truck.yelpURL
+                let s = truck.yelpURL
+                let s2 = (s!.substring(from: 8))
+                cell.detailTextLabel?.text = s2
                 return cell
             } else if (indexPath as NSIndexPath).row == 3 {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "addressCell", for: indexPath)
@@ -245,6 +247,11 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
             
         } else if (indexPath as NSIndexPath).row == 2 {
             performSegue(withIdentifier: "detailToWebSegue", sender: self)
+            
+            //DIRECTLY OPENS URL IN SAFARI
+            //            if let url = NSURL(string: truck.yelpURL!){
+            //                UIApplication.shared.open(url as URL)
+            //            }
             
         } else if (indexPath as NSIndexPath).row == 3 {
             openMapForPlace()
