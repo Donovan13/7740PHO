@@ -197,9 +197,9 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
                 
             let d = dateComponentsFormatter.string(from: Date(), to: endDate)
 
-            
+            let editedD = d?.substring(from: 1)
                 
-            cell.reviewTime.text = "Ago \(d)"
+            cell.reviewTime.text = "Ago \(editedD!)"
                 
                 
             }
