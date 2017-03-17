@@ -88,8 +88,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         
-        self.reloadTrucks()
-        
+        reloadTimer()
     }
     
     func reloadTimer() {
@@ -144,7 +143,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
             pin.image = scaleUIImageToSize(UIImage(named: "truck")!, size: CGSize(width: 40,height: 30))
             pin.canShowCallout = true
             pin.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
-//            pin.leftCalloutAccessoryView = iconFrame
+            //            pin.leftCalloutAccessoryView = iconFrame
             pin.leftCalloutAccessoryView?.layer.cornerRadius = (pin.leftCalloutAccessoryView?.frame.size.width)! / 2
             pin.leftCalloutAccessoryView?.clipsToBounds = true
             
@@ -167,7 +166,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     
     //    MARK: TableView Delegate
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-
+        
         if trucks.count == 0 {
             TableviewHelper.EmptyMessage(message: "There's No Active Trucks", tableView: tableView)
             return 0
@@ -376,7 +375,7 @@ class TableviewHelper {
         tableView.backgroundView = messageLabel
         tableView.separatorStyle = .none
     }
-
+    
 }
 
 

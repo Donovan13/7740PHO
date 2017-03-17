@@ -183,10 +183,26 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
             dateComponentsFormatter.allowedUnits = [.year,.month,.weekOfYear,.day,.hour,.minute,.second]
             dateComponentsFormatter.maximumUnitCount = 1
             dateComponentsFormatter.unitsStyle = .full
-            let D = dateComponentsFormatter.string(from: Date(), to: Date(timeIntervalSinceNow: 9000000))  // "1 month"
             
+            let endDateFormatter = DateFormatter()
+            endDateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
             
-            cell.reviewTime.text = D
+            let pulledEndDate = (review as AnyObject).value(forKey: "timeCreated") as? String
+            
+            print("Pulled Date = \(pulledEndDate)")
+            
+            if let endDate = endDateFormatter.date(from: pulledEndDate!) {
+            
+                print("End Date = \(endDate)")
+                
+            let d = dateComponentsFormatter.string(from: Date(), to: endDate)
+
+            
+                
+            cell.reviewTime.text = "Ago \(d)"
+                
+                
+            }
 //            cell.reviewTime.text = (review as AnyObject).value(forKey: "timeCreated") as? String
             cell.reviewTextView.text = (review as AnyObject).value(forKey: "text") as! String
             
