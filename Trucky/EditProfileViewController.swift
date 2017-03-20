@@ -43,7 +43,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
             saveChangeButton.setTitle("Ok", for: .normal)
         }
         
-       
+        
         
     }
     
@@ -52,8 +52,8 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         self.truckNameLabel.text = truck.truckName
         
         
+        
     }
-    
     
     @IBAction func saveImageButton(_ sender: AnyObject) {
         
@@ -67,6 +67,8 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         self.presentingViewController?.dismiss(animated: true, completion: nil)
         }
     }
+    
+    
     
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {

@@ -169,6 +169,9 @@ class FirebaseController {
     func updateMenuImage(menuImage: String) {
         let uid = loggedInTruck?.uid
         truckRef.child(uid!).updateChildValues(["menuImage": menuImage])
+        
+        self.reloadTrucksDelegate?.reloadTrucks()
+        
     }
     
     func updateProfileImage(imageString: String) {
@@ -288,6 +291,7 @@ class FirebaseController {
                     self.trucks.remove(at: index)
                 }
             }
+            
             self.reloadTrucksDelegate?.reloadTrucks()
 
         }

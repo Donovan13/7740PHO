@@ -62,9 +62,13 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         tableView.dataSource = self
         mapView.delegate = self
         
+        
+        
         firebaseController.reloadTrucksDelegate = self
         locationController.locationServiceDelegate = self
         userlocation = locationController.newLocation
+        
+        reloadTimer()
         
     }
     
@@ -83,12 +87,16 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         myShadow.shadowColor = UIColor.lightGray
         self.navigationController!.navigationBar.titleTextAttributes = [ NSShadowAttributeName: myShadow, NSFontAttributeName: UIFont(name: "times", size: 25)! ]
         
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(true)
         
-        reloadTimer()
+        self.navigationItem.title = "Trucky"
+        
+        
+        let backButton = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        navigationItem.backBarButtonItem = backButton
+
+        
+        reloadTrucks()
+        
     }
     
     func reloadTimer() {
@@ -258,6 +266,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
                 let webVC = segue.destination as! WebViewController
                 let truck = trucks[button.tag]
                 webVC.businessURL = truck.yelpURL
+                
                 
             default: break
             }

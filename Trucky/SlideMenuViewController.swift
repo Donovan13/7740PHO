@@ -202,6 +202,10 @@ class SlideMenuViewController: UIViewController, UNUserNotificationCenterDelegat
             uploadMenuVC.truck = self.loggedInTruck
             uploadMenuVC.source = "Slide"
             
+//            let backbutton = UIBarButtonItem(title: "Hello", style: .done, target: navigationItem.backBarButtonItem, action: nil)
+//            
+//            navigationItem.leftBarButtonItem = backbutton
+
         }
     }
     
