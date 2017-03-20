@@ -41,7 +41,7 @@
 		<true/>
 	</dict>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Location is now mine</string>
+	<string>Location information will be used to connect customers with food trucks nearby.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Use Photos</string>
 	<key>UIBackgroundModes</key>

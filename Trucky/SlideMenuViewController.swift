@@ -198,13 +198,19 @@ class SlideMenuViewController: UIViewController, UNUserNotificationCenterDelegat
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "menuToUpdateMenuSegue" {
             
+            let backItem = UIBarButtonItem()
+            backItem.title = ""
+            navigationItem.backBarButtonItem = backItem
+            
             let uploadMenuVC = segue.destination as! EditProfileViewController
             uploadMenuVC.truck = self.loggedInTruck
             uploadMenuVC.source = "Slide"
             
+            
+            
+            
         }
     }
-    
     
     @IBAction func logOutButtonTapped(_ sender: Any) {
         firebaseController.logOutUser()
@@ -392,6 +398,10 @@ class SlideMenuViewController: UIViewController, UNUserNotificationCenterDelegat
         let imageString = imageData!.base64EncodedString(options: .lineLength64Characters)
         return imageString
     }
+    
+    
 
     
 }
+
+

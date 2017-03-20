@@ -199,7 +199,7 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
 
             let editedD = d?.substring(from: 1)
                 
-            cell.reviewTime.text = "Ago \(editedD!)"
+            cell.reviewTime.text = "\(editedD!) ago"
                 
                 
             }
@@ -343,6 +343,18 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
         let data = Data(base64Encoded: string, options: .ignoreUnknownCharacters)
         return UIImage(data: data!)!
     }
+    
+    
+    @IBAction func yelpButtonTapped(_ sender: Any) {
+        
+
+        if let url = NSURL(string: truck.yelpURL!){
+            UIApplication.shared.open(url as URL)
+        }
+        
+    }
+    
+    
     
 }
 

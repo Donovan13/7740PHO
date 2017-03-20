@@ -200,7 +200,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         
         if post.distance != nil {
             let inMiles = post.distance! * 0.000621371192
-            cell.distanceLabel.text = (String(format: "%.2fm Away", inMiles))
+            cell.distanceLabel.text = (String(format: "%.2fm away", inMiles))
         }
         
         if post.rating == 0 {
@@ -253,12 +253,16 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
                 let annotation = sender as! CustomAnnotations
                 detailVC.truck = annotation.truckCA
                 
-            case "truckToWebSegue":
-                let button = sender as! UIButton
-                let webVC = segue.destination as! WebViewController
-                let truck = trucks[button.tag]
-                webVC.businessURL = truck.yelpURL
-                
+//            case "truckToWebSegue":
+//                let button = sender as! UIButton
+//                
+////                let webVC = segue.destination as! WebViewController
+//                let truck = trucks[button.tag]
+////                webVC.businessURL = truck.yelpURL
+//                
+//                if let url = NSURL(string: truck.yelpURL!){
+//                    UIApplication.shared.open(url as URL)
+//                }
             default: break
             }
         }
@@ -299,7 +303,11 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     }
     
     @IBAction func yelpButtonTapped(_ sender: AnyObject) {
-        performSegue(withIdentifier: "truckToWebSegue", sender: sender)
+        let button = sender as! UIButton
+        let truck = trucks[button.tag]
+        if let url = NSURL(string: truck.yelpURL!){
+            UIApplication.shared.open(url as URL)
+        }
     }
     
     

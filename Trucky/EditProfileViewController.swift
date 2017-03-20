@@ -29,6 +29,9 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         
+
+        
+        
         imagePicker.delegate = self
         imagePicker.sourceType = .savedPhotosAlbum
         imagePicker.allowsEditing = true
@@ -40,7 +43,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         
         if userDefaults == nil || userDefaults != truck.uid || userDefaults == truck.uid && source == "Profile" {
             menuPictureButton.isHidden = true
-            saveChangeButton.setTitle("Ok", for: .normal)
+            saveChangeButton.setTitle("Dismiss", for: .normal)
         }
         
        
@@ -51,7 +54,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         super.viewWillAppear(true)
         self.truckNameLabel.text = truck.truckName
         
-        
+                    self.navigationController?.navigationBar.backItem?.title = ""
     }
     
     
