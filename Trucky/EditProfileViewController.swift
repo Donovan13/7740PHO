@@ -34,7 +34,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         
         imagePicker.delegate = self
         imagePicker.sourceType = .savedPhotosAlbum
-        imagePicker.allowsEditing = true
+//        imagePicker.allowsEditing = true
         
         if truck.menuImage != "" {
             let menuImage = string2Image(truck.menuImage!)
@@ -74,13 +74,20 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage
+//        pickedImage?.resizableImage(withCapInsets: edgeinsets)
+        
+
+        
+        
+        
+//        menuImageView.contentMode = .center
         menuImageView.image = pickedImage
         dismiss(animated: true, completion: nil)
     }
     
     
     @IBAction func updateMenuButton(_ sender: AnyObject) {
-        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.savedPhotosAlbum){
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType(rawValue: UIImagePickerControllerSourceType.savedPhotosAlbum.rawValue)!){
             self.present(imagePicker, animated: true, completion: nil)
         }
     }

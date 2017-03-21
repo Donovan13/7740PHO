@@ -230,7 +230,7 @@ class SlideMenuViewController: UIViewController, UNUserNotificationCenterDelegat
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage
+        let pickedImage = info[UIImagePickerControllerEditedImage] as? UIImage
         
         
         let proImage = image2String(pickedImage!)
