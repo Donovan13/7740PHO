@@ -64,7 +64,7 @@ class CreateTruckViewController: UIViewController, UserCreationDelegate, Authent
         self.yelpImage.image = string2Image(imageURLtoString(searchedBusiness!.imageURL!))
         
         self.businessTextField.text = searchedBusiness?.name!
-        self.reviewsTextField.text = "\(searchedBusiness!.reviewCount!)"
+        self.reviewsTextField.text = "\(searchedBusiness!.reviewCount!) reviews on"
         self.categoryLabel.text = searchedBusiness?.categories!
         
         if searchedBusiness?.reviewCount == 0 {
