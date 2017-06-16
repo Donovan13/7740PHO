@@ -36,25 +36,41 @@ class InitialViewController: UIViewController {
         playerLayer.zPosition = -1
         playerLayer.frame = view.frame
         backgroundView.layer.addSublayer(playerLayer)
-        player?.play()
         
         //loop video
         NotificationCenter.default.addObserver(self,
                                                          selector: #selector(InitialViewController.loopVideo),
                                                          name: NSNotification.Name.AVPlayerItemDidPlayToEndTime,
                                                          object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(appWillEnterForeground), name: .UIApplicationWillEnterForeground, object: nil)
+        
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(true)
+        player?.pause()
+    }
+    
+    
     func loopVideo() {
         player?.seek(to: kCMTimeZero)
-//        player?.play()
+    }
+
+    func appWillEnterForeground() {
+        player?.play()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
 
+        player?.play()
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.isTranslucent = true
     }
+    
+    
+    
     
 }

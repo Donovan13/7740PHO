@@ -196,7 +196,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         cell.businessLabel?.text = post.truckName?.capitalized
         cell.reviewLabel?.text = "\(post.reviewCount!) reviews on"
         
-        if post.address?.characters.count > 1 {
+        if (post.address?.characters.count)! > 1 {
             cell.addressLabel.text = post.address
         } else {
             cell.addressLabel.text = post.cityAndState
@@ -347,7 +347,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         for truck in self.trucks {
             truck.calculateDistance(self.userlocation)
         }
-        
+    
         self.trucks.sort(by: { $0.distance < $1.distance })
         
         DispatchQueue.main.async {

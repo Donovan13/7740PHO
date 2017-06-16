@@ -189,7 +189,6 @@ class BusinessProfileViewController: UIViewController, UITableViewDelegate, UITa
             
             let pulledEndDate = (review as AnyObject).value(forKey: "timeCreated") as? String
             
-            print("Pulled Date = \(pulledEndDate)")
             
             if let endDate = endDateFormatter.date(from: pulledEndDate!) {
             
