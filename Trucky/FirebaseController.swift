@@ -120,8 +120,13 @@ class FirebaseController {
         return self.trucks
     }
     
-    func getLoggedInTruck() -> Truck {
-        return self.loggedInTruck!
+    func getLoggedInTruck() -> Truck? {
+        if let loggedIn = self.loggedInTruck {
+            return loggedIn
+            
+        }
+        
+        return nil
     }
     
     func logOutUser() {

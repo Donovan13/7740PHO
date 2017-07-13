@@ -93,7 +93,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         
         let backButton = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         navigationItem.backBarButtonItem = backButton
-
+        
         
         reloadTrucks()
         
@@ -261,7 +261,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
                 let annotation = sender as! CustomAnnotations
                 detailVC.truck = annotation.truckCA
                 
-
+                
             default: break
             }
         }
@@ -272,7 +272,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         
         if (sender.titleLabel!?.text == "Hide List") {
             sender.setTitle("Show List", for:  UIControlState())
-            tableView.isHidden = true
+            self.tableView.isHidden = true
         } else {
             sender.setTitle("Hide List", for:  UIControlState())
             tableView.isHidden = false
@@ -347,7 +347,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         for truck in self.trucks {
             truck.calculateDistance(self.userlocation)
         }
-    
+        
         self.trucks.sort(by: { $0.distance < $1.distance })
         
         DispatchQueue.main.async {

@@ -46,9 +46,6 @@ class SlideMenuViewController: UIViewController, UNUserNotificationCenterDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        self.navigationController?.navigationBar.shadowImage = UIImage()
-        self.navigationController?.navigationBar.isTranslucent = true
         
         UNUserNotificationCenter.current().requestAuthorization(
             options: [.alert, .sound,.badge],
@@ -61,10 +58,7 @@ class SlideMenuViewController: UIViewController, UNUserNotificationCenterDelegat
         firebaseController.logOutUserDelegate = self
         logInTruckDelegate()
         
-        
-        
         imagePicker.delegate = self
-        
         imagePicker.sourceType = .savedPhotosAlbum
         imagePicker.allowsEditing = true
 
@@ -134,11 +128,6 @@ class SlideMenuViewController: UIViewController, UNUserNotificationCenterDelegat
 //        imageView.addSubview(blurView)
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(true)
-        
-    }
-    
     func logInTruckDelegate() {
         loggedInTruck = firebaseController.getLoggedInTruck()
     }
@@ -153,8 +142,6 @@ class SlideMenuViewController: UIViewController, UNUserNotificationCenterDelegat
     
     func deactivateTruckDelegate() {
         errorAlert("Time has expired", message: "Your location is no longer being shared")
-        
-        //        errorAlert("Confirmation", message: "Going out of business =(")
     }
     
     func logOutUserDelegate() {
