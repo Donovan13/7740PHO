@@ -43,7 +43,16 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     @IBOutlet weak var menuButton: UIButton!
     
     //    MARK: Var & Let
-    var trucks = [Truck]()
+    var trucks: [Truck]? {
+        didSet {
+            self.tableView.reloadData()
+            
+            
+        }
+    }
+    
+    
+    
     var loggedInTruck: Truck?
     var loggedInCustomer: Customer?
     var userlocation: CLLocation?
@@ -62,18 +71,14 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         tableView.dataSource = self
         mapView.delegate = self
         
-        
-        
         firebaseController.reloadTrucksDelegate = self
         locationController.locationServiceDelegate = self
         userlocation = locationController.newLocation
         
-        reloadTimer()
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
+        super.viewWillAppear(animated)
         
         mapView.showsUserLocation = true
         mapView.setUserTrackingMode(MKUserTrackingMode.follow, animated: true)
@@ -90,28 +95,33 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         
         self.navigationItem.title = "Trucky"
         
-        
         let backButton = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         navigationItem.backBarButtonItem = backButton
         
         
-        reloadTrucks()
         
-    }
-    
-    func reloadTimer() {
-        
-        Timer.scheduledTimer(withTimeInterval: 60.0, repeats: true, block: { (Timer) in
+        Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false, block: { (Timer) in
             self.reloadTrucks()
         })
         
+        reloadTimer()
+
+    }
+    
+
+    
+    func reloadTimer() {
+        
+        Timer.scheduledTimer(withTimeInterval: 60.0, repeats: false, block: { (Timer) in
+            self.reloadTrucks()
+        })
         
     }
     
     func loadAnnotations() {
-        if trucks.count >= 1 {
-            if trucks.first?.truckName != nil {
-                for truck in trucks {
+        if trucks != nil {
+            if trucks?.first?.truckName != nil {
+                for truck in trucks! {
                     let title = truck.truckName
                     let subtitle = truck.categories
                     if let latitude = truck.latitude {
@@ -145,8 +155,8 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
         } else if annotation.isEqual(annotation as! CustomAnnotations) {
             
             let pin = MKAnnotationView (annotation: annotation, reuseIdentifier: nil)
-            let icon = scaleUIImageToSize(UIImage(named: "login")!, size: CGSize(width: 30,height: 30))
-            let iconFrame = UIImageView(image: icon)
+            //            let icon = scaleUIImageToSize(UIImage(named: "login")!, size: CGSize(width: 30,height: 30))
+            //            let iconFrame = UIImageView(image: icon)
             
             pin.image = scaleUIImageToSize(UIImage(named: "truck")!, size: CGSize(width: 40,height: 30))
             pin.canShowCallout = true
@@ -173,72 +183,77 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     
     
     //    MARK: TableView Delegate
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        if trucks.count == 0 {
-            TableviewHelper.EmptyMessage(message: "There's No Active Trucks", tableView: tableView)
-            return 0
-        } else {
-            TableviewHelper.EmptyMessage(message: "", tableView: tableView)
-            return trucks.count
-        }
-        
-    }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
+        let cell: DetailTableViewCell = tableView.dequeueReusableCell(withIdentifier: "BusinessTableViewCell") as! DetailTableViewCell
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "BusinessTableViewCell") as! DetailTableViewCell
-        let post = trucks[(indexPath as NSIndexPath).row]
-        
-        
-        cell.businessImage.image = string2Image(post.imageString!)
-        cell.businessLabel?.text = post.truckName?.capitalized
-        cell.reviewLabel?.text = "\(post.reviewCount!) reviews on"
-        
-        if (post.address?.characters.count)! > 1 {
-            cell.addressLabel.text = post.address
-        } else {
-            cell.addressLabel.text = post.cityAndState
+        if let safeT = trucks?.sorted(by: { $0.distance < $1.distance}) {
+            let post = safeT[(indexPath as NSIndexPath).row]
+            
+            cell.businessImage.image = string2Image(post.imageString!)
+            cell.businessLabel?.text = post.truckName?.capitalized
+            cell.reviewLabel?.text = "\(post.reviewCount!) reviews on"
+            cell.categoryLabel?.text = post.categories
+            cell.detailsButton.tag = (indexPath as NSIndexPath).row
+            cell.yelpButton.tag = (indexPath as NSIndexPath).row
+            
+            if (post.address?.characters.count)! > 1 {
+                cell.addressLabel.text = post.address
+            } else {
+                cell.addressLabel.text = post.cityAndState
+            }
+            
+            if post.distance != nil {
+                let inMiles = post.distance! * 0.000621371192
+                cell.distanceLabel.text = (String(format: "%.2fm away", inMiles))
+            }
+            
+            if post.rating == 0 {
+                cell.reviewImage?.image = UIImage(named: "star0")
+            } else if post.rating == 1 {
+                cell.reviewImage?.image = UIImage(named: "star1")
+            } else if post.rating == 1.5 {
+                cell.reviewImage?.image = UIImage(named: "star1h")
+            } else if post.rating == 2 {
+                cell.reviewImage?.image = UIImage(named: "star2")
+            } else if post.rating == 2.5 {
+                cell.reviewImage?.image = UIImage(named: "star2h")
+            } else if post.rating == 3 {
+                cell.reviewImage?.image = UIImage(named: "star3")
+            } else if post.rating == 3.5 {
+                cell.reviewImage?.image = UIImage(named: "star3h")
+            } else if post.rating == 4 {
+                cell.reviewImage?.image = UIImage(named: "star4")
+            } else if post.rating == 4.5 {
+                cell.reviewImage?.image = UIImage(named: "star4h")
+            } else if post.rating == 5 {
+                cell.reviewImage?.image = UIImage(named: "star5")
+            }
         }
         
-        cell.categoryLabel?.text = post.categories
-        cell.detailsButton.tag = (indexPath as NSIndexPath).row
-        cell.yelpButton.tag = (indexPath as NSIndexPath).row
         
-        if post.distance != nil {
-            let inMiles = post.distance! * 0.000621371192
-            cell.distanceLabel.text = (String(format: "%.2fm away", inMiles))
-        }
-        
-        if post.rating == 0 {
-            cell.reviewImage?.image = UIImage(named: "star0")
-        } else if post.rating == 1 {
-            cell.reviewImage?.image = UIImage(named: "star1")
-        } else if post.rating == 1.5 {
-            cell.reviewImage?.image = UIImage(named: "star1h")
-        } else if post.rating == 2 {
-            cell.reviewImage?.image = UIImage(named: "star2")
-        } else if post.rating == 2.5 {
-            cell.reviewImage?.image = UIImage(named: "star2h")
-        } else if post.rating == 3 {
-            cell.reviewImage?.image = UIImage(named: "star3")
-        } else if post.rating == 3.5 {
-            cell.reviewImage?.image = UIImage(named: "star3h")
-        } else if post.rating == 4 {
-            cell.reviewImage?.image = UIImage(named: "star4")
-        } else if post.rating == 4.5 {
-            cell.reviewImage?.image = UIImage(named: "star4h")
-        } else if post.rating == 5 {
-            cell.reviewImage?.image = UIImage(named: "star5")
-        }
         
         return cell
     }
     
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        guard let validTrucks = trucks else {
+            
+            TableviewHelper.EmptyMessage(message: "There's Currently No Active Trucks", tableView: tableView)
+            return 0
+        }
+        
+        return validTrucks.count
+    }
+
+    
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
-        let latitude = trucks[(indexPath as NSIndexPath).row].latitude
-        let longitude = trucks[(indexPath as NSIndexPath).row].longitude
+        let latitude = trucks?[(indexPath as NSIndexPath).row].latitude
+        let longitude = trucks?[(indexPath as NSIndexPath).row].longitude
         let centerCoordinate = CLLocationCoordinate2DMake(latitude!, longitude!)
         let span = MKCoordinateSpanMake(0.01, 0.01)
         let region = MKCoordinateRegion(center: centerCoordinate, span: span)
@@ -252,7 +267,7 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
             switch identifier {
             case "detailSegue":
                 let button = sender as! UIButton
-                let truck = trucks[button.tag]
+                let truck = trucks?[button.tag]
                 let detailVC = segue.destination as! BusinessProfileViewController
                 detailVC.truck = truck
                 
@@ -303,9 +318,10 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     
     @IBAction func yelpButtonTapped(_ sender: AnyObject) {
         let button = sender as! UIButton
-        let truck = trucks[button.tag]
-        if let url = NSURL(string: truck.yelpURL!){
-            UIApplication.shared.open(url as URL)
+        if let truck = trucks?[button.tag] {
+            if let url = NSURL(string: truck.yelpURL!){
+                UIApplication.shared.open(url as URL)
+            }
         }
     }
     
@@ -337,27 +353,33 @@ class TruckViewController: UIViewController, MKMapViewDelegate, UITableViewDeleg
     }
     
     func reloadTrucks() {
+        
         self.trucks = self.firebaseController.getActiveTrucks()
         
         if userDefaults.string(forKey: "Truck") != nil {
             self.loggedInTruck = self.firebaseController.getLoggedInTruck()
         }
         
-        
-        for truck in self.trucks {
-            truck.calculateDistance(self.userlocation)
+        if let loadedTrucks = self.trucks {
+            for truck in loadedTrucks {
+                truck.calculateDistance(self.userlocation)
+            }
         }
         
-        self.trucks.sort(by: { $0.distance < $1.distance })
+                reloadViews()
         
-        DispatchQueue.main.async {
-            self.mapView.removeAnnotations(self.mapView.annotations)
-            self.loadAnnotations()
-            self.tableView.reloadData()
-        }
         
     }
+    
+    func reloadViews() {
+        self.mapView.removeAnnotations(self.mapView.annotations)
+        self.loadAnnotations()
+        self.tableView.reloadData()
+    }
+    
+    
 }
+
 
 extension UITableView {
     func indexPathForView (_ view: UIView) -> IndexPath {

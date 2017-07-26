@@ -21,5 +21,6 @@ class DetailTableViewCell: UITableViewCell {
     @IBOutlet weak var detailsButton: UIButton!
     @IBOutlet weak var yelpButton: UIButton!
 
-
+    
+    
 }

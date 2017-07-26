@@ -43,6 +43,7 @@ protocol ShareTruckDelegate {
 
 protocol ReloadTrucksDelegate {
     func reloadTrucks()
+    func reloadViews()
 }
 
 
@@ -65,7 +66,9 @@ class FirebaseController {
     var logOutUserDelegate: LogOutUserDelegate?
     
     
-    fileprivate var trucks = [Truck]()
+    var trucks = [Truck]()
+       
+    
     fileprivate var loggedInTruck: Truck?
     
     fileprivate var customer: Customer?
@@ -73,7 +76,7 @@ class FirebaseController {
     static let sharedConnection = FirebaseController()
     
     init() {
-        activeTrucks()
+//        activeTrucks()
         observers()
     }
     
@@ -117,16 +120,14 @@ class FirebaseController {
     }
     
     func getActiveTrucks() -> [Truck] {
-        return self.trucks
+//        let sorted = self.trucks.sorted(by: { $0.distance! < $1.distance! })
+        
+        return trucks
     }
     
     func getLoggedInTruck() -> Truck? {
-        if let loggedIn = self.loggedInTruck {
-            return loggedIn
-            
-        }
-        
-        return nil
+    
+        return loggedInTruck
     }
     
     func logOutUser() {
@@ -161,12 +162,10 @@ class FirebaseController {
     func activeTrucks() {
         truckRef.observeSingleEvent(of: .value) { (snapshot: FIRDataSnapshot!) in
             for truck in snapshot.children {
-                
                 let foodTruck = Truck(snapshot: truck as! FIRDataSnapshot)
                 if foodTruck.active == true {
                     self.trucks.append(foodTruck)
                 }
-                
             }
         }
     }
@@ -237,12 +236,8 @@ class FirebaseController {
                 let uid = user?.uid
                 self.loggedInTruck(uid!)
                 
-
-                
                 self.authenticationDelegate?.userAuthenticationSuccess()
 
-                
-                
             } else {
                 self.authenticationDelegate?.userAuthenticationFail(error! as NSError)
             }
@@ -269,6 +264,7 @@ class FirebaseController {
             }
             self.reloadTrucksDelegate?.reloadTrucks()
         }
+        
         self.truckRef.observe(.childChanged) { (snapshot: FIRDataSnapshot!) in
             let truck = Truck(snapshot: snapshot)
             
@@ -285,11 +281,11 @@ class FirebaseController {
                 self.loggedInTruck = truck
                 print("loggedintruck changed")
             }
-            if truck.active! {
-                if !self.trucks.contains(truck) {
-                    self.trucks.append(truck)
-                }
-            }
+//            if truck.active! {
+//                if !self.trucks.contains(truck) {
+//                    self.trucks.append(truck)
+//                }
+//            }
             
             if !truck.active! {
                 if let index = self.trucks.index(of: truck) {
@@ -300,6 +296,7 @@ class FirebaseController {
             self.reloadTrucksDelegate?.reloadTrucks()
 
         }
+        
         self.truckRef.observe(.childRemoved) { (snapshot: FIRDataSnapshot!) in
             let truck = Truck(snapshot: snapshot)
             let index = self.trucks.index(of: truck)!
